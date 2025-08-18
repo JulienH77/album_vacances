@@ -376,7 +376,7 @@
   let state = {
     showPays:false,
     showTrajets:false,
-    showNuages:true,
+    showNuages:false,
     isNight:false,
     showRelief:false,
     dayBase:'earth'
@@ -404,7 +404,7 @@
     const layers = [];
     if(!s.isNight){ layers.push({ show:true, name:'Ombre nuit', type:'blend', intensity: 1, blendTo: 'emission', texture: PATH_EARTH_NIGHT_RAW }); }
     if(s.isNight){ layers.push({ show:true, name:'Ombre nuit', type:'blend', intensity: 1.3, blendTo: 'emission', texture: PATH_EARTH_NIGHT_RAW }); }
-    if(s.showNuages){ layers.push({ show:false, name:'Nuages', type:'overlay', texture: CLOUDS, shading: 'lambert', distance: 1 }); }
+    if(s.showNuages){ layers.push({ show:true, name:'Nuages', type:'overlay', texture: CLOUDS, shading: 'lambert', distance: 1 }); }
 
     const baseDay = (s.dayBase === 'earth') ? PATH_EARTH_DAY_1 : PATH_EARTH_DAY_2;
 
