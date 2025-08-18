@@ -424,8 +424,8 @@ if(s.showTrajets){
     data: filteredTrajets,
     effect: {
       show: true,
-      period: 15,
-      trailLength: 0.8,
+      period: 5,
+      trailLength: 1.5,
       symbol: (data) => {
         // Détermine le SVG en fonction du type de trajet
         const type = (data.properties?.trajet || '').toLowerCase();
@@ -439,10 +439,10 @@ if(s.showTrajets){
           return 'circle'; // symbole par défaut
         }
       },
-      symbolSize: [20, 20], // [largeur, hauteur] pour les images
+      symbolSize: [200, 200], // [largeur, hauteur] pour les images
     },
     lineStyle: {
-      width: 3,
+      width: 2,
       opacity: 0.95,
       color: (data) => {
         // Conserve la couleur par type de trajet
