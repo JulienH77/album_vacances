@@ -402,6 +402,29 @@
     activeVoyages: new Set(voyagesSet) // AJOUT : filtre actif
   };
 
+// Fonction pour calculer la distance entre deux points en km (formule Haversine)
+function calculateDistance(coord1, coord2) {
+  const [lon1, lat1] = coord1;
+  const [lon2, lat2] = coord2;
+  const R = 6371; // Rayon de la Terre en km
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+}
+// Fonction pour calculer la longueur totale d'un trajet
+function calculateTrajetLength(trajet) {
+  let total = 0;
+  for (let i = 0; i < trajet.coords.length - 1; i++) {
+    total += calculateDistance(trajet.coords[i], trajet.coords[i + 1]);
+  }
+  return total;
+};
+  
 function makeOption(s) {
   const series = [];
   if(s.showPays){
@@ -424,28 +447,34 @@ if(s.showTrajets){
     data: filteredTrajets,
     effect: {
       show: true,
-      period: 5,
-      trailLength: 1.5,
+      period: (data) => {
+        // Longueur du trajet en km
+        const length = calculateTrajetLength(data);
+        // 100 km en 4 secondes => période = (length / 100) * 4
+        return (length / 100) * 4;
+      },
+      trailLength: 0.4,
       symbol: (data) => {
-        // Détermine le SVG en fonction du type de trajet
         const type = (data.properties?.trajet || '').toLowerCase();
         if (type.includes('avion')) {
-          return './GLOBE/symboles/avion_rouge_cote.Svg'; // ou un SVG en ligne
+          // SVG inline pour un avion (exemple simplifié)
+          return 'path://M10,10 L20,5 L30,10 L20,15 Z';
         } else if (type.includes('train')) {
-          return './GLOBE/symboles/train_vert_left.svg';
+          // SVG inline pour un train
+          return 'path://M5,10 L35,10 L35,20 L5,20 Z';
         } else if (type.includes('bateau')) {
-          return 'https://www.svgrepo.com/show/145160/boat.svg';
+          // SVG inline pour un bateau
+          return 'path://M5,5 L35,5 L30,20 L10,20 Z';
         } else {
-          return 'circle'; // symbole par défaut
+          return 'circle';
         }
       },
-      symbolSize: [200, 200], // [largeur, hauteur] pour les images
+      symbolSize: [20, 20],
     },
     lineStyle: {
       width: 2,
       opacity: 0.95,
       color: (data) => {
-        // Conserve la couleur par type de trajet
         return mapColor[(data.properties?.trajet || '').toLowerCase()] || '#00ffff';
       }
     }
