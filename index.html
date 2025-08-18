@@ -414,27 +414,44 @@ function makeOption(s) {
       lineStyle: { color: '#f0f0f0', width: 1, opacity: 0.98 }
     });
   }
-  if(s.showTrajets){
-    const filteredTrajets = trajetLines.filter(l => s.activeVoyages.has(l.voyage));
-    series.push({
-      name: 'Trajets',
-      type: 'lines3D',
-      coordinateSystem: 'globe',
-      polyline: true,
-      data: filteredTrajets,
-      effect: {
-        show: true,
-        period: 10,
-        trailLength: 0.8,
-        symbol: 'circle',
-        symbolSize: 10,
+if(s.showTrajets){
+  const filteredTrajets = trajetLines.filter(l => s.activeVoyages.has(l.voyage));
+  series.push({
+    name: 'Trajets',
+    type: 'lines3D',
+    coordinateSystem: 'globe',
+    polyline: true,
+    data: filteredTrajets,
+    effect: {
+      show: true,
+      period: 15,
+      trailLength: 0.8,
+      symbol: (data) => {
+        // Détermine le SVG en fonction du type de trajet
+        const type = (data.properties?.trajet || '').toLowerCase();
+        if (type.includes('avion')) {
+          return './GLOBE/symboles/avion_rouge_cote.Svg'; // ou un SVG en ligne
+        } else if (type.includes('train')) {
+          return './GLOBE/symboles/train_vert_left.svg';
+        } else if (type.includes('bateau')) {
+          return 'https://www.svgrepo.com/show/145160/boat.svg';
+        } else {
+          return 'circle'; // symbole par défaut
+        }
       },
-      lineStyle: {
-        width: 3,
-        opacity: 0.95
+      symbolSize: [20, 20], // [largeur, hauteur] pour les images
+    },
+    lineStyle: {
+      width: 3,
+      opacity: 0.95,
+      color: (data) => {
+        // Conserve la couleur par type de trajet
+        return mapColor[(data.properties?.trajet || '').toLowerCase()] || '#00ffff';
       }
-    });
-  }
+    }
+  });
+}
+
   // pins des villes visitées — maintenant filtrées par voyages sélectionnés
   let pinsData = [];
   // construire l'ensemble des villes autorisées par les voyages sélectionnés
