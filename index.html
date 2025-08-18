@@ -424,19 +424,19 @@ series.push({
   data: filteredTrajets,
   effect: {
     show: true,
-    period: 6,
+    period: 6, // Temps pour un cycle complet (en secondes)
+    constantSpeed: 20, // Vitesse constante (pixels/seconde)
     trailLength: 0.6,
-    symbol: 'path://M0,0 L10,5 L0,10 Z', // Triangle pointant vers le haut (direction du trajet)
+    symbol: 'path://M0,0 L10,5 L0,10 Z', // Triangle blanc
     symbolSize: 12,
-    symbolRotate: 0, // Rotation automatique selon la direction de la ligne
-    color: '#FFFFFF', // Blanc
+    color: '#FFFFFF',
   },
   lineStyle: {
     width: 2,
     opacity: 0.95,
-    color: '#FFFFFF', // Optionnel : couleur de la ligne elle-même
   }
 });
+
   }
   // pins des villes visitées — maintenant filtrées par voyages sélectionnés
   let pinsData = [];
