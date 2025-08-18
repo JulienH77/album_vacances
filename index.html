@@ -123,64 +123,87 @@
     font-size:14px; line-height:1.4; max-width:300px;
     display:none; z-index:200;
   }
+
+  /* Popup Leaflet plein écran */
+  #leafletPopup {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.8);
+    display: none;
+    z-index: 400;
+  }
+  #leafletMap {
+    width: 90%; height: 80%;
+    margin: 40px auto;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  }
+  #leafletClose {
+    position: absolute; top: 20px; right: 20px;
+    background: #fff; border: none;
+    border-radius: 50%; width: 36px; height: 36px;
+    cursor: pointer; font-size: 18px; font-weight: bold;
+  }
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/echarts-gl@2/dist/echarts-gl.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
 <body>
 <div id="root">
   <div id="globeContainer" class="echarts-for-globe"></div>
 
-  <!-- Bouton jour/nuit -->
+  <!-- Boutons -->
   <div id="toggle" role="button" aria-pressed="false" aria-label="Basculer jour/nuit">
     <svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5" fill="#FFD43B"/></svg>
     <svg class="moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 0112.21 3 7 7 0 1021 12.79z" fill="#FFDD66"/></svg>
     <div class="ball" aria-hidden="true"></div>
   </div>
-
-  <!-- Bouton relief -->
   <div id="toggleRelief" role="button" aria-pressed="false" aria-label="Basculer relief">
     <svg viewBox="0 0 24 30">
       <path d="M3 20l5-9 4 7 5-10 5 12z" fill="#444"/>
       <path d="M3 20h18v1H3z" fill="#777"/>
     </svg>
   </div>
-
-  <!-- Nouveau : Bouton nuages -->
   <div id="toggleClouds" role="button" aria-pressed="true" aria-label="Afficher/masquer les nuages" class="active">
     <svg viewBox="0 0 24 24" width="22" height="22">
       <path d="M6 19h11a4 4 0 0 0 0-8 5 5 0 0 0-9.8-1.7A4 4 0 0 0 6 19z" fill="#4a90e2"/>
     </svg>
   </div>
+  <div id="toggleDayBase" role="button" aria-label="Changer fond du jour" title="Changer fond du jour">EARTH</div>
 
-  <!-- Nouveau : Bouton carré pour changer le fond du jour -->
-  <div id="toggleDayBase" role="button" aria-label="Changer fond du jour" title="Changer fond du jour">
-    EARTH
-  </div>
-
+  <!-- Légende -->
   <div id="legend" role="group" aria-label="Contrôles des couches">
     <label><input id="chkPays" type="checkbox"> Limites (Pays)</label>
     <label><input id="chkTrajets" type="checkbox"> Trajets</label>
     <label><input id="chkCapitales" type="checkbox"> Capitales</label>
-    <!-- (Nuages retiré de la légende, désormais un bouton à gauche) -->
   </div>
 
+  <!-- Lune -->
   <div id="moonPreview" title="Aperçu Lune"></div>
   <div id="trajetPopup"></div>
+</div>
+
+<!-- Popup Leaflet -->
+<div id="leafletPopup">
+  <div id="leafletMap"></div>
+  <button id="leafletClose">X</button>
 </div>
 
 <script>
 (async function(){
   const PATH_EARTH_DAY_1 = './earth.jpg';
-  const PATH_EARTH_DAY_2 = './world.topo.bathy.200401.jpg';  // alternative "fond jour"
+  const PATH_EARTH_DAY_2 = './world.topo.bathy.200401.jpg';
   const CLOUDS = './clouds.png';
   const PATH_EARTH_NIGHT_RAW = './night.jpg';
   const PATH_STARFIELD = './starfield.jpg';
   const PATH_MOON_BASE = './moon-base.jpg';
   const PATH_MOON_BUMP = './moon-bump.jpg';
   const PATH_COUNTRIES = './countries_10m_new.geojson';
-  const PATH_TRAJETS = './ALLLINE_TRAJET_wgs.geojson';
+  const PATH_TRAJETS = './TRAJETS_ALL_vacances_wgs.geojson';
   const PATH_CAPITALS = './capitals.geojson';
   const PATH_EARTH_BUMP = './world.topo.bathy.200401.jpg';
 
@@ -212,7 +235,7 @@
     return out;
   };
 
-  // texture nuit (on garde telle quelle)
+  // texture nuit
   const nightTexture = (await loadImage(PATH_EARTH_NIGHT_RAW)).src;
 
   // chargement des données
@@ -234,17 +257,36 @@
     extractLinesFromFeature(f).forEach(l => trajetLines.push({ ...l, lineStyle:{ color: col, width: 3, opacity: 0.95 }, properties:f.properties }));
   });
 
-  // capitales (on stocke le champ city en name)
+  // capitales
   const capitalPoints = (capitalsGeo.features || []).map(f => {
     const [x,y] = f.geometry.coordinates;
     const city = f.properties?.city || '';
     return { name: city, value: [normalizeLng(x), y, 0], city };
   });
 
+  // villes visitées avec visites/photos (exemple — à adapter)
+  const visitedCities = [
+    {
+      name: 'Shanghai',
+      value: [121.4737, 31.2304, 0],
+      visites: [
+        { name:'Bund', coords:[121.490317, 31.241666], photo:'bund.jpg' },
+        { name:'Yu Garden', coords:[121.4926, 31.2272], photo:'yugarden.jpg' }
+      ]
+    },
+    {
+      name: 'Paris',
+      value: [2.3522, 48.8566, 0],
+      visites: [
+        { name:'Tour Eiffel', coords:[2.2945, 48.8584], photo:'eiffel.jpg' },
+        { name:'Louvre', coords:[2.3364, 48.8606], photo:'louvre.jpg' }
+      ]
+    }
+  ];
+
   const globeChart = echarts.init(document.getElementById('globeContainer'), null, { renderer:'webgl' });
   const moonChart  = echarts.init(document.getElementById('moonPreview'), null, { renderer:'webgl' });
 
-  // état UI (ajout: base du fond jour)
   let state = {
     showPays:false,
     showTrajets:false,
@@ -252,61 +294,42 @@
     showNuages:true,
     isNight:false,
     showRelief:false,
-    dayBase:'earth' // 'earth' | 'topo'
+    dayBase:'earth'
   };
 
   function makeOption(s) {
     const series = [];
     if(s.showPays){
-      series.push({
-        name:'Pays',
-        type:'lines3D',
-        coordinateSystem:'globe',
-        polyline:true,
-        data: countryLines,
-        lineStyle:{ color:'#f0f0f0', width:1, opacity:0.98 }
-      });
+      series.push({ name:'Pays', type:'lines3D', coordinateSystem:'globe', polyline:true, data: countryLines,
+        lineStyle:{ color:'#f0f0f0', width:1, opacity:0.98 } });
     }
     if(s.showTrajets){
-      series.push({
-        name:'Trajets',
-        type:'lines3D',
-        coordinateSystem:'globe',
-        polyline:true,
-        data: trajetLines
-      });
+      series.push({ name:'Trajets', type:'lines3D', coordinateSystem:'globe', polyline:true, data: trajetLines });
     }
     if(s.showCapitales){
       series.push({
-        name:'Capitales',
-        type:'scatter3D',
-        coordinateSystem:'globe',
-        symbol:'rect',                 // carrés
-        symbolSize:6,
+        name:'Capitales', type:'scatter3D', coordinateSystem:'globe',
+        symbol:'rect', symbolSize:6,
         itemStyle:{ color:'#ffffff', borderColor:'#000', borderWidth:1 },
-        label:{
-          show:true,                   // affichage permanent
-          formatter: p => p.name || (p.data && (p.data.city||'')) || '',
-          position:'top',
-          distance: 2,
-          textStyle:{ fontSize: 10, color:'#ffffff', backgroundColor:'rgba(0,0,0,0.35)', padding:[2,4], borderRadius:3 }
-        },
+        label:{ show:true, formatter: p => p.name || '', position:'top', distance:2,
+          textStyle:{ fontSize:10, color:'#ffffff', backgroundColor:'rgba(0,0,0,0.35)', padding:[2,4], borderRadius:3 }},
         data: capitalPoints
       });
     }
+    // pins des villes visitées
+    series.push({
+      name:'Pins', type:'scatter3D', coordinateSystem:'globe',
+      symbol:'pin', symbolSize:22,
+      itemStyle:{ color:'#ff4444' },
+      label:{ show:true, formatter: p => p.name, position:'top',
+        textStyle:{ color:'#fff', fontSize:12, backgroundColor:'rgba(0,0,0,0.4)', padding:[2,4], borderRadius:3 }},
+      data: visitedCities
+    });
 
     const layers = [];
-    // Ombre de nuit uniquement en mode jour
-    if(!s.isNight){
-      layers.push({ show:true, name:'Ombre nuit', type:'blend', intensity: 1, blendTo: 'emission', texture: PATH_EARTH_NIGHT_RAW });
-    }
-    if(s.isNight){
-      layers.push({ show:true, name:'Ombre nuit', type:'blend', intensity: 1.3, blendTo: 'emission', texture: PATH_EARTH_NIGHT_RAW });
-    }
-    // Nuages via bouton
-    if(s.showNuages){
-      layers.push({ show:true, name:'Nuages', type:'overlay', texture: CLOUDS, shading: 'lambert', distance: 1 });
-    }
+    if(!s.isNight){ layers.push({ show:true, name:'Ombre nuit', type:'blend', intensity: 1, blendTo: 'emission', texture: PATH_EARTH_NIGHT_RAW }); }
+    if(s.isNight){ layers.push({ show:true, name:'Ombre nuit', type:'blend', intensity: 1.3, blendTo: 'emission', texture: PATH_EARTH_NIGHT_RAW }); }
+    if(s.showNuages){ layers.push({ show:true, name:'Nuages', type:'overlay', texture: CLOUDS, shading: 'lambert', distance: 1 }); }
 
     const baseDay = (s.dayBase === 'earth') ? PATH_EARTH_DAY_1 : PATH_EARTH_DAY_2;
 
@@ -321,7 +344,7 @@
         postEffect: { enable : false},
         light: { ambient: {color: '#1f1f1f', intensity: 0.2}, main: {color: '#FFFDED', intensity: s.isNight ? -20 : 0.9} },
         atmosphere:{show:true, color: '#a1a1a1', offset:4},
-        viewControl: { autoRotate: false, autoRotateSpeed:0.5, /*minDistance: 50, maxDistance: 600, zoomSensitivity: 2, rotateSensitivity: 2*/ },
+        viewControl: { autoRotate: false, autoRotateSpeed:0.5 },
         layers
       },
       series
@@ -339,6 +362,9 @@
   const chkTrajets = document.getElementById('chkTrajets');
   const chkCapitales = document.getElementById('chkCapitales');
   const popupEl = document.getElementById('trajetPopup');
+  const leafletPopupEl = document.getElementById('leafletPopup');
+  const leafletMapEl = document.getElementById('leafletMap');
+  const leafletCloseBtn = document.getElementById('leafletClose');
 
   // --- événements ---
   toggleEl.addEventListener('click', ()=>{
@@ -355,7 +381,6 @@
     refresh();
   });
 
-  // nouveau : bouton nuages
   toggleCloudsEl.addEventListener('click', ()=>{
     state.showNuages = !state.showNuages;
     toggleCloudsEl.classList.toggle('active', state.showNuages);
@@ -363,7 +388,6 @@
     refresh();
   });
 
-  // nouveau : bouton carré fond jour
   function updateDayBaseButtonLabel(){
     toggleDayBaseEl.textContent = (state.dayBase === 'earth') ? 'EARTH' : 'TOPO';
   }
@@ -374,7 +398,6 @@
   });
   updateDayBaseButtonLabel();
 
-  // légende (nuages retiré ici)
   [['Pays', chkPays], ['Trajets', chkTrajets], ['Capitales', chkCapitales]].forEach(([name, el])=>{
     el.addEventListener('change', e=>{
       state['show'+name] = e.target.checked;
@@ -382,7 +405,42 @@
     });
   });
 
-  // clic sur un trajet => popup
+  // Leaflet popup helpers
+  let currentLeafletMap = null;
+  function openLeafletPopup(cityData){
+    leafletPopupEl.style.display = 'block';
+
+    // (Ré)initialiser la carte
+    if(currentLeafletMap){
+      currentLeafletMap.remove();
+      currentLeafletMap = null;
+    }
+    leafletMapEl.innerHTML = '';
+
+    const [lon, lat] = cityData.value;
+    currentLeafletMap = L.map(leafletMapEl).setView([lat, lon], 13);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap'
+    }).addTo(currentLeafletMap);
+
+    (cityData.visites || []).forEach(v => {
+      const [vlon, vlat] = v.coords;
+      L.marker([vlat, vlon]).addTo(currentLeafletMap)
+        .bindPopup(`<b>${v.name || ''}</b><br>${v.photo ? `<img src="${v.photo}" width="180"/>` : ''}`);
+    });
+
+    setTimeout(()=>{ currentLeafletMap.invalidateSize(); }, 50);
+  }
+  function closeLeafletPopup(){
+    leafletPopupEl.style.display = 'none';
+    if(currentLeafletMap){ currentLeafletMap.remove(); currentLeafletMap = null; }
+  }
+  leafletCloseBtn.addEventListener('click', closeLeafletPopup);
+  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeLeafletPopup(); });
+  leafletPopupEl.addEventListener('click', (e)=>{ if(e.target === leafletPopupEl) closeLeafletPopup(); });
+
+  // clic sur globe
   globeChart.on('click', params => {
     if(params.seriesName === 'Trajets' && params.data && params.data.properties){
       const p = params.data.properties;
@@ -394,6 +452,9 @@
         <strong>Distance:</strong> ${p.distanceKM || ''} km
       `;
       popupEl.style.display = 'block';
+    } else if(params.seriesName === 'Pins' && params.data){
+      popupEl.style.display = 'none';
+      openLeafletPopup(params.data);
     } else {
       popupEl.style.display = 'none';
     }
