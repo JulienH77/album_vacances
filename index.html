@@ -150,7 +150,7 @@
   #voyagesDetails { margin-top:8px; }
   #voyagesDetails[hidden] { display:none; }
   #voyagesDetails summary { cursor:pointer; font-weight:700; }
-  #voyagesList { margin-top:6px; max-height:160px; overflow:auto; padding-left:2px; }
+  #voyagesList { margin-top:6px; max-height:260px; overflow:auto; padding-left:2px; }
   #voyagesList label { display:flex; align-items:center; gap:8px; font-weight:500; }
 </style>
 
@@ -187,11 +187,8 @@
     <label><input id="chkPays" type="checkbox"> Limites (Pays)</label>
     <label><input id="chkTrajets" type="checkbox"> Trajets</label>
 
-    <!-- AJOUT : liste dépliable des voyages détectés dans le champ `voyage` -->
-    <details id="voyagesDetails" hidden>
-      <summary>Filtrer par voyage</summary>
-      <div id="voyagesList" role="group" aria-label="Liste des voyages"></div>
-    </details>
+    <!-- AJOUT : liste des voyages directement sous "Trajets" -->
+    <div id="voyagesList" role="group" aria-label="Liste des voyages" style="display:none; margin-top:6px; max-height:260px; overflow:auto;"></div>
   </div>
 
   <!-- Lune -->
@@ -271,6 +268,12 @@
       voyage: voyageVal
     }));
   });
+
+  // Mapping voyage -> villes demandées par l'utilisateur
+  const voyagesToCities = {
+    'CHINE-1': ['Beijing','Xi\'an','Shanghai','Hangzhou','Guilin','Yangshuo','Tianjin'],
+    'EUROPE CENTRALE-1': ['Munich','Salzburg','Budapest','Prague','Regensburg','Ulm']
+  };
 
   // villes visitées avec visites/photos (inchangé)
   const visitedCities = [
@@ -409,14 +412,30 @@
       const filteredTrajets = trajetLines.filter(l => s.activeVoyages.has(l.voyage));
       series.push({ name:'Trajets', type:'lines3D', coordinateSystem:'globe', polyline:true, data: filteredTrajets });
     }
-    // pins des villes visitées
+    // pins des villes visitées — maintenant filtrées par voyages sélectionnés
+    let pinsData = [];
+    // construire l'ensemble des villes autorisées par les voyages sélectionnés
+    const allowedCities = new Set();
+    if(s.activeVoyages && s.activeVoyages.size){
+      s.activeVoyages.forEach(v => {
+        const list = voyagesToCities[v];
+        if(Array.isArray(list)) list.forEach(city => allowedCities.add(city));
+      });
+    }
+    if(allowedCities.size > 0){
+      pinsData = visitedCities.filter(c => allowedCities.has(c.name));
+    } else {
+      // si aucune ville autorisée (aucun voyage coché), ne pas afficher de pins
+      pinsData = [];
+    }
+
     series.push({
       name:'Pins', type:'scatter3D', coordinateSystem:'globe',
       symbol:'pin', symbolSize:22,
       itemStyle:{ color:'#5300D9' },
       label:{ show:true, formatter: p => p.name, position:'top',
         textStyle:{ color:'#fff', fontSize:12, backgroundColor:'rgba(0,0,0,0.4)', padding:[2,2], borderRadius:3 }},
-      data: visitedCities
+      data: pinsData
     });
 
     const layers = [];
@@ -457,10 +476,9 @@
   const leafletPopupEl = document.getElementById('leafletPopup');
   const leafletMapEl = document.getElementById('leafletMap');
   const leafletCloseBtn = document.getElementById('leafletClose');
-  const voyagesDetailsEl = document.getElementById('voyagesDetails'); // AJOUT
   const voyagesListEl = document.getElementById('voyagesList');       // AJOUT
 
-  // Remplit la liste dépliable avec les valeurs uniques de `voyage`
+  // Remplit la liste avec les valeurs uniques de `voyage`
   Array.from(voyagesSet).sort().forEach(v => {
     const id = 'voy_'+v.replace(/[^A-Za-z0-9_-]/g,'_');
     const label = document.createElement('label');
@@ -513,7 +531,7 @@
     el.addEventListener('change', e=>{
       state['show'+name] = e.target.checked;
       if(name === 'Trajets'){
-        voyagesDetailsEl.hidden = !state.showTrajets; // affiche/masque la liste quand "Trajets" est coché
+        voyagesListEl.style.display = state.showTrajets ? 'block' : 'none'; // affiche/masque la liste quand "Trajets" est coché
       }
       refresh();
     });
@@ -589,6 +607,8 @@
   });
 
   // rendu initial
+  // afficher la liste des voyages si "Trajets" est coché au départ
+  voyagesListEl.style.display = state.showTrajets ? 'block' : 'none';
   refresh();
 
 })();
