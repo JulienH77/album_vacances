@@ -517,6 +517,10 @@
     refresh();
   });
 
+const savedCamPos = camera.position.clone();
+const savedTarget = controls.target.clone();
+
+  
   function updateDayBaseButtonLabel(){
     toggleDayBaseEl.textContent = (state.dayBase === 'earth') ? 'EARTH' : 'TOPO';
   }
@@ -527,6 +531,12 @@
   });
   updateDayBaseButtonLabel();
 
+camera.position.copy(savedCamPos);
+controls.target.copy(savedTarget);
+controls.update();
+
+
+  
   [['Pays', chkPays], ['Trajets', chkTrajets]].forEach(([name, el])=>{
     el.addEventListener('change', e=>{
       state['show'+name] = e.target.checked;
