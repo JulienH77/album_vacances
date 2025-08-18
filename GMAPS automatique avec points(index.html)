@@ -1,203 +1,483 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trajet optimisé depuis la DDT</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
-  <style>
-    #map { height: 100vh; }
-    #fileInput {
-      position: absolute;
-      z-index: 999;
-      background: white;
-      padding: 10px;
-      top: 10px;
-      left: 10px;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-    }
-  </style>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Mes vacances</title>
+<style>
+  html,body,#root { height:100%; margin:0; padding:0; }
+  body{
+    background: url('./starfield.jpg') no-repeat center center fixed;
+    background-size: cover;
+    font-family: Inter, Arial, sans-serif;
+  }
+  #root { position:relative; width:100%; height:100%; overflow:hidden; }
+  #globeContainer { width:100%; height:100%; }
+
+  /* Toggle jour/nuit */
+  #toggle {
+    position:absolute; top:14px; left:14px;
+    width:100px; height:40px; border-radius:22px;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:4px 8px; cursor:pointer; z-index:120; user-select:none;
+    background: linear-gradient(90deg,#ffe066 50%, #4a90e2 50%);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+  }
+  #toggle.night { background: linear-gradient(90deg,#4a90e2 50%, #ffe066 50%); }
+  #toggle .ball {
+    position:absolute; top:4px; left:4px;
+    width:32px; height:32px; border-radius:50%;
+    background:#ffd54a;
+    box-shadow:0 6px 16px rgba(255,213,74,0.28);
+    transition:left .28s, background .28s;
+  }
+  #toggle.night .ball { left:64px; background:#f1d56d; }
+
+  /* Toggle relief (rond) */
+  #toggleRelief {
+    position: absolute;
+    top: 80px;
+    left: 18px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 120;
+    user-select: none;
+    background: rgba(255,255,255,0.9);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+    transition: background 0.2s, transform 0.15s;
+  }
+  #toggleRelief.active { background: rgba(180,255,180,0.9); }
+  #toggleRelief:active { transform: scale(0.95); }
+
+  /* Toggle nuages (rond) */
+  #toggleClouds {
+    position: absolute;
+    top: 134px;
+    left: 18px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 120;
+    user-select: none;
+    background: rgba(255,255,255,0.9);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+    transition: background 0.2s, transform 0.15s;
+  }
+  #toggleClouds.active { background: rgba(180,220,255,0.9); }
+  #toggleClouds:active { transform: scale(0.95); }
+
+  /* Bouton carré fond du jour (en bas à gauche) */
+  #toggleDayBase {
+    position: absolute;
+    left: 18px;
+    bottom: 18px;
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 120;
+    user-select: none;
+    background: rgba(255,255,255,0.95);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+    font-weight: 700;
+    font-size: 12px;
+    text-align: center;
+    line-height: 1.1;
+  }
+  #toggleDayBase:active { transform: scale(0.97); }
+
+  /* Légende */
+  #legend {
+    position:absolute; top:14px; right:14px; z-index:120;
+    background: rgba(255,255,255,0.92);
+    padding:10px 12px; border-radius:10px;
+    min-width:160px; box-shadow:0 6px 18px rgba(0,0,0,0.18);
+  }
+  #legend label { display:flex; align-items:center; gap:10px; font-weight:600; }
+  #legend input[type=checkbox] { width:16px; height:16px; }
+
+  /* Lune */
+  #moonPreview {
+    position:absolute; bottom:14px; right:14px;
+    width:140px; height:140px; z-index:110; border-radius:50%;
+    overflow:hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.6); background:black;
+  }
+
+  /* Popup stats */
+  #trajetPopup {
+    position:absolute; bottom:20px; left:20px;
+    background:rgba(0,0,0,0.85); color:white;
+    padding:10px 14px; border-radius:8px;
+    font-size:14px; line-height:1.4; max-width:300px;
+    display:none; z-index:200;
+  }
+
+  /* Popup Leaflet plein écran */
+  #leafletPopup {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.8);
+    display: none;
+    z-index: 400;
+  }
+  #leafletMap {
+    width: 90%; height: 80%;
+    margin: 40px auto;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  }
+  #leafletClose {
+    position: absolute; top: 20px; right: 20px;
+    background: #fff; border: none;
+    border-radius: 50%; width: 36px; height: 36px;
+    cursor: pointer; font-size: 18px; font-weight: bold;
+  }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/echarts-gl@2/dist/echarts-gl.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
 <body>
-  <input type="file" id="fileInput" accept=".zip" />
-  <div id="map"></div>
+<div id="root">
+  <div id="globeContainer" class="echarts-for-globe"></div>
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.min.js"></script>
-  <script src="https://unpkg.com/shpjs@latest/dist/shp.min.js"></script>
-  <script src="https://unpkg.com/@turf/turf@6.5.0/turf.min.js"></script>
+  <!-- Boutons -->
+  <div id="toggle" role="button" aria-pressed="false" aria-label="Basculer jour/nuit">
+    <svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5" fill="#FFD43B"/></svg>
+    <svg class="moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 0112.21 3 7 7 0 1021 12.79z" fill="#FFDD66"/></svg>
+    <div class="ball" aria-hidden="true"></div>
+  </div>
+  <div id="toggleRelief" role="button" aria-pressed="false" aria-label="Basculer relief">
+    <svg viewBox="0 0 24 30">
+      <path d="M3 20l5-9 4 7 5-10 5 12z" fill="#444"/>
+      <path d="M3 20h18v1H3z" fill="#777"/>
+    </svg>
+  </div>
+  <div id="toggleClouds" role="button" aria-pressed="true" aria-label="Afficher/masquer les nuages" class="active">
+    <svg viewBox="0 0 24 24" width="22" height="22">
+      <path d="M6 19h11a4 4 0 0 0 0-8 5 5 0 0 0-9.8-1.7A4 4 0 0 0 6 19z" fill="#4a90e2"/>
+    </svg>
+  </div>
+  <div id="toggleDayBase" role="button" aria-label="Changer fond du jour" title="Changer fond du jour">EARTH</div>
 
-  <script>
-    const map = L.map('map').setView([48.11658678172929, 5.145034144067746], 11);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19
-    }).addTo(map);
+  <!-- Légende -->
+  <div id="legend" role="group" aria-label="Contrôles des couches">
+    <label><input id="chkPays" type="checkbox"> Limites (Pays)</label>
+    <label><input id="chkTrajets" type="checkbox"> Trajets</label>
+    <label><input id="chkCapitales" type="checkbox"> Capitales</label>
+  </div>
 
-    const ddtCoord = [48.11658678172929, 5.145034144067746];
+  <!-- Lune -->
+  <div id="moonPreview" title="Aperçu Lune"></div>
+  <div id="trajetPopup"></div>
+</div>
 
-    // Icônes personnalisées
-    const startIcon = L.icon({
-      iconUrl: 'https://static.vecteezy.com/ti/vecteur-libre/p1/9117074-ddt-logo-ddt-letter-ddt-letter-logo-design-initials-ddt-logo-linked-with-circle-and-uppercase-monogram-logo-ddt-typography-for-technology-business-and-real-marque-immobilier-vectoriel.jpg',
-      iconSize: [30, 30],
-      iconAnchor: [15, 15]
-    });
+<!-- Popup Leaflet -->
+<div id="leafletPopup">
+  <div id="leafletMap"></div>
+  <button id="leafletClose">X</button>
+</div>
 
-    const stepIcon = L.icon({
-      iconUrl: 'https://cdn-icons-png.flaticon.com/512/9356/9356230.png',
-      iconSize: [25, 25],
-      iconAnchor: [12, 12]
-    });
-      
-    const gpsIcon = L.icon({
-      iconUrl: 'https://images.freeimages.com/vme/images/3/5/357941/red_racing_car_top_view_preview?h=350',
-      iconSize: [50, 25],
-      iconAnchor: [20, 20]
-    });
+<script>
+(async function(){
+  const PATH_EARTH_DAY_1 = './earth.jpg';
+  const PATH_EARTH_DAY_2 = './world.topo.bathy.200401.jpg';
+  const CLOUDS = './clouds.png';
+  const PATH_EARTH_NIGHT_RAW = './night.jpg';
+  const PATH_STARFIELD = './starfield.jpg';
+  const PATH_MOON_BASE = './moon-base.jpg';
+  const PATH_MOON_BUMP = './moon-bump.jpg';
+  const PATH_COUNTRIES = './countries_10m_new.geojson';
+  const PATH_TRAJETS = './ALLLINE_TRAJET_wgs.geojson';
+  const PATH_CAPITALS = './capitals.geojson';
+  const PATH_EARTH_BUMP = './world.topo.bathy.200401.jpg';
 
-    // === TSP heuristique : Nearest Neighbor ===
-    function solveTSPNearestNeighbor(coords) {
-      if (coords.length <= 2) return coords;
+  const loadJSON = url => fetch(url).then(r=>{ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); });
+  const loadImage = url => new Promise((res, rej) => { const img = new Image(); img.crossOrigin = 'anonymous'; img.onload = ()=>res(img); img.onerror = rej; img.src = url; });
+  const normalizeLng = lng => ((lng + 180) % 360) - 180;
 
-      const visited = new Set();
-      const route = [coords[0]];
-      visited.add(0);
-
-      while (route.length < coords.length) {
-        const last = route[route.length - 1];
-        let nearestIndex = null;
-        let nearestDist = Infinity;
-
-        for (let i = 1; i < coords.length; i++) {
-          if (visited.has(i)) continue;
-          const dist = turf.distance(
-            turf.point([last[1], last[0]]),
-            turf.point([coords[i][1], coords[i][0]]),
-            { units: 'kilometers' }
-          );
-          if (dist < nearestDist) {
-            nearestDist = dist;
-            nearestIndex = i;
-          }
-        }
-        route.push(coords[nearestIndex]);
-        visited.add(nearestIndex);
-      }
-
-      // Retour au départ
-      route.push(coords[0]);
-      return route;
+  const linesFromPolygonGeom = geom => {
+    const out = [];
+    if(!geom) return out;
+    if(geom.type === 'Polygon'){
+      geom.coordinates.forEach(ring => out.push({ coords: ring.map(([x,y]) => [normalizeLng(x), y, 0.001]) }));
+    } else if(geom.type === 'MultiPolygon'){
+      geom.coordinates.forEach(poly => poly.forEach(ring => out.push({ coords: ring.map(([x,y]) => [normalizeLng(x), y, 0.001]) })));
     }
+    return out;
+  };
 
-    // === GPS ===
-    let gpsMarker = null;
-    let gpsCircle = null;
-
-    function updatePosition(pos) {
-      const lat = pos.coords.latitude;
-      const lon = pos.coords.longitude;
-      const accuracy = pos.coords.accuracy;
-      const latlng = L.latLng(lat, lon);
-
-      if (!gpsMarker) {
-        gpsMarker = L.marker(latlng, { icon: gpsIcon })
-          .addTo(map)
-          .bindPopup("Ma position");
-
-        gpsCircle = L.circle(latlng, {
-          radius: accuracy,
-          color: 'green',
-          fillColor: 'green',
-          fillOpacity: 0.2
-        }).addTo(map);
-
-        map.setView(latlng, 13);
-      } else {
-        gpsMarker.setLatLng(latlng);
-        gpsCircle.setLatLng(latlng).setRadius(accuracy);
-      }
+  const extractLinesFromFeature = feature => {
+    const out = [], g = feature && feature.geometry;
+    if(!g) return out;
+    if(g.type === 'LineString'){
+      out.push({ coords: g.coordinates.map(([x,y]) => [normalizeLng(x), y]) });
+    } else if(g.type === 'MultiLineString'){
+      g.coordinates.forEach(lineCoords => out.push({ coords: lineCoords.map(([x,y]) => [normalizeLng(x), y]) }));
+    } else if(g.type === 'Polygon' || g.type === 'MultiPolygon'){
+      linesFromPolygonGeom(g).forEach(l => out.push(l));
     }
+    return out;
+  };
 
-    function showError(error) {
-      console.error("Erreur GPS :", error.message);
+  // texture nuit
+  const nightTexture = (await loadImage(PATH_EARTH_NIGHT_RAW)).src;
+
+  // chargement des données
+  const [countriesGeo, trajetsGeo, capitalsGeo] = await Promise.all([
+    loadJSON(PATH_COUNTRIES),
+    loadJSON(PATH_TRAJETS),
+    loadJSON(PATH_CAPITALS)
+  ]);
+
+  // frontières
+  const countryLines = [];
+  (countriesGeo.features || []).forEach(f => linesFromPolygonGeom(f.geometry).forEach(l => countryLines.push(l)));
+
+  // trajets
+  const trajetLines = [];
+  const mapColor = { avion:'#0da2ff', train:'#ee0020', bus:'#009c27', voiture:'#900dff' };
+  (trajetsGeo.features || []).forEach(f => {
+    const col = mapColor[(f.properties?.trajet || f.properties?.transport || '').toLowerCase()] || '#00ffff';
+    extractLinesFromFeature(f).forEach(l => trajetLines.push({ ...l, lineStyle:{ color: col, width: 3, opacity: 0.95 }, properties:f.properties }));
+  });
+
+  // capitales
+  const capitalPoints = (capitalsGeo.features || []).map(f => {
+    const [x,y] = f.geometry.coordinates;
+    const city = f.properties?.city || '';
+    return { name: city, value: [normalizeLng(x), y, 0], city };
+  });
+
+  // villes visitées avec visites/photos (exemple — à adapter)
+  const visitedCities = [
+    {
+      name: 'Shanghai',
+      value: [121.4737, 31.2304, 0],
+      visites: [
+        { name:'Bund', coords:[121.490317, 31.241666], photo:'bund.jpg' },
+        { name:'Yu Garden', coords:[121.4926, 31.2272], photo:'yugarden.jpg' }
+      ]
+    },
+    {
+      name: 'Paris',
+      value: [2.3522, 48.8566, 0],
+      visites: [
+        { name:'Tour Eiffel', coords:[2.2945, 48.8584], photo:'eiffel.jpg' },
+        { name:'Louvre', coords:[2.3364, 48.8606], photo:'louvre.jpg' }
+      ]
     }
+  ];
 
-    if (navigator.geolocation) {
-      navigator.geolocation.watchPosition(updatePosition, showError, {
-        enableHighAccuracy: true,
-        maximumAge: 5000,
-        timeout: 10000
+  const globeChart = echarts.init(document.getElementById('globeContainer'), null, { renderer:'webgl' });
+  const moonChart  = echarts.init(document.getElementById('moonPreview'), null, { renderer:'webgl' });
+
+  let state = {
+    showPays:false,
+    showTrajets:false,
+    showCapitales:false,
+    showNuages:true,
+    isNight:false,
+    showRelief:false,
+    dayBase:'earth'
+  };
+
+  function makeOption(s) {
+    const series = [];
+    if(s.showPays){
+      series.push({ name:'Pays', type:'lines3D', coordinateSystem:'globe', polyline:true, data: countryLines,
+        lineStyle:{ color:'#f0f0f0', width:1, opacity:0.98 } });
+    }
+    if(s.showTrajets){
+      series.push({ name:'Trajets', type:'lines3D', coordinateSystem:'globe', polyline:true, data: trajetLines });
+    }
+    if(s.showCapitales){
+      series.push({
+        name:'Capitales', type:'scatter3D', coordinateSystem:'globe',
+        symbol:'rect', symbolSize:6,
+        itemStyle:{ color:'#ffffff', borderColor:'#000', borderWidth:1 },
+        label:{ show:true, formatter: p => p.name || '', position:'top', distance:2,
+          textStyle:{ fontSize:10, color:'#ffffff', backgroundColor:'rgba(0,0,0,0.35)', padding:[2,4], borderRadius:3 }},
+        data: capitalPoints
       });
     }
-
-    document.getElementById('fileInput').addEventListener('change', function(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = function(evt) {
-        const arrayBuffer = evt.target.result;
-        shp(arrayBuffer).then(function(geojson) {
-          if (!geojson.features || geojson.features.length === 0) {
-            alert("Aucun point trouvé dans le fichier.");
-            return;
-          }
-
-          const points = geojson.features
-            .filter(f => f.geometry && f.geometry.type === "Point")
-            .map(f => [f.geometry.coordinates[1], f.geometry.coordinates[0]]);
-
-          if (points.length === 0) {
-            alert("Pas de points valides dans le shapefile.");
-            return;
-          }
-
-          if (points.length > 20) {
-            if (!confirm("Le fichier contient plus de 20 points, le calcul peut être long. Continuer ?")) {
-              return;
-            }
-          }
-
-          const allCoords = [ddtCoord, ...points];
-          const optimizedRoute = solveTSPNearestNeighbor(allCoords);
-          const latLngWaypoints = optimizedRoute.map(coord => L.latLng(coord[0], coord[1]));
-
-          if (window.routingControl) {
-            map.removeControl(window.routingControl);
-          }
-
-          window.routingControl = L.Routing.control({
-            waypoints: latLngWaypoints,
-            createMarker: function(i, wp) {
-              if (i === 0 || i === latLngWaypoints.length - 1) {
-                return L.marker(wp.latLng, { icon: startIcon }).bindPopup(
-                  i === 0 ? "Départ - DDT de Chaumont" : "Départ - DDT de Chaumont"
-                );
-              } else {
-                return L.marker(wp.latLng, { icon: stepIcon }).bindPopup("Étape " + i);
-              }
-            },
-            lineOptions: {
-              styles: [{ color: 'blue', opacity: 0.8, weight: 5 }]
-            },
-            routeWhileDragging: false
-          }).addTo(map);
-            
-            
-            
-            
-            
-
-          const bounds = L.latLngBounds(latLngWaypoints);
-          map.fitBounds(bounds);
-        }).catch(err => {
-          console.error(err);
-          alert("Erreur lors du traitement du fichier ZIP.");
-        });
-      };
-      reader.readAsArrayBuffer(file);
+    // pins des villes visitées
+    series.push({
+      name:'Pins', type:'scatter3D', coordinateSystem:'globe',
+      symbol:'pin', symbolSize:22,
+      itemStyle:{ color:'#ff4444' },
+      label:{ show:true, formatter: p => p.name, position:'top',
+        textStyle:{ color:'#fff', fontSize:12, backgroundColor:'rgba(0,0,0,0.4)', padding:[2,4], borderRadius:3 }},
+      data: visitedCities
     });
-  </script>
+
+    const layers = [];
+    if(!s.isNight){ layers.push({ show:true, name:'Ombre nuit', type:'blend', intensity: 1, blendTo: 'emission', texture: PATH_EARTH_NIGHT_RAW }); }
+    if(s.isNight){ layers.push({ show:true, name:'Ombre nuit', type:'blend', intensity: 1.3, blendTo: 'emission', texture: PATH_EARTH_NIGHT_RAW }); }
+    if(s.showNuages){ layers.push({ show:true, name:'Nuages', type:'overlay', texture: CLOUDS, shading: 'lambert', distance: 1 }); }
+
+    const baseDay = (s.dayBase === 'earth') ? PATH_EARTH_DAY_1 : PATH_EARTH_DAY_2;
+
+    return {
+      backgroundColor: 'transparent',
+      globe: {
+        baseTexture: s.isNight ? nightTexture : baseDay,
+        heightTexture:  s.showRelief ? PATH_EARTH_BUMP : undefined,
+        displacementScale: 0.025,
+        shading: s.isNight ? 'lambert' : 'realistic',
+        environment: PATH_STARFIELD,
+        postEffect: { enable : false},
+        light: { ambient: {color: '#1f1f1f', intensity: 0.2}, main: {color: '#FFFDED', intensity: s.isNight ? -20 : 0.9} },
+        atmosphere:{show:true, color: '#a1a1a1', offset:4},
+        viewControl: { autoRotate: false, autoRotateSpeed:0.5 },
+        layers
+      },
+      series
+    };
+  }
+
+  function refresh(){ globeChart.setOption(makeOption(state), { notMerge:true }); }
+
+  // --- UI refs ---
+  const toggleEl = document.getElementById('toggle');
+  const toggleReliefEl = document.getElementById('toggleRelief');
+  const toggleCloudsEl = document.getElementById('toggleClouds');
+  const toggleDayBaseEl = document.getElementById('toggleDayBase');
+  const chkPays = document.getElementById('chkPays');
+  const chkTrajets = document.getElementById('chkTrajets');
+  const chkCapitales = document.getElementById('chkCapitales');
+  const popupEl = document.getElementById('trajetPopup');
+  const leafletPopupEl = document.getElementById('leafletPopup');
+  const leafletMapEl = document.getElementById('leafletMap');
+  const leafletCloseBtn = document.getElementById('leafletClose');
+
+  // --- événements ---
+  toggleEl.addEventListener('click', ()=>{
+    state.isNight = !state.isNight;
+    toggleEl.classList.toggle('night', state.isNight);
+    toggleEl.setAttribute('aria-pressed', String(state.isNight));
+    refresh();
+  });
+
+  toggleReliefEl.addEventListener('click', ()=>{
+    state.showRelief = !state.showRelief;
+    toggleReliefEl.classList.toggle('active', state.showRelief);
+    toggleReliefEl.setAttribute('aria-pressed', String(state.showRelief));
+    refresh();
+  });
+
+  toggleCloudsEl.addEventListener('click', ()=>{
+    state.showNuages = !state.showNuages;
+    toggleCloudsEl.classList.toggle('active', state.showNuages);
+    toggleCloudsEl.setAttribute('aria-pressed', String(state.showNuages));
+    refresh();
+  });
+
+  function updateDayBaseButtonLabel(){
+    toggleDayBaseEl.textContent = (state.dayBase === 'earth') ? 'EARTH' : 'TOPO';
+  }
+  toggleDayBaseEl.addEventListener('click', ()=>{
+    state.dayBase = (state.dayBase === 'earth') ? 'topo' : 'earth';
+    updateDayBaseButtonLabel();
+    refresh();
+  });
+  updateDayBaseButtonLabel();
+
+  [['Pays', chkPays], ['Trajets', chkTrajets], ['Capitales', chkCapitales]].forEach(([name, el])=>{
+    el.addEventListener('change', e=>{
+      state['show'+name] = e.target.checked;
+      refresh();
+    });
+  });
+
+  // Leaflet popup helpers
+  let currentLeafletMap = null;
+  function openLeafletPopup(cityData){
+    leafletPopupEl.style.display = 'block';
+
+    // (Ré)initialiser la carte
+    if(currentLeafletMap){
+      currentLeafletMap.remove();
+      currentLeafletMap = null;
+    }
+    leafletMapEl.innerHTML = '';
+
+    const [lon, lat] = cityData.value;
+    currentLeafletMap = L.map(leafletMapEl).setView([lat, lon], 13);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap'
+    }).addTo(currentLeafletMap);
+
+    (cityData.visites || []).forEach(v => {
+      const [vlon, vlat] = v.coords;
+      L.marker([vlat, vlon]).addTo(currentLeafletMap)
+        .bindPopup(`<b>${v.name || ''}</b><br>${v.photo ? `<img src="${v.photo}" width="180"/>` : ''}`);
+    });
+
+    setTimeout(()=>{ currentLeafletMap.invalidateSize(); }, 50);
+  }
+  function closeLeafletPopup(){
+    leafletPopupEl.style.display = 'none';
+    if(currentLeafletMap){ currentLeafletMap.remove(); currentLeafletMap = null; }
+  }
+  leafletCloseBtn.addEventListener('click', closeLeafletPopup);
+  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeLeafletPopup(); });
+  leafletPopupEl.addEventListener('click', (e)=>{ if(e.target === leafletPopupEl) closeLeafletPopup(); });
+
+  // clic sur globe
+  globeChart.on('click', params => {
+    if(params.seriesName === 'Trajets' && params.data && params.data.properties){
+      const p = params.data.properties;
+      popupEl.innerHTML = `
+        <strong>Trajet:</strong> ${p.trajet || ''}<br/>
+        <strong>Date début:</strong> ${p.date_deb || ''}<br/>
+        <strong>Date fin:</strong> ${p.date_fin || ''}<br/>
+        <strong>Durée:</strong> ${p.duree || ''}<br/>
+        <strong>Distance:</strong> ${p.distanceKM || ''} km
+      `;
+      popupEl.style.display = 'block';
+    } else if(params.seriesName === 'Pins' && params.data){
+      popupEl.style.display = 'none';
+      openLeafletPopup(params.data);
+    } else {
+      popupEl.style.display = 'none';
+    }
+  });
+
+  // rendu initial
+  refresh();
+
+  // lune
+  moonChart.setOption({
+    backgroundColor: 'transparent',
+    globe: {
+      baseTexture: PATH_MOON_BASE,
+      heightTexture: PATH_MOON_BUMP,
+      shading: 'lambert',
+      environment: PATH_STARFIELD,
+      light: { main:{ intensity:0.9, alpha: 0, beta: 0 }, ambient:{ intensity:0.1 } },
+      viewControl: { autoRotate:true, autoRotateSpeed:1.6, distance:220 }
+    },
+    series:[]
+  });
+
+})();
+</script>
 </body>
 </html>
