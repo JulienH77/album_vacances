@@ -416,24 +416,27 @@
   }
   if(s.showTrajets){
     const filteredTrajets = trajetLines.filter(l => s.activeVoyages.has(l.voyage));
-    series.push({
-      name: 'Trajets',
-      type: 'lines3D',
-      coordinateSystem: 'globe',
-      polyline: true,
-      data: filteredTrajets,
-      effect: {
-        show: true,
-        period: 6,
-        trailLength: 0.6,
-        symbol: 'triangle',
-        symbolSize: 15,
-      },
-      lineStyle: {
-        width: 2,
-        opacity: 0.95
-      }
-    });
+series.push({
+  name: 'Trajets',
+  type: 'lines3D',
+  coordinateSystem: 'globe',
+  polyline: true,
+  data: filteredTrajets,
+  effect: {
+    show: true,
+    period: 6,
+    trailLength: 0.6,
+    symbol: 'path://M0,0 L10,5 L0,10 Z', // Triangle pointant vers le haut (direction du trajet)
+    symbolSize: 12,
+    symbolRotate: 0, // Rotation automatique selon la direction de la ligne
+    color: '#FFFFFF', // Blanc
+  },
+  lineStyle: {
+    width: 2,
+    opacity: 0.95,
+    color: '#FFFFFF', // Optionnel : couleur de la ligne elle-même
+  }
+});
   }
   // pins des villes visitées — maintenant filtrées par voyages sélectionnés
   let pinsData = [];
