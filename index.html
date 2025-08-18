@@ -195,17 +195,17 @@
 
 <script>
 (async function(){
-  const PATH_EARTH_DAY_1 = './earth.jpg';
-  const PATH_EARTH_DAY_2 = './world.topo.bathy.200401.jpg';
-  const CLOUDS = './clouds.png';
-  const PATH_EARTH_NIGHT_RAW = './night.jpg';
-  const PATH_STARFIELD = './starfield.jpg';
-  const PATH_MOON_BASE = './moon-base.jpg';
-  const PATH_MOON_BUMP = './moon-bump.jpg';
-  const PATH_COUNTRIES = './countries_10m_new.geojson';
-  const PATH_TRAJETS = './TRAJETS_ALL_vacances_wgs.geojson';
-  const PATH_CAPITALS = './capitals.geojson';
-  const PATH_EARTH_BUMP = './world.topo.bathy.200401.jpg';
+  const PATH_EARTH_DAY_1 = './GLOBE/earth.jpg';
+  const PATH_EARTH_DAY_2 = './GLOBE/world.topo.bathy.200401.jpg';
+  const CLOUDS = './GLOBE/clouds.png';
+  const PATH_EARTH_NIGHT_RAW = './GLOBE/night.jpg';
+  const PATH_STARFIELD = './GLOBE/starfield.jpg';
+  const PATH_MOON_BASE = './GLOBE/moon-base.jpg';
+  const PATH_MOON_BUMP = './GLOBE/moon-bump.jpg';
+  const PATH_COUNTRIES = './GEOJSON/countries_10m_new.geojson';
+  const PATH_TRAJETS = './GEOJSON/TRAJETS_ALL_vacances_wgs.geojson';
+  const PATH_CAPITALS = './GEOJSON/capitals.geojson';
+  const PATH_EARTH_BUMP = './GLOBE/world.topo.bathy.200401.jpg';
 
   const loadJSON = url => fetch(url).then(r=>{ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); });
   const loadImage = url => new Promise((res, rej) => { const img = new Image(); img.crossOrigin = 'anonymous'; img.onload = ()=>res(img); img.onerror = rej; img.src = url; });
