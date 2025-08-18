@@ -179,7 +179,6 @@
   <div id="legend" role="group" aria-label="Contrôles des couches">
     <label><input id="chkPays" type="checkbox"> Limites (Pays)</label>
     <label><input id="chkTrajets" type="checkbox"> Trajets</label>
-    <label><input id="chkCapitales" type="checkbox"> Capitales</label>
   </div>
 
   <!-- Lune -->
@@ -204,7 +203,6 @@
   const PATH_MOON_BUMP = './GLOBE/moon-bump.jpg';
   const PATH_COUNTRIES = './GEOJSON/countries_10m_new.geojson';
   const PATH_TRAJETS = './GEOJSON/TRAJETS_ALL_vacances_wgs.geojson';
-  const PATH_CAPITALS = './GEOJSON/capitals.geojson';
   const PATH_EARTH_BUMP = './GLOBE/world.topo.bathy.200401.jpg';
 
   const loadJSON = url => fetch(url).then(r=>{ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); });
@@ -239,10 +237,9 @@
   const nightTexture = (await loadImage(PATH_EARTH_NIGHT_RAW)).src;
 
   // chargement des données
-  const [countriesGeo, trajetsGeo, capitalsGeo] = await Promise.all([
+  const [countriesGeo, trajetsGeo] = await Promise.all([
     loadJSON(PATH_COUNTRIES),
-    loadJSON(PATH_TRAJETS),
-    loadJSON(PATH_CAPITALS)
+    loadJSON(PATH_TRAJETS)
   ]);
 
   // frontières
@@ -255,13 +252,6 @@
   (trajetsGeo.features || []).forEach(f => {
     const col = mapColor[(f.properties?.trajet || f.properties?.transport || '').toLowerCase()] || '#00ffff';
     extractLinesFromFeature(f).forEach(l => trajetLines.push({ ...l, lineStyle:{ color: col, width: 3, opacity: 0.95 }, properties:f.properties }));
-  });
-
-  // capitales
-  const capitalPoints = (capitalsGeo.features || []).map(f => {
-    const [x,y] = f.geometry.coordinates;
-    const city = f.properties?.city || '';
-    return { name: city, value: [normalizeLng(x), y, 0], city };
   });
 
   // villes visitées avec visites/photos (exemple — à adapter)
@@ -290,7 +280,6 @@
   let state = {
     showPays:false,
     showTrajets:false,
-    showCapitales:false,
     showNuages:true,
     isNight:false,
     showRelief:false,
@@ -305,16 +294,6 @@
     }
     if(s.showTrajets){
       series.push({ name:'Trajets', type:'lines3D', coordinateSystem:'globe', polyline:true, data: trajetLines });
-    }
-    if(s.showCapitales){
-      series.push({
-        name:'Capitales', type:'scatter3D', coordinateSystem:'globe',
-        symbol:'rect', symbolSize:6,
-        itemStyle:{ color:'#ffffff', borderColor:'#000', borderWidth:1 },
-        label:{ show:true, formatter: p => p.name || '', position:'top', distance:2,
-          textStyle:{ fontSize:10, color:'#ffffff', backgroundColor:'rgba(0,0,0,0.35)', padding:[2,4], borderRadius:3 }},
-        data: capitalPoints
-      });
     }
     // pins des villes visitées
     series.push({
@@ -360,7 +339,6 @@
   const toggleDayBaseEl = document.getElementById('toggleDayBase');
   const chkPays = document.getElementById('chkPays');
   const chkTrajets = document.getElementById('chkTrajets');
-  const chkCapitales = document.getElementById('chkCapitales');
   const popupEl = document.getElementById('trajetPopup');
   const leafletPopupEl = document.getElementById('leafletPopup');
   const leafletMapEl = document.getElementById('leafletMap');
@@ -398,7 +376,7 @@
   });
   updateDayBaseButtonLabel();
 
-  [['Pays', chkPays], ['Trajets', chkTrajets], ['Capitales', chkCapitales]].forEach(([name, el])=>{
+  [['Pays', chkPays], ['Trajets', chkTrajets]].forEach(([name, el])=>{
     el.addEventListener('change', e=>{
       state['show'+name] = e.target.checked;
       refresh();
