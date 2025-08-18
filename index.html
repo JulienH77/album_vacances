@@ -145,6 +145,13 @@
     border-radius: 50%; width: 36px; height: 36px;
     cursor: pointer; font-size: 18px; font-weight: bold;
   }
+
+  /* --- AJOUT: styles de la liste dépliable des voyages --- */
+  #voyagesDetails { margin-top:8px; }
+  #voyagesDetails[hidden] { display:none; }
+  #voyagesDetails summary { cursor:pointer; font-weight:700; }
+  #voyagesList { margin-top:6px; max-height:160px; overflow:auto; padding-left:2px; }
+  #voyagesList label { display:flex; align-items:center; gap:8px; font-weight:500; }
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
@@ -179,6 +186,12 @@
   <div id="legend" role="group" aria-label="Contrôles des couches">
     <label><input id="chkPays" type="checkbox"> Limites (Pays)</label>
     <label><input id="chkTrajets" type="checkbox"> Trajets</label>
+
+    <!-- AJOUT : liste dépliable des voyages détectés dans le champ `voyage` -->
+    <details id="voyagesDetails" hidden>
+      <summary>Filtrer par voyage</summary>
+      <div id="voyagesList" role="group" aria-label="Liste des voyages"></div>
+    </details>
   </div>
 
   <!-- Lune -->
@@ -243,15 +256,23 @@
   const countryLines = [];
   (countriesGeo.features || []).forEach(f => linesFromPolygonGeom(f.geometry).forEach(l => countryLines.push(l)));
 
-  // trajets
+  // trajets + collecte des valeurs uniques de `voyage`
   const trajetLines = [];
+  const voyagesSet = new Set();
   const mapColor = { avion:'#FFEC00', train:'#ee0020', bus:'#009c27', voiture:'#FF66E3', bateau:'#0da2ff' };
   (trajetsGeo.features || []).forEach(f => {
     const col = mapColor[(f.properties?.trajet || f.properties?.transport || '').toLowerCase()] || '#00ffff';
-    extractLinesFromFeature(f).forEach(l => trajetLines.push({ ...l, lineStyle:{ color: col, width: 3, opacity: 0.95 }, properties:f.properties }));
+    const voyageVal = (f.properties?.voyage ?? 'Inconnu');
+    voyagesSet.add(voyageVal);
+    extractLinesFromFeature(f).forEach(l => trajetLines.push({
+      ...l,
+      lineStyle:{ color: col, width: 3, opacity: 0.95 },
+      properties:f.properties,
+      voyage: voyageVal
+    }));
   });
 
-  // villes visitées avec visites/photos (exemple — à adapter)
+  // villes visitées avec visites/photos (inchangé)
   const visitedCities = [
     {
       name: 'Beijing',
@@ -374,7 +395,8 @@
     showNuages:false,
     isNight:false,
     showRelief:false,
-    dayBase:'earth'
+    dayBase:'earth',
+    activeVoyages: new Set(voyagesSet) // AJOUT : filtre actif
   };
 
   function makeOption(s) {
@@ -384,7 +406,8 @@
         lineStyle:{ color:'#f0f0f0', width:1, opacity:0.98 } });
     }
     if(s.showTrajets){
-      series.push({ name:'Trajets', type:'lines3D', coordinateSystem:'globe', polyline:true, data: trajetLines });
+      const filteredTrajets = trajetLines.filter(l => s.activeVoyages.has(l.voyage));
+      series.push({ name:'Trajets', type:'lines3D', coordinateSystem:'globe', polyline:true, data: filteredTrajets });
     }
     // pins des villes visitées
     series.push({
@@ -434,6 +457,25 @@
   const leafletPopupEl = document.getElementById('leafletPopup');
   const leafletMapEl = document.getElementById('leafletMap');
   const leafletCloseBtn = document.getElementById('leafletClose');
+  const voyagesDetailsEl = document.getElementById('voyagesDetails'); // AJOUT
+  const voyagesListEl = document.getElementById('voyagesList');       // AJOUT
+
+  // Remplit la liste dépliable avec les valeurs uniques de `voyage`
+  Array.from(voyagesSet).sort().forEach(v => {
+    const id = 'voy_'+v.replace(/[^A-Za-z0-9_-]/g,'_');
+    const label = document.createElement('label');
+    label.setAttribute('for', id);
+    const cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.id = id;
+    cb.className = 'voyageChk';
+    cb.value = v;
+    cb.checked = true;
+    cb.setAttribute('aria-label', 'Voyage '+v);
+    label.appendChild(cb);
+    label.appendChild(document.createTextNode(' '+v));
+    voyagesListEl.appendChild(label);
+  });
 
   // --- événements ---
   toggleEl.addEventListener('click', ()=>{
@@ -470,8 +512,21 @@
   [['Pays', chkPays], ['Trajets', chkTrajets]].forEach(([name, el])=>{
     el.addEventListener('change', e=>{
       state['show'+name] = e.target.checked;
+      if(name === 'Trajets'){
+        voyagesDetailsEl.hidden = !state.showTrajets; // affiche/masque la liste quand "Trajets" est coché
+      }
       refresh();
     });
+  });
+
+  // Gestion des cases des voyages
+  voyagesListEl.addEventListener('change', (e)=>{
+    const t = e.target;
+    if(t && t.classList.contains('voyageChk')){
+      if(t.checked) state.activeVoyages.add(t.value);
+      else state.activeVoyages.delete(t.value);
+      refresh();
+    }
   });
 
   // Leaflet popup helpers
@@ -513,8 +568,10 @@
   globeChart.on('click', params => {
     if(params.seriesName === 'Trajets' && params.data && params.data.properties){
       const p = params.data.properties;
+      const popupEl = document.getElementById('trajetPopup');
       popupEl.innerHTML = `
         <strong>Trajet:</strong> ${p.trajet || ''}<br/>
+        <strong>Voyage:</strong> ${p.voyage || ''}<br/>
         <strong>Date début:</strong> ${p.date_deb || ''}<br/>
         <strong>Date fin:</strong> ${p.date_fin || ''}<br/>
         <strong>Durée:</strong> ${p.duree || ''}<br/>
@@ -522,9 +579,11 @@
       `;
       popupEl.style.display = 'block';
     } else if(params.seriesName === 'Pins' && params.data){
+      const popupEl = document.getElementById('trajetPopup');
       popupEl.style.display = 'none';
       openLeafletPopup(params.data);
     } else {
+      const popupEl = document.getElementById('trajetPopup');
       popupEl.style.display = 'none';
     }
   });
