@@ -202,9 +202,9 @@
   const PATH_STARFIELD = './GLOBE/starfield.jpg';
   const PATH_MOON_BASE = './GLOBE/moon-base.jpg';
   const PATH_MOON_BUMP = './GLOBE/moon-bump.jpg';
-  const PATH_COUNTRIES = 'https://julienh77.github.io/GEOJSON/countries_10m_new.geojson';
-  const PATH_TRAJETS = 'https://julienh77.github.io/GEOJSON/TRAJETS_ALL_vacances_wgs.geojson';
-  const PATH_CAPITALS = 'https://julienh77.github.io/GEOJSON/capitals.geojson';
+  const PATH_COUNTRIES = './GEOJSON/countries_10m_new.geojson';
+  const PATH_TRAJETS = './GEOJSON/TRAJETS_ALL_vacances_wgs.geojson';
+  const PATH_CAPITALS = './GEOJSON/capitals.geojson';
   const PATH_EARTH_BUMP = './GLOBE/world.topo.bathy.200401.jpg';
 
   const loadJSON = url => fetch(url).then(r=>{ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); });
