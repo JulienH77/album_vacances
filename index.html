@@ -516,10 +516,6 @@
     toggleCloudsEl.setAttribute('aria-pressed', String(state.showNuages));
     refresh();
   });
-
-const savedCamPos = camera.position.clone();
-const savedTarget = controls.target.clone();
-
   
   function updateDayBaseButtonLabel(){
     toggleDayBaseEl.textContent = (state.dayBase === 'earth') ? 'EARTH' : 'TOPO';
@@ -530,12 +526,6 @@ const savedTarget = controls.target.clone();
     refresh();
   });
   updateDayBaseButtonLabel();
-
-camera.position.copy(savedCamPos);
-controls.target.copy(savedTarget);
-controls.update();
-
-
   
   [['Pays', chkPays], ['Trajets', chkTrajets]].forEach(([name, el])=>{
     el.addEventListener('change', e=>{
