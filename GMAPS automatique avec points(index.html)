@@ -203,7 +203,7 @@
   const PATH_MOON_BASE = './moon-base.jpg';
   const PATH_MOON_BUMP = './moon-bump.jpg';
   const PATH_COUNTRIES = './countries_10m_new.geojson';
-  const PATH_TRAJETS = './ALLLINE_TRAJET_wgs.geojson';
+  const PATH_TRAJETS = './TRAJETS_ALL_vacances_wgs.geojson.geojson';
   const PATH_CAPITALS = './capitals.geojson';
   const PATH_EARTH_BUMP = './world.topo.bathy.200401.jpg';
 
