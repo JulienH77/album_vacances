@@ -182,7 +182,6 @@
   </div>
 
   <!-- Lune -->
-  <div id="moonPreview" title="Aperçu Lune"></div>
   <div id="trajetPopup"></div>
 </div>
 
@@ -199,8 +198,6 @@
   const CLOUDS = './GLOBE/clouds.png';
   const PATH_EARTH_NIGHT_RAW = './GLOBE/night.jpg';
   const PATH_STARFIELD = './GLOBE/starfield.jpg';
-  const PATH_MOON_BASE = './GLOBE/moon-base.jpg';
-  const PATH_MOON_BUMP = './GLOBE/moon-bump.jpg';
   const PATH_COUNTRIES = './GEOJSON/countries_10m_new.geojson';
   const PATH_TRAJETS = './GEOJSON/TRAJETS_ALL_vacances_wgs.geojson';
   const PATH_EARTH_BUMP = './GLOBE/world.topo.bathy.200401.jpg';
@@ -371,8 +368,6 @@
   ];
 
   const globeChart = echarts.init(document.getElementById('globeContainer'), null, { renderer:'webgl' });
-  const moonChart  = echarts.init(document.getElementById('moonPreview'), null, { renderer:'webgl' });
-
   let state = {
     showPays:false,
     showTrajets:false,
@@ -536,20 +531,6 @@
 
   // rendu initial
   refresh();
-
-  // lune
-  moonChart.setOption({
-    backgroundColor: 'transparent',
-    globe: {
-      baseTexture: PATH_MOON_BASE,
-      heightTexture: PATH_MOON_BUMP,
-      shading: 'lambert',
-      environment: PATH_STARFIELD,
-      light: { main:{ intensity:0.9, alpha: 0, beta: 0 }, ambient:{ intensity:0.1 } },
-      viewControl: { autoRotate:true, autoRotateSpeed:1.6, distance:220 }
-    },
-    series:[]
-  });
 
 })();
 </script>
