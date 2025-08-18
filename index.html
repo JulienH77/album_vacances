@@ -395,7 +395,7 @@
     series.push({
       name:'Pins', type:'scatter3D', coordinateSystem:'globe',
       symbol:'pin', symbolSize:22,
-      itemStyle:{ color:'#ff4444' },
+      itemStyle:{ color:'#D90000' },
       label:{ show:true, formatter: p => p.name, position:'top',
         textStyle:{ color:'#fff', fontSize:12, backgroundColor:'rgba(0,0,0,0.4)', padding:[2,4], borderRadius:3 }},
       data: visitedCities
@@ -404,7 +404,7 @@
     const layers = [];
     if(!s.isNight){ layers.push({ show:true, name:'Ombre nuit', type:'blend', intensity: 1, blendTo: 'emission', texture: PATH_EARTH_NIGHT_RAW }); }
     if(s.isNight){ layers.push({ show:true, name:'Ombre nuit', type:'blend', intensity: 1.3, blendTo: 'emission', texture: PATH_EARTH_NIGHT_RAW }); }
-    if(s.showNuages){ layers.push({ show:true, name:'Nuages', type:'overlay', texture: CLOUDS, shading: 'lambert', distance: 1 }); }
+    if(s.showNuages){ layers.push({ show:false, name:'Nuages', type:'overlay', texture: CLOUDS, shading: 'lambert', distance: 1 }); }
 
     const baseDay = (s.dayBase === 'earth') ? PATH_EARTH_DAY_1 : PATH_EARTH_DAY_2;
 
