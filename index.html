@@ -257,22 +257,6 @@
   // villes visitées avec visites/photos (exemple — à adapter)
   const visitedCities = [
     {
-      name: 'Shanghai',
-      value: [121.4737, 31.2304, 0],
-      visites: [
-        { name:'Bund', coords:[121.490317, 31.241666], photo:'bund.jpg' },
-        { name:'Yu Garden', coords:[121.4926, 31.2272], photo:'yugarden.jpg' }
-      ]
-    },
-    {
-      name: 'Paris',
-      value: [2.3522, 48.8566, 0],
-      visites: [
-        { name:'Tour Eiffel', coords:[2.2945, 48.8584], photo:'eiffel.jpg' },
-        { name:'Louvre', coords:[2.3364, 48.8606], photo:'louvre.jpg' }
-      ]
-    },
-    {
       name: 'Beijing',
       value: [116.383331, 39.916668, 0],
       visites: [
@@ -283,6 +267,22 @@
     {
       name: 'Xi\'an',
       value: [108.94243, 34.264533, 0],
+      visites: [
+        { name:'Cité interdite', coords:[116.39082, 39.91691], photo:'citeinterdire.jpg' },
+        { name:'Palais d été', coords:[116.26793, 39.99761], photo:'palaisdete.jpg' }
+      ]
+    },
+    {
+      name: 'Shanghai',
+      value: [121.4737, 31.2304, 0],
+      visites: [
+        { name:'Bund', coords:[121.490317, 31.241666], photo:'bund.jpg' },
+        { name:'Yu Garden', coords:[121.4926, 31.2272], photo:'yugarden.jpg' }
+      ]
+    },
+    {
+      name: 'Hangzhou',
+      value: [120.17478, 30.27338, 0],
       visites: [
         { name:'Cité interdite', coords:[116.39082, 39.91691], photo:'citeinterdire.jpg' },
         { name:'Palais d été', coords:[116.26793, 39.99761], photo:'palaisdete.jpg' }
@@ -305,24 +305,69 @@
       ]
     },
     {
-      name: 'Hangzhou',
-      value: [120.17478, 30.27338, 0],
-      visites: [
-        { name:'Cité interdite', coords:[116.39082, 39.91691], photo:'citeinterdire.jpg' },
-        { name:'Palais d été', coords:[116.26793, 39.99761], photo:'palaisdete.jpg' }
-      ]
-    },
-    {
       name: 'Tianjin',
       value: [117.18850, 39.13867, 0],
       visites: [
         { name:'Cité interdite', coords:[116.39082, 39.91691], photo:'citeinterdire.jpg' },
         { name:'Palais d été', coords:[116.26793, 39.99761], photo:'palaisdete.jpg' }
       ]
-    }
-
-
-    
+    },
+    {
+      name: 'Munich',
+      value: [11.57251, 48.13922, 0],
+      visites: [
+        { name:'Cité interdite', coords:[116.39082, 39.91691], photo:'citeinterdire.jpg' },
+        { name:'Palais d été', coords:[116.26793, 39.99761], photo:'palaisdete.jpg' }
+      ]
+    },
+    {
+      name: 'Marquartstein',
+      value: [12.46238, 47.75929, 0],
+      visites: [
+        { name:'Cité interdite', coords:[116.39082, 39.91691], photo:'citeinterdire.jpg' },
+        { name:'Palais d été', coords:[116.26793, 39.99761], photo:'palaisdete.jpg' }
+      ]
+    },
+    {
+      name: 'Salzburg',
+      value: [13.04159, 47.80523, 0],
+      visites: [
+        { name:'Cité interdite', coords:[116.39082, 39.91691], photo:'citeinterdire.jpg' },
+        { name:'Palais d été', coords:[116.26793, 39.99761], photo:'palaisdete.jpg' }
+      ]
+    },
+    {
+      name: 'Budapest',
+      value: [19.05196, 47.49394, 0],
+      visites: [
+        { name:'Cité interdite', coords:[116.39082, 39.91691], photo:'citeinterdire.jpg' },
+        { name:'Palais d été', coords:[116.26793, 39.99761], photo:'palaisdete.jpg' }
+      ]
+    },
+    {
+      name: 'Prague',
+      value: [14.42037, 50.08427, 0],
+      visites: [
+        { name:'Cité interdite', coords:[116.39082, 39.91691], photo:'citeinterdire.jpg' },
+        { name:'Palais d été', coords:[116.26793, 39.99761], photo:'palaisdete.jpg' }
+      ]
+    },
+    {
+      name: 'Regensburg',
+      value: [12.09421, 49.02009, 0],
+      visites: [
+        { name:'Cité interdite', coords:[116.39082, 39.91691], photo:'citeinterdire.jpg' },
+        { name:'Palais d été', coords:[116.26793, 39.99761], photo:'palaisdete.jpg' }
+      ]
+    },
+    {
+      name: 'Ulm',
+      value: [9.99271, 48.39848, 0],
+      visites: [
+        { name:'Cité interdite', coords:[116.39082, 39.91691], photo:'citeinterdire.jpg' },
+        { name:'Palais d été', coords:[116.26793, 39.99761], photo:'palaisdete.jpg' }
+      ]
+    } 
   ];
 
   const globeChart = echarts.init(document.getElementById('globeContainer'), null, { renderer:'webgl' });
