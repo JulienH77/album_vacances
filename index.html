@@ -248,7 +248,7 @@
 
   // trajets
   const trajetLines = [];
-  const mapColor = { avion:'#0da2ff', train:'#ee0020', bus:'#009c27', voiture:'#900dff' };
+  const mapColor = { avion:'#0da2ff', train:'#ee0020', bus:'#009c27', voiture:'#900dff', bateau:'#FF4C2E' };
   (trajetsGeo.features || []).forEach(f => {
     const col = mapColor[(f.properties?.trajet || f.properties?.transport || '').toLowerCase()] || '#00ffff';
     extractLinesFromFeature(f).forEach(l => trajetLines.push({ ...l, lineStyle:{ color: col, width: 3, opacity: 0.95 }, properties:f.properties }));
