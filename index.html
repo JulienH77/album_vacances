@@ -256,7 +256,7 @@
   // trajets + collecte des valeurs uniques de `voyage`
   const trajetLines = [];
   const voyagesSet = new Set();
-  const mapColor = { avion:'#FFEC00', train:'#ee0020', bus:'#009c27', voiture:'#FF66E3', bateau:'#0da2ff' };
+  const mapColor = { avion:'#453ABA', train:'#ee0020', bus:'#68bd6f', voiture:'#a5834b', bateau:'#1d8ffa' };
   (trajetsGeo.features || []).forEach(f => {
     const col = mapColor[(f.properties?.trajet || f.properties?.transport || '').toLowerCase()] || '#00ffff';
     const voyageVal = (f.properties?.voyage ?? 'Inconnu');
