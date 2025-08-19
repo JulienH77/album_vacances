@@ -275,16 +275,6 @@
     }));
   });
 
-
-const countryCentroids = (countriesGeo.features || []).map(f => {
-  const centroid = turf.centroid(f.geometry);
-  return {
-    name: f.properties?.NAME || f.properties?.name || 'Inconnu',
-    value: [centroid.geometry.coordinates[0], centroid.geometry.coordinates[1], 0]
-  };
-});
-
-  
   // Mapping voyage -> villes demandées par l'utilisateur
   const voyagesToCities = {
     'May 2025 - China': ['Beijing','Xi\'an','Shanghai','Hangzhou','Guilin','Yangshuo','Tianjin'],
@@ -421,7 +411,7 @@ const countryCentroids = (countriesGeo.features || []).map(f => {
   function makeOption(s) {
   const series = [];
 // Frontières des pays
-  if (s.showPays) {
+  if(s.showPays){
     series.push({
       name: 'Pays',
       type: 'lines3D',
@@ -429,31 +419,6 @@ const countryCentroids = (countriesGeo.features || []).map(f => {
       polyline: true,
       data: countryLines,
       lineStyle: { color: '#f0f0f0', width: 1, opacity: 0.98 }
-    });
-
-    // Noms des pays (centroïdes)
-    series.push({
-      name: 'Noms des pays',
-      type: 'scatter3D',
-      coordinateSystem: 'globe',
-      symbol: 'none',
-      data: countryCentroids,
-      label: {
-        show: true,
-        formatter: p => p.name,
-        position: 'top',
-        textStyle: {
-          color: '#ffffff',
-          fontSize: 10,
-          backgroundColor: 'rgba(0,0,0,0.3)',
-          padding: [2, 4],
-          borderRadius: 2,
-          opacity: 0.8,
-        },
-      },
-      itemStyle: {
-        opacity: 0,
-      },
     });
   }
   if(s.showTrajets){
