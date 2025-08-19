@@ -416,7 +416,8 @@ const countryCentroids = (countriesGeo.features || []).map(f => {
 
   function makeOption(s) {
   const series = [];
-  if(s.showPays){
+// Frontières des pays
+  if (s.showPays) {
     series.push({
       name: 'Pays',
       type: 'lines3D',
@@ -424,6 +425,31 @@ const countryCentroids = (countriesGeo.features || []).map(f => {
       polyline: true,
       data: countryLines,
       lineStyle: { color: '#f0f0f0', width: 1, opacity: 0.98 }
+    });
+
+    // Noms des pays (centroïdes)
+    series.push({
+      name: 'Noms des pays',
+      type: 'scatter3D',
+      coordinateSystem: 'globe',
+      symbol: 'none',
+      data: countryCentroids,
+      label: {
+        show: true,
+        formatter: p => p.name,
+        position: 'top',
+        textStyle: {
+          color: '#ffffff',
+          fontSize: 10,
+          backgroundColor: 'rgba(0,0,0,0.3)',
+          padding: [2, 4],
+          borderRadius: 2,
+          opacity: 0.8,
+        },
+      },
+      itemStyle: {
+        opacity: 0,
+      },
     });
   }
   if(s.showTrajets){
@@ -449,40 +475,6 @@ series.push({
   }
 });
   }
-
-
-
-  // Série pour les noms des pays (si showPays est activé)
-  if (s.showPays && countryCentroids.length > 0) {
-    series.push({
-      name: 'Noms des pays',
-      type: 'scatter3D',
-      coordinateSystem: 'globe',
-      symbol: 'none', // Pas de symbole, juste le texte
-      data: countryCentroids,
-      label: {
-        show: true,
-        formatter: p => p.name,
-        position: 'top',
-        textStyle: {
-          color: '#ffffff', // Blanc
-          fontSize: 10,
-          backgroundColor: 'rgba(0,0,0,0.3)', // Fond légèrement transparent
-          padding: [2, 4],
-          borderRadius: 2,
-          opacity: 0.8, // Transparence du texte
-        },
-      },
-      itemStyle: {
-        opacity: 0, // Masque le symbole (on ne veut que le texte)
-      },
-    });
-  }
-
-
-
-
-
     
   // pins des villes visitées — maintenant filtrées par voyages sélectionnés
   let pinsData = [];
