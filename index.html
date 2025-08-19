@@ -481,22 +481,15 @@ series.push({
     },
     label: {
       show: true,
+      formatter: p => p.name,
+      position: 'top',
       textStyle: {
+        color: '#fff',
+        padding: [2, 2],
+        borderRadius: 3,
         backgroundColor: 'rgba(0,0,0,1)',
         fontSize: 15, // Optionnel : agrandir le texte au survol
       }
-    }
-  },
-  label: {
-    show: true,
-    formatter: p => p.name,
-    position: 'top',
-    textStyle: {
-      color: '#fff',
-      fontSize: 12,
-      backgroundColor: 'rgba(0,0,0,0.6)',
-      padding: [2, 2],
-      borderRadius: 3
     }
   },
   data: pinsData
