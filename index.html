@@ -528,7 +528,24 @@ series.push({
   };
 }
 
-  function refresh(){ globeChart.setOption(makeOption(state), { notMerge:true }); }
+
+function getCurrentView() {
+  const opt = globeChart.getOption();
+  if(opt && opt.globe && opt.globe[0] && opt.globe[0].viewControl){
+    return { ...opt.globe[0].viewControl };
+  }
+  return null;
+}
+
+function refresh(){
+  const currentView = getCurrentView();
+  const newOpt = makeOption(state);
+  if(currentView) {
+    newOpt.globe.viewControl = { ...newOpt.globe.viewControl, ...currentView };
+  }
+  globeChart.setOption(newOpt, { notMerge:true });
+}
+
 
   // --- UI refs ---
   const toggleEl = document.getElementById('toggle');
