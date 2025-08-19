@@ -363,14 +363,11 @@ const projectionOptions = s.isGlobe ? {
 } : {
   geo: {
     map: 'world',
-    roam: true, // Active le zoom et le déplacement
-    layoutCenter: ['50%', '50%'], // Centre la carte
-    layoutSize: '95%', // Taille de la carte (ajustable)
-    zoom: 1.2, // Niveau de zoom initial
-    emphasis: {
-      label: { show: false },
-      itemStyle: { areaColor: '#f0f0f0' }
-    },
+    roam: true,  // Active le zoom et le déplacement
+    layoutCenter: ['50%', '50%'],  // Centre la carte
+    layoutSize: '100%',  // Occupe tout l'espace disponible
+    zoom: 1.1,  // Zoom initial légèrement agrandi
+    aspectScale: 0.85,  // Ratio hauteur/largeur
     regions: [{
       name: 'World',
       itemStyle: {
@@ -379,15 +376,16 @@ const projectionOptions = s.isGlobe ? {
         borderWidth: 0.5
       }
     }],
-    // Options pour améliorer l'affichage
+    // Ajoute un fond pour s'assurer que la zone est visible
+    backgroundColor: 'rgba(0, 0, 0, 0)',  // Fond transparent
+    // Force le redimensionnement
     silent: false,
-    boxWidth: 300, // Largeur de la boîte de projection (ajustable)
-    top: '10%', // Position verticale
-    left: '10%', // Position horizontale
-    right: '10%',
-    bottom: '10%'
+    // Options pour éviter les conflits de taille
+    width: '100%',
+    height: '100%'
   }
 };
+
 
 
     // --- Retour de la configuration ---
@@ -406,14 +404,20 @@ const projectionOptions = s.isGlobe ? {
     return null;
   }
 
-  function refresh() {
-    const currentView = getCurrentView();
-    const newOpt = makeOption(state);
-    if (currentView && newOpt.globe) {
-      newOpt.globe.viewControl = { ...newOpt.globe.viewControl, ...currentView };
-    }
-    globeChart.setOption(newOpt, { notMerge: true });
+function refresh() {
+  const currentView = getCurrentView();
+  const newOpt = makeOption(state);
+  if (currentView && newOpt.globe) {
+    newOpt.globe.viewControl = { ...newOpt.globe.viewControl, ...currentView };
   }
+  globeChart.setOption(newOpt, { notMerge: true });
+
+  // Force le redimensionnement après l'application des options
+  setTimeout(() => {
+    globeChart.resize();
+  }, 100);
+}
+
 
   // --- UI refs ---
   const toggleEl = document.getElementById('toggle');
