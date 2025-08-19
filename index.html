@@ -280,8 +280,9 @@
 
   // Mapping voyage -> villes demandées par l'utilisateur
   const voyagesToCities = {
-    'May 2025 - China': ['Beijing','Xi\'an','Shanghai','Hangzhou','Guilin','Yangshuo','Tianjin'],
-    'July 2025 - Central Europe': ['Munich','Salzburg','Budapest','Prague','Regensburg','Ulm']
+    '2025 July - Central Europe': ['Munich','Salzburg','Budapest','Prague','Regensburg','Ulm'],
+    '2025 May - China': ['Beijing','Xi\'an','Shanghai','Hangzhou','Guilin','Yangshuo','Tianjin'],
+    '2024 August - England': ['Wells','Bath','Glastonbury','Bristol','Appledore','Cheddar','St Just','Fowey','Exeter','Exmouth','Sidmouth']
   };
 
   // villes visitées avec visites/photos (inchangé)
@@ -289,6 +290,7 @@
     {
       name: 'Beijing',
       value: [116.383331, 39.916668, 0],
+      zoom: 11, // dézoomer pour voir Mutianyu
       visites: [
         { name:'Cité interdite', coords:[116.39082, 39.91691], photo:'citeinterdire.jpg' },
         { name:'Palais d été', coords:[116.26793, 39.99761], photo:'palaisdete.jpg' }
@@ -318,14 +320,13 @@
         { name:'Palais d été', coords:[116.26793, 39.99761], photo:'palaisdete.jpg' }
       ]
     },
-    {
-      name: 'Guilin',
-      value: [110.28782, 25.27805, 0],
-      visites: [
-        { name:'Cité interdite', coords:[116.39082, 39.91691], photo:'citeinterdire.jpg' },
-        { name:'Palais d été', coords:[116.26793, 39.99761], photo:'palaisdete.jpg' }
-      ]
-    },
+{
+  name: 'Guilin',
+  value: [110.28782, 25.27805, 0],
+  zoom: 14, // ajouté
+  visites: [...]
+}
+,
     {
       name: 'Yangshuo',
       value: [110.486715, 24.7791743, 0],
@@ -382,14 +383,13 @@
         { name:'Palais d été', coords:[116.26793, 39.99761], photo:'palaisdete.jpg' }
       ]
     },
-    {
-      name: 'Regensburg',
-      value: [12.09421, 49.02009, 0],
-      visites: [
-        { name:'Cité interdite', coords:[116.39082, 39.91691], photo:'citeinterdire.jpg' },
-        { name:'Palais d été', coords:[116.26793, 39.99761], photo:'palaisdete.jpg' }
-      ]
-    },
+{
+  name: 'Regensburg',
+  value: [12.09421, 49.02009, 0],
+  zoom: 15,
+  visites: [...]
+}
+,
     {
       name: 'Ulm',
       value: [9.99271, 48.39848, 0],
@@ -397,7 +397,73 @@
         { name:'Cité interdite', coords:[116.39082, 39.91691], photo:'citeinterdire.jpg' },
         { name:'Palais d été', coords:[116.26793, 39.99761], photo:'palaisdete.jpg' }
       ]
-    } 
+    },
+    {
+      name: 'Wells',
+      value: [-2.6486, 51.2090, 0],
+      zoom: 13,
+      visites: []
+    },
+    {
+      name: 'Bath',
+      value: [-2.3590, 51.3813, 0],
+      zoom: 13,
+      visites: []
+    },
+    {
+      name: 'Glastonbury',
+      value: [-2.7186, 51.1476, 0],
+      zoom: 13,
+      visites: []
+    },
+    {
+      name: 'Bristol',
+      value: [-2.5879, 51.4545, 0],
+      zoom: 13,
+      visites: []
+    },
+    {
+      name: 'Appledore',
+      value: [-4.1979, 51.0531, 0],
+      zoom: 13,
+      visites: []
+    },
+    {
+      name: 'Cheddar',
+      value: [-2.7750, 51.2750, 0],
+      zoom: 13,
+      visites: []
+    },
+    {
+      name: 'St Just',
+      value: [-5.6829, 50.1237, 0], // proche côte ouest Cornouailles
+      zoom: 12,
+      visites: []
+    },
+    {
+      name: 'Fowey',
+      value: [-4.6360, 50.3374, 0],
+      zoom: 13,
+      visites: []
+    },
+    {
+      name: 'Exeter',
+      value: [-3.5339, 50.7184, 0],
+      zoom: 13,
+      visites: []
+    },
+    {
+      name: 'Exmouth',
+      value: [-3.4145, 50.6200, 0],
+      zoom: 13,
+      visites: []
+    },
+    {
+      name: 'Sidmouth',
+      value: [-3.2367, 50.6796, 0],
+      zoom: 13,
+      visites: []
+    }    
   ];
 
   const globeChart = echarts.init(document.getElementById('globeContainer'), null, { renderer:'webgl' });
@@ -637,11 +703,24 @@ function refresh(){
     leafletMapEl.innerHTML = '';
 
     const [lon, lat] = cityData.value;
-    currentLeafletMap = L.map(leafletMapEl).setView([lat, lon], 13);
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    currentLeafletMap = L.map(leafletMapEl, {
+      center: [lat, lon],
+      zoom: cityData.zoom || 13,
+      layers: [osm] // par défaut OSM
+    });
+    
+    const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap'
+    });
+    const googleSat = L.tileLayer('http://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+      attribution: '&copy; Google'
+    });
+
+    L.control.layers({
+      "OSM": osm,
+      "Google Satellite": googleSat
     }).addTo(currentLeafletMap);
+
 
     (cityData.visites || []).forEach(v => {
       const [vlon, vlat] = v.coords;
