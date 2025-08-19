@@ -459,11 +459,24 @@ series.push({
   type: 'scatter3D',
   coordinateSystem: 'globe',
   symbol: 'circle',
-  symbolSize: 22,
+  symbolSize: 10,
   itemStyle: {
     color: '#FFFFFF',
     borderColor: '#000000',
-    borderWidth: 1.2,
+    borderWidth: 0.75,
+  },
+  emphasis: {
+    itemStyle: {
+      color: '#FFD700', // Couleur au survol
+      borderColor: '#000000',
+      borderWidth: 0.9, // Contour légèrement plus épais au survol
+    },
+    label: {
+      show: true,
+      textStyle: {
+        fontSize: 15, // Optionnel : agrandir le texte au survol
+      }
+    }
   },
   label: {
     show: true,
@@ -479,6 +492,7 @@ series.push({
   },
   data: pinsData
 });
+
   const layers = [];
   if(!s.isNight){ layers.push({ show: true, name: 'Ombre nuit', type: 'blend', intensity: 1, blendTo: 'emission', texture: PATH_EARTH_NIGHT_RAW }); }
   if(s.isNight){ layers.push({ show: true, name: 'Ombre nuit', type: 'blend', intensity: 1.3, blendTo: 'emission', texture: PATH_EARTH_NIGHT_RAW }); }
