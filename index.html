@@ -217,13 +217,7 @@
   const loadImage = url => new Promise((res, rej) => { const img = new Image(); img.crossOrigin = 'anonymous'; img.onload = ()=>res(img); img.onerror = rej; img.src = url; });
   const normalizeLng = lng => ((lng + 180) % 360) - 180;
 
-const countryCentroids = (countriesGeo.features || []).map(f => {
-  const centroid = turf.centroid(f.geometry);
-  return {
-    name: f.properties?.NAME || f.properties?.name || 'Inconnu',
-    value: [centroid.geometry.coordinates[0], centroid.geometry.coordinates[1], 0]
-  };
-});
+
 
 
 
@@ -281,6 +275,16 @@ const countryCentroids = (countriesGeo.features || []).map(f => {
     }));
   });
 
+
+const countryCentroids = (countriesGeo.features || []).map(f => {
+  const centroid = turf.centroid(f.geometry);
+  return {
+    name: f.properties?.NAME || f.properties?.name || 'Inconnu',
+    value: [centroid.geometry.coordinates[0], centroid.geometry.coordinates[1], 0]
+  };
+});
+
+  
   // Mapping voyage -> villes demandées par l'utilisateur
   const voyagesToCities = {
     'May 2025 - China': ['Beijing','Xi\'an','Shanghai','Hangzhou','Guilin','Yangshuo','Tianjin'],
