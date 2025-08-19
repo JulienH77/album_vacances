@@ -620,55 +620,29 @@ series.push({
   document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeLeafletPopup(); });
   leafletPopupEl.addEventListener('click', (e)=>{ if(e.target === leafletPopupEl) closeLeafletPopup(); });
 
-
-
-
-
-
-
-
-
-
-  
-globeChart.on('click', params => {
-  console.log('Clic sur le globe :', params); // Pour déboguer
-
-  if (!params || !params.seriesName) return;
-
-  // Clic sur une ligne de trajet
-  if (params.seriesName === 'Trajets' && params.data) {
-    const p = params.data.properties || {};
-    const popupEl = document.getElementById('trajetPopup');
-
-    // Affiche les statistiques dans la popup
-    popupEl.innerHTML = `
-      <strong>Trajet:</strong> ${p.trajet || 'N/A'}<br/>
-      <strong>Voyage:</strong> ${p.voyage || 'N/A'}<br/>
-      <strong>Date début:</strong> ${p.date_deb || 'N/A'}<br/>
-      <strong>Date fin:</strong> ${p.date_fin || 'N/A'}<br/>
-      <strong>Durée:</strong> ${p.duree || 'N/A'}<br/>
-      <strong>Distance:</strong> ${p.distanceKM ? p.distanceKM + ' km' : 'N/A'}
-    `;
-    popupEl.style.display = 'block';
-  }
-  // Clic sur un pin (ville)
-  else if (params.seriesName === 'Pins' && params.data) {
-    const popupEl = document.getElementById('trajetPopup');
-    popupEl.style.display = 'none';
-    openLeafletPopup(params.data);
-  }
-  // Clic ailleurs
-  else {
-    const popupEl = document.getElementById('trajetPopup');
-    popupEl.style.display = 'none';
-  }
-});
-
-
-
-
-
-  
+  // clic sur globe
+  globeChart.on('click', params => {
+    if(params.seriesName === 'Trajets' && params.data && params.data.properties){
+      const p = params.data.properties;
+      const popupEl = document.getElementById('trajetPopup');
+      popupEl.innerHTML = `
+        <strong>Trajet:</strong> ${p.trajet || ''}<br/>
+        <strong>Voyage:</strong> ${p.voyage || ''}<br/>
+        <strong>Date début:</strong> ${p.date_deb || ''}<br/>
+        <strong>Date fin:</strong> ${p.date_fin || ''}<br/>
+        <strong>Durée:</strong> ${p.duree || ''}<br/>
+        <strong>Distance:</strong> ${p.distanceKM || ''} km
+      `;
+      popupEl.style.display = 'block';
+    } else if(params.seriesName === 'Pins' && params.data){
+      const popupEl = document.getElementById('trajetPopup');
+      popupEl.style.display = 'none';
+      openLeafletPopup(params.data);
+    } else {
+      const popupEl = document.getElementById('trajetPopup');
+      popupEl.style.display = 'none';
+    }
+  });
 
   // rendu initial
   // afficher la liste des voyages si "Trajets" est coché au départ
