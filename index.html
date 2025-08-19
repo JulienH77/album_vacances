@@ -620,29 +620,34 @@ series.push({
   document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeLeafletPopup(); });
   leafletPopupEl.addEventListener('click', (e)=>{ if(e.target === leafletPopupEl) closeLeafletPopup(); });
 
-  // clic sur globe
   globeChart.on('click', params => {
-    if(params.seriesName === 'Trajets' && params.data && params.data.properties){
-      const p = params.data.properties;
-      const popupEl = document.getElementById('trajetPopup');
-      popupEl.innerHTML = `
-        <strong>Trajet:</strong> ${p.trajet || ''}<br/>
-        <strong>Voyage:</strong> ${p.voyage || ''}<br/>
-        <strong>Date début:</strong> ${p.date_deb || ''}<br/>
-        <strong>Date fin:</strong> ${p.date_fin || ''}<br/>
-        <strong>Durée:</strong> ${p.duree || ''}<br/>
-        <strong>Distance:</strong> ${p.distanceKM || ''} km
-      `;
-      popupEl.style.display = 'block';
-    } else if(params.seriesName === 'Pins' && params.data){
-      const popupEl = document.getElementById('trajetPopup');
-      popupEl.style.display = 'none';
-      openLeafletPopup(params.data);
-    } else {
-      const popupEl = document.getElementById('trajetPopup');
-      popupEl.style.display = 'none';
-    }
-  });
+  console.log('Clic sur le globe :', params);
+  if (!params || !params.seriesName) return;
+
+  if (params.seriesName === 'Trajets' && params.data && params.data.properties) {
+    const p = params.data.properties;
+    const popupEl = document.getElementById('trajetPopup');
+    popupEl.innerHTML = `
+      <strong>Trajet:</strong> ${p.trajet || 'N/A'}<br/>
+      <strong>Voyage:</strong> ${p.voyage || 'N/A'}<br/>
+      <strong>Date début:</strong> ${p.date_deb || 'N/A'}<br/>
+      <strong>Date fin:</strong> ${p.date_fin || 'N/A'}<br/>
+      <strong>Durée:</strong> ${p.duree || 'N/A'}<br/>
+      <strong>Distance:</strong> ${p.distanceKM || 'N/A'} km
+    `;
+    popupEl.style.display = 'block';
+  }
+  else if (params.seriesName === 'Pins' && params.data) {
+    const popupEl = document.getElementById('trajetPopup');
+    popupEl.style.display = 'none';
+    openLeafletPopup(params.data);
+  }
+  else {
+    const popupEl = document.getElementById('trajetPopup');
+    popupEl.style.display = 'none';
+  }
+});
+
 
   // rendu initial
   // afficher la liste des voyages si "Trajets" est coché au départ
