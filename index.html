@@ -154,6 +154,49 @@
   #voyagesDetails summary { cursor:pointer; font-weight:700; }
   #voyagesList { margin-top:6px; max-height:260px; overflow:auto; padding-left:2px; }
   #voyagesList label { display:flex; align-items:center; gap:8px; font-weight:500; }
+
+
+
+
+
+
+
+#toggleProjection {
+  position: absolute;
+  top: 180px;
+  left: 18px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 120;
+  user-select: none;
+  background: rgba(255,255,255,0.9);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+  transition: background 0.2s, transform 0.15s;
+}
+#toggleProjection.active {
+  background: rgba(255, 180, 180, 0.9);
+}
+#toggleProjection:active {
+  transform: scale(0.95);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+  
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
@@ -182,6 +225,26 @@
       <path d="M6 19h11a4 4 0 0 0 0-8 5 5 0 0 0-9.8-1.7A4 4 0 0 0 6 19z" fill="#4a90e2"/>
     </svg>
   </div>
+
+
+
+
+
+
+  
+  <div id="toggleProjection" role="button" aria-pressed="false" aria-label="Basculer globe/carte">
+  <svg viewBox="0 0 24 24" width="22" height="22">
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" fill="#4a90e2"/>
+    <path d="M12 6c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z" fill="#4a90e2"/>
+  </svg>
+</div>
+
+
+
+
+
+  
+
   <div id="toggleDayBase" role="button" aria-label="Changer fond du jour" title="Changer fond du jour">EARTH</div>
 
   <!-- Légende -->
@@ -399,6 +462,23 @@
   ];
 
   const globeChart = echarts.init(document.getElementById('globeContainer'), null, { renderer:'webgl' });
+
+
+
+
+// Charger et enregistrer la carte monde pour le mode 2D
+fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json')
+  .then(r => r.json())
+  .then(geoJson => {
+    echarts.registerMap('world', geoJson);
+  });
+
+
+
+
+
+
+  
   let state = {
     showPays:false,
     showTrajets:false,
@@ -409,99 +489,145 @@
     activeVoyages: new Set(voyagesSet) // AJOUT : filtre actif
   };
 
-  function makeOption(s) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+function makeOption(s) {
   const series = [];
-// Frontières des pays
-  if(s.showPays){
+
+  // --- Frontières des pays ---
+  if (s.showPays) {
     series.push({
       name: 'Pays',
-      type: 'lines3D',
-      coordinateSystem: 'globe',
+      type: s.isGlobe ? 'lines3D' : 'lines',
+      coordinateSystem: s.isGlobe ? 'globe' : 'geo',
       polyline: true,
       data: countryLines,
       lineStyle: { color: '#f0f0f0', width: 1, opacity: 0.98 }
     });
   }
-  if(s.showTrajets){
+
+  // --- Trajets filtrés par voyages ---
+  if (s.showTrajets) {
     const filteredTrajets = trajetLines.filter(l => s.activeVoyages.has(l.voyage));
-series.push({
-  name: 'Trajets',
-  type: 'lines3D',
-  coordinateSystem: 'globe',
-  polyline: true,
-  data: filteredTrajets,
-  effect: {
-    show: true,
-    period: 10, // Temps pour un cycle complet (en secondes)
-    constantSpeed: 5, // Vitesse constante (pixels/seconde)
-    trailLength: 0.15,
-    /*symbol: 'path://M0,0 L10,5 L0,10 Z',*/ // Triangle blanc
-    symbolSize: 6,
-    color: '#FFFFFF',
-  },
-  lineStyle: {
-    width: 2.5,
-    opacity: 0.95,
-  }
-});
-  }
-    
-  // pins des villes visitées — maintenant filtrées par voyages sélectionnés
-  let pinsData = [];
-  // construire l'ensemble des villes autorisées par les voyages sélectionnés
-  const allowedCities = new Set();
-  if(s.activeVoyages && s.activeVoyages.size){
-    s.activeVoyages.forEach(v => {
-      const list = voyagesToCities[v];
-      if(Array.isArray(list)) list.forEach(city => allowedCities.add(city));
+    series.push({
+      name: 'Trajets',
+      type: s.isGlobe ? 'lines3D' : 'lines',
+      coordinateSystem: s.isGlobe ? 'globe' : 'geo',
+      polyline: true,
+      data: filteredTrajets,
+      effect: s.isGlobe ? {
+        show: true,
+        period: 10,
+        constantSpeed: 5,
+        trailLength: 0.15,
+        symbolSize: 6,
+        color: '#FFFFFF',
+      } : { show: false },
+      lineStyle: {
+        width: 2.5,
+        opacity: 0.95,
+      }
     });
   }
-  if(allowedCities.size > 0){
+
+  // --- Pins des villes visitées (filtrées par voyages) ---
+  let pinsData = [];
+  const allowedCities = new Set();
+  if (s.activeVoyages && s.activeVoyages.size) {
+    s.activeVoyages.forEach(v => {
+      const list = voyagesToCities[v];
+      if (Array.isArray(list)) list.forEach(city => allowedCities.add(city));
+    });
+  }
+  if (allowedCities.size > 0) {
     pinsData = visitedCities.filter(c => allowedCities.has(c.name));
   } else {
-    // si aucune ville autorisée (aucun voyage coché), ne pas afficher de pins
     pinsData = [];
   }
-series.push({
-  name: 'Pins',
-  type: 'scatter3D',
-  coordinateSystem: 'globe',
-  symbol: 'circle',
-  symbolSize: 10,
-  itemStyle: {
-    color: '#FFFFFF',
-    borderColor: '#000000',
-    borderWidth: 0.75,
-  },
-  emphasis: {
+  series.push({
+    name: 'Pins',
+    type: s.isGlobe ? 'scatter3D' : 'scatter',
+    coordinateSystem: s.isGlobe ? 'globe' : 'geo',
+    symbol: 'circle',
+    symbolSize: 10,
     itemStyle: {
-      color: '#FFD700', // Couleur au survol
+      color: '#FFFFFF',
       borderColor: '#000000',
-      borderWidth: 1, // Contour légèrement plus épais au survol
+      borderWidth: 0.75,
     },
-    label: {
-      show: true,
-    formatter: p => p.name,
-    position: 'top',
-    textStyle: {
-      color: '#fff',
-      backgroundColor: 'rgba(0,0,0,1)',
-        fontSize: 15,
-      padding: [2, 2],
-      borderRadius: 3
+    emphasis: {
+      itemStyle: {
+        color: '#FFD700',
+        borderColor: '#000000',
+        borderWidth: 1,
+      },
+      label: {
+        show: true,
+        formatter: p => p.name,
+        position: 'top',
+        textStyle: {
+          color: '#fff',
+          backgroundColor: 'rgba(0,0,0,1)',
+          fontSize: 15,
+          padding: [2, 2],
+          borderRadius: 3
+        }
       }
-    }
-  },
-  data: pinsData
-});
+    },
+    data: pinsData
+  });
 
+  // --- Configuration de la projection ---
   const layers = [];
-  if(!s.isNight){ layers.push({ show: true, name: 'Ombre nuit', type: 'blend', intensity: 1, blendTo: 'emission', texture: PATH_EARTH_NIGHT_RAW }); }
-  if(s.isNight){ layers.push({ show: true, name: 'Ombre nuit', type: 'blend', intensity: 1.3, blendTo: 'emission', texture: PATH_EARTH_NIGHT_RAW }); }
-  if(s.showNuages){ layers.push({ show: true, name: 'Nuages', type: 'overlay', texture: CLOUDS, shading: 'lambert', distance: 1 }); }
+  if (!s.isNight) {
+    layers.push({
+      show: true,
+      name: 'Ombre nuit',
+      type: 'blend',
+      intensity: 1,
+      blendTo: 'emission',
+      texture: PATH_EARTH_NIGHT_RAW
+    });
+  }
+  if (s.isNight) {
+    layers.push({
+      show: true,
+      name: 'Ombre nuit',
+      type: 'blend',
+      intensity: 1.3,
+      blendTo: 'emission',
+      texture: PATH_EARTH_NIGHT_RAW
+    });
+  }
+  if (s.showNuages) {
+    layers.push({
+      show: true,
+      name: 'Nuages',
+      type: 'overlay',
+      texture: CLOUDS,
+      shading: 'lambert',
+      distance: 1
+    });
+  }
+
+  // --- Options spécifiques au mode Globe ou Carte 2D ---
   const baseDay = (s.dayBase === 'earth') ? PATH_EARTH_DAY_1 : PATH_EARTH_DAY_2;
-  return {
-    backgroundColor: 'transparent',
+  const projectionOptions = s.isGlobe ? {
     globe: {
       baseTexture: s.isNight ? nightTexture : baseDay,
       heightTexture: s.showRelief ? PATH_EARTH_BUMP : undefined,
@@ -514,13 +640,65 @@ series.push({
         main: { color: '#FFFDED', intensity: s.isNight ? -20 : 0.9 }
       },
       atmosphere: { show: true, color: '#a1a1a1', offset: 4 },
-      viewControl: { autoRotate: false, autoRotateSpeed: 0.5 },
+      viewControl: {
+        autoRotate: false,
+        autoRotateSpeed: 0.5,
+        animation: true,
+        animationDurationUpdate: 1000
+      },
       layers
-    },
+    }
+  } : {
+    geo: {
+      map: 'world', // Assure-toi d'avoir chargé une carte monde compatible (ex: via echarts.registerMap)
+      roam: true,
+      emphasis: {
+        label: { show: false },
+        itemStyle: { areaColor: '#f0f0f0' }
+      },
+      regions: [{
+        name: 'World',
+        itemStyle: {
+          areaColor: s.isNight ? '#111' : '#eee',
+          borderColor: '#444',
+          borderWidth: 0.5
+        }
+      }]
+    }
+  };
+
+  // --- Retour de la configuration ---
+  return {
+    backgroundColor: 'transparent',
+    ...projectionOptions,
     series
   };
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
 
 function getCurrentView() {
   const opt = globeChart.getOption();
@@ -578,6 +756,27 @@ function refresh(){
     refresh();
   });
 
+
+
+  
+
+// Écouteur pour le bouton de basculement Globe/Carte
+document.getElementById('toggleProjection').addEventListener('click', () => {
+  state.isGlobe = !state.isGlobe;
+  document.getElementById('toggleProjection').classList.toggle('active', !state.isGlobe);
+  refresh();
+});
+
+
+
+
+
+
+
+
+
+
+  
   toggleReliefEl.addEventListener('click', ()=>{
     state.showRelief = !state.showRelief;
     toggleReliefEl.classList.toggle('active', state.showRelief);
