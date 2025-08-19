@@ -7,7 +7,6 @@
 <title>Mes vacances</title>
 <script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
 <style>
-  /* (Ton CSS existant, sans changement) */
   html,body,#root { height:100%; margin:0; padding:0; }
   body{
     background: url('./GLOBE/starfield.jpg') no-repeat center center fixed;
@@ -16,39 +15,139 @@
   }
   #root { position:relative; width:100%; height:100%; overflow:hidden; }
   #globeContainer { width:100%; height:100%; }
+
   /* Toggle jour/nuit */
-  #toggle { position:absolute; top:14px; left:14px; width:100px; height:40px; border-radius:22px; display:flex; align-items:center; justify-content:space-between; padding:4px 8px; cursor:pointer; z-index:120; user-select:none; background: linear-gradient(90deg,#ffe066 50%, #4a90e2 50%); box-shadow: 0 6px 18px rgba(0,0,0,0.25); }
+  #toggle {
+    position:absolute; top:14px; left:14px;
+    width:100px; height:40px; border-radius:22px;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:4px 8px; cursor:pointer; z-index:120; user-select:none;
+    background: linear-gradient(90deg,#ffe066 50%, #4a90e2 50%);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+  }
   #toggle.night { background: linear-gradient(90deg,#4a90e2 50%, #ffe066 50%); }
-  #toggle .ball { position:absolute; top:4px; left:4px; width:32px; height:32px; border-radius:50%; background:#ffd54a; box-shadow:0 6px 16px rgba(255,213,74,0.28); transition:left .28s, background .28s; }
+  #toggle .ball {
+    position:absolute; top:4px; left:4px;
+    width:32px; height:32px; border-radius:50%;
+    background:#ffd54a;
+    box-shadow:0 6px 16px rgba(255,213,74,0.28);
+    transition:left .28s, background .28s;
+  }
   #toggle.night .ball { left:64px; background:#f1d56d; }
+
   /* Toggle relief (rond) */
-  #toggleRelief { position: absolute; top: 80px; left: 18px; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 120; user-select: none; background: rgba(255,255,255,0.9); box-shadow: 0 4px 10px rgba(0,0,0,0.25); transition: background 0.2s, transform 0.15s; }
+  #toggleRelief {
+    position: absolute;
+    top: 80px;
+    left: 18px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 120;
+    user-select: none;
+    background: rgba(255,255,255,0.9);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+    transition: background 0.2s, transform 0.15s;
+  }
   #toggleRelief.active { background: rgba(180,255,180,0.9); }
   #toggleRelief:active { transform: scale(0.95); }
+
   /* Toggle nuages (rond) */
-  #toggleClouds { position: absolute; top: 134px; left: 18px; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 120; user-select: none; background: rgba(255,255,255,0.9); box-shadow: 0 4px 10px rgba(0,0,0,0.25); transition: background 0.2s, transform 0.15s; }
+  #toggleClouds {
+    position: absolute;
+    top: 134px;
+    left: 18px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 120;
+    user-select: none;
+    background: rgba(255,255,255,0.9);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+    transition: background 0.2s, transform 0.15s;
+  }
   #toggleClouds.active { background: rgba(180,220,255,0.9); }
   #toggleClouds:active { transform: scale(0.95); }
+
   /* Bouton carré fond du jour (en bas à gauche) */
-  #toggleDayBase { position: absolute; left: 18px; bottom: 18px; width: 48px; height: 48px; border-radius: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 120; user-select: none; background: rgba(255,255,255,0.95); box-shadow: 0 6px 18px rgba(0,0,0,0.25); font-weight: 700; font-size: 12px; text-align: center; line-height: 1.1; }
+  #toggleDayBase {
+    position: absolute;
+    left: 18px;
+    bottom: 18px;
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 120;
+    user-select: none;
+    background: rgba(255,255,255,0.95);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+    font-weight: 700;
+    font-size: 12px;
+    text-align: center;
+    line-height: 1.1;
+  }
   #toggleDayBase:active { transform: scale(0.97); }
+
   /* Légende */
-  #legend { position:absolute; top:14px; right:14px; z-index:120; background: rgba(255,255,255,0.92); padding:10px 12px; border-radius:10px; min-width:160px; box-shadow:0 6px 18px rgba(0,0,0,0.18); }
+  #legend {
+    position:absolute; top:14px; right:14px; z-index:120;
+    background: rgba(255,255,255,0.92);
+    padding:10px 12px; border-radius:10px;
+    min-width:160px; box-shadow:0 6px 18px rgba(0,0,0,0.18);
+  }
   #legend label { display:flex; align-items:center; gap:10px; font-weight:600; }
   #legend input[type=checkbox] { width:16px; height:16px; }
+
   /* Lune */
-  #moonPreview { position:absolute; bottom:14px; right:14px; width:140px; height:140px; z-index:110; border-radius:50%; overflow:hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.6); background:black; }
+  #moonPreview {
+    position:absolute; bottom:14px; right:14px;
+    width:140px; height:140px; z-index:110; border-radius:50%;
+    overflow:hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.6); background:black;
+  }
+
   /* Popup stats */
-  #trajetPopup { position:absolute; bottom:20px; left:20px; background:rgba(0,0,0,0.85); color:white; padding:10px 14px; border-radius:8px; font-size:14px; line-height:1.4; max-width:300px; display:none; z-index:200; }
+  #trajetPopup {
+    position:absolute; bottom:20px; left:20px;
+    background:rgba(0,0,0,0.85); color:white;
+    padding:10px 14px; border-radius:8px;
+    font-size:14px; line-height:1.4; max-width:300px;
+    display:none; z-index:200;
+  }
+
   /* Popup Leaflet plein écran */
-  #leafletPopup { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; z-index: 400; }
-  #leafletMap { width: 90%; height: 80%; margin: 40px auto; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.4); }
-  #leafletClose { position: absolute; top: 20px; right: 20px; background: #fff; border: none; border-radius: 50%; width: 36px; height: 36px; cursor: pointer; font-size: 18px; font-weight: bold; }
-  /* --- Bouton de projection --- */
-  #toggleProjection { position: absolute; top: 180px; left: 18px; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 120; user-select: none; background: rgba(255,255,255,0.9); box-shadow: 0 4px 10px rgba(0,0,0,0.25); transition: background 0.2s, transform 0.15s; }
-  #toggleProjection.active { background: rgba(255, 180, 180, 0.9); }
-  #toggleProjection:active { transform: scale(0.95); }
-  #toggleProjection:disabled { opacity: 0.5; cursor: not-allowed; background: rgba(200, 200, 200, 0.9) !important; }
+  #leafletPopup {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.8);
+    display: none;
+    z-index: 400;
+  }
+  #leafletMap {
+    width: 90%; height: 80%;
+    margin: 40px auto;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  }
+  #leafletClose {
+    position: absolute; top: 20px; right: 20px;
+    background: #fff; border: none;
+    border-radius: 50%; width: 36px; height: 36px;
+    cursor: pointer; font-size: 18px; font-weight: bold;
+  }
+
   /* --- AJOUT: styles de la liste dépliable des voyages --- */
   #voyagesDetails { margin-top:8px; }
   #voyagesDetails[hidden] { display:none; }
@@ -56,6 +155,7 @@
   #voyagesList { margin-top:6px; max-height:260px; overflow:auto; padding-left:2px; }
   #voyagesList label { display:flex; align-items:center; gap:8px; font-weight:500; }
 </style>
+
 <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/echarts-gl@2/dist/echarts-gl.min.js"></script>
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
@@ -64,6 +164,7 @@
 <body>
 <div id="root">
   <div id="globeContainer" class="echarts-for-globe"></div>
+
   <!-- Boutons -->
   <div id="toggle" role="button" aria-pressed="false" aria-label="Basculer jour/nuit">
     <svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5" fill="#FFD43B"/></svg>
@@ -82,27 +183,26 @@
     </svg>
   </div>
   <div id="toggleDayBase" role="button" aria-label="Changer fond du jour" title="Changer fond du jour">EARTH</div>
-  <!-- Bouton de projection -->
-  <div id="toggleProjection" role="button" aria-pressed="false" aria-label="Basculer globe/carte" disabled>
-    <svg viewBox="0 0 24 24" width="22" height="22">
-      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" fill="#4a90e2"/>
-      <path d="M12 6c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z" fill="#4a90e2"/>
-    </svg>
-  </div>
+
   <!-- Légende -->
   <div id="legend" role="group" aria-label="Contrôles des couches">
     <label><input id="chkPays" type="checkbox"> Limites (Pays)</label>
     <label><input id="chkTrajets" type="checkbox"> Trajets</label>
+
+    <!-- AJOUT : liste des voyages directement sous "Trajets" -->
     <div id="voyagesList" role="group" aria-label="Liste des voyages" style="display:none; margin-top:6px; max-height:260px; overflow:auto;"></div>
   </div>
+
   <!-- Lune -->
   <div id="trajetPopup"></div>
 </div>
+
 <!-- Popup Leaflet -->
 <div id="leafletPopup">
   <div id="leafletMap"></div>
   <button id="leafletClose">X</button>
 </div>
+
 <script>
 (async function(){
   const PATH_EARTH_DAY_1 = './GLOBE/earth.jpg';
@@ -114,27 +214,15 @@
   const PATH_TRAJETS = './GEOJSON/TRAJETS_ALL_vacances_wgs.geojson';
   const PATH_EARTH_BUMP = './GLOBE/world.topo.bathy.200401.jpg';
 
-  // Variable pour suivre le chargement de la carte monde
-  let isWorldMapLoaded = false;
-
-  // Charge la carte monde pour le mode 2D
-  fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json')
-    .then(r => r.json())
-    .then(geoJson => {
-      echarts.registerMap('world', geoJson);
-      isWorldMapLoaded = true;
-      document.getElementById('toggleProjection').disabled = false;
-      console.log("Carte monde chargée.");
-    })
-    .catch(e => {
-      console.error("Erreur de chargement de la carte monde :", e);
-      alert("Impossible de charger la carte monde. Le mode 2D ne sera pas disponible.");
-    });
-
   const loadJSON = url => fetch(url).then(r=>{ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); });
   const loadImage = url => new Promise((res, rej) => { const img = new Image(); img.crossOrigin = 'anonymous'; img.onload = ()=>res(img); img.onerror = rej; img.src = url; });
   const normalizeLng = lng => ((lng + 180) % 360) - 180;
 
+
+
+
+
+  
   const linesFromPolygonGeom = geom => {
     const out = [];
     if(!geom) return out;
@@ -145,6 +233,7 @@
     }
     return out;
   };
+
   const extractLinesFromFeature = feature => {
     const out = [], g = feature && feature.geometry;
     if(!g) return out;
@@ -157,16 +246,20 @@
     }
     return out;
   };
+
   // texture nuit
   const nightTexture = (await loadImage(PATH_EARTH_NIGHT_RAW)).src;
+
   // chargement des données
   const [countriesGeo, trajetsGeo] = await Promise.all([
     loadJSON(PATH_COUNTRIES),
     loadJSON(PATH_TRAJETS)
   ]);
+
   // frontières
   const countryLines = [];
   (countriesGeo.features || []).forEach(f => linesFromPolygonGeom(f.geometry).forEach(l => countryLines.push(l)));
+
   // trajets + collecte des valeurs uniques de `voyage`
   const trajetLines = [];
   const voyagesSet = new Set();
@@ -182,240 +275,275 @@
       voyage: voyageVal
     }));
   });
-  // Mapping voyage -> villes
+
+  // Mapping voyage -> villes demandées par l'utilisateur
   const voyagesToCities = {
     'May 2025 - China': ['Beijing','Xi\'an','Shanghai','Hangzhou','Guilin','Yangshuo','Tianjin'],
     'July 2025 - Central Europe': ['Munich','Salzburg','Budapest','Prague','Regensburg','Ulm']
   };
-  // villes visitées
+
+  // villes visitées avec visites/photos (inchangé)
   const visitedCities = [
-    { name: 'Beijing', value: [116.383331, 39.916668, 0], visites: [{ name:'Cité interdite', coords:[116.39082, 39.91691], photo:'citeinterdire.jpg' }, { name:'Palais d été', coords:[116.26793, 39.99761], photo:'palaisdete.jpg' }] },
-    { name: 'Xi\'an', value: [108.94243, 34.264533, 0], visites: [{ name:'Armée de terre cuite', coords:[109.2791, 34.3836], photo:'terrecuite.jpg' }] },
-    { name: 'Shanghai', value: [121.4737, 31.2304, 0], visites: [{ name:'Bund', coords:[121.490317, 31.241666], photo:'bund.jpg' }, { name:'Yu Garden', coords:[121.4926, 31.2272], photo:'yugarden.jpg' }] },
-    { name: 'Hangzhou', value: [120.17478, 30.27338, 0], visites: [{ name:'Lac de l\'Ouest', coords:[120.1536, 30.2495], photo:'lacouest.jpg' }] },
-    { name: 'Guilin', value: [110.28782, 25.27805, 0], visites: [{ name:'Colline de la Trompe d\'éléphant', coords:[110.2991, 25.2636], photo:'elephant.jpg' }] },
-    { name: 'Yangshuo', value: [110.486715, 24.7791743, 0], visites: [{ name:'Rivière Li', coords:[110.4938, 24.7766], photo:'riviereli.jpg' }] },
-    { name: 'Tianjin', value: [117.18850, 39.13867, 0], visites: [{ name:'Temple de la Grande Bénédiction', coords:[117.1875, 39.1381], photo:'temple.jpg' }] },
-    { name: 'Munich', value: [11.57251, 48.13922, 0], visites: [{ name:'Marienplatz', coords:[11.5761, 48.1374], photo:'marienplatz.jpg' }] },
-    { name: 'Marquartstein', value: [12.46238, 47.75929, 0], visites: [{ name:'Château de Marquartstein', coords:[12.4624, 47.7593], photo:'chateau.jpg' }] },
-    { name: 'Salzburg', value: [13.04159, 47.80523, 0], visites: [{ name:'Forteresse Hohensalzburg', coords:[13.0550, 47.7965], photo:'hohensalzburg.jpg' }] },
-    { name: 'Budapest', value: [19.05196, 47.49394, 0], visites: [{ name:'Parlement hongrois', coords:[19.0555, 47.5079], photo:'parlement.jpg' }] },
-    { name: 'Prague', value: [14.42037, 50.08427, 0], visites: [{ name:'Pont Charles', coords:[14.4119, 50.0869], photo:'pontcharles.jpg' }] },
-    { name: 'Regensburg', value: [12.09421, 49.02009, 0], visites: [{ name:'Cathédrale Saint-Pierre', coords:[12.0983, 49.0195], photo:'cathedrale.jpg' }] },
-    { name: 'Ulm', value: [9.99271, 48.39848, 0], visites: [{ name:'Cathédrale d\'Ulm', coords:[9.9917, 48.3985], photo:'cathedraleulm.jpg' }] }
+    {
+      name: 'Beijing',
+      value: [116.383331, 39.916668, 0],
+      visites: [
+        { name:'Cité interdite', coords:[116.39082, 39.91691], photo:'citeinterdire.jpg' },
+        { name:'Palais d été', coords:[116.26793, 39.99761], photo:'palaisdete.jpg' }
+      ]
+    },
+    {
+      name: 'Xi\'an',
+      value: [108.94243, 34.264533, 0],
+      visites: [
+        { name:'Cité interdite', coords:[116.39082, 39.91691], photo:'citeinterdire.jpg' },
+        { name:'Palais d été', coords:[116.26793, 39.99761], photo:'palaisdete.jpg' }
+      ]
+    },
+    {
+      name: 'Shanghai',
+      value: [121.4737, 31.2304, 0],
+      visites: [
+        { name:'Bund', coords:[121.490317, 31.241666], photo:'bund.jpg' },
+        { name:'Yu Garden', coords:[121.4926, 31.2272], photo:'yugarden.jpg' }
+      ]
+    },
+    {
+      name: 'Hangzhou',
+      value: [120.17478, 30.27338, 0],
+      visites: [
+        { name:'Cité interdite', coords:[116.39082, 39.91691], photo:'citeinterdire.jpg' },
+        { name:'Palais d été', coords:[116.26793, 39.99761], photo:'palaisdete.jpg' }
+      ]
+    },
+    {
+      name: 'Guilin',
+      value: [110.28782, 25.27805, 0],
+      visites: [
+        { name:'Cité interdite', coords:[116.39082, 39.91691], photo:'citeinterdire.jpg' },
+        { name:'Palais d été', coords:[116.26793, 39.99761], photo:'palaisdete.jpg' }
+      ]
+    },
+    {
+      name: 'Yangshuo',
+      value: [110.486715, 24.7791743, 0],
+      visites: [
+        { name:'Cité interdite', coords:[116.39082, 39.91691], photo:'citeinterdire.jpg' },
+        { name:'Palais d été', coords:[116.26793, 39.99761], photo:'palaisdete.jpg' }
+      ]
+    },
+    {
+      name: 'Tianjin',
+      value: [117.18850, 39.13867, 0],
+      visites: [
+        { name:'Cité interdite', coords:[116.39082, 39.91691], photo:'citeinterdire.jpg' },
+        { name:'Palais d été', coords:[116.26793, 39.99761], photo:'palaisdete.jpg' }
+      ]
+    },
+    {
+      name: 'Munich',
+      value: [11.57251, 48.13922, 0],
+      visites: [
+        { name:'Cité interdite', coords:[116.39082, 39.91691], photo:'citeinterdire.jpg' },
+        { name:'Palais d été', coords:[116.26793, 39.99761], photo:'palaisdete.jpg' }
+      ]
+    },
+    {
+      name: 'Marquartstein',
+      value: [12.46238, 47.75929, 0],
+      visites: [
+        { name:'Cité interdite', coords:[116.39082, 39.91691], photo:'citeinterdire.jpg' },
+        { name:'Palais d été', coords:[116.26793, 39.99761], photo:'palaisdete.jpg' }
+      ]
+    },
+    {
+      name: 'Salzburg',
+      value: [13.04159, 47.80523, 0],
+      visites: [
+        { name:'Cité interdite', coords:[116.39082, 39.91691], photo:'citeinterdire.jpg' },
+        { name:'Palais d été', coords:[116.26793, 39.99761], photo:'palaisdete.jpg' }
+      ]
+    },
+    {
+      name: 'Budapest',
+      value: [19.05196, 47.49394, 0],
+      visites: [
+        { name:'Cité interdite', coords:[116.39082, 39.91691], photo:'citeinterdire.jpg' },
+        { name:'Palais d été', coords:[116.26793, 39.99761], photo:'palaisdete.jpg' }
+      ]
+    },
+    {
+      name: 'Prague',
+      value: [14.42037, 50.08427, 0],
+      visites: [
+        { name:'Cité interdite', coords:[116.39082, 39.91691], photo:'citeinterdire.jpg' },
+        { name:'Palais d été', coords:[116.26793, 39.99761], photo:'palaisdete.jpg' }
+      ]
+    },
+    {
+      name: 'Regensburg',
+      value: [12.09421, 49.02009, 0],
+      visites: [
+        { name:'Cité interdite', coords:[116.39082, 39.91691], photo:'citeinterdire.jpg' },
+        { name:'Palais d été', coords:[116.26793, 39.99761], photo:'palaisdete.jpg' }
+      ]
+    },
+    {
+      name: 'Ulm',
+      value: [9.99271, 48.39848, 0],
+      visites: [
+        { name:'Cité interdite', coords:[116.39082, 39.91691], photo:'citeinterdire.jpg' },
+        { name:'Palais d été', coords:[116.26793, 39.99761], photo:'palaisdete.jpg' }
+      ]
+    } 
   ];
 
   const globeChart = echarts.init(document.getElementById('globeContainer'), null, { renderer:'webgl' });
-
   let state = {
-    showPays: false,
-    showTrajets: false,
-    showNuages: false,
-    isNight: false,
-    showRelief: false,
-    dayBase: 'earth',
-    activeVoyages: new Set(voyagesSet),
-    isGlobe: true // Mode par défaut : Globe
+    showPays:false,
+    showTrajets:false,
+    showNuages:false,
+    isNight:false,
+    showRelief:false,
+    dayBase:'earth',
+    activeVoyages: new Set(voyagesSet) // AJOUT : filtre actif
   };
 
   function makeOption(s) {
-    const series = [];
-
-    // --- Frontières des pays ---
-    if (s.showPays) {
-      series.push({
-        name: 'Pays',
-        type: s.isGlobe ? 'lines3D' : 'lines',
-        coordinateSystem: s.isGlobe ? 'globe' : 'geo',
-        polyline: true,
-        data: countryLines,
-        lineStyle: { color: '#f0f0f0', width: 1, opacity: 0.98 }
-      });
-    }
-
-    // --- Trajets filtrés par voyages ---
-    if (s.showTrajets) {
-      const filteredTrajets = trajetLines.filter(l => s.activeVoyages.has(l.voyage));
-      series.push({
-        name: 'Trajets',
-        type: s.isGlobe ? 'lines3D' : 'lines',
-        coordinateSystem: s.isGlobe ? 'globe' : 'geo',
-        polyline: true,
-        data: filteredTrajets,
-        effect: s.isGlobe ? {
-          show: true,
-          period: 10,
-          constantSpeed: 5,
-          trailLength: 0.15,
-          symbolSize: 6,
-          color: '#FFFFFF',
-        } : { show: false },
-        lineStyle: {
-          width: 2.5,
-          opacity: 0.95,
-        }
-      });
-    }
-
-    // --- Pins des villes visitées (filtrées par voyages) ---
-    let pinsData = [];
-    const allowedCities = new Set();
-    if (s.activeVoyages && s.activeVoyages.size) {
-      s.activeVoyages.forEach(v => {
-        const list = voyagesToCities[v];
-        if (Array.isArray(list)) list.forEach(city => allowedCities.add(city));
-      });
-    }
-    if (allowedCities.size > 0) {
-      pinsData = visitedCities.filter(c => allowedCities.has(c.name));
-    } else {
-      pinsData = [];
-    }
+  const series = [];
+// Frontières des pays
+  if(s.showPays){
     series.push({
-      name: 'Pins',
-      type: s.isGlobe ? 'scatter3D' : 'scatter',
-      coordinateSystem: s.isGlobe ? 'globe' : 'geo',
-      symbol: 'circle',
-      symbolSize: 10,
-      itemStyle: {
-        color: '#FFFFFF',
-        borderColor: '#000000',
-        borderWidth: 0.75,
-      },
-      emphasis: {
-        itemStyle: {
-          color: '#FFD700',
-          borderColor: '#000000',
-          borderWidth: 1,
-        },
-        label: {
-          show: true,
-          formatter: p => p.name,
-          position: 'top',
-          textStyle: {
-            color: '#fff',
-            backgroundColor: 'rgba(0,0,0,1)',
-            fontSize: 15,
-            padding: [2, 2],
-            borderRadius: 3
-          }
-        }
-      },
-      data: pinsData
+      name: 'Pays',
+      type: 'lines3D',
+      coordinateSystem: 'globe',
+      polyline: true,
+      data: countryLines,
+      lineStyle: { color: '#f0f0f0', width: 1, opacity: 0.98 }
     });
-
-    // --- Configuration de la projection ---
-    const layers = [];
-    if (!s.isNight) {
-      layers.push({
-        show: true,
-        name: 'Ombre nuit',
-        type: 'blend',
-        intensity: 1,
-        blendTo: 'emission',
-        texture: PATH_EARTH_NIGHT_RAW
-      });
-    }
-    if (s.isNight) {
-      layers.push({
-        show: true,
-        name: 'Ombre nuit',
-        type: 'blend',
-        intensity: 1.3,
-        blendTo: 'emission',
-        texture: PATH_EARTH_NIGHT_RAW
-      });
-    }
-    if (s.showNuages) {
-      layers.push({
-        show: true,
-        name: 'Nuages',
-        type: 'overlay',
-        texture: CLOUDS,
-        shading: 'lambert',
-        distance: 1
-      });
-    }
-
-    // --- Options spécifiques au mode Globe ou Carte 2D ---
-    const baseDay = (s.dayBase === 'earth') ? PATH_EARTH_DAY_1 : PATH_EARTH_DAY_2;
-const projectionOptions = s.isGlobe ? {
-  globe: {
-    baseTexture: s.isNight ? nightTexture : baseDay,
-    heightTexture: s.showRelief ? PATH_EARTH_BUMP : undefined,
-    displacementScale: 0.025,
-    shading: s.isNight ? 'lambert' : 'realistic',
-    environment: PATH_STARFIELD,
-    postEffect: { enable: false },
-    light: {
-      ambient: { color: '#1f1f1f', intensity: 0.2 },
-      main: { color: '#FFFDED', intensity: s.isNight ? -20 : 0.9 }
-    },
-    atmosphere: { show: true, color: '#a1a1a1', offset: 4 },
-    viewControl: {
-      autoRotate: false,
-      autoRotateSpeed: 0.5,
-      animation: true,
-      animationDurationUpdate: 1000
-    },
-    layers
   }
-} : {
-  geo: {
-    map: 'world',
-    roam: true,  // Active le zoom et le déplacement
-    layoutCenter: ['50%', '50%'],  // Centre la carte
-    layoutSize: '100%',  // Occupe tout l'espace disponible
-    zoom: 1.1,  // Zoom initial légèrement agrandi
-    aspectScale: 0.85,  // Ratio hauteur/largeur
-    regions: [{
-      name: 'World',
-      itemStyle: {
-        areaColor: s.isNight ? '#111' : '#eee',
-        borderColor: '#444',
-        borderWidth: 0.5
+  if(s.showTrajets){
+    const filteredTrajets = trajetLines.filter(l => s.activeVoyages.has(l.voyage));
+series.push({
+  name: 'Trajets',
+  type: 'lines3D',
+  coordinateSystem: 'globe',
+  polyline: true,
+  data: filteredTrajets,
+  effect: {
+    show: true,
+    period: 10, // Temps pour un cycle complet (en secondes)
+    constantSpeed: 5, // Vitesse constante (pixels/seconde)
+    trailLength: 0.15,
+    /*symbol: 'path://M0,0 L10,5 L0,10 Z',*/ // Triangle blanc
+    symbolSize: 6,
+    color: '#FFFFFF',
+  },
+  lineStyle: {
+    width: 2.5,
+    opacity: 0.95,
+  }
+});
+  }
+    
+  // pins des villes visitées — maintenant filtrées par voyages sélectionnés
+  let pinsData = [];
+  // construire l'ensemble des villes autorisées par les voyages sélectionnés
+  const allowedCities = new Set();
+  if(s.activeVoyages && s.activeVoyages.size){
+    s.activeVoyages.forEach(v => {
+      const list = voyagesToCities[v];
+      if(Array.isArray(list)) list.forEach(city => allowedCities.add(city));
+    });
+  }
+  if(allowedCities.size > 0){
+    pinsData = visitedCities.filter(c => allowedCities.has(c.name));
+  } else {
+    // si aucune ville autorisée (aucun voyage coché), ne pas afficher de pins
+    pinsData = [];
+  }
+series.push({
+  name: 'Pins',
+  type: 'scatter3D',
+  coordinateSystem: 'globe',
+  symbol: 'circle',
+  symbolSize: 10,
+  itemStyle: {
+    color: '#FFFFFF',
+    borderColor: '#000000',
+    borderWidth: 0.75,
+  },
+  emphasis: {
+    itemStyle: {
+      color: '#FFD700', // Couleur au survol
+      borderColor: '#000000',
+      borderWidth: 1, // Contour légèrement plus épais au survol
+    },
+    label: {
+      show: true,
+      textStyle: {
+        backgroundColor: 'rgba(0,0,0,1)',
+        fontSize: 15, // Optionnel : agrandir le texte au survol
       }
-    }],
-    // Ajoute un fond pour s'assurer que la zone est visible
-    backgroundColor: 'rgba(0, 0, 0, 0)',  // Fond transparent
-    // Force le redimensionnement
-    silent: false,
-    // Options pour éviter les conflits de taille
-    width: '100%',
-    height: '100%'
-  }
-};
-
-
-
-    // --- Retour de la configuration ---
-    return {
-      backgroundColor: 'transparent',
-      ...projectionOptions,
-      series
-    };
-  }
-
-  function getCurrentView() {
-    const opt = globeChart.getOption();
-    if (opt && opt.globe && opt.globe[0] && opt.globe[0].viewControl) {
-      return { ...opt.globe[0].viewControl };
     }
-    return null;
-  }
+  },
+  label: {
+    show: true,
+    formatter: p => p.name,
+    position: 'top',
+    textStyle: {
+      color: '#fff',
+      fontSize: 12,
+      backgroundColor: 'rgba(0,0,0,0.6)',
+      padding: [2, 2],
+      borderRadius: 3
+    }
+  },
+  data: pinsData
+});
 
-function refresh() {
+  const layers = [];
+  if(!s.isNight){ layers.push({ show: true, name: 'Ombre nuit', type: 'blend', intensity: 1, blendTo: 'emission', texture: PATH_EARTH_NIGHT_RAW }); }
+  if(s.isNight){ layers.push({ show: true, name: 'Ombre nuit', type: 'blend', intensity: 1.3, blendTo: 'emission', texture: PATH_EARTH_NIGHT_RAW }); }
+  if(s.showNuages){ layers.push({ show: true, name: 'Nuages', type: 'overlay', texture: CLOUDS, shading: 'lambert', distance: 1 }); }
+  const baseDay = (s.dayBase === 'earth') ? PATH_EARTH_DAY_1 : PATH_EARTH_DAY_2;
+  return {
+    backgroundColor: 'transparent',
+    globe: {
+      baseTexture: s.isNight ? nightTexture : baseDay,
+      heightTexture: s.showRelief ? PATH_EARTH_BUMP : undefined,
+      displacementScale: 0.025,
+      shading: s.isNight ? 'lambert' : 'realistic',
+      environment: PATH_STARFIELD,
+      postEffect: { enable: false },
+      light: {
+        ambient: { color: '#1f1f1f', intensity: 0.2 },
+        main: { color: '#FFFDED', intensity: s.isNight ? -20 : 0.9 }
+      },
+      atmosphere: { show: true, color: '#a1a1a1', offset: 4 },
+      viewControl: { autoRotate: false, autoRotateSpeed: 0.5 },
+      layers
+    },
+    series
+  };
+}
+
+
+function getCurrentView() {
+  const opt = globeChart.getOption();
+  if(opt && opt.globe && opt.globe[0] && opt.globe[0].viewControl){
+    return { ...opt.globe[0].viewControl };
+  }
+  return null;
+}
+
+function refresh(){
   const currentView = getCurrentView();
   const newOpt = makeOption(state);
-  if (currentView && newOpt.globe) {
+  if(currentView) {
     newOpt.globe.viewControl = { ...newOpt.globe.viewControl, ...currentView };
   }
-  globeChart.setOption(newOpt, { notMerge: true });
-
-  // Force le redimensionnement après l'application des options
-  setTimeout(() => {
-    globeChart.resize();
-  }, 100);
+  globeChart.setOption(newOpt, { notMerge:true });
 }
 
 
@@ -424,14 +552,13 @@ function refresh() {
   const toggleReliefEl = document.getElementById('toggleRelief');
   const toggleCloudsEl = document.getElementById('toggleClouds');
   const toggleDayBaseEl = document.getElementById('toggleDayBase');
-  const toggleProjectionEl = document.getElementById('toggleProjection');
   const chkPays = document.getElementById('chkPays');
   const chkTrajets = document.getElementById('chkTrajets');
   const popupEl = document.getElementById('trajetPopup');
   const leafletPopupEl = document.getElementById('leafletPopup');
   const leafletMapEl = document.getElementById('leafletMap');
   const leafletCloseBtn = document.getElementById('leafletClose');
-  const voyagesListEl = document.getElementById('voyagesList');
+  const voyagesListEl = document.getElementById('voyagesList');       // AJOUT
 
   // Remplit la liste avec les valeurs uniques de `voyage`
   Array.from(voyagesSet).sort().forEach(v => {
@@ -450,7 +577,7 @@ function refresh() {
     voyagesListEl.appendChild(label);
   });
 
-  // --- Événements ---
+  // --- événements ---
   toggleEl.addEventListener('click', ()=>{
     state.isNight = !state.isNight;
     toggleEl.classList.toggle('night', state.isNight);
@@ -471,24 +598,22 @@ function refresh() {
     toggleCloudsEl.setAttribute('aria-pressed', String(state.showNuages));
     refresh();
   });
-
-  function updateDayBaseButtonLabel() {
+  
+  function updateDayBaseButtonLabel(){
     toggleDayBaseEl.textContent = (state.dayBase === 'earth') ? 'EARTH' : 'TOPO';
   }
-
   toggleDayBaseEl.addEventListener('click', ()=>{
     state.dayBase = (state.dayBase === 'earth') ? 'topo' : 'earth';
     updateDayBaseButtonLabel();
     refresh();
   });
-
   updateDayBaseButtonLabel();
-
+  
   [['Pays', chkPays], ['Trajets', chkTrajets]].forEach(([name, el])=>{
     el.addEventListener('change', e=>{
       state['show'+name] = e.target.checked;
-      if (name === 'Trajets') {
-        voyagesListEl.style.display = state.showTrajets ? 'block' : 'none';
+      if(name === 'Trajets'){
+        voyagesListEl.style.display = state.showTrajets ? 'block' : 'none'; // affiche/masque la liste quand "Trajets" est coché
       }
       refresh();
     });
@@ -497,59 +622,53 @@ function refresh() {
   // Gestion des cases des voyages
   voyagesListEl.addEventListener('change', (e)=>{
     const t = e.target;
-    if (t && t.classList.contains('voyageChk')) {
-      if (t.checked) state.activeVoyages.add(t.value);
+    if(t && t.classList.contains('voyageChk')){
+      if(t.checked) state.activeVoyages.add(t.value);
       else state.activeVoyages.delete(t.value);
       refresh();
     }
   });
 
-  // Écouteur pour le bouton de projection
-  toggleProjectionEl.addEventListener('click', () => {
-    if (!isWorldMapLoaded && !state.isGlobe) {
-      alert("La carte monde est en cours de chargement. Le mode 2D sera disponible bientôt.");
-      return;
-    }
-    state.isGlobe = !state.isGlobe;
-    toggleProjectionEl.classList.toggle('active', !state.isGlobe);
-    refresh();
-  });
-
-  // Leaflet popup helpers (inchangé)
+  // Leaflet popup helpers
   let currentLeafletMap = null;
-  function openLeafletPopup(cityData) {
+  function openLeafletPopup(cityData){
     leafletPopupEl.style.display = 'block';
-    if (currentLeafletMap) {
+
+    // (Ré)initialiser la carte
+    if(currentLeafletMap){
       currentLeafletMap.remove();
       currentLeafletMap = null;
     }
     leafletMapEl.innerHTML = '';
+
     const [lon, lat] = cityData.value;
     currentLeafletMap = L.map(leafletMapEl).setView([lat, lon], 13);
+
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap'
     }).addTo(currentLeafletMap);
+
     (cityData.visites || []).forEach(v => {
       const [vlon, vlat] = v.coords;
       L.marker([vlat, vlon]).addTo(currentLeafletMap)
         .bindPopup(`<b>${v.name || ''}</b><br>${v.photo ? `<img src="${v.photo}" width="180"/>` : ''}`);
     });
+
     setTimeout(()=>{ currentLeafletMap.invalidateSize(); }, 50);
   }
-
-  function closeLeafletPopup() {
+  function closeLeafletPopup(){
     leafletPopupEl.style.display = 'none';
-    if (currentLeafletMap) { currentLeafletMap.remove(); currentLeafletMap = null; }
+    if(currentLeafletMap){ currentLeafletMap.remove(); currentLeafletMap = null; }
   }
-
   leafletCloseBtn.addEventListener('click', closeLeafletPopup);
-  document.addEventListener('keydown', (e)=>{ if (e.key === 'Escape') closeLeafletPopup(); });
-  leafletPopupEl.addEventListener('click', (e)=>{ if (e.target === leafletPopupEl) closeLeafletPopup(); });
+  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeLeafletPopup(); });
+  leafletPopupEl.addEventListener('click', (e)=>{ if(e.target === leafletPopupEl) closeLeafletPopup(); });
 
-  // Clic sur globe
+  // clic sur globe
   globeChart.on('click', params => {
-    if (params.seriesName === 'Trajets' && params.data && params.data.properties) {
+    if(params.seriesName === 'Trajets' && params.data && params.data.properties){
       const p = params.data.properties;
+      const popupEl = document.getElementById('trajetPopup');
       popupEl.innerHTML = `
         <strong>Trajet:</strong> ${p.trajet || ''}<br/>
         <strong>Voyage:</strong> ${p.voyage || ''}<br/>
@@ -559,17 +678,21 @@ function refresh() {
         <strong>Distance:</strong> ${p.distanceKM || ''} km
       `;
       popupEl.style.display = 'block';
-    } else if (params.seriesName === 'Pins' && params.data) {
+    } else if(params.seriesName === 'Pins' && params.data){
+      const popupEl = document.getElementById('trajetPopup');
       popupEl.style.display = 'none';
       openLeafletPopup(params.data);
     } else {
+      const popupEl = document.getElementById('trajetPopup');
       popupEl.style.display = 'none';
     }
   });
 
-  // Rendu initial
+  // rendu initial
+  // afficher la liste des voyages si "Trajets" est coché au départ
   voyagesListEl.style.display = state.showTrajets ? 'block' : 'none';
   refresh();
+
 })();
 </script>
 </body>
