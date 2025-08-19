@@ -339,45 +339,56 @@
 
     // --- Options spécifiques au mode Globe ou Carte 2D ---
     const baseDay = (s.dayBase === 'earth') ? PATH_EARTH_DAY_1 : PATH_EARTH_DAY_2;
-    const projectionOptions = s.isGlobe ? {
-      globe: {
-        baseTexture: s.isNight ? nightTexture : baseDay,
-        heightTexture: s.showRelief ? PATH_EARTH_BUMP : undefined,
-        displacementScale: 0.025,
-        shading: s.isNight ? 'lambert' : 'realistic',
-        environment: PATH_STARFIELD,
-        postEffect: { enable: false },
-        light: {
-          ambient: { color: '#1f1f1f', intensity: 0.2 },
-          main: { color: '#FFFDED', intensity: s.isNight ? -20 : 0.9 }
-        },
-        atmosphere: { show: true, color: '#a1a1a1', offset: 4 },
-        viewControl: {
-          autoRotate: false,
-          autoRotateSpeed: 0.5,
-          animation: true,
-          animationDurationUpdate: 1000
-        },
-        layers
+const projectionOptions = s.isGlobe ? {
+  globe: {
+    baseTexture: s.isNight ? nightTexture : baseDay,
+    heightTexture: s.showRelief ? PATH_EARTH_BUMP : undefined,
+    displacementScale: 0.025,
+    shading: s.isNight ? 'lambert' : 'realistic',
+    environment: PATH_STARFIELD,
+    postEffect: { enable: false },
+    light: {
+      ambient: { color: '#1f1f1f', intensity: 0.2 },
+      main: { color: '#FFFDED', intensity: s.isNight ? -20 : 0.9 }
+    },
+    atmosphere: { show: true, color: '#a1a1a1', offset: 4 },
+    viewControl: {
+      autoRotate: false,
+      autoRotateSpeed: 0.5,
+      animation: true,
+      animationDurationUpdate: 1000
+    },
+    layers
+  }
+} : {
+  geo: {
+    map: 'world',
+    roam: true, // Active le zoom et le déplacement
+    layoutCenter: ['50%', '50%'], // Centre la carte
+    layoutSize: '95%', // Taille de la carte (ajustable)
+    zoom: 1.2, // Niveau de zoom initial
+    emphasis: {
+      label: { show: false },
+      itemStyle: { areaColor: '#f0f0f0' }
+    },
+    regions: [{
+      name: 'World',
+      itemStyle: {
+        areaColor: s.isNight ? '#111' : '#eee',
+        borderColor: '#444',
+        borderWidth: 0.5
       }
-    } : {
-      geo: {
-        map: 'world',
-        roam: true,
-        emphasis: {
-          label: { show: false },
-          itemStyle: { areaColor: '#f0f0f0' }
-        },
-        regions: [{
-          name: 'World',
-          itemStyle: {
-            areaColor: s.isNight ? '#111' : '#eee',
-            borderColor: '#444',
-            borderWidth: 0.5
-          }
-        }]
-      }
-    };
+    }],
+    // Options pour améliorer l'affichage
+    silent: false,
+    boxWidth: 300, // Largeur de la boîte de projection (ajustable)
+    top: '10%', // Position verticale
+    left: '10%', // Position horizontale
+    right: '10%',
+    bottom: '10%'
+  }
+};
+
 
     // --- Retour de la configuration ---
     return {
