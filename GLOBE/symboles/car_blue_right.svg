@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+
+<svg
+   version="1.1"
+   viewBox="0 0 250000 250000"
+   xml:space="preserve"
+   id="svg6"
+   sodipodi:docname="car_blue.svg"
+   width="250000"
+   height="250000"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs6" /><sodipodi:namedview
+   id="namedview6"
+   pagecolor="#ffffff"
+   bordercolor="#000000"
+   borderopacity="0.25"
+   inkscape:showpageshadow="2"
+   inkscape:pageopacity="0.0"
+   inkscape:pagecheckerboard="0"
+   inkscape:deskcolor="#d1d1d1"><inkscape:page
+     x="0"
+     y="0"
+     width="250000"
+     height="250000"
+     id="page2"
+     margin="0"
+     bleed="0" /></sodipodi:namedview>
+<style
+   type="text/css"
+   id="style1">
+	.st0{fill:#FFFFFF;stroke:#FFFFFF;stroke-width:10;stroke-miterlimit:10;}
+	.st1{fill:#2E55A1;}
+	.st2{fill:#3D3D3D;}
+	.st3{fill:#7A7A7A;}
+	.st4{fill:#79B5B5;}
+</style>
+<g
+   id="border"
+   transform="matrix(-1,0,0,1,502.1,0)">
+	<path
+   class="st0"
+   d="m 459.2,227 -25.9,-82.3 c -0.8,-5.9 -5.9,-10.5 -12.1,-10.5 H 202.4 c -4.6,0 -8.6,2.6 -10.7,6.3 v -0.3 l -95,84.6 -42.6,7.2 c -7.1,0 -12.8,5.7 -12.8,12.8 v 71 c 0,7.1 5.7,12.8 12.8,12.8 h 50.1 c 0,20.5 16.6,37.2 37.2,37.2 20.6,0 37.2,-16.6 37.2,-37.2 h 181.1 c 0,20.5 16.6,37.2 37.2,37.2 20.5,0 37.2,-16.6 37.2,-37.2 H 448 c 7.1,0 12.8,-5.7 12.8,-12.8 v -82.6 c -0.1,-2.2 -0.6,-4.3 -1.6,-6.2 z"
+   id="path1" />
+</g>
+<g
+   id="object"
+   transform="matrix(-1,0,0,1,502.1,0)">
+	<g
+   id="g6">
+		<path
+   class="st1"
+   d="m 459.2,227 -25.9,-82.3 c -0.8,-5.9 -5.9,-10.5 -12.1,-10.5 H 202.4 c -4.6,0 -8.6,2.6 -10.7,6.3 v -0.3 l -95,84.6 -42.6,7.2 c -7.1,0 -12.8,5.7 -12.8,12.8 v 71 c 0,7.1 5.7,12.8 12.8,12.8 h 57.9 11.5 324.4 c 7.1,0 12.8,-5.7 12.8,-12.8 v -82.6 c 0,-2.2 -0.5,-4.3 -1.5,-6.2 z"
+   id="path2" />
+		<circle
+   class="st2"
+   cx="396.79999"
+   cy="328.60001"
+   r="37.200001"
+   id="circle2" />
+		<circle
+   class="st3"
+   cx="396.79999"
+   cy="328.60001"
+   r="18.4"
+   id="circle3" />
+		<circle
+   class="st2"
+   cx="141.3"
+   cy="328.60001"
+   r="37.200001"
+   id="circle4" />
+		<circle
+   class="st3"
+   cx="141.3"
+   cy="328.60001"
+   r="18.4"
+   id="circle5" />
+		<polygon
+   class="st4"
+   points="253,210.2 253,153.4 198.6,153.4 198.6,154.8 156.4,213.5 199.4,210.2 "
+   id="polygon5" />
+		<rect
+   x="264"
+   y="153.39999"
+   class="st4"
+   width="70.599998"
+   height="56.599998"
+   id="rect5" />
+		<rect
+   x="345.29999"
+   y="153.39999"
+   class="st4"
+   width="70.599998"
+   height="56.599998"
+   id="rect6" />
+	</g>
+</g>
+</svg>
