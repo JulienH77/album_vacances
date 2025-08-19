@@ -263,7 +263,7 @@
     voyagesSet.add(voyageVal);
     extractLinesFromFeature(f).forEach(l => trajetLines.push({
       ...l,
-      lineStyle:{ color: col, width: 3, opacity: 0.95 },
+      lineStyle:{ color: col, width: 4, opacity: 0.95 },
       properties:f.properties,
       voyage: voyageVal
     }));
@@ -432,7 +432,7 @@ series.push({
     color: '#FFFFFF',
   },
   lineStyle: {
-    width: 2,
+    width: 4,
     opacity: 0.95,
   }
 });
