@@ -238,7 +238,7 @@
     cursor: pointer;
     font-size: 18px;
     font-weight: bold;
-    z-index: 501;
+    z-index: 1001;
   ">X</button>
 </div>
 
@@ -761,36 +761,14 @@ function openLeafletPopup(cityData) {
   L.control.layers(baseMaps).addTo(currentLeafletMap);
 
   (cityData.visites || []).forEach(v => {
-  const [vlon, vlat] = v.coords;
-  if (v.type === 'hotel') {
-    L.marker([vlat, vlon], { icon: hotelIcon }).addTo(currentLeafletMap)
-      .bindPopup(`<b>Hotel</b>`);
-  } else if (v.photo) {
-    // Extraction de la date/heure depuis le nom de fichier
-    let dateHeure = '';
-    const matchDateHeure = v.photo.match(/(IMG[-_]?\d{8}_\d{6}|IMG[-_]\d{8}-WA\d{4})/i);
-    if (matchDateHeure) {
-      const nomFichier = matchDateHeure[0];
-      if (nomFichier.includes('_')) {
-        const [datePart, heurePart] = nomFichier.split('_')[1].split('.')[0].split('_');
-        const annee = datePart.substring(0, 4);
-        const mois = datePart.substring(4, 6);
-        const jour = datePart.substring(6, 8);
-        const heure = heurePart.substring(0, 2);
-        const minute = heurePart.substring(2, 4);
-        const seconde = heurePart.substring(4, 6);
-        dateHeure = `<small>${jour}/${mois}/${annee} à ${heure}h${minute}m${seconde}s</small>`;
-      } else if (nomFichier.includes('-WA')) {
-        const datePart = nomFichier.split('-')[1];
-        const annee = datePart.substring(0, 4);
-        const mois = datePart.substring(4, 6);
-        const jour = datePart.substring(6, 8);
-        dateHeure = `<small>${jour}/${mois}/${annee}</small>`;
-      }
-    }
-
-    const popupContent = `
-      <div style="position: relative;">
+    const [vlon, vlat] = v.coords;
+    if (v.type === 'hotel') {
+      L.marker([vlat, vlon], { icon: hotelIcon }).addTo(currentLeafletMap)
+        .bindPopup(`<b>Hotel</b>`);
+    } else if (v.photo) {
+      const popupContent = document.createElement('div');
+      popupContent.style.position = 'relative';
+      popupContent.innerHTML = `
         <b>${v.name || ''}</b><br>
         <div style="position: relative; display: inline-block;">
           <img src="${v.photo}" width="250" style="display: block; border-radius: 4px;"/>
@@ -811,25 +789,24 @@ function openLeafletPopup(cityData) {
             justify-content: center;
           ">⤢</button>
         </div>
-        <div style="text-align: center; margin-top: 4px; font-size: 12px;">${dateHeure}</div>
-      </div>
-    `;
-    L.marker([vlat, vlon]).addTo(currentLeafletMap)
-      .bindPopup(popupContent)
-      .on('popupopen', function() {
-        document.querySelectorAll('.enlarge-btn').forEach(btn => {
-          btn.onclick = function(e) {
-            e.stopPropagation();
-            const photoUrl = this.getAttribute('data-photo');
-            openPhotoPopup(photoUrl);
-          };
+      `;
+      L.marker([vlat, vlon]).addTo(currentLeafletMap)
+        .bindPopup(popupContent)
+        .on('popupopen', function() {
+          // Attacher l'écouteur d'événement après l'ouverture de la popup
+          document.querySelectorAll('.enlarge-btn').forEach(btn => {
+            btn.onclick = function(e) {
+              e.stopPropagation();
+              const photoUrl = this.getAttribute('data-photo');
+              openPhotoPopup(photoUrl);
+            };
+          });
         });
-      });
-  } else {
-    L.marker([vlat, vlon]).addTo(currentLeafletMap)
-      .bindPopup(`<b>${v.name || ''}</b>`);
-  }
-});
+    } else {
+      L.marker([vlat, vlon]).addTo(currentLeafletMap)
+        .bindPopup(`<b>${v.name || ''}</b>`);
+    }
+  });
 
   // Gestion du clic sur le bouton "Agrandir"
   setTimeout(() => {
