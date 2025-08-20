@@ -730,7 +730,7 @@ L.control.layers(baseMaps).addTo(currentLeafletMap);
           .bindPopup(`<b>Hotel</b>`);
       } else {
         L.marker([vlat, vlon]).addTo(currentLeafletMap)
-          .bindPopup(`<b>${v.name || ''}</b><br>${v.photo ? `<img src="${v.photo}" width="180"/>` : ''}`);
+          .bindPopup(`<b>${v.name || ''}</b><br>${v.photo ? `<img src="${v.photo}" width="250"/>` : ''}`);
       }
     });
     setTimeout(()=>{ currentLeafletMap.invalidateSize(); }, 50);
