@@ -691,7 +691,7 @@ const relief = L.tileLayer('https://stamen-tiles.a.ssl.fastly.net/terrain/{z}/{x
 });
     
     const [lon, lat] = cityData.value;
-currentLeafletMap = L.map(mapDiv).setView([lat, lon], 13);
+currentLeafletMap = L.map(leafletMapEl).setView([lat, lon], 13);
 osm.addTo(currentLeafletMap);
 
 const baseMaps = {
