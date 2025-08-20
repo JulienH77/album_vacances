@@ -362,6 +362,7 @@
       name: 'Salzburg',
       value: [13.04159, 47.80523, 0],
       visites: [
+        { type: 'hotel', coords:[13.037606, 47.810420] },
         { name:'Mozart Diner Concert', coords:[13.0441398, 47.7970268], photo:'./IMG/2025/Central Europe/Salzburg/IMG_20250713_185800.jpg' },
         { name:'Mozart Birth Place', coords:[13.043580, 47.79991], photo:'./IMG/2025/Central Europe/Salzburg/IMG_20250714_131540.jpg' },
         { name:'Roof of the Castle', coords:[13.046522, 47.794979], photo:'./IMG/2025/Central Europe/Salzburg/IMG_20250714_165226.jpg' },
@@ -413,6 +414,29 @@
     } 
   ];
 
+
+
+
+const hotelIcon = L.divIcon({
+  html: `
+    <div style="
+      width:28px; height:28px;
+      background:#2ecc71;
+      border:2px solid #fff;
+      border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      font-size:16px; font-weight:bold; color:white;
+      box-shadow:0 2px 6px rgba(0,0,0,0.3);
+    ">
+      🏨
+    </div>
+  `,
+  className: '', // important: éviter la classe par défaut Leaflet
+  iconSize: [28,28],
+  iconAnchor: [14,14]
+});
+
+  
   const globeChart = echarts.init(document.getElementById('globeContainer'), null, { renderer:'webgl' });
   let state = {
     showPays:false,
@@ -656,14 +680,26 @@ function refresh(){
       attribution: '&copy; OpenStreetMap'
     }).addTo(currentLeafletMap);
 
-    (cityData.visites || []).forEach(v => {
+    /*(cityData.visites || []).forEach(v => {
       const [vlon, vlat] = v.coords;
       L.marker([vlat, vlon]).addTo(currentLeafletMap)
         .bindPopup(`<b>${v.name || ''}</b><br>${v.photo ? `<img src="${v.photo}" width="180"/>` : ''}`);
-    });
+    });*/
 
+    (cityData.visites || []).forEach(v => {
+      const [vlon, vlat] = v.coords;
+    
+      if(v.type === 'hotel'){
+        L.marker([vlat, vlon], { icon: hotelIcon }).addTo(currentLeafletMap)
+          .bindPopup(`<b>Hôtel :</b> ${v.name || 'Non précisé'}`);
+      } else {
+        L.marker([vlat, vlon]).addTo(currentLeafletMap)
+          .bindPopup(`<b>${v.name || ''}</b><br>${v.photo ? `<img src="${v.photo}" width="180"/>` : ''}`);
+      }
+    });
     setTimeout(()=>{ currentLeafletMap.invalidateSize(); }, 50);
   }
+  
   function closeLeafletPopup(){
     leafletPopupEl.style.display = 'none';
     if(currentLeafletMap){ currentLeafletMap.remove(); currentLeafletMap = null; }
