@@ -674,32 +674,27 @@ function refresh(){
     }
     leafletMapEl.innerHTML = '';
 
-// Fonds de carte
-const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
-});
-const googleStreet = L.tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
-  subdomains:['mt0','mt1','mt2','mt3'],
-  attribution: '© Google'
-});
-const googleSat = L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
-  subdomains:['mt0','mt1','mt2','mt3'],
-  attribution: '© Google'
-});
-const relief = L.tileLayer('https://stamen-tiles.a.ssl.fastly.net/terrain/{z}/{x}/{y}.jpg', {
-  attribution: 'Map tiles by <a href="https://stamen.com/">Stamen Design</a>'
-});
-    
+    // Fonds de carte
+    const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
+    });
+    const googleStreet = L.tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+      subdomains:['mt0','mt1','mt2','mt3'],
+      attribution: '© Google'
+    });
+    const googleSat = L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+      subdomains:['mt0','mt1','mt2','mt3'],
+      attribution: '© Google'
+    });    
     const [lon, lat] = cityData.value;
-currentLeafletMap = L.map(leafletMapEl).setView([lat, lon], 13);
-osm.addTo(currentLeafletMap);
+    currentLeafletMap = L.map(leafletMapEl).setView([lat, lon], 13);
+    osm.addTo(currentLeafletMap);
 
-const baseMaps = {
-  "OpenStreetMap": osm,
-  "Google Street": googleStreet,
-  "Google Satellite": googleSat,
-  "Relief": relief
-};
+    const baseMaps = {
+      "OpenStreetMap": osm,
+      "Google Street": googleStreet,
+      "Google Satellite": googleSat,
+    };
 
 L.control.layers(baseMaps).addTo(currentLeafletMap);
     
