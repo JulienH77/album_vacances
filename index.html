@@ -127,10 +127,11 @@
   height: 100%;
   background: rgba(0, 0, 0, 0.95);
   display: none;
-  z-index: 500; /* Doit être supérieur à celui de Leaflet (400) */
+  z-index: 500;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  background: rgba(0, 0, 0, 0.9); /* Fond noir à 90% de transparence */
 }
 #photoPopup img {
   max-width: 90%;
@@ -830,7 +831,6 @@ function openPhotoPopup(photoUrl) {
   const photoPopupImg = document.getElementById('photoPopupImg');
   photoPopupImg.src = photoUrl;
   photoPopup.style.display = 'flex';
-  console.log("Ouverture de la popup avec l'URL :", photoUrl); // Ajout pour le débogage
 }
 
 // Fonction pour fermer la popup de photo agrandie
