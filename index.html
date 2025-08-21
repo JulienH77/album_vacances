@@ -528,6 +528,30 @@
     activeVoyages: new Set(voyagesSet)
   };
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
   function makeOption(s) {
     const series = [];
     // Frontières des pays
@@ -540,30 +564,56 @@
         data: countryLines,
         lineStyle: { color: '#f0f0f0', width: 1, opacity: 0.98 }
       });
-    }
-    if(s.showTrajets){
-      const filteredTrajets = trajetLines.filter(l => s.activeVoyages.has(l.voyage));
-      series.push({
-        name: 'Trajets',
-        type: 'lines3D',
-        coordinateSystem: 'globe',
-        polyline: true,
-        data: filteredTrajets,
-        effect: {
-          show: true,
-          period: 10,
-          constantSpeed: 5,
-          trailLength: 0.15,
-          symbolSize: 6,
-          color: '#FFFFFF',
-        },
-        lineStyle: {
-          width: 2.5,
-          opacity: 0.95,
-        }
-      });
-    }
+    }  
+if (s.showTrajets) {
+  const filteredTrajets = trajetLines
+    .filter(l => s.activeVoyages.has(l.voyage))
+    .sort((a, b) => new Date(a.properties.date_deb) - new Date(b.properties.date_deb));
 
+  filteredTrajets.forEach((line, index) => {
+    series.push({
+      name: `Trajet ${index}`,
+      type: 'lines3D',
+      coordinateSystem: 'globe',
+      polyline: true,
+      data: [line],
+      lineStyle: {
+        color: line.lineStyle.color,
+        width: 1.5,
+        opacity: 0.1, // Opacité initiale (presque invisible)
+        type: 'dashed', // En pointillés
+      },
+      effect: {
+        show: true,
+        period: 10,
+        constantSpeed: 5,
+        trailLength: 0.15,
+        symbol: 'circle',
+        symbolSize: 6,
+        color: line.lineStyle.color,
+      },
+      // Animation progressive
+      animationDelay: (idx) => {
+        if (idx === 0) return 0;
+        const prevLine = filteredTrajets[idx - 1];
+        const prevDuration = new Date(line.properties.date_deb) - new Date(prevLine.properties.date_deb);
+        return prevDuration / 1000; // Convertir en secondes
+      },
+      // Rendre la ligne visible progressivement
+      lineStyle: {
+        color: line.lineStyle.color,
+        width: 2.5,
+        opacity: 0.1, // Opacité initiale
+      },
+      // Utiliser un effet pour augmenter l'opacité
+      emphasis: {
+        lineStyle: {
+          opacity: 0.95, // Opacité maximale quand la ligne est "active"
+        }
+      },
+    });
+  });
+} 
     // pins des villes visitées — maintenant filtrées par voyages sélectionnés
     let pinsData = [];
     const allowedCities = new Set();
@@ -654,6 +704,32 @@
     };
   }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
   function getCurrentView() {
     const opt = globeChart.getOption();
     if(opt && opt.globe && opt.globe[0] && opt.globe[0].viewControl){
