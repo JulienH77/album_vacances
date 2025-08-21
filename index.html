@@ -541,80 +541,29 @@
         lineStyle: { color: '#f0f0f0', width: 1, opacity: 0.98 }
       });
     }
+    if(s.showTrajets){
+      const filteredTrajets = trajetLines.filter(l => s.activeVoyages.has(l.voyage));
+      series.push({
+        name: 'Trajets',
+        type: 'lines3D',
+        coordinateSystem: 'globe',
+        polyline: true,
+        data: filteredTrajets,
+        effect: {
+          show: true,
+          period: 10,
+          constantSpeed: 5,
+          trailLength: 0.15,
+          symbolSize: 6,
+          color: '#FFFFFF',
+        },
+        lineStyle: {
+          width: 2.5,
+          opacity: 0.95,
+        }
+      });
+    }
     
-    
-    
-    
-    
-    
-    
-    
-    if (s.showTrajets) {
-  // 1. Filtrer et trier les trajets par date_deb
-  const filteredTrajets = trajetLines
-    .filter(l => s.activeVoyages.has(l.voyage))
-    .sort((a, b) => new Date(a.properties.date_deb) - new Date(b.properties.date_deb));
-
-  // 2. Préparer les données pour l'animation séquentielle
-  const seriesData = filteredTrajets.map((line, index) => {
-    return {
-      coords: line.coords,
-      lineStyle: {
-        color: line.lineStyle.color,
-        width: 2.5,
-        opacity: 0.1, // Presque invisible au départ
-      },
-      effect: {
-        show: true,
-        period: 10,
-        constantSpeed: 5,
-        trailWidth: 2,
-        trailLength: 0.2,
-        trailOpacity: 1,
-        trailColor: line.lineStyle.color,
-      },
-    };
-  });
-
-  // 3. Ajouter une série unique pour tous les trajets
-  series.push({
-    name: 'Trajets animés',
-    type: 'lines3D',
-    coordinateSystem: 'globe',
-    polyline: true,
-    data: seriesData,
-    lineStyle: {
-      color: '#000000', // Noir par défaut
-      width: 2.5,
-      opacity: 0.1,
-      type: 'dashed', // En pointillés
-    },
-    effect: {
-      show: true,
-      period: 10,
-      constantSpeed: 5,
-      trailWidth: 2,
-      trailLength: 0.2,
-      trailOpacity: 1,
-    },
-    // Animation séquentielle
-    animationDelay: (idx) => {
-      if (idx === 0) return 0;
-      const prevLine = filteredTrajets[idx - 1];
-      const prevDuration = new Date(seriesData[idx].coords[0].properties.date_deb) - new Date(prevLine.properties.date_deb);
-      return prevDuration / 1000; // Convertir en secondes
-    },
-  });
-}
-
-
-
-
-
-
-
-    
-
     // pins des villes visitées — maintenant filtrées par voyages sélectionnés
     let pinsData = [];
     const allowedCities = new Set();
