@@ -786,54 +786,72 @@ function openLeafletPopup(cityData) {
   };
   L.control.layers(baseMaps).addTo(currentLeafletMap);
 
-  (cityData.visites || []).forEach(v => {
-    const [vlon, vlat] = v.coords;
-    if (v.type === 'hotel') {
-      L.marker([vlat, vlon], { icon: hotelIcon }).addTo(currentLeafletMap)
-        .bindPopup(`<b>Hotel</b>`);
-    } else if (v.photo) {
-      const popupContent = document.createElement('div');
-      popupContent.style.position = 'relative';
-      popupContent.innerHTML = `
-        <b>${v.name || ''}</b><br>
-        <div style="position: relative; display: inline-block;">
-          <img src="${v.photo}" width="250" style="display: block; border-radius: 4px;"/>
-          <button class="enlarge-btn" data-photo="${v.photo}" style="
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            background: rgba(0, 0, 0, 0.7);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 24px;
-            height: 24px;
-            cursor: pointer;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-          ">⤢</button>
-        </div>
-      `;
-      L.marker([vlat, vlon]).addTo(currentLeafletMap)
-        .bindPopup(popupContent)
-        .on('popupopen', function() {
-          // Attacher l'écouteur d'événement après l'ouverture de la popup
-          document.querySelectorAll('.enlarge-btn').forEach(btn => {
-            btn.onclick = function(e) {
-              e.stopPropagation();
-              const photoUrl = this.getAttribute('data-photo');
-              openPhotoPopup(photoUrl);
-            };
-          });
-        });
-    } else {
-      L.marker([vlat, vlon]).addTo(currentLeafletMap)
-        .bindPopup(`<b>${v.name || ''}</b>`);
+(cityData.visites || []).forEach(v => {
+  const [vlon, vlat] = v.coords;
+  if (v.type === 'hotel') {
+    L.marker([vlat, vlon], { icon: hotelIcon }).addTo(currentLeafletMap)
+      .bindPopup(`<b>Hotel</b>`);
+  } else if (v.photo) {
+    // Extraction de la date et de l'heure depuis le nom du fichier
+    let dateInfo = "";
+    const photoName = v.photo.split('/').pop(); // Récupère le nom du fichier
+    const dateMatch = photoName.match(/IMG[-_]?(\d{4})(\d{2})(\d{2})[-_]?([A-Za-z]{2})?(\d{6})?/);
+    if (dateMatch) {
+      const year = dateMatch[1];
+      const month = dateMatch[2];
+      const day = dateMatch[3];
+      const time = dateMatch[5]; // Format : HHMMSS
+      dateInfo = `Le ${day}/${month}/${year}`;
+      if (time) {
+        const hours = time.substring(0, 2);
+        const minutes = time.substring(2, 4);
+        const seconds = time.substring(4, 6);
+        dateInfo += ` à ${hours}h${minutes}m${seconds}s`;
+      }
     }
-  });
 
+    const popupContent = document.createElement('div');
+    popupContent.style.position = 'relative';
+    popupContent.innerHTML = `
+      <b>${v.name || ''}</b><br>
+      <div style="position: relative; display: inline-block;">
+        <img src="${v.photo}" width="250" style="display: block; border-radius: 4px;"/>
+        <button class="enlarge-btn" data-photo="${v.photo}" style="
+          position: absolute;
+          top: 5px;
+          right: 5px;
+          background: rgba(0, 0, 0, 0.7);
+          color: white;
+          border: none;
+          border-radius: 50%;
+          width: 24px;
+          height: 24px;
+          cursor: pointer;
+          font-size: 14px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        ">⤢</button>
+      </div>
+      <small style="display: block; margin-top: 4px; color: #666;">${dateInfo}</small>
+    `;
+    L.marker([vlat, vlon]).addTo(currentLeafletMap)
+      .bindPopup(popupContent)
+      .on('popupopen', function() {
+        document.querySelectorAll('.enlarge-btn').forEach(btn => {
+          btn.onclick = function(e) {
+            e.stopPropagation();
+            const photoUrl = this.getAttribute('data-photo');
+            openPhotoPopup(photoUrl);
+          };
+        });
+      });
+  } else {
+    L.marker([vlat, vlon]).addTo(currentLeafletMap)
+      .bindPopup(`<b>${v.name || ''}</b>`);
+  }
+});
+  
   // Gestion du clic sur le bouton "Agrandir"
   setTimeout(() => {
     document.querySelectorAll('.enlarge-btn').forEach(btn => {
