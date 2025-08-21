@@ -527,30 +527,6 @@
     dayBase:'earth',
     activeVoyages: new Set(voyagesSet)
   };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   
   function makeOption(s) {
     const series = [];
@@ -564,63 +540,29 @@
         data: countryLines,
         lineStyle: { color: '#f0f0f0', width: 1, opacity: 0.98 }
       });
-    }  
-if (s.showTrajets) {
-  // 1. Filtrer et trier les trajets par date_deb
-  const filteredTrajets = trajetLines
-    .filter(l => s.activeVoyages.has(l.voyage))
-    .sort((a, b) => new Date(a.properties.date_deb) - new Date(b.properties.date_deb));
-
-  // 2. Ajouter chaque trajet comme une série distincte
-  filteredTrajets.forEach((line, index) => {
-    series.push({
-      name: `Trajet ${index}`,
-      type: 'lines3D',
-      coordinateSystem: 'globe',
-      polyline: true,
-      data: [line],
-      // Style initial : ligne noire en pointillés
-      lineStyle: {
-        color: '#000000', // Noir
-        width: 2.5,
-        opacity: 1,
-        type: 'dashed', // En pointillés
-      },
-      // Animation du cercle
-      effect: {
-        show: true,
-        period: 10,
-        constantSpeed: 5,
-        trailLength: 0.15,
-        symbol: 'circle',
-        symbolSize: 6,
-        color: line.lineStyle.color, // Couleur du cercle = couleur finale de la ligne
-      },
-      // Animation progressive : la ligne devient colorée et pleine
-      emphasis: {
+    }
+    if(s.showTrajets){
+      const filteredTrajets = trajetLines.filter(l => s.activeVoyages.has(l.voyage));
+      series.push({
+        name: 'Trajets',
+        type: 'lines3D',
+        coordinateSystem: 'globe',
+        polyline: true,
+        data: filteredTrajets,
+        effect: {
+          show: true,
+          period: 10,
+          constantSpeed: 5,
+          trailLength: 0.15,
+          symbolSize: 6,
+          color: '#FFFFFF',
+        },
         lineStyle: {
-          color: line.lineStyle.color, // Couleur finale
           width: 2.5,
-          opacity: 1,
-          type: 'solid', // Ligne pleine
+          opacity: 0.95,
         }
-      },
-      // Délai pour démarrer l'animation de chaque ligne
-      animationDelay: (idx) => {
-        if (idx === 0) return 0;
-        const prevLine = filteredTrajets[idx - 1];
-        const prevDuration = new Date(line.properties.date_deb) - new Date(prevLine.properties.date_deb);
-        return prevDuration / 1000; // Convertir en secondes
-      },
-      // Désactiver l'animation après le passage du cercle
-      animationEasing: 'linear',
-      animationDuration: (idx, data) => {
-        const lineLength = data.coords.length;
-        return (lineLength * 1000) / 5; // Durée = longueur de la ligne / vitesse
-      },
-    });
-  });
-}
+      });
+    }
 
     // pins des villes visitées — maintenant filtrées par voyages sélectionnés
     let pinsData = [];
