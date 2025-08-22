@@ -828,6 +828,8 @@ function openLeafletPopup(cityData) {
     currentLeafletMap = null;
   }
   leafletMapEl.innerHTML = '';
+
+  // --- Layers de base ---
   const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
   });
@@ -840,9 +842,36 @@ function openLeafletPopup(cityData) {
     attribution: '© Google'
   });
 
+  // --- Extraction des dates uniques ---
+  const uniqueDates = extractUniqueDates(cityData.visites || []);
   const [lon, lat] = cityData.value;
   currentLeafletMap = L.map(leafletMapEl).setView([lat, lon], 13);
   osm.addTo(currentLeafletMap);
+
+  // --- Légende des dates ---
+  const dateLegend = document.createElement('div');
+  dateLegend.style.position = 'absolute';
+  dateLegend.style.top = '10px';
+  dateLegend.style.right = '10px';
+  dateLegend.style.background = 'white';
+  dateLegend.style.padding = '10px';
+  dateLegend.style.borderRadius = '5px';
+  dateLegend.style.boxShadow = '0 0 10px rgba(0,0,0,0.2)';
+  dateLegend.style.zIndex = '1000';
+  dateLegend.innerHTML = '<h4>Dates de visite</h4>';
+
+  uniqueDates.forEach(date => {
+    const dateId = `date_${date.replace(/\//g, '_')}`;
+    dateLegend.innerHTML += `
+      <label style="display: block;">
+        <input type="checkbox" id="${dateId}" value="${date}" checked> ${date}
+      </label>
+    `;
+  });
+
+  leafletMapEl.parentNode.appendChild(dateLegend);
+
+  // --- Ajout des layers ---
   const baseMaps = {
     "OpenStreetMap": osm,
     "Google Street": googleStreet,
@@ -850,73 +879,86 @@ function openLeafletPopup(cityData) {
   };
   L.control.layers(baseMaps).addTo(currentLeafletMap);
 
-(cityData.visites || []).forEach(v => {
-  const [vlon, vlat] = v.coords;
-if (v.type === 'hotel') {
-    L.marker([vlat, vlon], { icon: hotelIcon }).addTo(currentLeafletMap)
+  // --- Ajout des épingles ---
+  const markers = [];
+  (cityData.visites || []).forEach(v => {
+    const [vlon, vlat] = v.coords;
+    if (v.type === 'hotel') {
+      const marker = L.marker([vlat, vlon], { icon: hotelIcon })
         .bindPopup(`<b>Hotel</b><br>Du ${v.datedeb} au ${v.datefin}`);
-} else if (v.photo) {
-    // Extraction de la date et de l'heure depuis le nom du fichier
-    let dateInfo = "";
-    const photoName = v.photo.split('/').pop(); // Récupère le nom du fichier
-    const dateMatch = photoName.match(/IMG[-_]?(\d{4})(\d{2})(\d{2})[-_]?([A-Za-z]{2})?(\d{6})?/);
-    if (dateMatch) {
-      const year = dateMatch[1];
-      const month = dateMatch[2];
-      const day = dateMatch[3];
-      const time = dateMatch[5]; // Format : HHMMSS
-      dateInfo = `Le ${day}/${month}/${year}`;
-      if (time) {
-        const hours = time.substring(0, 2);
-        const minutes = time.substring(2, 4);
-        const seconds = time.substring(4, 6);
-        dateInfo += ` à ${hours}h${minutes}m${seconds}s`;
+      marker.addTo(currentLeafletMap);
+      markers.push({ marker, date: null }); // Les hôtels n'ont pas de date
+    } else if (v.photo) {
+      const photoName = v.photo.split('/').pop();
+      const dateMatch = photoName.match(/IMG[-_]?(\d{4})(\d{2})(\d{2})/);
+      let dateInfo = "";
+      if (dateMatch) {
+        const year = dateMatch[1];
+        const month = dateMatch[2];
+        const day = dateMatch[3];
+        dateInfo = `${day}/${month}/${year}`;
       }
-    }
 
-    const popupContent = document.createElement('div');
-    popupContent.style.position = 'relative';
-    popupContent.innerHTML = `
-      <b>${v.name || ''}</b><br>
-      <div style="position: relative; display: inline-block;">
-        <img src="${v.photo}" width="250" style="display: block; border-radius: 4px;"/>
-        <button class="enlarge-btn" data-photo="${v.photo}" style="
-          position: absolute;
-          top: 5px;
-          right: 5px;
-          background: rgba(0, 0, 0, 0.7);
-          color: white;
-          border: none;
-          border-radius: 50%;
-          width: 24px;
-          height: 24px;
-          cursor: pointer;
-          font-size: 14px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        ">⤢</button>
-      </div>
-      <small style="display: block; margin-top: 4px; color: #666;">${dateInfo}</small>
-    `;
-    L.marker([vlat, vlon]).addTo(currentLeafletMap)
-      .bindPopup(popupContent)
-      .on('popupopen', function() {
-        document.querySelectorAll('.enlarge-btn').forEach(btn => {
-          btn.onclick = function(e) {
-            e.stopPropagation();
-            const photoUrl = this.getAttribute('data-photo');
-            openPhotoPopup(photoUrl);
-          };
+      const popupContent = document.createElement('div');
+      popupContent.style.position = 'relative';
+      popupContent.innerHTML = `
+        <b>${v.name || ''}</b><br>
+        <div style="position: relative; display: inline-block;">
+          <img src="${v.photo}" width="250" style="display: block; border-radius: 4px;"/>
+          <button class="enlarge-btn" data-photo="${v.photo}" style="
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          ">⤢</button>
+        </div>
+        <small style="display: block; margin-top: 4px; color: #666;">${dateInfo}</small>
+      `;
+
+      const marker = L.marker([vlat, vlon])
+        .bindPopup(popupContent)
+        .on('popupopen', function() {
+          document.querySelectorAll('.enlarge-btn').forEach(btn => {
+            btn.onclick = function(e) {
+              e.stopPropagation();
+              const photoUrl = this.getAttribute('data-photo');
+              openPhotoPopup(photoUrl);
+            };
+          });
         });
+      marker.addTo(currentLeafletMap);
+      markers.push({ marker, date: dateInfo });
+    }
+  });
+
+  // --- Gestion des cases à cocher pour les dates ---
+  uniqueDates.forEach(date => {
+    const dateId = `date_${date.replace(/\//g, '_')}`;
+    document.getElementById(dateId).addEventListener('change', (e) => {
+      const isChecked = e.target.checked;
+      markers.forEach(m => {
+        if (m.date === date) {
+          if (isChecked) {
+            currentLeafletMap.addLayer(m.marker);
+          } else {
+            currentLeafletMap.removeLayer(m.marker);
+          }
+        }
       });
-  } else {
-    L.marker([vlat, vlon]).addTo(currentLeafletMap)
-      .bindPopup(`<b>${v.name || ''}</b>`);
-  }
-});
-  
-  // Gestion du clic sur le bouton "Agrandir"
+    });
+  });
+
+  // --- Gestion du clic sur le bouton "Agrandir" ---
   setTimeout(() => {
     document.querySelectorAll('.enlarge-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
@@ -928,6 +970,7 @@ if (v.type === 'hotel') {
     currentLeafletMap.invalidateSize();
   }, 50);
 }
+
 
 // Fonction pour ouvrir la popup de photo agrandie
 function openPhotoPopup(photoUrl) {
@@ -957,6 +1000,25 @@ document.getElementById('photoPopup').addEventListener('click', (e) => {
 });
 
 
+
+function extractUniqueDates(visites) {
+  const dates = new Set();
+  visites.forEach(v => {
+    if (v.photo) {
+      const photoName = v.photo.split('/').pop();
+      const dateMatch = photoName.match(/IMG[-_]?(\d{4})(\d{2})(\d{2})/);
+      if (dateMatch) {
+        const year = dateMatch[1];
+        const month = dateMatch[2];
+        const day = dateMatch[3];
+        dates.add(`${day}/${month}/${year}`);
+      }
+    }
+  });
+  return Array.from(dates).sort();
+}
+
+  
   function closeLeafletPopup(){
     leafletPopupEl.style.display = 'none';
     if(currentLeafletMap){ currentLeafletMap.remove(); currentLeafletMap = null; }
