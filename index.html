@@ -813,7 +813,7 @@ function openLeafletPopup(cityData) {
   osm.addTo(currentLeafletMap);
   const baseMaps = {
     "OpenStreetMap": osm,
-    "Google Street": googleStreet,
+    "Google Street (shifted in China)": googleStreet,
     "Google Satellite": googleSat,
   };
   L.control.layers(baseMaps).addTo(currentLeafletMap);
