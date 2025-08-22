@@ -515,7 +515,7 @@
         { name:'Entrée au Ruin bar', coords:[19.06335, 47.497006], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250718_205500.jpg' },
         { name:'In the Ruin bar', coords:[19.06299, 47.49687], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250719_002000.jpg' },
         { name:'Us and the castel of Pest', coords:[19.08303, 47.51652], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250718_195500.jpg' },
-        { name:'Luggage locker', coords:[19.08311, 47.50028], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250728_165000.jpg' },
+        { name:'Luggage locker', coords:[19.08311, 47.50028], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250721_165000.jpg' },
       ]
     },
     {
@@ -892,12 +892,19 @@ function openLeafletPopup(cityData) {
       const photoName = v.photo.split('/').pop();
       const dateMatch = photoName.match(/IMG[-_]?(\d{4})(\d{2})(\d{2})/);
       let dateInfo = "";
-      if (dateMatch) {
-        const year = dateMatch[1];
-        const month = dateMatch[2];
-        const day = dateMatch[3];
-        dateInfo = `${day}/${month}/${year}`;
+    if (dateMatch) {
+      const year = dateMatch[1];
+      const month = dateMatch[2];
+      const day = dateMatch[3];
+      const time = dateMatch[5]; // Format : HHMMSS
+      dateInfo = `Le ${day}/${month}/${year}`;
+      if (time) {
+        const hours = time.substring(0, 2);
+        const minutes = time.substring(2, 4);
+        const seconds = time.substring(4, 6);
+        dateInfo += ` à ${hours}h${minutes}m${seconds}s`;
       }
+    }
 
       const popupContent = document.createElement('div');
       popupContent.style.position = 'relative';
