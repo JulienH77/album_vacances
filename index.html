@@ -421,9 +421,11 @@
       name: 'Hangzhou',
       value: [120.17478, 30.27338, 0],
       visites: [
+        /*tourist street*/
         { name:'Hefang street', coords:[120.16237, 30.24233], photo:'./IMG/2025/China/Hangzhou/IMG_20250521_102732.jpg' },
         { name:'Hefang street', coords:[120.16279, 30.24234], photo:'./IMG/2025/China/Hangzhou/IMG_20250521_102831.jpg' },
         { name:'Marco Polo\'s book in Chinese medicine museum', coords:[120.16425, 30.24220], photo:'./IMG/2025/China/Hangzhou/IMG_20250521_105933.jpg' },
+        /*Lake*/
         { name:'Famous bridge', coords:[120.14823, 30.26160], photo:'./IMG/2025/China/Hangzhou/IMG_20250521_154618.jpg' },
         { name:'Beautiful walk', coords:[120.14517, 30.25887], photo:'./IMG/2025/China/Hangzhou/IMG_20250521_155357.jpg' },
         { name:'Beautiful gate', coords:[120.137691, 30.25252], photo:'./IMG/2025/China/Hangzhou/IMG_20250521_162017.jpg' },
@@ -454,10 +456,14 @@
       name: 'Tianjin',
       value: [117.18850, 39.13867, 0],
       visites: [
+        /*visit of the city*/
         { name:'Century clock', coords:[117.20000, 39.13255], photo:'./IMG/2025/China/Tianjin/IMG_20250529_100703.jpg' },
         { name:'Century clock', coords:[117.20001, 39.13251], photo:'./IMG/2025/China/Tianjin/IMG_20250529_100714.jpg' },
         { name:'La Défense from China', coords:[117.19594, 39.13045], photo:'./IMG/2025/China/Tianjin/IMG_20250529_102057.jpg' },
+        /*Antiquity streets*/
         { name:'Antiquity street', coords:[117.19043, 39.12548], photo:'./IMG/2025/China/Tianjin/IMG_20250529_105243.jpg' },
+        { name:'I think i bought it in this street maybe at 10/11am (took this photo in my hotel at night)', coords:[117.19054, 39.12562], photo:'./IMG/2025/China/Tianjin/IMG_20250529_225805.jpg' },
+        /*Visiting*/
         { name:'Beautiful bridge', coords:[117.18796, 39.13232], photo:'./IMG/2025/China/Tianjin/IMG_20250529_120417.jpg' },
         { name:'Beautiful bridge', coords:[117.18775, 39.13266], photo:'./IMG/2025/China/Tianjin/IMG_20250529_120546.jpg' },
         { name:'Beautiful bridge', coords:[117.18743, 39.13331], photo:'./IMG/2025/China/Tianjin/IMG_20250529_120712.jpg' },
@@ -470,6 +476,7 @@
         { name:'Beautiful street', coords:[117.18644, 39.14273], photo:'./IMG/2025/China/Tianjin/IMG_20250529_123715.jpg' },
         { name:'Tianjin\'s dock and the ferris wheel', coords:[117.18455, 39.14841], photo:'./IMG/2025/China/Tianjin/IMG_20250529_142105.jpg' },
         { name:'Buddhism temple', coords:[117.18300, 39.15381], photo:'./IMG/2025/China/Tianjin/IMG_20250529_144733.jpg' },
+        /*Italian concession*/
         { name:'Cool church Sainte Victoire - 1869', coords:[117.18851, 39.14635], photo:'./IMG/2025/China/Tianjin/IMG_20250529_150828.jpg' },
         { name:'Statue of Dante', coords:[117.19398, 39.13291], photo:'./IMG/2025/China/Tianjin/IMG_20250529_164259.jpg' },
         { name:'Cool tower', coords:[117.19019, 39.13360], photo:'./IMG/2025/China/Tianjin/IMG_20250529_165031.jpg' },
@@ -479,10 +486,10 @@
         { name:'The interior of the library', coords:[117.19278, 39.13405], photo:'./IMG/2025/China/Tianjin/IMG_20250529_172230.jpg' },
         { name:'The exterior of the library', coords:[117.19265, 39.13408], photo:'./IMG/2025/China/Tianjin/IMG_20250529_172251.jpg' },
         { name:'Apéro time with my bible', coords:[117.1912, 39.13370], photo:'./IMG/2025/China/Tianjin/IMG_20250529_180516.jpg' },
+        /*Going back to the train station*/
         { name:'Chinese la Défense by night', coords:[39.13077, 39.13077], photo:'./IMG/2025/China/Tianjin/IMG_20250529_195447.jpg' },
         { name:'Financial center tower', coords:[117.19313, 39.12997], photo:'./IMG/2025/China/Tianjin/IMG_20250529_195706.jpg' },
-        { name:'Tianjin dock before leaving', coords:[117.19884, 39.13174], photo:'./IMG/2025/China/Tianjin/IMG_20250529_201045.jpg' },
-        { name:'I think i bought it in this street maybe at 10/11am (took this photo in my hotel at night)', coords:[117.19054, 39.12562], photo:'./IMG/2025/China/Tianjin/IMG_20250529_225805.jpg' }
+        { name:'Tianjin dock before leaving', coords:[117.19884, 39.13174], photo:'./IMG/2025/China/Tianjin/IMG_20250529_201045.jpg' }
       ]
     },
     {
@@ -592,13 +599,14 @@
   const hotelIcon = L.divIcon({
     html: `
       <div style="
-        width:28px; height:28px;
-        background:#fff; //128019;
+        width:33px; height:33px;
+        background:#EDEDED;;
         border:2px solid #000;
-        border-radius:10%;
-        display:flex; align-items:center; justify-content:center;
-        font-size:16px; font-weight:bold; color:white;
-        box-shadow:0 2px 6px rgba(0,0,0,0.3);
+        border-radius:15%;
+        display:flex; align-items:center; 
+        justify-content:center;
+        font-size:25px;
+        box-shadow:0 3px 4px rgba(0,0,0,0.3);
       ">
         🏢
       </div>
