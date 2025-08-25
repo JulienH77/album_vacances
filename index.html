@@ -222,7 +222,12 @@
 <div id="leafletPopup">
   <div id="leafletMap"></div>
   <button id="leafletClose">X</button>
-
+  
+  <div id="dateFilter" style="margin-top: 10px;">
+    <label><strong>Filtrer par date :</strong></label><br>
+    <!-- Les cases à cocher pour chaque date seront ajoutées dynamiquement ici -->
+  </div>
+  
 <!-- Popup d'agrandissement de photo -->
 <div id="photoPopup" style="display: none;">
   <img id="photoPopupImg" src="" alt="Photo agrandie">
@@ -783,6 +788,24 @@ const cityViewConfig = {
     dayBase:'earth',
     activeVoyages: new Set(voyagesSet)
   };
+
+  function getUniqueDates(cityData) {
+    const dates = new Set();
+    (cityData.visites || []).forEach(v => {
+      if (v.photo) {
+        const photoName = v.photo.split('/').pop();
+        const dateMatch = photoName.match(/IMG[-_]?(\d{4})(\d{2})(\d{2})[-_]?/);
+        if (dateMatch) {
+          const year = dateMatch[1];
+          const month = dateMatch[2];
+          const day = dateMatch[3];
+          dates.add(`${day}/${month}/${year}`);
+        }
+      }
+    });
+    return Array.from(dates).sort();
+  }
+
   
   function makeOption(s) {
     const series = [];
@@ -1014,12 +1037,17 @@ const cityViewConfig = {
   // Leaflet popup helpers
   let currentLeafletMap = null;
 function openLeafletPopup(cityData) {
+  // 1. Affiche la popup Leaflet
   leafletPopupEl.style.display = 'block';
+
+  // 2. Nettoie la carte précédente (si elle existe)
   if (currentLeafletMap) {
     currentLeafletMap.remove();
     currentLeafletMap = null;
   }
   leafletMapEl.innerHTML = '';
+
+  // 3. Initialise la carte Leaflet avec les couches de base
   const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
   });
@@ -1032,19 +1060,13 @@ function openLeafletPopup(cityData) {
     attribution: '© Google'
   });
 
+  // 4. Centre la carte sur la ville sélectionnée
   const [lon, lat] = cityData.value;
   const config = cityViewConfig[cityData.name] || { center: [lat, lon], zoom: 13 };
   currentLeafletMap = L.map(leafletMapEl).setView(config.center, config.zoom);
-
-  
-  currentLeafletMap.on('moveend', function() {
-  const center = currentLeafletMap.getCenter();
-  const zoom = currentLeafletMap.getZoom();
-  console.log('Centre de la carte :', center.lat, center.lng);
-  console.log('Niveau de zoom :', zoom);
-});
-
   osm.addTo(currentLeafletMap);
+
+  // 5. Ajoute le contrôle des couches
   const baseMaps = {
     "OpenStreetMap": osm,
     "Google Street": googleStreet,
@@ -1052,84 +1074,140 @@ function openLeafletPopup(cityData) {
   };
   L.control.layers(baseMaps).addTo(currentLeafletMap);
 
-(cityData.visites || []).forEach(v => {
-  const [vlon, vlat] = v.coords;
-if (v.type === 'hotel') {
-    L.marker([vlat, vlon], { icon: hotelIcon }).addTo(currentLeafletMap)
-        .bindPopup(`<b>Hotel</b><br>Du ${v.datedeb} au ${v.datefin}`);
-} else if (v.photo) {
-    // Extraction de la date et de l'heure depuis le nom du fichier
-    let dateInfo = "";
-    const photoName = v.photo.split('/').pop(); // Récupère le nom du fichier
-    const dateMatch = photoName.match(/IMG[-_]?(\d{4})(\d{2})(\d{2})[-_]?([A-Za-z]{2})?(\d{6})?/);
-    if (dateMatch) {
-      const year = dateMatch[1];
-      const month = dateMatch[2];
-      const day = dateMatch[3];
-      const time = dateMatch[5]; // Format : HHMMSS
-      dateInfo = `Le ${day}/${month}/${year}`;
-      if (time) {
-        const hours = time.substring(0, 2);
-        const minutes = time.substring(2, 4);
-        const seconds = time.substring(4, 6);
-        dateInfo += ` à ${hours}h${minutes}m${seconds}s`;
+  // 6. Extrait les dates uniques pour cette ville
+  function getUniqueDates(cityData) {
+    const dates = new Set();
+    (cityData.visites || []).forEach(v => {
+      if (v.photo) {
+        const photoName = v.photo.split('/').pop();
+        const dateMatch = photoName.match(/IMG[-_]?(\d{4})(\d{2})(\d{2})[-_]?/);
+        if (dateMatch) {
+          const year = dateMatch[1];
+          const month = dateMatch[2];
+          const day = dateMatch[3];
+          dates.add(`${day}/${month}/${year}`);
+        }
       }
-    }
-
-    const popupContent = document.createElement('div');
-    popupContent.style.position = 'relative';
-    popupContent.innerHTML = `
-      <b>${v.name || ''}</b><br>
-      <div style="position: relative; display: inline-block;">
-        <img src="${v.photo}" width="250" style="display: block; border-radius: 4px;"/>
-        <button class="enlarge-btn" data-photo="${v.photo}" style="
-          position: absolute;
-          top: 5px;
-          right: 5px;
-          background: rgba(0, 0, 0, 0.7);
-          color: white;
-          border: none;
-          border-radius: 50%;
-          width: 24px;
-          height: 24px;
-          cursor: pointer;
-          font-size: 14px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        ">⤢</button>
-      </div>
-      <small style="display: block; margin-top: 4px; color: #666;">${dateInfo}</small>
-    `;
-    L.marker([vlat, vlon]).addTo(currentLeafletMap)
-      .bindPopup(popupContent)
-      .on('popupopen', function() {
-        document.querySelectorAll('.enlarge-btn').forEach(btn => {
-          btn.onclick = function(e) {
-            e.stopPropagation();
-            const photoUrl = this.getAttribute('data-photo');
-            openPhotoPopup(photoUrl);
-          };
-        });
-      });
-  } else {
-    L.marker([vlat, vlon]).addTo(currentLeafletMap)
-      .bindPopup(`<b>${v.name || ''}</b>`);
-  }
-});
-  
-  // Gestion du clic sur le bouton "Agrandir"
-  setTimeout(() => {
-    document.querySelectorAll('.enlarge-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const photoUrl = e.target.getAttribute('data-photo');
-        openPhotoPopup(photoUrl);
-      });
     });
-    currentLeafletMap.invalidateSize();
-  }, 50);
+    return Array.from(dates).sort();
+  }
+
+  // 7. Crée la légende des dates dans le HTML
+  const uniqueDates = getUniqueDates(cityData);
+  const dateFilterEl = document.createElement('div');
+  dateFilterEl.id = 'dateFilter';
+  dateFilterEl.style.marginTop = '10px';
+  dateFilterEl.style.background = 'rgba(255,255,255,0.9)';
+  dateFilterEl.style.padding = '8px';
+  dateFilterEl.style.borderRadius = '5px';
+  dateFilterEl.style.maxHeight = '200px';
+  dateFilterEl.style.overflow = 'auto';
+  dateFilterEl.innerHTML = '<label><strong>Filtrer par date :</strong></label><br>';
+
+  // 8. Ajoute une case à cocher pour chaque date
+  uniqueDates.forEach(date => {
+    const id = `date_${date.replace(/\//g, '_')}`;
+    const label = document.createElement('label');
+    label.style.display = 'block';
+    label.innerHTML = `
+      <input type="checkbox" id="${id}" value="${date}" checked>
+      ${date}
+    `;
+    dateFilterEl.appendChild(label);
+  });
+
+  // 9. Ajoute la légende des dates à la légende existante
+  const legendEl = document.getElementById('legend');
+  legendEl.appendChild(dateFilterEl);
+
+  // 10. Fonction pour filtrer les marqueurs en fonction des dates sélectionnées
+  function filterMarkersByDate() {
+    const selectedDates = Array.from(document.querySelectorAll('#dateFilter input[type="checkbox"]:checked'))
+      .map(el => el.value);
+
+    // Supprime tous les marqueurs existants
+    currentLeafletMap.eachLayer(layer => {
+      if (layer instanceof L.Marker) {
+        currentLeafletMap.removeLayer(layer);
+      }
+    });
+
+    // Réajoute les marqueurs en fonction des dates sélectionnées
+    (cityData.visites || []).forEach(v => {
+      if (v.type === 'hotel') {
+        // Toujours afficher les hôtels
+        const [vlon, vlat] = v.coords;
+        L.marker([vlat, vlon], { icon: hotelIcon }).addTo(currentLeafletMap)
+          .bindPopup(`<b>Hotel</b><br>Du ${v.datedeb} au ${v.datefin}`);
+      }
+      else if (v.photo) {
+        const photoName = v.photo.split('/').pop();
+        const dateMatch = photoName.match(/IMG[-_]?(\d{4})(\d{2})(\d{2})[-_]?/);
+        if (dateMatch) {
+          const year = dateMatch[1];
+          const month = dateMatch[2];
+          const day = dateMatch[3];
+          const date = `${day}/${month}/${year}`;
+          if (selectedDates.includes(date)) {
+            // Ajoute le marqueur seulement si la date est sélectionnée
+            const [vlon, vlat] = v.coords;
+            const popupContent = document.createElement('div');
+            popupContent.style.position = 'relative';
+            popupContent.innerHTML = `
+              <b>${v.name || ''}</b><br>
+              <div style="position: relative; display: inline-block;">
+                <img src="${v.photo}" width="250" style="display: block; border-radius: 4px;"/>
+                <button class="enlarge-btn" data-photo="${v.photo}" style="
+                  position: absolute;
+                  top: 5px;
+                  right: 5px;
+                  background: rgba(0, 0, 0, 0.7);
+                  color: white;
+                  border: none;
+                  border-radius: 50%;
+                  width: 24px;
+                  height: 24px;
+                  cursor: pointer;
+                  font-size: 14px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                ">⤢</button>
+              </div>
+              <small style="display: block; margin-top: 4px; color: #666;">${date}</small>
+            `;
+            L.marker([vlat, vlon]).addTo(currentLeafletMap)
+              .bindPopup(popupContent)
+              .on('popupopen', function() {
+                document.querySelectorAll('.enlarge-btn').forEach(btn => {
+                  btn.onclick = function(e) {
+                    e.stopPropagation();
+                    const photoUrl = this.getAttribute('data-photo');
+                    openPhotoPopup(photoUrl);
+                  };
+                });
+              });
+          }
+        }
+      }
+    });
+  }
+
+  // 11. Écouteur pour les changements de sélection de date
+  dateFilterEl.addEventListener('change', filterMarkersByDate);
+
+  // 12. Affiche tous les marqueurs par défaut
+  filterMarkersByDate();
+
+  // 13. Gestion du clic sur le bouton "Agrandir" (déjà présent dans ton code)
+  currentLeafletMap.on('moveend', function() {
+    const center = currentLeafletMap.getCenter();
+    const zoom = currentLeafletMap.getZoom();
+    console.log('Centre de la carte :', center.lat, center.lng);
+    console.log('Niveau de zoom :', zoom);
+  });
 }
+
 
 // Fonction pour ouvrir la popup de photo agrandie
 function openPhotoPopup(photoUrl) {
