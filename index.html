@@ -1020,17 +1020,33 @@ function openLeafletPopup(cityData) {
     currentLeafletMap = null;
   }
   leafletMapEl.innerHTML = '';
-  
+
+  // --- Basemaps classiques ---
   const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OSM'
   });
+  const gmap = L.tileLayer('https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}', {
+    attribution: '&copy; Google Maps'
+  });
+  const gsat = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+    attribution: '&copy; Google Maps Sat'
+  });
+
+  const baseMaps = {
+    "OSM": osm,
+    "Google Street": gmap,
+    "Google Satellite": gsat
+  };
 
   const [lon, lat] = cityData.value;
   const config = cityViewConfig[cityData.name] || { center: [lat, lon], zoom: 13 };
-  currentLeafletMap = L.map(leafletMapEl).setView(config.center, config.zoom);
-  osm.addTo(currentLeafletMap);
+  currentLeafletMap = L.map(leafletMapEl, {
+    layers: [osm]
+  }).setView(config.center, config.zoom);
 
-  // --- Étape 1 : préparer les LayerGroups par date ---
+  L.control.layers(baseMaps).addTo(currentLeafletMap); // <-- 1er contrôle : les fonds de plan
+
+  // --- Préparer les LayerGroups par date ---
   const photosByDate = {};
   (cityData.visites || []).forEach(v => {
     if (!v.photo) return;
@@ -1052,18 +1068,24 @@ function openLeafletPopup(cityData) {
     photosByDate[dateKey].addLayer(marker);
   });
 
-  // --- Étape 2 : ajouter toutes les dates cochées par défaut ---
+  // --- Activer toutes les dates au départ ---
   Object.values(photosByDate).forEach(layer => layer.addTo(currentLeafletMap));
 
-  // --- Étape 3 : créer un contrôle personnalisé avec les cases à cocher ---
+  // --- Créer un contrôle distinct pour les dates ---
   const datesControl = L.control({ position: 'topright' });
   datesControl.onAdd = function() {
     const div = L.DomUtil.create('div', 'dates-control');
     div.style.background = 'white';
     div.style.padding = '6px';
     div.style.borderRadius = '6px';
+    div.style.marginTop = '10px'; // <-- petit espace entre les 2 contrôles
+    div.style.boxShadow = '0 1px 4px rgba(0,0,0,0.3)';
     div.style.maxHeight = '150px';
     div.style.overflowY = 'auto';
+
+    const title = document.createElement('strong');
+    title.textContent = "Photos par date";
+    div.appendChild(title);
 
     Object.keys(photosByDate).forEach(dateKey => {
       const id = 'chk_' + dateKey.replace(/\//g, '_');
@@ -1087,8 +1109,7 @@ function openLeafletPopup(cityData) {
       div.appendChild(label);
     });
 
-    // empêcher que le scroll/clic du panneau bloque la carte
-    L.DomEvent.disableClickPropagation(div);
+    L.DomEvent.disableClickPropagation(div); // évite que ça bloque la carte
     return div;
   };
   datesControl.addTo(currentLeafletMap);
