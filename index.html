@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <link rel="icon" href="https://static.vecteezy.com/ti/vecteur-libre/p1/22395051-voyage-agence-vecteur-logo-modele-vacances-logo-modele-globe-en-voyageant-logo-vecteur-conception-vectoriel.jpg">
 <title>Mes vacances</title>
-<script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
 <style>
   html,body,#root { height:100%; margin:0; padding:0; }
   body{
@@ -181,11 +180,17 @@
 #photoPopup {
   z-index: 500;
 } 
+
+.camera-icon {
+  transform-origin: center;
+}
 </style>
+<script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/echarts-gl@2/dist/echarts-gl.min.js"></script>
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/leaflet-rotatedmarker@0.2.0/leaflet.rotatedMarker.js"></script>
 </head>
 <body>
 <div id="root">
@@ -320,18 +325,18 @@
         { type: 'hotel', datedeb:'28/05/2025', datefin:'30/05/2025', coords:[116.38023, 39.86887] },
         
         /*The great wall*/
-        { name:'Entering the Great Wall', coords:[116.5379, 40.41597], photo:'./IMG/2025/China/Beijing/IMG_20250512_130110.jpg' },
-        { name:'Arriving in cabble car', coords:[116.55903, 40.43878], photo:'./IMG/2025/China/Beijing/IMG_20250512_140556.jpg' },
-        { name:'Me on the Great Wall', coords:[116.55938, 40.44054], photo:'./IMG/2025/China/Beijing/IMG_20250512_141016.jpg' },
-        { name:'The long line of the Great Wall', coords:[116.56053, 40.43988], photo:'./IMG/2025/China/Beijing/IMG_20250512_141348.jpg' },
-        { name:'The long line of the Great Wall', coords:[116.56099, 40.43901], photo:'./IMG/2025/China/Beijing/IMG_20250512_141844.jpg' },
-        { name:'My fat body on the Great Wall', coords:[116.56119, 40.43869], photo:'./IMG/2025/China/Beijing/IMG_20250512_142025.jpg' },
-        { name:'The beauty of the Great Wall', coords:[116.56122, 40.43815], photo:'./IMG/2025/China/Beijing/IMG_20250512_143901.jpg' },
-        { name:'View of the Great Wall', coords:[116.55676, 40.44378], photo:'./IMG/2025/China/Beijing/IMG_20250512_150859.jpg' },
-        { name:'The grand staircase of Mutianyu', coords:[116.55515, 40.44703], photo:'./IMG/2025/China/Beijing/IMG_20250512_152823.jpg' },
-        { name:'Half way (my legs aaargh)', coords:[116.55456, 40.44756], photo:'./IMG/2025/China/Beijing/IMG_20250512_153650.jpg' },
-        { name:'Finally at the end of Mutianyu', coords:[116.55376, 40.44816], photo:'./IMG/2025/China/Beijing/IMG_20250512_154257.jpg' },
-        { name:'Going back to the cable car', coords:[116.55570, 40.44453], photo:'./IMG/2025/China/Beijing/IMG_20250512_161109.jpg' },
+        { name:'Entering the Great Wall', coords:[116.5379, 40.41597], photo:'./IMG/2025/China/Beijing/IMG_20250512_130110.jpg', rotation: 25 },
+        { name:'Arriving in cabble car', coords:[116.55903, 40.43878], photo:'./IMG/2025/China/Beijing/IMG_20250512_140556.jpg', rotation: 90 },
+        { name:'Me on the Great Wall', coords:[116.55938, 40.44054], photo:'./IMG/2025/China/Beijing/IMG_20250512_141016.jpg', rotation: 312 },
+        { name:'The long line of the Great Wall', coords:[116.56053, 40.43988], photo:'./IMG/2025/China/Beijing/IMG_20250512_141348.jpg', rotation: 157 },
+        { name:'The long line of the Great Wall', coords:[116.56099, 40.43901], photo:'./IMG/2025/China/Beijing/IMG_20250512_141844.jpg', rotation: 157 },
+        { name:'My fat body on the Great Wall', coords:[116.56119, 40.43869], photo:'./IMG/2025/China/Beijing/IMG_20250512_142025.jpg', rotation: 162 },
+        { name:'The beauty of the Great Wall', coords:[116.56122, 40.43815], photo:'./IMG/2025/China/Beijing/IMG_20250512_143901.jpg', rotation: 346 },
+        { name:'View of the Great Wall', coords:[116.55676, 40.44378], photo:'./IMG/2025/China/Beijing/IMG_20250512_150859.jpg', rotation: 327 },
+        { name:'The grand staircase of Mutianyu', coords:[116.55515, 40.44703], photo:'./IMG/2025/China/Beijing/IMG_20250512_152823.jpg', rotation: 319 },
+        { name:'Half way (my legs aaargh)', coords:[116.55456, 40.44756], photo:'./IMG/2025/China/Beijing/IMG_20250512_153650.jpg', rotation: 152 },
+        { name:'Finally at the end of Mutianyu', coords:[116.55376, 40.44816], photo:'./IMG/2025/China/Beijing/IMG_20250512_154257.jpg', rotation: 152 },
+        { name:'Going back to the cable car', coords:[116.55570, 40.44453], photo:'./IMG/2025/China/Beijing/IMG_20250512_161109.jpg', rotation: 131 },
         
         /*The forbidden city*/
         { name:'Entering the forbidden city', coords:[116.39102, 39.91145], photo:'./IMG/2025/China/Beijing/IMG_20250513_120311_1.jpg' },
@@ -704,7 +709,19 @@
     iconSize: [28,28],
     iconAnchor: [14,14]
   });
+  
+  function createCameraIcon(rotationAngle) {
+    return L.icon({
+      iconUrl: './GLOBE/symboles/appareilphoto_black.png',
+      iconSize: [32, 32], // Taille de l'icône
+      iconAnchor: [16, 16], // Point d'ancrage (centre de l'icône)
+      className: 'camera-icon',
+      rotationAngle: rotationAngle // Angle de rotation en degrés
+    });
+  }
 
+
+  
   const globeChart = echarts.init(document.getElementById('globeContainer'), null, { renderer:'webgl' });
   let state = {
     showPays:false,
@@ -966,6 +983,8 @@ function openLeafletPopup(cityData) {
 
   const [lon, lat] = cityData.value;
   currentLeafletMap = L.map(leafletMapEl).setView([lat, lon], 13);
+  L.RotatedMarker = L.RotatedMarker || {};
+  L.RotatedMarker.version = '0.2.0';
   osm.addTo(currentLeafletMap);
   const baseMaps = {
     "OpenStreetMap": osm,
@@ -976,19 +995,19 @@ function openLeafletPopup(cityData) {
 
 (cityData.visites || []).forEach(v => {
   const [vlon, vlat] = v.coords;
-if (v.type === 'hotel') {
+  if (v.type === 'hotel') {
     L.marker([vlat, vlon], { icon: hotelIcon }).addTo(currentLeafletMap)
-        .bindPopup(`<b>Hotel</b><br>Du ${v.datedeb} au ${v.datefin}`);
-} else if (v.photo) {
+      .bindPopup(`<b>Hotel</b><br>Du ${v.datedeb} au ${v.datefin}`);
+  } else if (v.photo) {
     // Extraction de la date et de l'heure depuis le nom du fichier
     let dateInfo = "";
-    const photoName = v.photo.split('/').pop(); // Récupère le nom du fichier
+    const photoName = v.photo.split('/').pop();
     const dateMatch = photoName.match(/IMG[-_]?(\d{4})(\d{2})(\d{2})[-_]?([A-Za-z]{2})?(\d{6})?/);
     if (dateMatch) {
       const year = dateMatch[1];
       const month = dateMatch[2];
       const day = dateMatch[3];
-      const time = dateMatch[5]; // Format : HHMMSS
+      const time = dateMatch[5];
       dateInfo = `Le ${day}/${month}/${year}`;
       if (time) {
         const hours = time.substring(0, 2);
@@ -997,7 +1016,8 @@ if (v.type === 'hotel') {
         dateInfo += ` à ${hours}h${minutes}m${seconds}s`;
       }
     }
-
+    // Utilisez v.rotation ou une propriété similaire pour l'angle
+    const rotation = v.rotation || 0;
     const popupContent = document.createElement('div');
     popupContent.style.position = 'relative';
     popupContent.innerHTML = `
@@ -1023,7 +1043,10 @@ if (v.type === 'hotel') {
       </div>
       <small style="display: block; margin-top: 4px; color: #666;">${dateInfo}</small>
     `;
-    L.marker([vlat, vlon]).addTo(currentLeafletMap)
+    L.marker([vlat, vlon], {
+      icon: createCameraIcon(rotation),
+      rotationAngle: rotation
+    }).addTo(currentLeafletMap)
       .bindPopup(popupContent)
       .on('popupopen', function() {
         document.querySelectorAll('.enlarge-btn').forEach(btn => {
