@@ -1014,7 +1014,6 @@ const cityViewConfig = {
   // Leaflet popup helpers
   let currentLeafletMap = null;
 function openLeafletPopup(cityData) {
-  // --- ouverture / reset ---
   leafletPopupEl.style.display = 'block';
   if (currentLeafletMap) {
     currentLeafletMap.remove();
@@ -1022,192 +1021,141 @@ function openLeafletPopup(cityData) {
   }
   leafletMapEl.innerHTML = '';
 
-  // --- helpers ---
-  function parseDateTimeFromFilename(path) {
-    // Capte 20250518 et optionnellement 175710 dans IMG_20250518_175710.jpg, PANO_20250526_124223.jpg, etc.
-    const filename = String(path || '').split('/').pop() || '';
-    const m = filename.match(/(\d{4})(\d{2})(\d{2})(?:[_-]?(\d{6}))?/);
-    if (!m) return null;
-    const [_, Y, M, D, T] = m;
-    const dateKey = `${D}/${M}/${Y}`;
-    let timeText = '';
-    if (T && T.length === 6) {
-      const hh = T.slice(0, 2), mm = T.slice(2, 4), ss = T.slice(4, 6);
-      timeText = `${hh}h${mm}m${ss}s`;
-    }
-    return { Y, M, D, dateKey, timeText };
-  }
-
-  function createPhotoPopup(v) {
-    const info = parseDateTimeFromFilename(v.photo);
-    let dateInfo = '';
-    if (info) {
-      dateInfo = `Le ${info.D}/${info.M}/${info.Y}` + (info.timeText ? ` à ${info.timeText}` : '');
-    }
-
-    const wrapper = document.createElement('div');
-    wrapper.style.position = 'relative';
-    wrapper.innerHTML = `
-      <b>${v.name || ''}</b><br>
-      <div style="position: relative; display: inline-block;">
-        <img src="${v.photo}" width="250" style="display:block;border-radius:4px;"/>
-        <button class="enlarge-btn" data-photo="${v.photo}" style="
-          position:absolute;top:5px;right:5px;
-          background:rgba(0,0,0,0.7);color:#fff;border:none;
-          border-radius:50%;width:24px;height:24px;cursor:pointer;
-          font-size:14px;display:flex;align-items:center;justify-content:center;
-        ">⤢</button>
-      </div>
-      <small style="display:block;margin-top:4px;color:#666;">${dateInfo}</small>
-    `;
-
-    // bouton "agrandir"
-    const btn = wrapper.querySelector('.enlarge-btn');
-    if (btn) {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const photoUrl = btn.getAttribute('data-photo');
-        openPhotoPopup(photoUrl);
-      });
-    }
-    return wrapper;
-  }
-
-  function parseDateKeyToSortable(dateKey) {
-    // "DD/MM/YYYY" -> {Y,M,D} nombres
-    const m = dateKey.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
-    if (!m) return { Y: 0, M: 0, D: 0 };
-    return { D: +m[1], M: +m[2], Y: +m[3] };
-  }
-
-  // --- basemaps ---
+  // --- Basemaps ---
   const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
+    attribution: '&copy; OSM'
   });
-  const googleStreet = L.tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
-    subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-    attribution: '© Google'
+  const gmap = L.tileLayer('https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}', {
+    attribution: '&copy; Google Maps'
   });
-  const googleSat = L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
-    subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-    attribution: '© Google'
+  const gsat = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+    attribution: '&copy; Google Maps Sat'
   });
 
   const baseMaps = {
-    "OpenStreetMap": osm,
-    "Google Street": googleStreet,
-    "Google Satellite": googleSat,
+    "OSM": osm,
+    "Google Street": gmap,
+    "Google Satellite": gsat
   };
 
-  // --- init carte ---
   const [lon, lat] = cityData.value;
   const config = cityViewConfig[cityData.name] || { center: [lat, lon], zoom: 13 };
-  currentLeafletMap = L.map(leafletMapEl, { layers: [osm] }).setView(config.center, config.zoom);
+  currentLeafletMap = L.map(leafletMapEl, {
+    layers: [osm]
+  }).setView(config.center, config.zoom);
 
-  // (facultatif) debug déplacement
-  currentLeafletMap.on('moveend', () => {
-    const c = currentLeafletMap.getCenter();
-    const z = currentLeafletMap.getZoom();
-    console.log('Centre de la carte :', c.lat, c.lng);
-    console.log('Niveau de zoom :', z);
-  });
+  L.control.layers(baseMaps).addTo(currentLeafletMap); // contrôle des fonds de plan
 
-  // --- contrôle des fonds de plan (layers) ---
-  L.control.layers(baseMaps).addTo(currentLeafletMap);
+  // --- Grouper photos par date ---
+  const photosByDate = {};
 
-  // --- calques ---
-  const fixedLayer = L.layerGroup().addTo(currentLeafletMap); // hôtels + marqueurs sans photo
-  const photosByDate = {}; // { 'DD/MM/YYYY': L.layerGroup }
-
-  // --- markers ---
   (cityData.visites || []).forEach(v => {
     const [vlon, vlat] = v.coords;
 
     if (v.type === 'hotel') {
-      L.marker([vlat, vlon], { icon: hotelIcon })
-        .addTo(fixedLayer)
+      L.marker([vlat, vlon], { icon: hotelIcon }).addTo(currentLeafletMap)
         .bindPopup(`<b>Hotel</b><br>Du ${v.datedeb} au ${v.datefin}`);
       return;
     }
 
     if (v.photo) {
-      const info = parseDateTimeFromFilename(v.photo);
-      if (!info) {
-        // si pas de date détectée, on l'affiche quand même dans fixedLayer
-        L.marker([vlat, vlon]).addTo(fixedLayer).bindPopup(createPhotoPopup(v));
-        return;
+      // Récupérer date depuis le nom du fichier
+      let dateInfo = "";
+      const photoName = v.photo.split('/').pop();
+      const dateMatch = photoName.match(/IMG[-_]?(\d{4})(\d{2})(\d{2})[-_]?([A-Za-z]{2})?(\d{6})?/);
+      if (dateMatch) {
+        const year = dateMatch[1];
+        const month = dateMatch[2];
+        const day = dateMatch[3];
+        const time = dateMatch[5];
+        dateInfo = `Le ${day}/${month}/${year}`;
+        if (time) {
+          const hours = time.substring(0, 2);
+          const minutes = time.substring(2, 4);
+          const seconds = time.substring(4, 6);
+          dateInfo += ` à ${hours}h${minutes}m${seconds}s`;
+        }
       }
-      const dateKey = info.dateKey;
-      if (!photosByDate[dateKey]) photosByDate[dateKey] = L.layerGroup();
 
-      const m = L.marker([vlat, vlon]).bindPopup(createPhotoPopup(v));
-      photosByDate[dateKey].addLayer(m);
-      return;
+      const dateKey = dateInfo.split(" à ")[0]; // clé = juste la date, sans heure
+      if (!photosByDate[dateKey]) {
+        photosByDate[dateKey] = L.layerGroup();
+      }
+
+      // popup avec bouton agrandir
+      const popupContent = document.createElement('div');
+      popupContent.style.position = 'relative';
+      popupContent.innerHTML = `
+        <b>${v.name || ''}</b><br>
+        <div style="position: relative; display: inline-block;">
+          <img src="${v.photo}" width="250" style="display: block; border-radius: 4px;"/>
+          <button class="enlarge-btn" data-photo="${v.photo}" style="
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          ">⤢</button>
+        </div>
+        <small style="display: block; margin-top: 4px; color: #666;">${dateInfo}</small>
+      `;
+
+      const marker = L.marker([vlat, vlon]).bindPopup(popupContent);
+      marker.on('popupopen', function () {
+        document.querySelectorAll('.enlarge-btn').forEach(btn => {
+          btn.onclick = function (e) {
+            e.stopPropagation();
+            const photoUrl = this.getAttribute('data-photo');
+            openPhotoPopup(photoUrl);
+          };
+        });
+      });
+
+      photosByDate[dateKey].addLayer(marker);
+
+    } else {
+      L.marker([vlat, vlon]).addTo(currentLeafletMap)
+        .bindPopup(`<b>${v.name || ''}</b>`);
     }
-
-    // autres points (sans photo)
-    L.marker([vlat, vlon]).addTo(fixedLayer).bindPopup(`<b>${v.name || ''}</b>`);
   });
 
-  // --- activer toutes les dates au départ ---
+  // --- Activer toutes les dates au départ ---
   Object.values(photosByDate).forEach(layer => layer.addTo(currentLeafletMap));
 
-  // --- contrôle séparé : cases à cocher par date ---
+  // --- Contrôle avec cases à cocher ---
   const datesControl = L.control({ position: 'topright' });
   datesControl.onAdd = function () {
     const div = L.DomUtil.create('div', 'dates-control');
     div.style.background = 'white';
-    div.style.padding = '8px';
+    div.style.padding = '6px';
     div.style.borderRadius = '6px';
-    div.style.marginTop = '10px'; // <-- séparation d'avec le contrôle des layers
+    div.style.marginTop = '10px';
     div.style.boxShadow = '0 1px 4px rgba(0,0,0,0.3)';
-    div.style.maxHeight = '180px';
+    div.style.maxHeight = '150px';
     div.style.overflowY = 'auto';
-    div.style.font = '14px/1.2 system-ui, -apple-system, Segoe UI, Roboto, Arial';
 
-    const title = document.createElement('div');
-    title.innerHTML = '<strong>Photos par date</strong>';
-    title.style.marginBottom = '6px';
+    const title = document.createElement('strong');
+    title.textContent = "Photos by date";
     div.appendChild(title);
 
-    // boutons rapide "Tout" / "Aucun"
-    const tools = document.createElement('div');
-    tools.style.display = 'flex';
-    tools.style.gap = '6px';
-    tools.style.marginBottom = '6px';
-    const btnAll = document.createElement('button');
-    btnAll.textContent = 'Tout';
-    btnAll.style.padding = '4px 6px';
-    btnAll.style.border = '1px solid #ddd';
-    btnAll.style.borderRadius = '4px';
-    btnAll.style.background = '#f8f8f8';
-    const btnNone = btnAll.cloneNode(true);
-    btnNone.textContent = 'Aucun';
-    tools.appendChild(btnAll);
-    tools.appendChild(btnNone);
-    div.appendChild(tools);
-
-    // dates triées chronologiquement
-    const dateKeys = Object.keys(photosByDate).sort((a, b) => {
-      const A = parseDateKeyToSortable(a), B = parseDateKeyToSortable(b);
-      return A.Y - B.Y || A.M - B.M || A.D - B.D;
-    });
-
-    // cases
-    dateKeys.forEach(dateKey => {
+    Object.keys(photosByDate).forEach(dateKey => {
       const id = 'chk_' + dateKey.replace(/\//g, '_');
       const label = document.createElement('label');
-      label.style.display = 'flex';
-      label.style.alignItems = 'center';
-      label.style.gap = '6px';
-      label.style.margin = '4px 0';
+      label.style.display = 'block';
 
       const cb = document.createElement('input');
       cb.type = 'checkbox';
       cb.id = id;
       cb.checked = true;
-      cb.setAttribute('aria-label', `Filtrer ${dateKey}`);
-
       cb.onchange = () => {
         if (cb.checked) {
           photosByDate[dateKey].addTo(currentLeafletMap);
@@ -1216,35 +1164,18 @@ function openLeafletPopup(cityData) {
         }
       };
 
-      const span = document.createElement('span');
-      span.textContent = dateKey;
-
       label.appendChild(cb);
-      label.appendChild(span);
+      label.appendChild(document.createTextNode(' ' + dateKey));
       div.appendChild(label);
     });
 
-    // actions "Tout/Aucun"
-    btnAll.addEventListener('click', () => {
-      dateKeys.forEach(dateKey => photosByDate[dateKey].addTo(currentLeafletMap));
-      div.querySelectorAll('input[type="checkbox"]').forEach(chk => chk.checked = true);
-    });
-    btnNone.addEventListener('click', () => {
-      dateKeys.forEach(dateKey => currentLeafletMap.removeLayer(photosByDate[dateKey]));
-      div.querySelectorAll('input[type="checkbox"]').forEach(chk => chk.checked = false);
-    });
-
-    // pour ne pas gêner la carte
     L.DomEvent.disableClickPropagation(div);
-    L.DomEvent.disableScrollPropagation(div);
     return div;
   };
   datesControl.addTo(currentLeafletMap);
 
-  // --- fin ---
-  setTimeout(() => currentLeafletMap.invalidateSize(), 50);
+  currentLeafletMap.invalidateSize();
 }
-
 
 // Fonction pour ouvrir la popup de photo agrandie
 function openPhotoPopup(photoUrl) {
