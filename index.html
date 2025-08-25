@@ -245,6 +245,8 @@
   
 </div>
 <script>
+let voyagesSet = new Set();
+  
 (async function(){
   const PATH_EARTH_DAY_1 = './GLOBE/earth.jpg';
   const PATH_EARTH_DAY_2 = './GLOBE/world.topo.bathy.200401.jpg';
@@ -294,6 +296,9 @@
   const trajetLines = [];
   const voyagesSet = new Set();
   const mapColor = { avion:'#00dbc5', train:'#db0016', bus:'#dbc500', voiture:'#0016db', bateau:'#0084db' };
+  
+  voyagesSet = new Set();
+  
   (trajetsGeo.features || []).forEach(f => {
     const col = mapColor[(f.properties?.trajet || f.properties?.transport || '').toLowerCase()] || '#00ffff';
     const voyageVal = (f.properties?.voyage ?? 'Inconnu');
