@@ -797,28 +797,51 @@ const cityViewConfig = {
         lineStyle: { color: '#f0f0f0', width: 1, opacity: 0.98 }
       });
     }
-    if(s.showTrajets){
-      const filteredTrajets = trajetLines.filter(l => s.activeVoyages.has(l.voyage));
-      series.push({
-        name: 'Trajets',
-        type: 'lines3D',
-        coordinateSystem: 'globe',
-        polyline: true,
-        data: filteredTrajets,
-        effect: {
-          show: true,
-          period: 10,
-          constantSpeed: 5,
-          trailLength: 0.15,
-          symbolSize: 6,
-          color: '#FFFFFF',
-        },
-        lineStyle: {
-          width: 2.5,
-          opacity: 0.95,
+if (s.showTrajets) {
+  const filteredTrajets = trajetLines.filter(l => s.activeVoyages.has(l.voyage));
+  series.push({
+    name: 'Trajets',
+    type: 'lines3D',
+    coordinateSystem: 'globe',
+    polyline: true,
+    data: filteredTrajets,
+    effect: {
+      show: true,
+      period: 10, // Durée d'une animation complète (en secondes)
+      constantSpeed: 5, // Vitesse constante du symbole
+      trailLength: 0.15, // Longueur de la traînée
+      symbol: (data) => {
+        // Choisis le symbole en fonction du type de trajet
+        const type = (data.properties?.trajet || '').toLowerCase();
+        switch (type) {
+          case 'avion':
+            return './GLOBE/symboles/avion_rouge_cote.svg';
+          case 'train':
+            return './GLOBE/symboles/train_vert_left.svg';
+          case 'voiture':
+            return './GLOBE/symboles/car_right.svg';
+          case 'bateau':
+            return 'https://cdn-icons-png.flaticon.com/128/45/45998.png';
+          case 'bus':
+            return './GLOBE/symboles/bus.svg';
+          default:
+            return 'circle'; // Symbole par défaut
         }
-      });
+      },
+      symbolSize: 12, // Taille du symbole
+      color: (data) => {
+        // Couleur en fonction du type de trajet
+        const type = (data.properties?.trajet || '').toLowerCase();
+        return mapColor[type] || '#00ffff';
+      },
+    },
+    lineStyle: {
+      width: 2.5,
+      opacity: 0.95,
     }
+  });
+}
+
     
     // pins des villes visitées — maintenant filtrées par voyages sélectionnés
     let pinsData = [];
