@@ -464,19 +464,40 @@
         { name:'Tree forest art center', coords:[121.446222, 31.253172], photo:'./IMG/2025/China/Shanghai/IMG_20250520_190533.jpg' },
         { name:'Tree forest art center', coords:[121.4457, 31.253264], photo:'./IMG/2025/China/Shanghai/IMG_20250520_190612.jpg' },
         { name:'Cool view of Shanghai', coords:[121.44539, 31.245141], photo:'./IMG/2025/China/Shanghai/IMG_20250520_203940.jpg' },
+        /*Visit of the Buddha temple*/
         { name:'3 big Buddhas', coords:[121.4403, 31.24340], photo:'./IMG/2025/China/Shanghai/IMG_20250522_115234.jpg' },
         { name:'The lying down Buddha', coords:[121.44083, 31.2433], photo:'./IMG/2025/China/Shanghai/IMG_20250522_115611.jpg' },
         { name:'The temple of Buddha', coords:[121.44058, 31.24343], photo:'./IMG/2025/China/Shanghai/IMG_20250522_115838.jpg' },
         { name:'The temple of Buddha', coords:[121.44030, 31.24319], photo:'./IMG/2025/China/Shanghai/IMG_20250522_121420.jpg' },
         { name:'The temple of Buddha', coords:[121.44062, 31.24282], photo:'./IMG/2025/China/Shanghai/IMG_20250522_123517.jpg' },
         { name:'The temple of Buddha', coords:[121.44041, 31.24334], photo:'./IMG/2025/China/Shanghai/IMG_20250522_125147.jpg' },
+        /*Visit of the Bund*/
         { name:'The bund by day', coords:[121.48619, 31.24038], photo:'./IMG/2025/China/Shanghai/IMG_20250522_164733.jpg' },
         { name:'The oriental pearl', coords:[121.49299, 31.24002], photo:'./IMG/2025/China/Shanghai/IMG_20250522_170254.jpg' },
         { name:'The oriental pearl', coords:[121.49545, 31.24025], photo:'./IMG/2025/China/Shanghai/IMG_20250522_170749.jpg' },
         { name:'The oriental pearl', coords:[121.49629, 31.23967], photo:'./IMG/2025/China/Shanghai/IMG_20250522_170926.jpg' },
         { name:'The oriental pearl', coords:[121.49635, 31.23967], photo:'./IMG/2025/China/Shanghai/IMG_20250522_170933.jpg' },
         { name:'The big 3', coords:[121.49905, 31.23921], photo:'./IMG/2025/China/Shanghai/IMG_20250522_171629.jpg' },
-        { name:'The big 3', coords:[121.50006, 31.23850], photo:'./IMG/2025/China/Shanghai/IMG_20250522_171847.jpg' },
+        { name:'The big 3', coords:[121.50006, 31.23850], photo:'./IMG/2025/China/Shanghai/IMG_20250522_171852.jpg' },
+        /*The Bund by night*/
+        { name:'The view of the ground behind', coords:[121.50112, 31.23599], photo:'./IMG/2025/China/Shanghai/IMG_20250522_174301.jpg' },
+        { name:'The view from the 119th floor (552m high)', coords:[121.50113, 31.23548], photo:'./IMG/2025/China/Shanghai/IMG_20250522_181211.jpg' },
+        { name:'The view when lights turn on', coords:[121.50052, 31.235755], photo:'./IMG/2025/China/Shanghai/IMG_20250522_191006.jpg' },
+        { name:'The view from behind at night', coords:[121.50145, 31.235975], photo:'./IMG/2025/China/Shanghai/IMG_20250522_193634.jpg' },
+        { name:'The big 3 at night', coords:[121.49927, 31.23606], photo:'./IMG/2025/China/Shanghai/IMG_20250522_200940_1.jpg' },
+        { name:'The big 3 at night', coords:[121.49914, 31.23708], photo:'./IMG/2025/China/Shanghai/IMG_20250522_201158.jpg' },
+        { name:'The big 3 at night', coords:[121.49907, 31.23758], photo:'./IMG/2025/China/Shanghai/IMG_20250522_201412.jpg' },
+        { name:'The area at night', coords:[121.49886, 31.23788], photo:'./IMG/2025/China/Shanghai/IMG_20250522_201436.jpg' },
+        { name:'The oriental pearl at night', coords:[121.49868, 31.23884], photo:'./IMG/2025/China/Shanghai/IMG_20250522_201625.jpg' },
+        { name:'The oriental pearl at night', coords:[121.49899, 31.23918], photo:'./IMG/2025/China/Shanghai/IMG_20250522_201803.jpg' },
+        { name:'The oriental pearl at night', coords:[121.49908, 31.23928], photo:'./IMG/2025/China/Shanghai/IMG_20250522_201817.jpg' },
+        { name:'The big 3 at night', coords:[121.49960, 31.23947], photo:'./IMG/2025/China/Shanghai/IMG_20250522_202027.jpg' },
+        { name:'The oriental pearl at night', coords:[121.49709, 31.24056], photo:'./IMG/2025/China/Shanghai/IMG_20250522_202607.jpg' },
+        { name:'The Bund', coords:[121.48631, 31.24173], photo:'./IMG/2025/China/Shanghai/IMG_20250522_204941.jpg' },
+        { name:'Mao Zedong', coords:[121.48594, 31.24100], photo:'./IMG/2025/China/Shanghai/IMG_20250522_205306.jpg' },
+        { name:'The people\'s brazer', coords:[121.48669, 31.24413], photo:'./IMG/2025/China/Shanghai/IMG_20250522_205940.jpg' },
+        { name:'The bund with the brazer', coords:[121.48649, 31.24416], photo:'./IMG/2025/China/Shanghai/IMG_20250522_210154.jpg' },
+        { name:'Start of my date with Xinrui', coords:[121.43297, 31.26360], photo:'./IMG/2025/China/Shanghai/IMG_20250523_000731.jpg' }
       ]
     },
     {
@@ -1087,7 +1108,7 @@ document.getElementById('photoPopup').addEventListener('click', (e) => {
   }
 
   leafletCloseBtn.addEventListener('click', closeLeafletPopup);
-  /*document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeLeafletPopup(); });*/
+  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeLeafletPopup(); });
   leafletPopupEl.addEventListener('click', (e)=>{ if(e.target === leafletPopupEl) closeLeafletPopup(); });
 
   // clic sur globe
