@@ -722,41 +722,31 @@
 function createDirectionalMarker(rotationAngle) {
   return L.divIcon({
     html: `
-      <div style="position: relative; width: 32px; height: 32px;">
-        <!-- Marqueur bleu classique -->
+      <div style="position: relative; width: 0; height: 0;">
+        <!-- Flèche directionnelle -->
         <div style="
           position: absolute;
-          top: 0;
-          left: 0;
-          width: 28px;
-          height: 28px;
-          background: #3498db;
-          border: 2px solid #2980b9;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transform: translate(-50%, -50%);
+          top: -10px;
+          left: -10px;
+          width: 20px;
+          height: 20px;
+          transform: rotate(${rotationAngle}deg);
+          transform-origin: center;
         ">
-          <div style="
-            width: 0;
-            height: 0;
-            border-left: 8px solid transparent;
-            border-right: 8px solid transparent;
-            border-top: 12px solid #e74c3c;
-            transform: rotate(${rotationAngle}deg) translateY(6px);
-            position: absolute;
-            top: 50%;
-            left: 50%;
-          "></div>
+          <svg width="20" height="20" viewBox="0 0 20 20" style="transform: rotate(${rotationAngle}deg);">
+            <line x1="0" y1="10" x2="15" y2="10" stroke="#e74c3c" stroke-width="2" />
+            <line x1="15" y1="10" x2="12" y2="7" stroke="#e74c3c" stroke-width="2" />
+            <line x1="15" y1="10" x2="12" y2="13" stroke="#e74c3c" stroke-width="2" />
+          </svg>
         </div>
       </div>
     `,
     className: 'directional-marker',
-    iconSize: [32, 32],
-    iconAnchor: [16, 16]
+    iconSize: [0, 0], // Taille nulle pour ne pas interférer avec le marqueur bleu
+    iconAnchor: [0, 0] // Ancrage nul pour superposer correctement
   });
 }
+
 
 
   
@@ -1055,6 +1045,17 @@ function openLeafletPopup(cityData) {
     }
     // Angle de rotation (exemple : 45)
     const rotation = v.rotation || 0;
+
+    // Créer un marqueur bleu classique
+    const marker = L.marker([vlat, vlon]).addTo(currentLeafletMap);
+
+    // Ajouter la flèche directionnelle en superposition
+    L.marker([vlat, vlon], {
+      icon: createDirectionalMarker(rotation),
+      zIndexOffset: 1000 // Pour s'assurer que la flèche est au-dessus du marqueur bleu
+    }).addTo(currentLeafletMap);
+
+    // Contenu de la popup
     const popupContent = document.createElement('div');
     popupContent.style.position = 'relative';
     popupContent.innerHTML = `
@@ -1065,10 +1066,9 @@ function openLeafletPopup(cityData) {
       </div>
       <small style="display: block; margin-top: 4px; color: #666;">${dateInfo}</small>
     `;
-    L.marker([vlat, vlon], {
-      icon: createDirectionalMarker(rotation)
-    }).addTo(currentLeafletMap)
-      .bindPopup(popupContent)
+
+    // Associer la popup au marqueur bleu
+    marker.bindPopup(popupContent)
       .on('popupopen', function() {
         document.querySelectorAll('.enlarge-btn').forEach(btn => {
           btn.onclick = function(e) {
@@ -1083,6 +1083,7 @@ function openLeafletPopup(cityData) {
       .bindPopup(`<b>${v.name || ''}</b>`);
   }
 });
+
 
   
   // Gestion du clic sur le bouton "Agrandir"
