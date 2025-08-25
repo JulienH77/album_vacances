@@ -245,8 +245,6 @@
   
 </div>
 <script>
-let voyagesSet = new Set();
-  
 (async function(){
   const PATH_EARTH_DAY_1 = './GLOBE/earth.jpg';
   const PATH_EARTH_DAY_2 = './GLOBE/world.topo.bathy.200401.jpg';
@@ -296,24 +294,16 @@ let voyagesSet = new Set();
   const trajetLines = [];
   const voyagesSet = new Set();
   const mapColor = { avion:'#00dbc5', train:'#db0016', bus:'#dbc500', voiture:'#0016db', bateau:'#0084db' };
-  
-  voyagesSet = new Set();
-  
   (trajetsGeo.features || []).forEach(f => {
     const col = mapColor[(f.properties?.trajet || f.properties?.transport || '').toLowerCase()] || '#00ffff';
     const voyageVal = (f.properties?.voyage ?? 'Inconnu');
     voyagesSet.add(voyageVal);
     extractLinesFromFeature(f).forEach(l => trajetLines.push({
       ...l,
-      lineStyle: { color: col, width: 2.5, opacity: 0.95 },
-      properties: f.properties, // Assurez-vous que f.properties contient bien les clés attendues
+      lineStyle:{ color: col, width: 2.5, opacity: 0.95 },
+      properties:f.properties,
       voyage: voyageVal
     }));
-  });
-
-
-
-    
   });
   // Mapping voyage -> villes demandées par l'utilisateur
   const voyagesToCities = {
@@ -1101,22 +1091,33 @@ document.getElementById('photoPopup').addEventListener('click', (e) => {
   leafletPopupEl.addEventListener('click', (e)=>{ if(e.target === leafletPopupEl) closeLeafletPopup(); });
 
   // clic sur globe
-globeChart.on('click', params => {
-  if (params.seriesName === 'Trajets' && params.data && params.data.properties) {
-    const p = params.data.properties;
-    const popupEl = document.getElementById('trajetPopup');
-    // Affiche toutes les propriétés disponibles pour déboguer
-    popupEl.innerHTML = `<pre>${JSON.stringify(p, null, 2)}</pre>`;
-    popupEl.style.display = 'block';
-  } else if (params.seriesName === 'Pins' && params.data) {
-    const popupEl = document.getElementById('trajetPopup');
-    popupEl.style.display = 'none';
-    openLeafletPopup(params.data);
-  } else {
-    const popupEl = document.getElementById('trajetPopup');
-    popupEl.style.display = 'none';
-  }
-});
+  globeChart.on('click', params => {
+    if(params.seriesName === 'Trajets' && params.data && params.data.properties){
+      const p = params.data.properties;
+      const popupEl = document.getElementById('trajetPopup');
+      popupEl.innerHTML = `
+        <strong>Trajet:</strong> ${p.trajet || ''}<br/>
+        <strong>Voyage:</strong> ${p.voyage || ''}<br/>
+        <strong>Date début:</strong> ${p.date_deb || ''}<br/>
+        <strong>Date fin:</strong> ${p.date_fin || ''}<br/>
+        <strong>Durée:</strong> ${p.duree || ''}<br/>
+        <strong>Distance:</strong> ${p.distanceKM || ''} km
+      `;
+      popupEl.style.display = 'block';
+    } else if(params.seriesName === 'Pins' && params.data){
+      const popupEl = document.getElementById('trajetPopup');
+      popupEl.style.display = 'none';
+      openLeafletPopup(params.data);
+    } else {
+      const popupEl = document.getElementById('trajetPopup');
+      popupEl.style.display = 'none';
+    }
+  });
+
+  // rendu initial
+  voyagesListEl.style.display = state.showTrajets ? 'block' : 'none';
+  refresh();
+})();
 </script>
 </body>
 </html>
