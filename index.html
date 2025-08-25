@@ -1017,6 +1017,14 @@ function openLeafletPopup(cityData) {
 
   const [lon, lat] = cityData.value;
   currentLeafletMap = L.map(leafletMapEl).setView([lat, lon], 13);
+  
+  currentLeafletMap.on('moveend', function() {
+  const center = currentLeafletMap.getCenter();
+  const zoom = currentLeafletMap.getZoom();
+  console.log('Centre de la carte :', center.lat, center.lng);
+  console.log('Niveau de zoom :', zoom);
+});
+
   osm.addTo(currentLeafletMap);
   const baseMaps = {
     "OpenStreetMap": osm,
