@@ -1,136 +1,177 @@
-html,body,#root { height:100%; margin:0; padding:0; }
-  body{
-    background-color: black;
-    background-size: cover;
-    font-family: Inter, Arial, sans-serif;
-  }
-  #root { position:relative; width:100%; height:100%; overflow:hidden; }
-  #globeContainer { width:100%; height:100%; }
-  /* Boutons ronds */
-  .toggle-btn {
-    position: absolute;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 120;
-    user-select: none;
-    background: rgba(255,255,255,0.9);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.25);
-    transition: background 0.2s, transform 0.15s;
-  }
-  .toggle-btn.active { background: rgba(180,220,255,0.9); }
-  .toggle-btn:active { transform: scale(0.95); }
-  #toggleNight {
-    top: 18px;
-    left: 18px;
-  }
-  #toggleRelief {
-    top: 80px;
-    left: 18px;
-  }
-  #toggleClouds {
-    top: 142px;
-    left: 18px;
-  }
-  /* Bouton carré fond du jour (en bas à gauche) */
-  #toggleDayBase {
-    position: absolute;
-    left: 18px;
-    bottom: 18px;
-    width: 48px;
-    height: 48px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 120;
-    user-select: none;
-    background: rgba(255,255,255,0.95);
-    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
-    font-weight: 700;
-    font-size: 12px;
-    text-align: center;
-    line-height: 1.1;
-  }
-  #toggleDayBase:active { transform: scale(0.97); }
-  /* Légende */
-  #legend {
-    position:absolute; top:14px; right:14px; z-index:120;
-    background: rgba(255,255,255,0.92);
-    padding:10px 12px; border-radius:10px;
-    min-width:160px; box-shadow:0 6px 18px rgba(0,0,0,0.18);
-  }
-  #legend label { display:flex; align-items:center; gap:10px; font-weight:600; }
-  #legend input[type=checkbox] { width:16px; height:16px; }
-  /* Lune */
-  #moonPreview {
-    position:absolute; bottom:14px; right:14px;
-    width:140px; height:140px; z-index:110; border-radius:50%;
-    overflow:hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.6); background:black;
-  }
-  /* Popup stats */
-  #trajetPopup {
-    position:absolute; bottom:20px; left:20px;
-    background:rgba(0,0,0,0.85); color:white;
-    padding:10px 14px; border-radius:8px;
-    font-size:14px; line-height:1.4; max-width:300px;
-    display:none; z-index:200;
-  }
-  /* Popup Leaflet plein écran */
-  #leafletPopup {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,0.8);
-    display: none;
-    z-index: 400;
-  }
-  #leafletMap {
-    width: 90%; height: 90%;
-    margin: 40px auto;
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-  }
-  #leafletClose {
-    position: absolute; top: 20px; right: 20px;
-    background: #fff; border: none;
-    border-radius: 50%; width: 36px; height: 36px;
-    cursor: pointer; font-size: 18px; font-weight: bold;
-  }
-  /* --- AJOUT: styles de la liste dépliable des voyages --- */
-  #voyagesDetails { margin-top:8px; }
-  #voyagesDetails[hidden] { display:none; }
-  #voyagesDetails summary { cursor:pointer; font-weight:700; }
-  #voyagesList { margin-top:6px; max-height:260px; overflow:auto; padding-left:2px; }
-  #voyagesList label { display:flex; align-items:center; gap:8px; font-weight:500; }
+/* Reset et base */
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
 
-/* Popup d'agrandissement de photo */
-#photoPopup {
+body {
+  background-color: black;
+  font-family: Inter, Arial, sans-serif;
+}
+
+#root {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+#globeContainer {
+  width: 100%;
+  height: 100%;
+}
+
+/* Boutons */
+.toggle-btn {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 120;
+  user-select: none;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  transition: background 0.2s, transform 0.15s;
+}
+
+.toggle-btn.active {
+  background: rgba(180, 220, 255, 0.9);
+}
+
+.toggle-btn:active {
+  transform: scale(0.95);
+}
+
+#toggleNight {
+  top: 18px;
+  left: 18px;
+}
+
+#toggleRelief {
+  top: 80px;
+  left: 18px;
+}
+
+#toggleClouds {
+  top: 142px;
+  left: 18px;
+}
+
+#toggleDayBase {
+  position: absolute;
+  left: 18px;
+  bottom: 18px;
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 120;
+  user-select: none;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+  font-weight: 700;
+  font-size: 12px;
+  text-align: center;
+  line-height: 1.1;
+}
+
+#toggleDayBase:active {
+  transform: scale(0.97);
+}
+
+/* Légende */
+#legend {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 120;
+  background: rgba(255, 255, 255, 0.92);
+  padding: 10px 12px;
+  border-radius: 10px;
+  min-width: 160px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+}
+
+#legend label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+}
+
+#legend input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+}
+
+/* Liste des voyages */
+#voyagesList {
+  margin-top: 6px;
+  max-height: 260px;
+  overflow: auto;
+  padding-left: 2px;
+}
+
+#voyagesList label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+}
+
+/* Popups */
+#trajetPopup {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background: rgba(0, 0, 0, 0.85);
+  color: white;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.4;
+  max-width: 300px;
+  z-index: 200;
+}
+
+#leafletPopup, #photoPopup {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.95);
+  background: rgba(0, 0, 0, 0.8);
   display: none;
-  z-index: 500;
+  z-index: 400;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
 }
+
+#leafletMap {
+  width: 90%;
+  height: 90%;
+  margin: 40px auto;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
 #photoPopup img {
   max-width: 90%;
-  max-height: 90vh; /* 90% de la hauteur de la fenêtre */
+  max-height: 90vh;
   object-fit: contain;
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
   border-radius: 4px;
 }
-#photoClose {
+
+#leafletClose, #photoClose {
   position: absolute;
   top: 20px;
   right: 20px;
@@ -142,11 +183,9 @@ html,body,#root { height:100%; margin:0; padding:0; }
   cursor: pointer;
   font-size: 18px;
   font-weight: bold;
-  z-index: 501;
+  z-index: 1001;
 }
-#photoClose:hover {
-  background: #eee;
-}
+
 .enlarge-btn {
   position: absolute;
   top: 5px;
@@ -163,12 +202,7 @@ html,body,#root { height:100%; margin:0; padding:0; }
   align-items: center;
   justify-content: center;
 }
+
 .enlarge-btn:hover {
   background: rgba(0, 0, 0, 0.9);
 }
-#leafletPopup {
-  z-index: 400;
-}
-#photoPopup {
-  z-index: 500;
-} 
