@@ -76,8 +76,23 @@
       
 // villes visitées avec photos et coordonnées
 <script src="visitedCities.js"></script>
+      
 <script>
+  console.log("voyagesToCities:", voyagesToCities); // Vérifie si c'est défini ici
+</script>
+
+
+      
+<script>
+  // Force la variable à être globale
+  window.voyagesToCities = window.voyagesToCities || {};
 (async function(){
+
+      
+    console.log("voyagesToCities:", voyagesToCities); // Vérifie ici
+
+
+      
   /* Les variables */
   const PATH_EARTH_DAY_1 = './GLOBE/earth.jpg';
   const PATH_EARTH_DAY_2 = './GLOBE/world.topo.bathy.200401.jpg';
