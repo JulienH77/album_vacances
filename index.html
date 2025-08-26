@@ -46,7 +46,9 @@
                 <label><input id="chkTrajets" type="checkbox"> Trajets</label>
                 <!-- AJOUT : liste des voyages directement sous "Trajets" -->
                 <div id="voyagesList" role="group" aria-label="Liste des voyages" style="display:none; margin-top:6px; max-height:260px; overflow:auto;"></div>
-                <div id="trajetLegend" style="display:none; margin-top:10px;"></div>
+                <div id="trajetLegend" style="position:absolute; bottom:20px; right:20px; background:white; padding:8px 12px; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,0.3); font-size:14px; display:none; z-index:1000;">
+                     <strong style="display:block; margin-bottom:6px;">Légende trajets</strong>
+                </div>            
             </div>
             <!-- A QUOI SERS TU ? -->
             <div id="trajetPopup"></div>
@@ -153,11 +155,12 @@ Object.entries(mapColor).forEach(([transport, color])=>{
   item.style.alignItems = 'center';
   item.style.marginBottom = '4px';
   item.innerHTML = `
-    <span style="display:inline-block; width:18px; height:3px; background:${color}; margin-right:6px;"></span>
+    <span style="display:inline-block; width:16px; height:3px; background:${color}; margin-right:6px;"></span>
     ${transport.charAt(0).toUpperCase() + transport.slice(1)}
   `;
   trajetLegendEl.appendChild(item);
 });
+
       
   // Style des logos des hotels
   const hotelIcon = L.divIcon({
