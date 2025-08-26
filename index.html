@@ -76,7 +76,7 @@
       
 // villes visitées avec photos et coordonnées
 <script src="visitedCities.js"></script> 
-<script>      
+<script>
 (async function(){
   /* Les variables */
   const PATH_EARTH_DAY_1 = './GLOBE/earth.jpg';
@@ -178,247 +178,134 @@
     activeVoyages: new Set(voyagesSet)
   };
 
-
-
-// Variables globales pour l'ISS
-let issTrajectory = [];
-const maxTrajectoryPoints = 10; // Nombre de points à garder pour la trajectoire
-
-// Fonction pour récupérer la position de l'ISS
-async function fetchISSPosition() {
-  try {
-    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent('http://api.open-notify.org/iss-now.json')}`;
-    const response = await fetch(proxyUrl);
-    const data = await response.json();
-    const issData = JSON.parse(data.contents);
-    return {
-      longitude: parseFloat(issData.iss_position.longitude),
-      latitude: parseFloat(issData.iss_position.latitude),
-      timestamp: issData.timestamp
-    };
-  } catch (error) {
-    console.error("Erreur lors de la récupération de la position de l'ISS :", error);
-    return null;
-  }
-}
-
-
-// Fonction pour mettre à jour la position de l'ISS
-async function updateISSPosition() {
-  const position = await fetchISSPosition();
-  if (position) {
-    issTrajectory.push([position.longitude, position.latitude, 0.05]);
-    if (issTrajectory.length > maxTrajectoryPoints) {
-      issTrajectory.shift();
+  // Fonction qui fait plein de trucs
+  function makeOption(s) {
+    const series = [];
+    // Frontières des pays
+    if(s.showPays){
+      series.push({
+        name: 'Pays',
+        type: 'lines3D',
+        coordinateSystem: 'globe',
+        polyline: true,
+        data: countryLines,
+        lineStyle: { color: '#f0f0f0', width: 1, opacity: 0.98 }
+      });
     }
-    refresh();
-  }
-}
-
-// Fonction principale pour générer les options du globe
-function makeOption(s) {
-  const series = [];
-
-  // Frontières des pays
-  if (s.showPays) {
-    series.push({
-      name: 'Pays',
-      type: 'lines3D',
-      coordinateSystem: 'globe',
-      polyline: true,
-      data: countryLines,
-      lineStyle: { color: '#f0f0f0', width: 1, opacity: 0.98 }
-    });
-  }
-
-  // Affiche les trajets
-  if (s.showTrajets) {
-    const filteredTrajets = trajetLines.filter(l => s.activeVoyages.has(l.voyage));
-    series.push({
-      name: 'Trajets',
-      type: 'lines3D',
-      coordinateSystem: 'globe',
-      polyline: true,
-      data: filteredTrajets,
-      effect: {
-        show: true,
-        period: 10,
-        constantSpeed: 5,
-        trailLength: 0.15,
-        symbolSize: 6,
-        color: '#FFFFFF',
-      },
-      lineStyle: {
-        width: 2.5,
-        opacity: 0.95,
-      }
-    });
-  }
-
-  // Pins des villes visitées
-  let pinsData = [];
-  const allowedCities = new Set();
-  if (s.activeVoyages && s.activeVoyages.size) {
-    s.activeVoyages.forEach(v => {
-      const list = voyagesToCities[v];
-      if (Array.isArray(list)) list.forEach(city => allowedCities.add(city));
-    });
-  }
-  if (allowedCities.size > 0) {
-    pinsData = visitedCities.filter(c => allowedCities.has(c.name));
-  } else {
-    pinsData = [];
-  }
-  series.push({
-    name: 'Pins',
-    type: 'scatter3D',
-    coordinateSystem: 'globe',
-    symbol: 'circle',
-    symbolSize: 10,
-    itemStyle: {
-      color: '#FFFFFF',
-      borderColor: '#000000',
-      borderWidth: 0.75,
-    },
-    emphasis: {
-      itemStyle: {
-        color: '#FFD700',
-        borderColor: '#000000',
-        borderWidth: 1,
-      },
-      label: {
-        show: true,
-        formatter: p => p.name,
-        position: 'top',
-        textStyle: {
-          color: '#fff',
-          padding: [2, 2],
-          borderRadius: 3,
-          backgroundColor: 'rgba(0,0,0,1)',
-          fontSize: 15,
-        }
-      }
-    },
-    data: pinsData
-  });
-
-  // Ajoute la trajectoire de l'ISS si des points existent
-  if (issTrajectory.length > 0) {
-    series.push({
-      name: 'ISS Trajectory',
-      type: 'lines3D',
-      coordinateSystem: 'globe',
-      data: [{
-        coords: issTrajectory,
+    // Affiche les trajets
+    if(s.showTrajets){
+      const filteredTrajets = trajetLines.filter(l => s.activeVoyages.has(l.voyage));
+      series.push({
+        name: 'Trajets',
+        type: 'lines3D',
+        coordinateSystem: 'globe',
+        polyline: true,
+        data: filteredTrajets,
+        effect: {
+          show: true,
+          period: 10,
+          constantSpeed: 5,
+          trailLength: 0.15,
+          symbolSize: 6,
+          color: '#FFFFFF',
+        },
         lineStyle: {
-          color: '#FF00FF',
-          width: 2,
-          opacity: 0.8
+          width: 2.5,
+          opacity: 0.95,
         }
-      }],
-      effect: {
-        show: true,
-        trailWidth: 2,
-        trailLength: 0.2,
-        trailOpacity: 0.8,
-        trailColor: '#FF00FF'
-      }
-    });
-
-    // Ajoute le point de l'ISS
+      });
+    }
+    // pins des villes visitées qui deviennent filtrées par les voyages sélectionnés
+    let pinsData = [];
+    const allowedCities = new Set();
+    if(s.activeVoyages && s.activeVoyages.size){
+      s.activeVoyages.forEach(v => {
+        const list = voyagesToCities[v];
+        if(Array.isArray(list)) list.forEach(city => allowedCities.add(city));
+      });
+    }
+    if(allowedCities.size > 0){
+      pinsData = visitedCities.filter(c => allowedCities.has(c.name));
+    } else {
+      pinsData = [];
+    }
     series.push({
-      name: 'ISS',
+      name: 'Pins',
       type: 'scatter3D',
       coordinateSystem: 'globe',
-      symbol: 'image://https://upload.wikimedia.org/wikipedia/commons/f/f2/ISS_spacecraft_model_1.png',
-      symbolSize: [20, 20],
+      symbol: 'circle',
+      symbolSize: 10,
       itemStyle: {
-        color: '#FF00FF'
+        color: '#FFFFFF',
+        borderColor: '#000000',
+        borderWidth: 0.75,
       },
-      data: [{
-        value: issTrajectory[issTrajectory.length - 1] // Dernière position connue
-      }]
-    });
-  }
-
-  // Affiche le monde de nuit
-  const layers = [];
-  if (s.showNightShadow) {
-    layers.push({
-      show: true,
-      name: 'Ombre nuit',
-      type: 'blend',
-      intensity: 1.3,
-      blendTo: 'emission',
-      texture: PATH_EARTH_NIGHT_RAW
-    });
-  }
-
-  // Affiche les nuages
-  if (s.showNuages) {
-    layers.push({
-      show: true,
-      name: 'Nuages',
-      type: 'overlay',
-      texture: CLOUDS,
-      shading: 'lambert',
-      distance: 2
-    });
-  }
-
-  // Change le fond du globe
-  const baseDay = (s.dayBase === 'earth') ? PATH_EARTH_DAY_1 : PATH_EARTH_DAY_2;
-
-  return {
-    backgroundColor: 'transparent',
-    globe: {
-      baseTexture: baseDay,
-      heightTexture: s.showRelief ? PATH_EARTH_BUMP : undefined,
-      displacementScale: 0.025,
-      shading: 'realistic',
-      environment: PATH_STARFIELD,
-      postEffect: { enable: false },
-      light: {
-        ambient: { color: '#1f1f1f', intensity: 0.2 },
-        main: { color: '#FFFDED', intensity: 0.9 }
+      emphasis: {
+        itemStyle: {
+          color: '#FFD700',
+          borderColor: '#000000',
+          borderWidth: 1,
+        },
+        label: {
+          show: true,
+          formatter: p => p.name,
+          position: 'top',
+          textStyle: {
+            color: '#fff',
+            padding: [2, 2],
+            borderRadius: 3,
+            backgroundColor: 'rgba(0,0,0,1)',
+            fontSize: 15,
+          }
+        }
       },
-      atmosphere: { show: true, color: '#a1a1a1', offset: 4 },
-      viewControl: { autoRotate: false, autoRotateSpeed: 0.5 },
-      layers
-    },
-    series
-  };
-}
-
-// Démarre la mise à jour périodique de la position de l'ISS
-setInterval(updateISSPosition, 5000);
-
-      
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      
+      data: pinsData
+    });
+    // Affiche le monde de nuit
+    const layers = [];
+    if(s.showNightShadow){
+      layers.push({
+        show: true,
+        name: 'Ombre nuit',
+        type: 'blend',
+        intensity: 1.3,
+        blendTo: 'emission',
+        texture: PATH_EARTH_NIGHT_RAW
+      });
+    }
+    // Affiche les nuages
+    if(s.showNuages){
+      layers.push({
+        show: true,
+        name: 'Nuages',
+        type: 'overlay',
+        texture: CLOUDS,
+        shading: 'lambert',
+        distance: 2
+      });
+    }
+    // Change le fond du globe
+    const baseDay = (s.dayBase === 'earth') ? PATH_EARTH_DAY_1 : PATH_EARTH_DAY_2;
+    return {
+      backgroundColor: 'transparent',
+      globe: {
+        baseTexture: baseDay,
+        heightTexture: s.showRelief ? PATH_EARTH_BUMP : undefined,
+        displacementScale: 0.025,
+        shading: 'realistic',
+        environment: PATH_STARFIELD,
+        postEffect: { enable: false },
+        light: {
+          ambient: { color: '#1f1f1f', intensity: 0.2 },
+          main: { color: '#FFFDED', intensity: 0.9 }
+        },
+        atmosphere: { show: true, color: '#a1a1a1', offset: 4 },
+        viewControl: { autoRotate: false, autoRotateSpeed: 0.5 },
+        layers
+      },
+      series
+    };
+  }
 
   // Récupère la vue du globe actuelle
   function getCurrentView() {
