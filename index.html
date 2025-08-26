@@ -46,6 +46,7 @@
                 <label><input id="chkTrajets" type="checkbox"> Trajets</label>
                 <!-- AJOUT : liste des voyages directement sous "Trajets" -->
                 <div id="voyagesList" role="group" aria-label="Liste des voyages" style="display:none; margin-top:6px; max-height:260px; overflow:auto;"></div>
+                <div id="trajetLegend" style="display:none; margin-top:10px;"></div>
             </div>
             <!-- A QUOI SERS TU ? -->
             <div id="trajetPopup"></div>
@@ -144,6 +145,19 @@
       voyage: voyageVal
     }));
   });
+// --- Génération de la légende des trajets ---
+const trajetLegendEl = document.getElementById('trajetLegend');
+Object.entries(mapColor).forEach(([transport, color])=>{
+  const item = document.createElement('div');
+  item.style.display = 'flex';
+  item.style.alignItems = 'center';
+  item.style.marginBottom = '4px';
+  item.innerHTML = `
+    <span style="display:inline-block; width:18px; height:3px; background:${color}; margin-right:6px;"></span>
+    ${transport.charAt(0).toUpperCase() + transport.slice(1)}
+  `;
+  trajetLegendEl.appendChild(item);
+});
       
   // Style des logos des hotels
   const hotelIcon = L.divIcon({
@@ -396,6 +410,7 @@
       state['show'+name] = e.target.checked;
       if(name === 'Trajets'){
         voyagesListEl.style.display = state.showTrajets ? 'block' : 'none';
+        trajetLegendEl.style.display = state.showTrajets ? 'block' : 'none';
       }
       refresh();
     });
