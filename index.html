@@ -803,7 +803,6 @@ const clusterGroups = {};
 Object.keys(clusters).forEach(id => {
   clusterGroups[id] = L.markerClusterGroup({
     iconCreateFunction: function (cluster) {
-      // Icône personnalisée avec image + label
       const childCount = cluster.getChildCount();
       const clusterData = clusters[id];
 
@@ -820,12 +819,27 @@ Object.keys(clusters).forEach(id => {
     }
   });
 });
-photos.forEach(photo => {
-  const marker = L.marker([photo.lat, photo.lng])
-    .bindPopup(`<img src="photos/${photo.name}" style="width:200px;"><br>${photo.name}`);
-  
-  clusterGroups[photo.cluster].addLayer(marker);
+
+// Parcours des visites et ajout dans le bon cluster
+(cityData.visites || []).forEach(v => {
+  if (!v.photo || !v.cluster) return;
+
+  const [vlon, vlat] = v.coords;
+
+  const marker = L.marker([vlat, vlon]).bindPopup(`
+    <div style="text-align:center">
+      <img src="${v.photo}" width="200" style="border-radius:6px; margin-bottom:6px"/>
+      <div>${v.name || ''}</div>
+    </div>
+  `);
+
+  // Ajout dans le cluster correspondant
+  if (clusterGroups[v.cluster]) {
+    clusterGroups[v.cluster].addLayer(marker);
+  }
 });
+
+// Ajout des clusters à la carte
 Object.values(clusterGroups).forEach(group => {
   group.addTo(currentLeafletMap);
 });
