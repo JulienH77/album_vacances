@@ -1,4 +1,9 @@
 const visitedCities = [
+    /*-------------------------------------------------------------------------------------------------------------------------------*/
+    /*--------------------------------------------------------- A S I A -------------------------------------------------------------*/
+    /*-------------------------------------------------------------------------------------------------------------------------------*/
+    
+    /*-------------------------------------------------------- C H I N A ------------------------------------------------------------*/
     {
       name: 'Beijing',
       value: [116.383331, 39.916668, 0],
@@ -319,6 +324,18 @@ const visitedCities = [
         { name:'Tianjin dock before leaving', coords:[117.19884, 39.13174], photo:'./IMG/2025/China/Tianjin/IMG_20250529_201045.jpg' }
       ]
     },
+    /*-------------------------------------------------------------------------------------------------------------------------------*/
+    /*-------------------------------------------------------------------------------------------------------------------------------*/
+
+
+
+
+
+    /*----------------------------------------------------------------------------------------------------------------------------------*/
+    /*-------------------------------------------------------- E U R O P E -------------------------------------------------------------*/
+    /*----------------------------------------------------------------------------------------------------------------------------------*/
+
+    /*------------------------------------------------------- G E R M A N Y ------------------------------------------------------------*/
     {
       name: 'Munich',
       value: [11.57251, 48.13922, 0],
@@ -330,71 +347,6 @@ const visitedCities = [
         { name:'Leaving the garten', coords:[11.596034, 48.1503655], photo:'./IMG/2025/Central Europe/Munich/IMG_20250712_203324.jpg' },
         { name:'Waiting for her laundry', coords:[11.60667, 48.12429], photo:'./IMG/2025/Central Europe/Munich/IMG_20250712_221519.jpg' },
         { name:'Last meal before the end', coords:[11.56099, 48.13865], photo:'./IMG/2025/Central Europe/Munich/IMG_20250727_140041.jpg' }
-      ]
-    },
-    {
-      name: 'Marquartstein',
-      value: [12.46238, 47.75929, 0],
-      visites: [
-        { name:'On a walk', coords:[12.46436, 47.757624], photo:'./IMG/2025/Central Europe/Marquartstein/IMG_20250713_135813.jpg' },
-        { name:'Cute girl and a bin', coords:[12.465336, 47.75557], photo:'./IMG/2025/Central Europe/Marquartstein/IMG_20250713_140715.jpg' },
-        { name:'The lion girl', coords:[12.46704, 47.75209], photo:'./IMG/2025/Central Europe/Marquartstein/IMG_20250713_141521.jpg' },
-        { name:'Barbie was lost', coords:[12.46681, 47.751229], photo:'./IMG/2025/Central Europe/Marquartstein/IMG_20250713_141835.jpg' },
-        { name:'Fuck the rain', coords:[12.463480, 47.759179], photo:'./IMG/2025/Central Europe/Marquartstein/IMG_20250713_150552.jpg' }
-      ]
-    },
-    {
-      name: 'Salzburg',
-      value: [13.04159, 47.80523, 0],
-      visites: [
-        { type: 'hotel', datedeb:'13/07/2025', datefin:'15/07/2025', coords:[13.037606, 47.810420] },
-        { name:'Mozart Diner Concert', coords:[13.0441398, 47.7970268], photo:'./IMG/2025/Central Europe/Salzburg/IMG_20250713_185800.jpg' },
-        { name:'Mozart Birth Place', coords:[13.043580, 47.79991], photo:'./IMG/2025/Central Europe/Salzburg/IMG_20250714_131540.jpg' },
-        { name:'Roof of the Castle', coords:[13.046522, 47.794979], photo:'./IMG/2025/Central Europe/Salzburg/IMG_20250714_165226.jpg' },
-        { name:'First evening apéro ', coords:[13.052116, 47.796713], photo:'./IMG/2025/Central Europe/Salzburg/IMG_20250714_214406.jpg' },
-        { name:'Beautiful night sky view', coords:[13.037349, 47.804998], photo:'./IMG/2025/Central Europe/Salzburg/IMG_20250714_012446.jpg' },
-        { name:'My street', coords:[13.03803, 47.810573], photo:'./IMG/2025/Central Europe/Salzburg/IMG_20250714_115800.jpg' }
-      ]
-    },
-    {
-      name: 'Budapest',
-      value: [19.05196, 47.49394, 0],
-      visites: [
-        { type: 'hotel', datedeb:'18/07/2025', datefin:'21/07/2025', coords:[19.0628424, 47.4977553] },
-        { name:'Heroes square', coords:[19.077351, 47.514584], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250718_191011.jpg' },
-        { name:'The cutest', coords:[19.080105, 47.516005], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250718_193447.jpg' },
-        { name:'Us and the castle of Vajdahunyad', coords:[19.0816144, 47.5159559], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250718_194127.jpg' },
-        { name:'Ruin bar', coords:[19.06287432, 47.49678406], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250719_003008.jpg' },
-        { name:'Snow White and the bird', coords:[19.06256, 47.497044], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250719_121752.jpg' },
-        { name:'Going to the Museum in the castle of Buda', coords:[19.041502, 47.495178], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250719_133222.jpg' },
-        { name:'Resting time in the museum', coords:[19.039736, 47.495084], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250719_154009.jpg' },
-        { name:'Photo of us', coords:[19.041387, 47.495095], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250719_171040.jpg' },
-        { name:'Fishermen\'s church', coords:[19.033740, 47.501323], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250719_183722.jpg' },
-        { name:'My beauty and the parliament', coords:[19.03952892, 47.506152106], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250719_200219.jpg' },
-        { name:'Parliament of Budapest', coords:[19.04688, 47.50800], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250720_192616.jpg' },
-        { name:'On the way to the thermal baths', coords:[19.06856, 47.50860], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250721_111258_1.jpg' },
-        { name:'Entering the Ruin bar', coords:[19.06335, 47.497006], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250718_205500.jpg' },
-        { name:'In the Ruin bar', coords:[19.06299, 47.49687], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250719_002000.jpg' },
-        { name:'Us and the castel of Pest', coords:[19.08303, 47.51652], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250718_195500.jpg' },
-        { name:'Luggage locker', coords:[19.08311, 47.50028], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250721_165000.jpg' },
-      ]
-    },
-    {
-      name: 'Prague',
-      value: [14.42037, 50.08427, 0],
-      visites: [
-        { type: 'hotel', datedeb:'21/07/2025', datefin:'24/07/2025', coords:[14.454204, 50.094476] },
-        { name:'Powder tower', coords:[14.42802, 50.08691], photo:'./IMG/2025/Central Europe/Prague/IMG_20250722_140357.jpg' },
-        { name:'Astronomical clock', coords:[14.42067, 50.08700], photo:'./IMG/2025/Central Europe/Prague/IMG_20250722_144513.jpg' },
-        { name:'Astronomical clock\'s square', coords:[14.42125, 50.08711], photo:'./IMG/2025/Central Europe/Prague/IMG_20250722_144953.jpg' },
-        { name:'Forced to eat', coords:[14.41971, 50.08665], photo:'./IMG/2025/Central Europe/Prague/IMG_20250722_154732.jpg' },
-        { name:'Old tavern', coords:[14.40156, 50.08898], photo:'./IMG/2025/Central Europe/Prague/IMG_20250722_204124.jpg' },
-        { name:'Church of the infant Jesus', coords:[14.40365, 50.08572], photo:'./IMG/2025/Central Europe/Prague/IMG_20250723_165037.jpg' },
-        { name:'The Lennon wall', coords:[14.406930, 50.086249], photo:'./IMG/2025/Central Europe/Prague/IMG_20250723_180908.jpg' },
-        { name:'London underground bar', coords:[14.41934, 50.08147], photo:'./IMG/2025/Central Europe/Prague/IMG_20250723_205251.jpg' },
-        { name:'Distorting mirror', coords:[14.42559, 50.08526], photo:'./IMG/2025/Central Europe/Prague/IMG_20250722_135000.jpg' },
-        { name:'Frog guy with a frog on the Lennon wall', coords:[14.406810, 50.086249], photo:'./IMG/2025/Central Europe/Prague/IMG_20250723_181500.jpg' },
-        { name:'Delicious meal in a pub', coords:[14.40824, 50.08629], photo:'./IMG/2025/Central Europe/Prague/IMG_20250723_185200.jpg' }
       ]
     },
     {
@@ -420,5 +372,78 @@ const visitedCities = [
         { name:'Cute bridge, river and us', coords:[9.9909279, 48.395416], photo:'./IMG/2025/Central Europe/Ulm/IMG_20250726_163153.jpg' },
         { name:'Einstein fountain', coords:[10.001146, 48.400465], photo:'./IMG/2025/Central Europe/Ulm/IMG_20250726_180211.jpg' }
       ]
+    },
+    {
+      name: 'Marquartstein',
+      value: [12.46238, 47.75929, 0],
+      visites: [
+        { name:'On a walk', coords:[12.46436, 47.757624], photo:'./IMG/2025/Central Europe/Marquartstein/IMG_20250713_135813.jpg' },
+        { name:'Cute girl and a bin', coords:[12.465336, 47.75557], photo:'./IMG/2025/Central Europe/Marquartstein/IMG_20250713_140715.jpg' },
+        { name:'The lion girl', coords:[12.46704, 47.75209], photo:'./IMG/2025/Central Europe/Marquartstein/IMG_20250713_141521.jpg' },
+        { name:'Barbie was lost', coords:[12.46681, 47.751229], photo:'./IMG/2025/Central Europe/Marquartstein/IMG_20250713_141835.jpg' },
+        { name:'Fuck the rain', coords:[12.463480, 47.759179], photo:'./IMG/2025/Central Europe/Marquartstein/IMG_20250713_150552.jpg' }
+      ]
+    },
+    
+    /*------------------------------------------------------ A U S T R I A -------------------------------------------------------------*/
+    {
+      name: 'Salzburg',
+      value: [13.04159, 47.80523, 0],
+      visites: [
+        { type: 'hotel', datedeb:'13/07/2025', datefin:'15/07/2025', coords:[13.037606, 47.810420] },
+        { name:'Mozart Diner Concert', coords:[13.0441398, 47.7970268], photo:'./IMG/2025/Central Europe/Salzburg/IMG_20250713_185800.jpg' },
+        { name:'Mozart Birth Place', coords:[13.043580, 47.79991], photo:'./IMG/2025/Central Europe/Salzburg/IMG_20250714_131540.jpg' },
+        { name:'Roof of the Castle', coords:[13.046522, 47.794979], photo:'./IMG/2025/Central Europe/Salzburg/IMG_20250714_165226.jpg' },
+        { name:'First evening apéro ', coords:[13.052116, 47.796713], photo:'./IMG/2025/Central Europe/Salzburg/IMG_20250714_214406.jpg' },
+        { name:'Beautiful night sky view', coords:[13.037349, 47.804998], photo:'./IMG/2025/Central Europe/Salzburg/IMG_20250714_012446.jpg' },
+        { name:'My street', coords:[13.03803, 47.810573], photo:'./IMG/2025/Central Europe/Salzburg/IMG_20250714_115800.jpg' }
+      ]
+    },
+    
+    /*------------------------------------------------------ H U N G A R Y -------------------------------------------------------------*/
+    {
+      name: 'Budapest',
+      value: [19.05196, 47.49394, 0],
+      visites: [
+        { type: 'hotel', datedeb:'18/07/2025', datefin:'21/07/2025', coords:[19.0628424, 47.4977553] },
+        { name:'Heroes square', coords:[19.077351, 47.514584], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250718_191011.jpg' },
+        { name:'The cutest', coords:[19.080105, 47.516005], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250718_193447.jpg' },
+        { name:'Us and the castle of Vajdahunyad', coords:[19.0816144, 47.5159559], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250718_194127.jpg' },
+        { name:'Ruin bar', coords:[19.06287432, 47.49678406], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250719_003008.jpg' },
+        { name:'Snow White and the bird', coords:[19.06256, 47.497044], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250719_121752.jpg' },
+        { name:'Going to the Museum in the castle of Buda', coords:[19.041502, 47.495178], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250719_133222.jpg' },
+        { name:'Resting time in the museum', coords:[19.039736, 47.495084], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250719_154009.jpg' },
+        { name:'Photo of us', coords:[19.041387, 47.495095], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250719_171040.jpg' },
+        { name:'Fishermen\'s church', coords:[19.033740, 47.501323], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250719_183722.jpg' },
+        { name:'My beauty and the parliament', coords:[19.03952892, 47.506152106], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250719_200219.jpg' },
+        { name:'Parliament of Budapest', coords:[19.04688, 47.50800], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250720_192616.jpg' },
+        { name:'On the way to the thermal baths', coords:[19.06856, 47.50860], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250721_111258_1.jpg' },
+        { name:'Entering the Ruin bar', coords:[19.06335, 47.497006], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250718_205500.jpg' },
+        { name:'In the Ruin bar', coords:[19.06299, 47.49687], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250719_002000.jpg' },
+        { name:'Us and the castel of Pest', coords:[19.08303, 47.51652], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250718_195500.jpg' },
+        { name:'Luggage locker', coords:[19.08311, 47.50028], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250721_165000.jpg' },
+      ]
+    },
+    
+    /*-------------------------------------------------- C Z E C H   R E P U B L I C --------------------------------------------------*/
+    {
+      name: 'Prague',
+      value: [14.42037, 50.08427, 0],
+      visites: [
+        { type: 'hotel', datedeb:'21/07/2025', datefin:'24/07/2025', coords:[14.454204, 50.094476] },
+        { name:'Powder tower', coords:[14.42802, 50.08691], photo:'./IMG/2025/Central Europe/Prague/IMG_20250722_140357.jpg' },
+        { name:'Astronomical clock', coords:[14.42067, 50.08700], photo:'./IMG/2025/Central Europe/Prague/IMG_20250722_144513.jpg' },
+        { name:'Astronomical clock\'s square', coords:[14.42125, 50.08711], photo:'./IMG/2025/Central Europe/Prague/IMG_20250722_144953.jpg' },
+        { name:'Forced to eat', coords:[14.41971, 50.08665], photo:'./IMG/2025/Central Europe/Prague/IMG_20250722_154732.jpg' },
+        { name:'Old tavern', coords:[14.40156, 50.08898], photo:'./IMG/2025/Central Europe/Prague/IMG_20250722_204124.jpg' },
+        { name:'Church of the infant Jesus', coords:[14.40365, 50.08572], photo:'./IMG/2025/Central Europe/Prague/IMG_20250723_165037.jpg' },
+        { name:'The Lennon wall', coords:[14.406930, 50.086249], photo:'./IMG/2025/Central Europe/Prague/IMG_20250723_180908.jpg' },
+        { name:'London underground bar', coords:[14.41934, 50.08147], photo:'./IMG/2025/Central Europe/Prague/IMG_20250723_205251.jpg' },
+        { name:'Distorting mirror', coords:[14.42559, 50.08526], photo:'./IMG/2025/Central Europe/Prague/IMG_20250722_135000.jpg' },
+        { name:'Frog guy with a frog on the Lennon wall', coords:[14.406810, 50.086249], photo:'./IMG/2025/Central Europe/Prague/IMG_20250723_181500.jpg' },
+        { name:'Delicious meal in a pub', coords:[14.40824, 50.08629], photo:'./IMG/2025/Central Europe/Prague/IMG_20250723_185200.jpg' }
+      ]
     }
   ];
+    /*----------------------------------------------------------------------------------------------------------------------------------*/
+    /*----------------------------------------------------------------------------------------------------------------------------------*/
