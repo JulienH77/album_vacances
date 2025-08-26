@@ -281,7 +281,7 @@ const visitedCities = [
         { name:'Start of the show', coords:[110.50577, 24.77105], photo:'./IMG/2025/China/Yangshuo/IMG_20250526_200533.jpg' },
         { name:'Middle of the show', coords:[110.50581, 24.77104], photo:'./IMG/2025/China/Yangshuo/IMG_20250526_202232.jpg' },
         { name:'Going back from the show', coords:[110.49783, 24.76995], photo:'./IMG/2025/China/Yangshuo/IMG_20250526_212603.jpg' },
-        { name:'The bridge and the landscape', coords:[110.45614, 24.69133], photo:'./IMG/2025/China/Yangshuo/PANO_20250526_124223.jpg' }
+        { name:'The bridge and the landscape', coords:[110.45614, 24.69133], photo:'./IMG/2025/China/Yangshuo/IMG_20250526_124223.jpg' }
       ]
     },
     {
