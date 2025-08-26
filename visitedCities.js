@@ -1,32 +1,3 @@
-// Groupe dans la légende des différents voyages
-const voyagesToCities = {
-    'May 2025 - China': ['Beijing','Xi\'an','Shanghai','Hangzhou','Guilin','Yangshuo','Tianjin'],
-    'July 2025 - Central Europe': ['Munich','Marquartstein','Salzburg','Budapest','Prague','Regensburg','Ulm']
-};
-
-/* Le centre et le zoom de chaque carte leaflet par ville */
-const cityViewConfig = {
-    // ASIA
-    'Beijing': { center: [40.020209783862754, 116.3232421875], zoom: 9 },
-    'Xi\'an': { center: [34.28132602790971, 108.93905639648439], zoom: 11 },
-    'Shanghai': { center: [31.23210765003047, 121.46278381347658], zoom: 13 },
-    'Hangzhou': { center: [30.272187492315027, 120.16244888305665], zoom: 13 },
-    'Guilin': { center: [25.199358154551998, 110.29449462890626], zoom: 10 },
-    'Yangshuo': { center: [24.74519431173974, 110.48126220703126], zoom: 13 },
-    'Tianjin': { center: [39.138914818265235, 117.18824386596681], zoom: 13 },
-
-    // EUROPE
-    'Munich': { center: [48.138771479187696, 11.573753356933594], zoom: 13 },
-    'Marquartstein': { center: [47.75647836080556, 12.463345527648928], zoom: 15 },
-    'Regensburg': { center: [49.020900370239644, 12.09817886352539], zoom: 14 },
-    'Ulm': { center: [48.397026547811194, 9.990649223327638], zoom: 15 },
-    'Salzburg': { center: [47.8036142598392, 13.041458129882814], zoom: 14 },
-    'Budapest': { center: [47.50485033050466, 19.06059265136719], zoom: 13 },
-    'Prague': { center: [50.08834555719001, 14.419813156127931], zoom: 14 }
-};
-
-
-
 const visitedCities = [
     /*-------------------------------------------------------------------------------------------------------------------------------*/
     /*--------------------------------------------------------- A S I A -------------------------------------------------------------*/
