@@ -383,7 +383,7 @@ const visitedCities = [
         { name:'Cute bridge, river and us', coords:[9.9909279, 48.395416], photo:'./IMG/2025/Central Europe/Ulm/IMG_20250726_163153.jpg' },
         { name:'Einstein fountain', coords:[10.001146, 48.400465], photo:'./IMG/2025/Central Europe/Ulm/IMG_20250726_180211.jpg' }
       ]
-    }
+    },
     
     /*------------------------------------------------------ A U S T R I A -------------------------------------------------------------*/
     {
