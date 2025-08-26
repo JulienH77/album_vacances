@@ -1130,88 +1130,108 @@ function openLeafletPopup(cityData) {
     )
   );
 
-  // --- Contrôle hiérarchique Année → Mois → Jour ---
-  const datesControl = L.control({ position: 'topright' });
-  datesControl.onAdd = function () {
-    const div = L.DomUtil.create('div', 'dates-control');
-    div.style.background = 'white';
-    div.style.padding = '6px';
-    div.style.borderRadius = '6px';
-    div.style.maxHeight = '200px';
-    div.style.overflowY = 'auto';
-    div.style.boxShadow = '0 1px 4px rgba(0,0,0,0.3)';
+ // --- Contrôle hiérarchique Année → Mois → Jour (version jolie avec <details>) ---
+const datesControl = L.control({ position: 'topright' });
+datesControl.onAdd = function () {
+  const div = L.DomUtil.create('div', 'dates-control');
+  div.style.background = 'white';
+  div.style.padding = '6px';
+  div.style.borderRadius = '6px';
+  div.style.maxHeight = '250px';
+  div.style.overflowY = 'auto';
+  div.style.boxShadow = '0 2px 6px rgba(0,0,0,0.3)';
+  div.style.fontSize = "13px";
+  div.style.lineHeight = "1.4em";
 
-    const title = document.createElement('strong');
-    title.textContent = "Photos par date";
-    div.appendChild(title);
+  const title = document.createElement('strong');
+  title.textContent = "📅 Photos par date";
+  title.style.display = "block";
+  title.style.marginBottom = "6px";
+  div.appendChild(title);
 
-    Object.keys(photosByYear).sort().forEach(year => {
-      const yearDiv = document.createElement('div');
-      yearDiv.style.marginTop = "5px";
+  Object.keys(photosByYear).sort().forEach(year => {
+    const yearDetails = document.createElement('details');
+    yearDetails.open = true; // ouvert par défaut
+    const yearSummary = document.createElement('summary');
 
-      const yearCb = document.createElement('input');
-      yearCb.type = 'checkbox';
-      yearCb.checked = true;
-      yearCb.onchange = () => {
-        Object.values(photosByYear[year]).forEach(monthObj =>
-          Object.values(monthObj).forEach(dayGroup => {
-            if (yearCb.checked) dayGroup.addTo(currentLeafletMap);
-            else currentLeafletMap.removeLayer(dayGroup);
-          })
-        );
-        yearDiv.querySelectorAll('input[type=checkbox]').forEach(cb => cb.checked = yearCb.checked);
+    const yearCb = document.createElement('input');
+    yearCb.type = 'checkbox';
+    yearCb.checked = true;
+    yearCb.style.marginRight = "5px";
+    yearCb.onchange = () => {
+      Object.values(photosByYear[year]).forEach(monthObj =>
+        Object.values(monthObj).forEach(dayGroup => {
+          if (yearCb.checked) dayGroup.addTo(currentLeafletMap);
+          else currentLeafletMap.removeLayer(dayGroup);
+        })
+      );
+      yearDetails.querySelectorAll('input[type=checkbox]').forEach(cb => cb.checked = yearCb.checked);
+    };
+
+    yearSummary.appendChild(yearCb);
+    yearSummary.append(year);
+    yearDetails.appendChild(yearSummary);
+
+    // --- Mois ---
+    Object.keys(photosByYear[year]).sort().forEach(month => {
+      const monthDetails = document.createElement('details');
+      monthDetails.style.marginLeft = "15px";
+      monthDetails.open = false;
+
+      const monthSummary = document.createElement('summary');
+
+      const monthCb = document.createElement('input');
+      monthCb.type = 'checkbox';
+      monthCb.checked = true;
+      monthCb.style.marginRight = "5px";
+      monthCb.onchange = () => {
+        Object.values(photosByYear[year][month]).forEach(dayGroup => {
+          if (monthCb.checked) dayGroup.addTo(currentLeafletMap);
+          else currentLeafletMap.removeLayer(dayGroup);
+        });
+        monthDetails.querySelectorAll('input[type=checkbox]').forEach(cb => cb.checked = monthCb.checked);
       };
 
-      yearDiv.appendChild(yearCb);
-      yearDiv.append(" " + year);
+      // Traduction mois
+      const moisNoms = {
+        "01": "Janvier", "02": "Février", "03": "Mars", "04": "Avril",
+        "05": "Mai", "06": "Juin", "07": "Juillet", "08": "Août",
+        "09": "Septembre", "10": "Octobre", "11": "Novembre", "12": "Décembre"
+      };
 
-      // --- Mois ---
-      Object.keys(photosByYear[year]).sort().forEach(month => {
-        const monthDiv = document.createElement('div');
-        monthDiv.style.marginLeft = "15px";
+      monthSummary.appendChild(monthCb);
+      monthSummary.append(moisNoms[month] || month);
+      monthDetails.appendChild(monthSummary);
 
-        const monthCb = document.createElement('input');
-        monthCb.type = 'checkbox';
-        monthCb.checked = true;
-        monthCb.onchange = () => {
-          Object.values(photosByYear[year][month]).forEach(dayGroup => {
-            if (monthCb.checked) dayGroup.addTo(currentLeafletMap);
-            else currentLeafletMap.removeLayer(dayGroup);
-          });
-          monthDiv.querySelectorAll('input[type=checkbox]').forEach(cb => cb.checked = monthCb.checked);
+      // --- Jours ---
+      Object.keys(photosByYear[year][month]).sort().forEach(day => {
+        const dayDiv = document.createElement('div');
+        dayDiv.style.marginLeft = "20px";
+
+        const dayCb = document.createElement('input');
+        dayCb.type = 'checkbox';
+        dayCb.checked = true;
+        dayCb.style.marginRight = "5px";
+        dayCb.onchange = () => {
+          if (dayCb.checked) photosByYear[year][month][day].addTo(currentLeafletMap);
+          else currentLeafletMap.removeLayer(photosByYear[year][month][day]);
         };
 
-        monthDiv.appendChild(monthCb);
-        monthDiv.append(" " + month);
-
-        // --- Jours ---
-        Object.keys(photosByYear[year][month]).sort().forEach(day => {
-          const dayDiv = document.createElement('div');
-          dayDiv.style.marginLeft = "30px";
-
-          const dayCb = document.createElement('input');
-          dayCb.type = 'checkbox';
-          dayCb.checked = true;
-          dayCb.onchange = () => {
-            if (dayCb.checked) photosByYear[year][month][day].addTo(currentLeafletMap);
-            else currentLeafletMap.removeLayer(photosByYear[year][month][day]);
-          };
-
-          dayDiv.appendChild(dayCb);
-          dayDiv.append(" " + day);
-          monthDiv.appendChild(dayDiv);
-        });
-
-        yearDiv.appendChild(monthDiv);
+        dayDiv.appendChild(dayCb);
+        dayDiv.append("Jour " + day);
+        monthDetails.appendChild(dayDiv);
       });
 
-      div.appendChild(yearDiv);
+      yearDetails.appendChild(monthDetails);
     });
 
-    L.DomEvent.disableClickPropagation(div);
-    return div;
-  };
-  datesControl.addTo(currentLeafletMap);
+    div.appendChild(yearDetails);
+  });
+
+  L.DomEvent.disableClickPropagation(div);
+  return div;
+};
+datesControl.addTo(currentLeafletMap);
 
   currentLeafletMap.invalidateSize();
 }
