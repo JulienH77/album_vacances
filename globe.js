@@ -10,6 +10,9 @@ const PATHS = {
   EARTH_BUMP: './GLOBE/world.topo.bathy.200401.jpg',
 };
 
+// Variable globale pour le chart
+let globeChart;
+
 // Couleurs des trajets
 const TRAJET_COLORS = {
   avion: '#00dbc5',
