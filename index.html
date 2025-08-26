@@ -40,46 +40,45 @@
             </div>
             <!-- Basemap -->
             <div id="toggleDayBase" role="button" aria-label="Changer fond du jour" title="Changer fond du jour">EARTH</div>
-            <!-- Légende -->
+            <!-- Legend -->
             <div id="legend" role="group" aria-label="Contrôles des couches">
                 <label><input id="chkPays" type="checkbox"> Limites (Pays)</label>
                 <label><input id="chkTrajets" type="checkbox"> Trajets</label>
                 <!-- AJOUT : liste des voyages directement sous "Trajets" -->
                 <div id="voyagesList" role="group" aria-label="Liste des voyages" style="display:none; margin-top:6px; max-height:260px; overflow:auto;"></div>
             </div>
-            <!-- Lune -->
+            <!-- A QUOI SERS TU ? -->
             <div id="trajetPopup"></div>
       </div>
       <!-- Popup Leaflet -->
       <div id="leafletPopup">
-        <div id="leafletMap"></div>
-        <button id="leafletClose">X</button>
-      
-      <!-- Popup d'agrandissement de photo -->
-      <div id="photoPopup" style="display: none;">
-        <img id="photoPopupImg" src="" alt="Photo agrandie">
-        <button id="photoClose" style="
-          position: absolute;
-          top: 20px;
-          right: 20px;
-          background: #fff;
-          border: none;
-          border-radius: 50%;
-          width: 36px;
-          height: 36px;
-          cursor: pointer;
-          font-size: 18px;
-          font-weight: bold;
-          z-index: 1001;
-        ">X</button>
+            <div id="leafletMap"></div>
+            <button id="leafletClose">X</button>
+            <!-- Popup d'agrandissement de photo -->
+            <div id="photoPopup" style="display: none;">
+                    <img id="photoPopupImg" src="" alt="Photo agrandie">
+                    <button id="photoClose" style="
+                      position: absolute;
+                      top: 20px;
+                      right: 20px;
+                      background: #fff;
+                      border: none;
+                      border-radius: 50%;
+                      width: 36px;
+                      height: 36px;
+                      cursor: pointer;
+                      font-size: 18px;
+                      font-weight: bold;
+                      z-index: 1001;
+                    ">X</button>
+            </div>
       </div>
       
-        
-      </div>
-// villes visitées avec visites/photos
+// villes visitées avec photos et coordonnées
 <script src="visitedCities.js"></script>
 <script>
 (async function(){
+  /* Les variables */
   const PATH_EARTH_DAY_1 = './GLOBE/earth.jpg';
   const PATH_EARTH_DAY_2 = './GLOBE/world.topo.bathy.200401.jpg';
   const CLOUDS = 'https://clouds.matteason.co.uk/images/4096x2048/clouds-alpha.png';
@@ -92,23 +91,25 @@
   const loadImage = url => new Promise((res, rej) => { const img = new Image(); img.crossOrigin = 'anonymous'; img.onload = ()=>res(img); img.onerror = rej; img.src = url; });
   const normalizeLng = lng => ((lng + 180) % 360) - 180;
 
-const cityViewConfig = {
-  'Guilin': { center: [25.199358154551998, 110.29449462890626], zoom: 10 },
-  'Yangshuo': { center: [24.74519431173974, 110.48126220703126], zoom: 13 },
-  'Xi\'an': { center: [34.28132602790971, 108.93905639648439], zoom: 11 },
-  'Beijing': { center: [40.020209783862754, 116.3232421875], zoom: 9 },
-  'Tianjin': { center: [39.138914818265235, 117.18824386596681], zoom: 13 },
-  'Shanghai': { center: [31.23210765003047, 121.46278381347658], zoom: 13 },
-  'Hangzhou': { center: [30.272187492315027, 120.16244888305665], zoom: 13 },
-  'Ulm': { center: [48.397026547811194, 9.990649223327638], zoom: 15 },
-  'Munich': { center: [48.138771479187696, 11.573753356933594], zoom: 13 },
-  'Regensburg': { center: [49.020900370239644, 12.09817886352539], zoom: 14 },
-  'Marquartstein': { center: [47.75647836080556, 12.463345527648928], zoom: 15 },
-  'Salzburg': { center: [47.8036142598392, 13.041458129882814], zoom: 14 },
-  'Prague': { center: [50.08834555719001, 14.419813156127931], zoom: 14 },
-  'Budapest': { center: [47.50485033050466, 19.06059265136719], zoom: 13 }
-};
+  /* Le centre et le zoom de chaque carte leaflet par ville */
+  const cityViewConfig = {
+    'Guilin': { center: [25.199358154551998, 110.29449462890626], zoom: 10 },
+    'Yangshuo': { center: [24.74519431173974, 110.48126220703126], zoom: 13 },
+    'Xi\'an': { center: [34.28132602790971, 108.93905639648439], zoom: 11 },
+    'Beijing': { center: [40.020209783862754, 116.3232421875], zoom: 9 },
+    'Tianjin': { center: [39.138914818265235, 117.18824386596681], zoom: 13 },
+    'Shanghai': { center: [31.23210765003047, 121.46278381347658], zoom: 13 },
+    'Hangzhou': { center: [30.272187492315027, 120.16244888305665], zoom: 13 },
+    'Ulm': { center: [48.397026547811194, 9.990649223327638], zoom: 15 },
+    'Munich': { center: [48.138771479187696, 11.573753356933594], zoom: 13 },
+    'Regensburg': { center: [49.020900370239644, 12.09817886352539], zoom: 14 },
+    'Marquartstein': { center: [47.75647836080556, 12.463345527648928], zoom: 15 },
+    'Salzburg': { center: [47.8036142598392, 13.041458129882814], zoom: 14 },
+    'Prague': { center: [50.08834555719001, 14.419813156127931], zoom: 14 },
+    'Budapest': { center: [47.50485033050466, 19.06059265136719], zoom: 13 }
+  };
 
+  /* Je crois que ca sert pour les contours des pays */
   const linesFromPolygonGeom = geom => {
     const out = [];
     if(!geom) return out;
@@ -119,6 +120,8 @@ const cityViewConfig = {
     }
     return out;
   };
+      
+  /* Je crois que ca sert pour les trajets */
   const extractLinesFromFeature = feature => {
     const out = [], g = feature && feature.geometry;
     if(!g) return out;
@@ -131,6 +134,7 @@ const cityViewConfig = {
     }
     return out;
   };
+
   // texture nuit
   const nightTexture = (await loadImage(PATH_EARTH_NIGHT_RAW)).src;
   // chargement des données
@@ -138,9 +142,11 @@ const cityViewConfig = {
     loadJSON(PATH_COUNTRIES),
     loadJSON(PATH_TRAJETS)
   ]);
+      
   // frontières
   const countryLines = [];
   (countriesGeo.features || []).forEach(f => linesFromPolygonGeom(f.geometry).forEach(l => countryLines.push(l)));
+      
   // trajets + collecte des valeurs uniques de `voyage`
   const trajetLines = [];
   const voyagesSet = new Set();
@@ -156,11 +162,14 @@ const cityViewConfig = {
       voyage: voyageVal
     }));
   });
-  // Mapping voyage -> villes demandées par l'utilisateur
+      
+  // Groupe dans la légende des différents voyages
   const voyagesToCities = {
     'May 2025 - China': ['Beijing','Xi\'an','Shanghai','Hangzhou','Guilin','Yangshuo','Tianjin'],
     'July 2025 - Central Europe': ['Munich','Marquartstein','Salzburg','Budapest','Prague','Regensburg','Ulm']
   };
+
+  // Style des logos des hotels
   const hotelIcon = L.divIcon({
     html: `
       <div style="
@@ -181,17 +190,19 @@ const cityViewConfig = {
     iconAnchor: [14,14]
   });
 
+  // Chargement de la page avec ce qui est affiché ou non
   const globeChart = echarts.init(document.getElementById('globeContainer'), null, { renderer:'webgl' });
   let state = {
     showPays:false,
     showTrajets:false,
     showNuages:false,
-    showNightShadow: false, // Changé pour refléter l'ombre de nuit
+    showNightShadow: false,
     showRelief:false,
     dayBase:'earth',
     activeVoyages: new Set(voyagesSet)
   };
-  
+
+  // Fonction qui fait plein de trucs
   function makeOption(s) {
     const series = [];
     // Frontières des pays
@@ -205,6 +216,7 @@ const cityViewConfig = {
         lineStyle: { color: '#f0f0f0', width: 1, opacity: 0.98 }
       });
     }
+    // Affiche les trajets
     if(s.showTrajets){
       const filteredTrajets = trajetLines.filter(l => s.activeVoyages.has(l.voyage));
       series.push({
@@ -227,8 +239,7 @@ const cityViewConfig = {
         }
       });
     }
-    
-    // pins des villes visitées — maintenant filtrées par voyages sélectionnés
+    // pins des villes visitées qui deviennent filtrées par les voyages sélectionnés
     let pinsData = [];
     const allowedCities = new Set();
     if(s.activeVoyages && s.activeVoyages.size){
@@ -274,7 +285,7 @@ const cityViewConfig = {
       },
       data: pinsData
     });
-
+    // Affiche le monde de nuit
     const layers = [];
     if(s.showNightShadow){
       layers.push({
@@ -286,6 +297,7 @@ const cityViewConfig = {
         texture: PATH_EARTH_NIGHT_RAW
       });
     }
+    // Affiche les nuages
     if(s.showNuages){
       layers.push({
         show: true,
@@ -296,6 +308,7 @@ const cityViewConfig = {
         distance: 2
       });
     }
+    // Change le fond du globe
     const baseDay = (s.dayBase === 'earth') ? PATH_EARTH_DAY_1 : PATH_EARTH_DAY_2;
     return {
       backgroundColor: 'transparent',
@@ -317,7 +330,8 @@ const cityViewConfig = {
       series
     };
   }
-  
+
+  // Récupère la vue du globe actuelle
   function getCurrentView() {
     const opt = globeChart.getOption();
     if(opt && opt.globe && opt.globe[0] && opt.globe[0].viewControl){
@@ -325,7 +339,8 @@ const cityViewConfig = {
     }
     return null;
   }
-
+      
+  // Permet de rafraichir l'affichage sans reset la vue
   function refresh(){
     const currentView = getCurrentView();
     const newOpt = makeOption(state);
@@ -334,7 +349,7 @@ const cityViewConfig = {
     }
     globeChart.setOption(newOpt, { notMerge:true });
   }
-
+      
   // --- UI refs ---
   const toggleNightEl = document.getElementById('toggleNight');
   const toggleReliefEl = document.getElementById('toggleRelief');
@@ -348,7 +363,7 @@ const cityViewConfig = {
   const leafletCloseBtn = document.getElementById('leafletClose');
   const voyagesListEl = document.getElementById('voyagesList');
 
-  // Remplit la liste avec les valeurs uniques de `voyage`
+  // Remplit la liste avec les valeurs uniques de `voyage` (je ne sais pas a quoi tu sers)
   Array.from(voyagesSet).sort().forEach(v => {
     const id = 'voy_'+v.replace(/[^A-Za-z0-9_-]/g,'_');
     const label = document.createElement('label');
@@ -372,14 +387,14 @@ const cityViewConfig = {
     toggleNightEl.setAttribute('aria-pressed', String(state.showNightShadow));
     refresh();
   });
-
+      
   toggleReliefEl.addEventListener('click', ()=>{
     state.showRelief = !state.showRelief;
     toggleReliefEl.classList.toggle('active', state.showRelief);
     toggleReliefEl.setAttribute('aria-pressed', String(state.showRelief));
     refresh();
   });
-
+      
   toggleCloudsEl.addEventListener('click', ()=>{
     state.showNuages = !state.showNuages;
     toggleCloudsEl.classList.toggle('active', state.showNuages);
@@ -387,10 +402,11 @@ const cityViewConfig = {
     refresh();
   });
 
+  // Fonction pour changer le fond du globe
   function updateDayBaseButtonLabel(){
     toggleDayBaseEl.textContent = (state.dayBase === 'earth') ? 'EARTH' : 'TOPO';
   }
-
+      
   toggleDayBaseEl.addEventListener('click', ()=>{
     state.dayBase = (state.dayBase === 'earth') ? 'topo' : 'earth';
     updateDayBaseButtonLabel();
@@ -538,7 +554,7 @@ function openLeafletPopup(cityData) {
     )
   );
 
- // --- Contrôle hiérarchique Année → Mois → Jour (version jolie avec <details>) ---
+ // --- Contrôle hiérarchique Année → Mois → Jour ---
 const datesControl = L.control({ position: 'topright' });
 datesControl.onAdd = function () {
   const div = L.DomUtil.create('div', 'dates-control');
@@ -681,6 +697,8 @@ document.getElementById('photoPopup').addEventListener('click', (e) => {
   document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeLeafletPopup(); });
   leafletPopupEl.addEventListener('click', (e)=>{ if(e.target === leafletPopupEl) closeLeafletPopup(); });
 
+
+  // CETTE FONCTION NE MARCHE PAS
   // clic sur globe
   globeChart.on('click', params => {
     if(params.seriesName === 'Trajets' && params.data && params.data.properties){
