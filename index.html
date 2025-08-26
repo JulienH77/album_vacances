@@ -187,18 +187,21 @@ const maxTrajectoryPoints = 10; // Nombre de points à garder pour la trajectoir
 // Fonction pour récupérer la position de l'ISS
 async function fetchISSPosition() {
   try {
-    const response = await fetch('http://api.open-notify.org/iss-now.json');
+    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent('http://api.open-notify.org/iss-now.json')}`;
+    const response = await fetch(proxyUrl);
     const data = await response.json();
+    const issData = JSON.parse(data.contents);
     return {
-      longitude: parseFloat(data.iss_position.longitude),
-      latitude: parseFloat(data.iss_position.latitude),
-      timestamp: data.timestamp
+      longitude: parseFloat(issData.iss_position.longitude),
+      latitude: parseFloat(issData.iss_position.latitude),
+      timestamp: issData.timestamp
     };
   } catch (error) {
     console.error("Erreur lors de la récupération de la position de l'ISS :", error);
     return null;
   }
 }
+
 
 // Fonction pour mettre à jour la position de l'ISS
 async function updateISSPosition() {
