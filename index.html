@@ -186,9 +186,6 @@
 <script src="https://cdn.jsdelivr.net/npm/echarts-gl@2/dist/echarts-gl.min.js"></script>
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
-<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
-<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 </head>
 <body>
 <div id="root">
@@ -330,29 +327,6 @@ const cityViewConfig = {
     'May 2025 - China': ['Beijing','Xi\'an','Shanghai','Hangzhou','Guilin','Yangshuo','Tianjin'],
     'July 2025 - Central Europe': ['Munich','Marquartstein','Salzburg','Budapest','Prague','Regensburg','Ulm']
   };
-
-const clusters = {
-  "The great wall": {
-    label: "The great wall",
-    image: "https://uspto.report/TM/88931629/FTK20200528065346/2.jpeg"
-  },
-    "The forbidden city": {
-    label: "The forbidden city",
-    image: "https://ih1.redbubble.net/image.3213636624.2903/st,small,507x507-pad,600x600,f8f8f8.jpg"
-  },
-    "The temple of Heaven": {
-    label: "The temple of Heaven",
-    image: "https://www.shutterstock.com/image-vector/temple-heaven-complex-imperial-religious-600nw-2549927489.jpg"
-  },
-    "Tiananmen square": {
-    label: "Tiananmen square",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/National_Emblem_of_the_People%27s_Republic_of_China_%282%29.svg/500px-National_Emblem_of_the_People%27s_Republic_of_China_%282%29.svg.png"
-  },
-  "The summer palace": {
-    label: "The summer palace",
-    image: "https://media.istockphoto.com/id/646693950/vector/summer-palace.jpg?s=612x612&w=0&k=20&c=Magb4I2pqo2GiyHP9tKTNsAsD40MXx7QGw-SP2SziXA="
-  }
-};  
   // villes visitées avec visites/photos (inchangé)
   const visitedCities = [
     {
@@ -362,77 +336,77 @@ const clusters = {
         { type: 'hotel', datedeb:'11/05/2025', datefin:'15/05/2025', coords:[116.4106, 39.90006] },
         { type: 'hotel', datedeb:'28/05/2025', datefin:'30/05/2025', coords:[116.38023, 39.86887] },
         /*The great wall*/
-        { name:'Entering the Great Wall', coords:[116.5379, 40.41597], photo:'./IMG/2025/China/Beijing/IMG_20250512_130110.jpg', rotation: 25, cluster:'The great wall' },
-        { name:'Arriving in cabble car', coords:[116.55903, 40.43878], photo:'./IMG/2025/China/Beijing/IMG_20250512_140556.jpg', rotation: 90, cluster:'The great wall' },
-        { name:'Me on the Great Wall', coords:[116.55938, 40.44054], photo:'./IMG/2025/China/Beijing/IMG_20250512_141016.jpg', rotation: 312, cluster:'The great wall' },
-        { name:'The long line of the Great Wall', coords:[116.56053, 40.43988], photo:'./IMG/2025/China/Beijing/IMG_20250512_141348.jpg', rotation: 157, cluster:'The great wall' },
-        { name:'The long line of the Great Wall', coords:[116.56099, 40.43901], photo:'./IMG/2025/China/Beijing/IMG_20250512_141844.jpg', rotation: 157, cluster:'The great wall' },
-        { name:'My fat body on the Great Wall', coords:[116.56119, 40.43869], photo:'./IMG/2025/China/Beijing/IMG_20250512_142025.jpg', rotation: 162, cluster:'The great wall' },
-        { name:'The beauty of the Great Wall', coords:[116.56122, 40.43815], photo:'./IMG/2025/China/Beijing/IMG_20250512_143901.jpg', rotation: 346, cluster:'The great wall' },
-        { name:'View of the Great Wall', coords:[116.55676, 40.44378], photo:'./IMG/2025/China/Beijing/IMG_20250512_150859.jpg', rotation: 327, cluster:'The great wall' },
-        { name:'The grand staircase of Mutianyu', coords:[116.55515, 40.44703], photo:'./IMG/2025/China/Beijing/IMG_20250512_152823.jpg', rotation: 319, cluster:'The great wall' },
-        { name:'Half way (my legs aaargh)', coords:[116.55456, 40.44756], photo:'./IMG/2025/China/Beijing/IMG_20250512_153650.jpg', rotation: 152, cluster:'The great wall' },
-        { name:'Finally at the end of Mutianyu', coords:[116.55376, 40.44816], photo:'./IMG/2025/China/Beijing/IMG_20250512_154257.jpg', rotation: 148, cluster:'The great wall' },
-        { name:'Going back to the cable car', coords:[116.55570, 40.44453], photo:'./IMG/2025/China/Beijing/IMG_20250512_161109.jpg', rotation: 131, cluster:'The great wall' },
+        { name:'Entering the Great Wall', coords:[116.5379, 40.41597], photo:'./IMG/2025/China/Beijing/IMG_20250512_130110.jpg', rotation: 25 },
+        { name:'Arriving in cabble car', coords:[116.55903, 40.43878], photo:'./IMG/2025/China/Beijing/IMG_20250512_140556.jpg', rotation: 90 },
+        { name:'Me on the Great Wall', coords:[116.55938, 40.44054], photo:'./IMG/2025/China/Beijing/IMG_20250512_141016.jpg', rotation: 312 },
+        { name:'The long line of the Great Wall', coords:[116.56053, 40.43988], photo:'./IMG/2025/China/Beijing/IMG_20250512_141348.jpg', rotation: 157 },
+        { name:'The long line of the Great Wall', coords:[116.56099, 40.43901], photo:'./IMG/2025/China/Beijing/IMG_20250512_141844.jpg', rotation: 157 },
+        { name:'My fat body on the Great Wall', coords:[116.56119, 40.43869], photo:'./IMG/2025/China/Beijing/IMG_20250512_142025.jpg', rotation: 162 },
+        { name:'The beauty of the Great Wall', coords:[116.56122, 40.43815], photo:'./IMG/2025/China/Beijing/IMG_20250512_143901.jpg', rotation: 346 },
+        { name:'View of the Great Wall', coords:[116.55676, 40.44378], photo:'./IMG/2025/China/Beijing/IMG_20250512_150859.jpg', rotation: 327 },
+        { name:'The grand staircase of Mutianyu', coords:[116.55515, 40.44703], photo:'./IMG/2025/China/Beijing/IMG_20250512_152823.jpg', rotation: 319 },
+        { name:'Half way (my legs aaargh)', coords:[116.55456, 40.44756], photo:'./IMG/2025/China/Beijing/IMG_20250512_153650.jpg', rotation: 152 },
+        { name:'Finally at the end of Mutianyu', coords:[116.55376, 40.44816], photo:'./IMG/2025/China/Beijing/IMG_20250512_154257.jpg', rotation: 148 },
+        { name:'Going back to the cable car', coords:[116.55570, 40.44453], photo:'./IMG/2025/China/Beijing/IMG_20250512_161109.jpg', rotation: 131 },
         /*The forbidden city*/
-        { name:'Entering the forbidden city', coords:[116.39102, 39.91145], photo:'./IMG/2025/China/Beijing/IMG_20250513_120311_1.jpg', cluster:'The forbidden city' },
-        { name:'Finally inside', coords:[116.39098, 39.91287], photo:'./IMG/2025/China/Beijing/IMG_20250513_122113.jpg', cluster:'The forbidden city' },
-        { name:'Amazed by the colours', coords:[116.39134, 39.91361], photo:'./IMG/2025/China/Beijing/IMG_20250513_122329.jpg', cluster:'The forbidden city' },
-        { name:'Visiting', coords:[116.39164, 39.91379], photo:'./IMG/2025/China/Beijing/IMG_20250513_122412.jpg', cluster:'The forbidden city' },
-        { name:'Amazed big the big space', coords:[116.39163, 39.91413], photo:'./IMG/2025/China/Beijing/IMG_20250513_122506.jpg', cluster:'The forbidden city' },
-        { name:'Dying from hunger and heat (took a mango ice cream)', coords:[116.39081, 39.91793], photo:'./IMG/2025/China/Beijing/IMG_20250513_125342.jpg', cluster:'The forbidden city' },
-        { name:'Beautiful alley', coords:[116.39158, 39.91863], photo:'./IMG/2025/China/Beijing/IMG_20250513_131056.jpg', cluster:'The forbidden city' },
-        { name:'Long alley', coords:[116.39336, 39.91869], photo:'./IMG/2025/China/Beijing/IMG_20250513_141109.jpg', cluster:'The forbidden city' },
-        { name:'The 9 dragon wall', coords:[116.39401, 39.91718], photo:'./IMG/2025/China/Beijing/IMG_20250513_142120.jpg', cluster:'The forbidden city' },
-        { name:'Throne of the palace of tranquil longevity', coords:[116.39411, 39.91848], photo:'./IMG/2025/China/Beijing/IMG_20250513_142625.jpg', cluster:'The forbidden city' },
-        { name:'One of the side doors', coords:[116.39452, 39.91867], photo:'./IMG/2025/China/Beijing/IMG_20250513_143152.jpg', cluster:'The forbidden city' },
-        { name:'Cool building', coords:[116.39443, 39.91872], photo:'./IMG/2025/China/Beijing/IMG_20250513_143154.jpg', cluster:'The forbidden city' },
-        { name:'Opera building', coords:[116.39441, 39.91940], photo:'./IMG/2025/China/Beijing/IMG_20250513_145311.jpg', cluster:'The forbidden city' },
-        { name:'Edge of the forbidden city', coords:[116.39537, 39.92195], photo:'./IMG/2025/China/Beijing/IMG_20250513_152620.jpg', cluster:'The forbidden city' },
+        { name:'Entering the forbidden city', coords:[116.39102, 39.91145], photo:'./IMG/2025/China/Beijing/IMG_20250513_120311_1.jpg' },
+        { name:'Finally inside', coords:[116.39098, 39.91287], photo:'./IMG/2025/China/Beijing/IMG_20250513_122113.jpg' },
+        { name:'Amazed by the colours', coords:[116.39134, 39.91361], photo:'./IMG/2025/China/Beijing/IMG_20250513_122329.jpg' },
+        { name:'Visiting', coords:[116.39164, 39.91379], photo:'./IMG/2025/China/Beijing/IMG_20250513_122412.jpg' },
+        { name:'Amazed big the big space', coords:[116.39163, 39.91413], photo:'./IMG/2025/China/Beijing/IMG_20250513_122506.jpg' },
+        { name:'Dying from hunger and heat (took a mango ice cream)', coords:[116.39081, 39.91793], photo:'./IMG/2025/China/Beijing/IMG_20250513_125342.jpg' },
+        { name:'Beautiful alley', coords:[116.39158, 39.91863], photo:'./IMG/2025/China/Beijing/IMG_20250513_131056.jpg' },
+        { name:'Long alley', coords:[116.39336, 39.91869], photo:'./IMG/2025/China/Beijing/IMG_20250513_141109.jpg' },
+        { name:'The 9 dragon wall', coords:[116.39401, 39.91718], photo:'./IMG/2025/China/Beijing/IMG_20250513_142120.jpg' },
+        { name:'Throne of the palace of tranquil longevity', coords:[116.39411, 39.91848], photo:'./IMG/2025/China/Beijing/IMG_20250513_142625.jpg' },
+        { name:'One of the side doors', coords:[116.39452, 39.91867], photo:'./IMG/2025/China/Beijing/IMG_20250513_143152.jpg' },
+        { name:'Cool building', coords:[116.39443, 39.91872], photo:'./IMG/2025/China/Beijing/IMG_20250513_143154.jpg' },
+        { name:'Opera building', coords:[116.39441, 39.91940], photo:'./IMG/2025/China/Beijing/IMG_20250513_145311.jpg' },
+        { name:'Edge of the forbidden city', coords:[116.39537, 39.92195], photo:'./IMG/2025/China/Beijing/IMG_20250513_152620.jpg' },
         /*The temple of heaven*/
-        { name:'The temple of Heaven', coords:[116.40722, 39.88007], photo:'./IMG/2025/China/Beijing/IMG_20250513_190240_1.jpg', cluster:'The temple of Heaven' },
-        { name:'Huge hail storm', coords:[116.41425, 39.88223], photo:'./IMG/2025/China/Beijing/IMG_20250513_204322.jpg', cluster:'The temple of Heaven' },
+        { name:'The temple of Heaven', coords:[116.40722, 39.88007], photo:'./IMG/2025/China/Beijing/IMG_20250513_190240_1.jpg' },
+        { name:'Huge hail storm', coords:[116.41425, 39.88223], photo:'./IMG/2025/China/Beijing/IMG_20250513_204322.jpg' },
         /*Tiananmen square*/
-        { name:'Tiananmen square !', coords:[116.39270, 39.90391], photo:'./IMG/2025/China/Beijing/IMG_20250514_110050.jpg', cluster:'Tiananmen square' },
-        { name:'Mister Mao Zedong', coords:[116.39181, 39.90521], photo:'./IMG/2025/China/Beijing/IMG_20250514_110234.jpg', cluster:'Tiananmen square' },
-        { name:'The great hall of the people', coords:[116.38999, 39.90355], photo:'./IMG/2025/China/Beijing/IMG_20250514_110756.jpg', cluster:'Tiananmen square' },
-        { name:'Mao Zedong memorial hall', coords:[116.39138, 39.90269], photo:'./IMG/2025/China/Beijing/IMG_20250514_111114.jpg', cluster:'Tiananmen square' },
-        { name:'National Museum of China', coords:[116.39292, 39.90355], photo:'./IMG/2025/China/Beijing/IMG_20250514_111347.jpg', cluster:'Tiananmen square' },
-        { name:'Beautiful building and gate', coords:[116.39161, 39.89702], photo:'./IMG/2025/China/Beijing/IMG_20250514_125603.jpg', cluster:'Tiananmen square' },
-        { name:'Me', coords:[116.39175, 39.89465], photo:'./IMG/2025/China/Beijing/IMG_20250514_132806.jpg', cluster:'Tiananmen square' },
-        { name:'Dumb me', coords:[116.39179, 39.89463], photo:'./IMG/2025/China/Beijing/IMG_20250514_132809.jpg', cluster:'Tiananmen square' },
-        { name:'Beautiful gate', coords:[116.39175, 39.89653], photo:'./IMG/2025/China/Beijing/IMG_20250514_134125.jpg', cluster:'Tiananmen square' },
+        { name:'Tiananmen square !', coords:[116.39270, 39.90391], photo:'./IMG/2025/China/Beijing/IMG_20250514_110050.jpg' },
+        { name:'Mister Mao Zedong', coords:[116.39181, 39.90521], photo:'./IMG/2025/China/Beijing/IMG_20250514_110234.jpg' },
+        { name:'The great hall of the people', coords:[116.38999, 39.90355], photo:'./IMG/2025/China/Beijing/IMG_20250514_110756.jpg' },
+        { name:'Mao Zedong memorial hall', coords:[116.39138, 39.90269], photo:'./IMG/2025/China/Beijing/IMG_20250514_111114.jpg' },
+        { name:'National Museum of China', coords:[116.39292, 39.90355], photo:'./IMG/2025/China/Beijing/IMG_20250514_111347.jpg' },
+        { name:'Beautiful building and gate', coords:[116.39161, 39.89702], photo:'./IMG/2025/China/Beijing/IMG_20250514_125603.jpg' },
+        { name:'Me', coords:[116.39175, 39.89465], photo:'./IMG/2025/China/Beijing/IMG_20250514_132806.jpg' },
+        { name:'Dumb me', coords:[116.39179, 39.89463], photo:'./IMG/2025/China/Beijing/IMG_20250514_132809.jpg' },
+        { name:'Beautiful gate', coords:[116.39175, 39.89653], photo:'./IMG/2025/China/Beijing/IMG_20250514_134125.jpg' },
         /*The summer palace*/
-        { name:'Beautiful gate', coords:[116.26806, 40.00049], photo:'./IMG/2025/China/Beijing/IMG_20250514_144546.jpg', cluster:'The summer palace' },
-        { name:'The summer palace', coords:[116.26821, 39.99958], photo:'./IMG/2025/China/Beijing/IMG_20250514_144828.jpg', cluster:'The summer palace' },
-        { name:'As always, beautiful decoration', coords:[116.26825, 39.99909], photo:'./IMG/2025/China/Beijing/IMG_20250514_145106.jpg', cluster:'The summer palace' },
-        { name:'Beautiful building', coords:[116.26823, 39.99885], photo:'./IMG/2025/China/Beijing/IMG_20250514_145541.jpg', cluster:'The summer palace' },
-        { name:'Building full of Buddha', coords:[116.26785, 39.99839], photo:'./IMG/2025/China/Beijing/IMG_20250514_145953.jpg', cluster:'The summer palace' },
-        { name:'Cute resting building', coords:[116.26986, 39.99826], photo:'./IMG/2025/China/Beijing/IMG_20250514_151334.jpg', cluster:'The summer palace' },
-        { name:'Beautiful entrance', coords:[116.26821, 39.99644], photo:'./IMG/2025/China/Beijing/IMG_20250514_152031.jpg', cluster:'The summer palace' },
-        { name:'Beautiful building', coords:[116.26802, 39.99705], photo:'./IMG/2025/China/Beijing/IMG_20250514_152412.jpg', cluster:'The summer palace' },
-        { name:'Beautiful old lady', coords:[116.26824, 39.99692], photo:'./IMG/2025/China/Beijing/IMG_20250514_153233.jpg', cluster:'The summer palace' },
-        { name:'At the top of the summer palace, Buddhism temple', coords:[116.26802, 39.99778], photo:'./IMG/2025/China/Beijing/IMG_20250514_154020.jpg', cluster:'The summer palace' },
-        { name:'Cool view of Beijing and the lake', coords:[116.26792, 39.99765], photo:'./IMG/2025/China/Beijing/IMG_20250514_155039.jpg', cluster:'The summer palace' },
-        { name:'Cool pagoda in the landscape', coords:[116.26776, 39.99762], photo:'./IMG/2025/China/Beijing/IMG_20250514_155106.jpg', cluster:'The summer palace' },
-        { name:'Married couple', coords:[116.26771, 39.99727], photo:'./IMG/2025/China/Beijing/IMG_20250514_155451_1.jpg', cluster:'The summer palace' },
-        { name:'Cool view from under', coords:[116.26775, 39.99702], photo:'./IMG/2025/China/Beijing/IMG_20250514_155556.jpg', cluster:'The summer palace' },
-        { name:'Cute boats on the lake', coords:[116.26765, 39.99630], photo:'./IMG/2025/China/Beijing/IMG_20250514_155803_1.jpg', cluster:'The summer palace' },
-        { name:'Cool walk path well decorated', coords:[116.26642, 39.99666], photo:'./IMG/2025/China/Beijing/IMG_20250514_160017.jpg', cluster:'The summer palace' },
-        { name:'The stone boat', coords:[116.26400, 39.99664], photo:'./IMG/2025/China/Beijing/IMG_20250514_160447.jpg', cluster:'The summer palace' },
-        { name:'Cute bridge', coords:[116.26354, 39.99927], photo:'./IMG/2025/China/Beijing/IMG_20250514_161619.jpg', cluster:'The summer palace' },
-        { name:'Cute walk path', coords:[116.26195, 39.99852], photo:'./IMG/2025/China/Beijing/IMG_20250514_162344.jpg', cluster:'The summer palace' },
-        { name:'Cool bridge', coords:[116.261467, 39.99546], photo:'./IMG/2025/China/Beijing/IMG_20250514_163717.jpg', cluster:'The summer palace' },
-        { name:'BIIIG bridge', coords:[116.26069, 39.99215], photo:'./IMG/2025/China/Beijing/IMG_20250514_164547.jpg', cluster:'The summer palace' },
-        { name:'The summer palace from the lake side', coords:[116.26145, 39.99156], photo:'./IMG/2025/China/Beijing/IMG_20250514_164651.jpg', cluster:'The summer palace' },
-        { name:'Another cool bridge', coords:[116.26329, 39.99009], photo:'./IMG/2025/China/Beijing/IMG_20250514_165126.jpg', cluster:'The summer palace' },
-        { name:'Another cool bridge', coords:[116.26559, 39.98781], photo:'./IMG/2025/China/Beijing/IMG_20250514_170056.jpg', cluster:'The summer palace' },
-        { name:'Cool building', coords:[116.26777, 39.98518], photo:'./IMG/2025/China/Beijing/IMG_20250514_170821.jpg', cluster:'The summer palace' },
-        { name:'Another enormous bridge', coords:[116.27407, 39.98017], photo:'./IMG/2025/China/Beijing/IMG_20250514_172519.jpg', cluster:'The summer palace' },
-        { name:'Another enormous bridge', coords:[116.27404, 39.98026], photo:'./IMG/2025/China/Beijing/IMG_20250514_172615.jpg', cluster:'The summer palace' },
-        { name:'Beautiful landscape', coords:[116.27437, 39.99400], photo:'./IMG/2025/China/Beijing/IMG_20250514_174405.jpg', cluster:'The summer palace' },
-        { name:'Beautiful landscape', coords:[116.27440, 39.99391], photo:'./IMG/2025/China/Beijing/IMG_20250514_174407.jpg', cluster:'The summer palace' },
-        { name:'End of the Beijing journey', coords:[116.31481, 39.89339], photo:'./IMG/2025/China/Beijing/IMG_20250515_093400.jpg', cluster:'The summer palace' },
+        { name:'Beautiful gate', coords:[116.26806, 40.00049], photo:'./IMG/2025/China/Beijing/IMG_20250514_144546.jpg' },
+        { name:'The summer palace', coords:[116.26821, 39.99958], photo:'./IMG/2025/China/Beijing/IMG_20250514_144828.jpg' },
+        { name:'As always, beautiful decoration', coords:[116.26825, 39.99909], photo:'./IMG/2025/China/Beijing/IMG_20250514_145106.jpg' },
+        { name:'Beautiful building', coords:[116.26823, 39.99885], photo:'./IMG/2025/China/Beijing/IMG_20250514_145541.jpg' },
+        { name:'Building full of Buddha', coords:[116.26785, 39.99839], photo:'./IMG/2025/China/Beijing/IMG_20250514_145953.jpg' },
+        { name:'Cute resting building', coords:[116.26986, 39.99826], photo:'./IMG/2025/China/Beijing/IMG_20250514_151334.jpg' },
+        { name:'Beautiful entrance', coords:[116.26821, 39.99644], photo:'./IMG/2025/China/Beijing/IMG_20250514_152031.jpg' },
+        { name:'Beautiful building', coords:[116.26802, 39.99705], photo:'./IMG/2025/China/Beijing/IMG_20250514_152412.jpg' },
+        { name:'Beautiful old lady', coords:[116.26824, 39.99692], photo:'./IMG/2025/China/Beijing/IMG_20250514_153233.jpg' },
+        { name:'At the top of the summer palace, Buddhism temple', coords:[116.26802, 39.99778], photo:'./IMG/2025/China/Beijing/IMG_20250514_154020.jpg' },
+        { name:'Cool view of Beijing and the lake', coords:[116.26792, 39.99765], photo:'./IMG/2025/China/Beijing/IMG_20250514_155039.jpg' },
+        { name:'Cool pagoda in the landscape', coords:[116.26776, 39.99762], photo:'./IMG/2025/China/Beijing/IMG_20250514_155106.jpg' },
+        { name:'Married couple', coords:[116.26771, 39.99727], photo:'./IMG/2025/China/Beijing/IMG_20250514_155451_1.jpg' },
+        { name:'Cool view from under', coords:[116.26775, 39.99702], photo:'./IMG/2025/China/Beijing/IMG_20250514_155556.jpg' },
+        { name:'Cute boats on the lake', coords:[116.26765, 39.99630], photo:'./IMG/2025/China/Beijing/IMG_20250514_155803_1.jpg' },
+        { name:'Cool walk path well decorated', coords:[116.26642, 39.99666], photo:'./IMG/2025/China/Beijing/IMG_20250514_160017.jpg' },
+        { name:'The stone boat', coords:[116.26400, 39.99664], photo:'./IMG/2025/China/Beijing/IMG_20250514_160447.jpg' },
+        { name:'Cute bridge', coords:[116.26354, 39.99927], photo:'./IMG/2025/China/Beijing/IMG_20250514_161619.jpg' },
+        { name:'Cute walk path', coords:[116.26195, 39.99852], photo:'./IMG/2025/China/Beijing/IMG_20250514_162344.jpg' },
+        { name:'Cool bridge', coords:[116.261467, 39.99546], photo:'./IMG/2025/China/Beijing/IMG_20250514_163717.jpg' },
+        { name:'BIIIG bridge', coords:[116.26069, 39.99215], photo:'./IMG/2025/China/Beijing/IMG_20250514_164547.jpg' },
+        { name:'The summer palace from the lake side', coords:[116.26145, 39.99156], photo:'./IMG/2025/China/Beijing/IMG_20250514_164651.jpg' },
+        { name:'Another cool bridge', coords:[116.26329, 39.99009], photo:'./IMG/2025/China/Beijing/IMG_20250514_165126.jpg' },
+        { name:'Another cool bridge', coords:[116.26559, 39.98781], photo:'./IMG/2025/China/Beijing/IMG_20250514_170056.jpg' },
+        { name:'Cool building', coords:[116.26777, 39.98518], photo:'./IMG/2025/China/Beijing/IMG_20250514_170821.jpg' },
+        { name:'Another enormous bridge', coords:[116.27407, 39.98017], photo:'./IMG/2025/China/Beijing/IMG_20250514_172519.jpg' },
+        { name:'Another enormous bridge', coords:[116.27404, 39.98026], photo:'./IMG/2025/China/Beijing/IMG_20250514_172615.jpg' },
+        { name:'Beautiful landscape', coords:[116.27437, 39.99400], photo:'./IMG/2025/China/Beijing/IMG_20250514_174405.jpg' },
+        { name:'Beautiful landscape', coords:[116.27440, 39.99391], photo:'./IMG/2025/China/Beijing/IMG_20250514_174407.jpg' },
+        { name:'End of the Beijing journey', coords:[116.31481, 39.89339], photo:'./IMG/2025/China/Beijing/IMG_20250515_093400.jpg' },
         /* last night in China*/
         { name:'Last photo of my whole trip', coords:[116.38023, 39.86887], photo:'./IMG/2025/China/Beijing/IMG_20250530_001727.jpg' },
       ]
@@ -1039,7 +1013,6 @@ const clusters = {
 
   // Leaflet popup helpers
   let currentLeafletMap = null;
-
 function openLeafletPopup(cityData) {
   leafletPopupEl.style.display = 'block';
   if (currentLeafletMap) {
@@ -1070,28 +1043,6 @@ function openLeafletPopup(cityData) {
   currentLeafletMap = L.map(leafletMapEl, { layers: [osm] }).setView(config.center, config.zoom);
 
   L.control.layers(baseMaps).addTo(currentLeafletMap);
-
-  // --- Création des groupes de clusters (thématiques) ---
-  const clusterGroups = {};
-  Object.keys(clusters).forEach(id => {
-    clusterGroups[id] = L.markerClusterGroup({
-      iconCreateFunction: function (cluster) {
-        const childCount = cluster.getChildCount();
-        const clusterData = clusters[id];
-        return L.divIcon({
-          html: `
-            <div style="text-align:center;">
-              <img src="${clusterData.image}" style="width:40px;height:40px;border-radius:50%;"><br>
-              <span style="font-size:11px;">${clusterData.label} (${childCount})</span>
-            </div>
-          `,
-          className: "custom-cluster",
-          iconSize: [50, 60]
-        });
-      }
-    });
-    clusterGroups[id].addTo(currentLeafletMap);
-  });
 
   // --- Grouper photos par Année > Mois > Jour ---
   const photosByYear = {};
@@ -1166,21 +1117,9 @@ function openLeafletPopup(cityData) {
         });
       });
 
-      // Ajout dans hiérarchie date
       photosByYear[year][month][day].addLayer(marker);
-
-      // Ajout dans le cluster si défini
-      if (v.cluster && clusterGroups[v.cluster]) {
-        clusterGroups[v.cluster].addLayer(marker);
-      }
-
     } else {
-      const marker = L.marker([vlat, vlon]).bindPopup(`<b>${v.name || ''}</b>`);
-      if (v.cluster && clusterGroups[v.cluster]) {
-        clusterGroups[v.cluster].addLayer(marker);
-      } else {
-        marker.addTo(currentLeafletMap);
-      }
+      L.marker([vlat, vlon]).addTo(currentLeafletMap).bindPopup(`<b>${v.name || ''}</b>`);
     }
   });
 
@@ -1191,107 +1130,108 @@ function openLeafletPopup(cityData) {
     )
   );
 
-  // --- Contrôle hiérarchique Année → Mois → Jour ---
-  const datesControl = L.control({ position: 'topright' });
-  datesControl.onAdd = function () {
-    const div = L.DomUtil.create('div', 'dates-control');
-    div.style.background = 'white';
-    div.style.padding = '6px';
-    div.style.borderRadius = '6px';
-    div.style.maxHeight = '250px';
-    div.style.overflowY = 'auto';
-    div.style.boxShadow = '0 2px 6px rgba(0,0,0,0.3)';
-    div.style.fontSize = "13px";
-    div.style.lineHeight = "1.4em";
+ // --- Contrôle hiérarchique Année → Mois → Jour (version jolie avec <details>) ---
+const datesControl = L.control({ position: 'topright' });
+datesControl.onAdd = function () {
+  const div = L.DomUtil.create('div', 'dates-control');
+  div.style.background = 'white';
+  div.style.padding = '6px';
+  div.style.borderRadius = '6px';
+  div.style.maxHeight = '250px';
+  div.style.overflowY = 'auto';
+  div.style.boxShadow = '0 2px 6px rgba(0,0,0,0.3)';
+  div.style.fontSize = "13px";
+  div.style.lineHeight = "1.4em";
 
-    const title = document.createElement('strong');
-    title.textContent = "📅 Photos by date";
-    title.style.display = "block";
-    title.style.marginBottom = "6px";
-    div.appendChild(title);
+  const title = document.createElement('strong');
+  title.textContent = "📅 Photos by date";
+  title.style.display = "block";
+  title.style.marginBottom = "6px";
+  div.appendChild(title);
 
-    Object.keys(photosByYear).sort().forEach(year => {
-      const yearDetails = document.createElement('details');
-      yearDetails.open = true;
-      const yearSummary = document.createElement('summary');
+  Object.keys(photosByYear).sort().forEach(year => {
+    const yearDetails = document.createElement('details');
+    yearDetails.open = true; // ouvert par défaut
+    const yearSummary = document.createElement('summary');
 
-      const yearCb = document.createElement('input');
-      yearCb.type = 'checkbox';
-      yearCb.checked = true;
-      yearCb.style.marginRight = "5px";
-      yearCb.onchange = () => {
-        Object.values(photosByYear[year]).forEach(monthObj =>
-          Object.values(monthObj).forEach(dayGroup => {
-            if (yearCb.checked) dayGroup.addTo(currentLeafletMap);
-            else currentLeafletMap.removeLayer(dayGroup);
-          })
-        );
-        yearDetails.querySelectorAll('input[type=checkbox]').forEach(cb => cb.checked = yearCb.checked);
+    const yearCb = document.createElement('input');
+    yearCb.type = 'checkbox';
+    yearCb.checked = true;
+    yearCb.style.marginRight = "5px";
+    yearCb.onchange = () => {
+      Object.values(photosByYear[year]).forEach(monthObj =>
+        Object.values(monthObj).forEach(dayGroup => {
+          if (yearCb.checked) dayGroup.addTo(currentLeafletMap);
+          else currentLeafletMap.removeLayer(dayGroup);
+        })
+      );
+      yearDetails.querySelectorAll('input[type=checkbox]').forEach(cb => cb.checked = yearCb.checked);
+    };
+
+    yearSummary.appendChild(yearCb);
+    yearSummary.append(year);
+    yearDetails.appendChild(yearSummary);
+
+    // --- Mois ---
+    Object.keys(photosByYear[year]).sort().forEach(month => {
+      const monthDetails = document.createElement('details');
+      monthDetails.style.marginLeft = "15px";
+      monthDetails.open = false;
+
+      const monthSummary = document.createElement('summary');
+
+      const monthCb = document.createElement('input');
+      monthCb.type = 'checkbox';
+      monthCb.checked = true;
+      monthCb.style.marginRight = "5px";
+      monthCb.onchange = () => {
+        Object.values(photosByYear[year][month]).forEach(dayGroup => {
+          if (monthCb.checked) dayGroup.addTo(currentLeafletMap);
+          else currentLeafletMap.removeLayer(dayGroup);
+        });
+        monthDetails.querySelectorAll('input[type=checkbox]').forEach(cb => cb.checked = monthCb.checked);
       };
 
-      yearSummary.appendChild(yearCb);
-      yearSummary.append(year);
-      yearDetails.appendChild(yearSummary);
+      // Traduction mois
+      const moisNoms = {
+        "01": "January", "02": "February", "03": "March", "04": "April",
+        "05": "May", "06": "June", "07": "July", "08": "August",
+        "09": "September", "10": "October", "11": "November", "12": "December"
+      };
 
-      // --- Mois ---
-      Object.keys(photosByYear[year]).sort().forEach(month => {
-        const monthDetails = document.createElement('details');
-        monthDetails.style.marginLeft = "15px";
-        monthDetails.open = false;
+      monthSummary.appendChild(monthCb);
+      monthSummary.append(moisNoms[month] || month);
+      monthDetails.appendChild(monthSummary);
 
-        const monthSummary = document.createElement('summary');
+      // --- Jours ---
+      Object.keys(photosByYear[year][month]).sort().forEach(day => {
+        const dayDiv = document.createElement('div');
+        dayDiv.style.marginLeft = "20px";
 
-        const monthCb = document.createElement('input');
-        monthCb.type = 'checkbox';
-        monthCb.checked = true;
-        monthCb.style.marginRight = "5px";
-        monthCb.onchange = () => {
-          Object.values(photosByYear[year][month]).forEach(dayGroup => {
-            if (monthCb.checked) dayGroup.addTo(currentLeafletMap);
-            else currentLeafletMap.removeLayer(dayGroup);
-          });
-          monthDetails.querySelectorAll('input[type=checkbox]').forEach(cb => cb.checked = monthCb.checked);
+        const dayCb = document.createElement('input');
+        dayCb.type = 'checkbox';
+        dayCb.checked = true;
+        dayCb.style.marginRight = "5px";
+        dayCb.onchange = () => {
+          if (dayCb.checked) photosByYear[year][month][day].addTo(currentLeafletMap);
+          else currentLeafletMap.removeLayer(photosByYear[year][month][day]);
         };
 
-        const moisNoms = {
-          "01": "January", "02": "February", "03": "March", "04": "April",
-          "05": "May", "06": "June", "07": "July", "08": "August",
-          "09": "September", "10": "October", "11": "November", "12": "December"
-        };
-
-        monthSummary.appendChild(monthCb);
-        monthSummary.append(moisNoms[month] || month);
-        monthDetails.appendChild(monthSummary);
-
-        // --- Jours ---
-        Object.keys(photosByYear[year][month]).sort().forEach(day => {
-          const dayDiv = document.createElement('div');
-          dayDiv.style.marginLeft = "20px";
-
-          const dayCb = document.createElement('input');
-          dayCb.type = 'checkbox';
-          dayCb.checked = true;
-          dayCb.style.marginRight = "5px";
-          dayCb.onchange = () => {
-            if (dayCb.checked) photosByYear[year][month][day].addTo(currentLeafletMap);
-            else currentLeafletMap.removeLayer(photosByYear[year][month][day]);
-          };
-
-          dayDiv.appendChild(dayCb);
-          dayDiv.append(day);
-          monthDetails.appendChild(dayDiv);
-        });
-
-        yearDetails.appendChild(monthDetails);
+        dayDiv.appendChild(dayCb);
+        dayDiv.append(day);
+        monthDetails.appendChild(dayDiv);
       });
 
-      div.appendChild(yearDetails);
+      yearDetails.appendChild(monthDetails);
     });
 
-    L.DomEvent.disableClickPropagation(div);
-    return div;
-  };
-  datesControl.addTo(currentLeafletMap);
+    div.appendChild(yearDetails);
+  });
+
+  L.DomEvent.disableClickPropagation(div);
+  return div;
+};
+datesControl.addTo(currentLeafletMap);
 
   currentLeafletMap.invalidateSize();
 }
