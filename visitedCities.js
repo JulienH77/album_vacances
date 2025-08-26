@@ -260,6 +260,7 @@ const visitedCities = [
         { name:'View of the dragon path', coords:[110.45633, 24.69120], photo:'./IMG/2025/China/Yangshuo/IMG_20250526_123804.jpg' },
         { name:'The bridge', coords:[110.45622, 24.69130], photo:'./IMG/2025/China/Yangshuo/IMG_20250526_124020.jpg' },
         { name:'The bridge full of wish from people', coords:[110.45611, 24.69139], photo:'./IMG/2025/China/Yangshuo/IMG_20250526_124050.jpg' },
+        { name:'The bridge and the landscape', coords:[110.45614, 24.69133], photo:'./IMG/2025/China/Yangshuo/IMG_20250526_124223.jpg' },
         { name:'View from above', coords:[110.45458, 24.69437], photo:'./IMG/2025/China/Yangshuo/IMG_20250526_130243.jpg' },
         { name:'Me and the hills', coords:[110.45467, 24.69440], photo:'./IMG/2025/China/Yangshuo/IMG_20250526_130328.jpg' },
         { name:'View', coords:[110.45472, 24.69425], photo:'./IMG/2025/China/Yangshuo/IMG_20250526_130457.jpg' },
@@ -280,8 +281,7 @@ const visitedCities = [
         { name:'Enter of the Impression Liu Sanjie', coords:[110.50185, 24.76819], photo:'./IMG/2025/China/Yangshuo/IMG_20250526_195417.jpg' },
         { name:'Start of the show', coords:[110.50577, 24.77105], photo:'./IMG/2025/China/Yangshuo/IMG_20250526_200533.jpg' },
         { name:'Middle of the show', coords:[110.50581, 24.77104], photo:'./IMG/2025/China/Yangshuo/IMG_20250526_202232.jpg' },
-        { name:'Going back from the show', coords:[110.49783, 24.76995], photo:'./IMG/2025/China/Yangshuo/IMG_20250526_212603.jpg' },
-        { name:'The bridge and the landscape', coords:[110.45614, 24.69133], photo:'./IMG/2025/China/Yangshuo/IMG_20250526_124223.jpg' }
+        { name:'Going back from the show', coords:[110.49783, 24.76995], photo:'./IMG/2025/China/Yangshuo/IMG_20250526_212603.jpg' }
       ]
     },
     {
