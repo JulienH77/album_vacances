@@ -232,6 +232,23 @@ Object.entries(mapColor).forEach(([transport, color])=>{
         }
       });
     }
+
+if (issTrail.length > 1) {
+  opt.series.push({
+    name: 'ISS Trail',
+    type: 'lines3D',
+    coordinateSystem: 'globe',
+    polyline: true,
+    data: [{
+      coords: issTrail,
+      lineStyle: { color: '#FF0000', width: 2, opacity: 0.7 }
+    }],
+    zlevel: 1 // Pour s'assurer que la traînée est au-dessus du globe
+  });
+}
+
+
+        
     // pins des villes visitées qui deviennent filtrées par les voyages sélectionnés
     let pinsData = [];
     const allowedCities = new Set();
@@ -327,18 +344,26 @@ Object.entries(mapColor).forEach(([transport, color])=>{
 // --- ISS tracking ---
 //const ISS_ICON = 'https://upload.wikimedia.org/wikipedia/commons/f/f2/ISS_spacecraft_model_1.png';
 const ISS_ICON = './GLOBE/ISS.png';
-
+let issTrail = [];
+const MAX_TRAIL_POINTS = 20; // Nombre de points à afficher dans la traînée
+      
 async function fetchISS() {
   try {
     const res = await fetch("https://api.wheretheiss.at/v1/satellites/25544");
     if (!res.ok) throw new Error("HTTP " + res.status);
     const data = await res.json();
-    return [data.longitude, data.latitude];
+    const newPos = [data.longitude, data.latitude];
+    issTrail.push(newPos);
+    if (issTrail.length > MAX_TRAIL_POINTS) {
+      issTrail.shift(); // Supprime le point le plus ancien
+    }
+    return newPos;
   } catch (err) {
     console.error("Erreur récupération ISS:", err);
     return null;
   }
 }
+
 
 let issCoord = null;
 
@@ -387,14 +412,15 @@ makeOption = function(s) {
   }
       
   // Permet de rafraichir l'affichage sans reset la vue
-  function refresh(){
-    const currentView = getCurrentView();
-    const newOpt = makeOption(state);
-    if(currentView) {
-      newOpt.globe.viewControl = { ...newOpt.globe.viewControl, ...currentView };
-    }
-    globeChart.setOption(newOpt, { notMerge:true });
+function refresh() {
+  const currentView = getCurrentView();
+  const newOpt = makeOption(state);
+  if (currentView) {
+    newOpt.globe.viewControl = { ...newOpt.globe.viewControl, ...currentView };
   }
+  globeChart.setOption(newOpt, { notMerge: true });
+}
+
       
   // --- UI refs ---
   const toggleNightEl = document.getElementById('toggleNight');
