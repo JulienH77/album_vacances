@@ -763,67 +763,6 @@ document.getElementById('photoPopup').addEventListener('click', (e) => {
     }
   });
 
-  // rendu initial
-  voyagesListEl.style.display = state.showTrajets ? 'block' : 'none';
-  refresh();
-
-
-
-
-
-
-
-
-
-// --- ISS tracking ---
-const ISS_ICON = 'https://upload.wikimedia.org/wikipedia/commons/f/f2/ISS_spacecraft_model_1.png';
-
-// Fonction pour récupérer la position de l'ISS
-async function fetchISS() {
-  try {
-    const res = await fetch("https://api.wheretheiss.at/v1/satellites/25544");
-    if (!res.ok) throw new Error("HTTP " + res.status);
-    const data = await res.json();
-    return [data.longitude, data.latitude];
-  } catch (err) {
-    console.error("Erreur récupération ISS:", err);
-    return null;
-  }
-}
-
-// On garde la dernière coordonnée ISS
-let issCoord = null;
-
-// Ajout de la série ISS dans makeOption
-const oldMakeOption = makeOption;
-makeOption = function(s) {
-  const opt = oldMakeOption(s);
-
-  if (issCoord) {
-    opt.series.push({
-      name: 'ISS',
-      type: 'scatter3D',
-      coordinateSystem: 'globe',
-      symbol: 'image://' + ISS_ICON,
-      symbolSize: 30,
-      data: [{ name: 'ISS', value: issCoord }],
-      label: {
-        show: true,
-        formatter: 'ISS',
-        textStyle: {
-          color: '#fff',
-          fontSize: 14,
-          backgroundColor: 'rgba(0,0,0,0.6)',
-          padding: [2,4],
-          borderRadius: 3
-        }
-      }
-    });
-  }
-
-  return opt;
-};
-
 // Mise à jour de la position ISS toutes les secondes
 setInterval(async () => {
   const pos = await fetchISS();
@@ -832,6 +771,10 @@ setInterval(async () => {
     refresh();
   }
 }, 1000);
+
+// rendu initial
+voyagesListEl.style.display = state.showTrajets ? 'block' : 'none';
+refresh();
 })();
 </script>
 </body>
