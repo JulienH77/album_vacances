@@ -38,6 +38,13 @@
                     <path d="M6 19h11a4 4 0 0 0 0-8 5 5 0 0 0-9.8-1.7A4 4 0 0 0 6 19z" fill="#4a90e2"/>
                 </svg>
             </div>
+            <!-- ISS -->
+            <div id="toggleISS" class="toggle-btn" role="button" aria-pressed="false" aria-label="Afficher/masquer l'ISS">
+              <svg viewBox="0 0 24 24" width="22" height="22">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="#FF0000"/>
+              </svg>
+            </div>
+
             <!-- Basemap -->
             <div id="toggleDayBase" role="button" aria-label="Changer fond du jour" title="Changer fond du jour">EARTH</div>
             <!-- Legend -->
@@ -193,8 +200,9 @@ Object.entries(mapColor).forEach(([transport, color])=>{
     showRelief:false,
     dayBase:'earth',
     activeVoyages: new Set(voyagesSet)
+    showISS: true, // Par défaut, l'ISS est affichée
   };
-
+      
   // Fonction qui fait plein de trucs
   function makeOption(s) {
     const series = [];
@@ -335,24 +343,21 @@ return {
 //const ISS_ICON = 'https://upload.wikimedia.org/wikipedia/commons/f/f2/ISS_spacecraft_model_1.png';
 const ISS_ICON = './GLOBE/ISS.png';
 let issTrail = [];
-const MAX_TRAIL_POINTS = 20;
 
 async function fetchISS() {
   try {
     const res = await fetch("https://api.wheretheiss.at/v1/satellites/25544");
     if (!res.ok) throw new Error("HTTP " + res.status);
     const data = await res.json();
-    const newPos = [data.longitude, data.latitude];
-    issTrail.push(newPos);
-    if (issTrail.length > MAX_TRAIL_POINTS) {
-      issTrail.shift();
-    }
+    const newPos = [data.longitude, data.latitude, 1]; // 0.1 pour une altitude visible
+    issTrail.push(newPos); // Ajoute toutes les positions
     return newPos;
   } catch (err) {
     console.error("Erreur récupération ISS:", err);
     return null;
   }
 }
+
 
 let issCoord = null;
 const oldMakeOption = makeOption;
@@ -387,7 +392,7 @@ if (issTrail.length > 1) {
     coordinateSystem: 'globe',
     polyline: true,
     data: [{
-      coords: issTrail
+        coords: issTrail.map(coord => [coord[0], coord[1], coord[2] || 1])
     }],
     lineStyle: {
       width: 2,
@@ -457,7 +462,11 @@ function refresh() {
   const leafletMapEl = document.getElementById('leafletMap');
   const leafletCloseBtn = document.getElementById('leafletClose');
   const voyagesListEl = document.getElementById('voyagesList');
+  const toggleISSEl = document.getElementById('toggleISS');
 
+
+
+      
   // Remplit la liste avec les valeurs uniques de `voyage` (je ne sais pas a quoi tu sers)
   Array.from(voyagesSet).sort().forEach(v => {
     const id = 'voy_'+v.replace(/[^A-Za-z0-9_-]/g,'_');
@@ -496,6 +505,13 @@ function refresh() {
     toggleCloudsEl.setAttribute('aria-pressed', String(state.showNuages));
     refresh();
   });
+      
+toggleISSEl.addEventListener('click', () => {
+  state.showISS = !state.showISS;
+  toggleISSEl.classList.toggle('active', state.showISS);
+  toggleISSEl.setAttribute('aria-pressed', String(state.showISS));
+  refresh();
+});
 
   // Fonction pour changer le fond du globe
   function updateDayBaseButtonLabel(){
