@@ -231,24 +231,7 @@ Object.entries(mapColor).forEach(([transport, color])=>{
           opacity: 0.95,
         }
       });
-    }
-
-if (issTrail.length > 1) {
-  opt.series.push({
-    name: 'ISS Trail',
-    type: 'lines3D',
-    coordinateSystem: 'globe',
-    polyline: true,
-    data: [{
-      coords: issTrail,
-      lineStyle: { color: '#FF0000', width: 2, opacity: 0.7 }
-    }],
-    zlevel: 1 // Pour s'assurer que la traînée est au-dessus du globe
-  });
-}
-
-
-        
+    }        
     // pins des villes visitées qui deviennent filtrées par les voyages sélectionnés
     let pinsData = [];
     const allowedCities = new Set();
@@ -320,33 +303,40 @@ if (issTrail.length > 1) {
     }
     // Change le fond du globe
     const baseDay = (s.dayBase === 'earth') ? PATH_EARTH_DAY_1 : PATH_EARTH_DAY_2;
-    return {
-      backgroundColor: 'transparent',
-      globe: {
-        baseTexture: baseDay,
-        heightTexture: s.showRelief ? PATH_EARTH_BUMP : undefined,
-        displacementScale: 0.025,
-        shading: 'realistic',
-        environment: PATH_STARFIELD,
-        postEffect: { enable: false },
-        light: {
-          ambient: { color: '#1f1f1f', intensity: 0.2 },
-          main: { color: '#FFFDED', intensity: 0.9 }
-        },
-        atmosphere: { show: true, color: '#a1a1a1', offset: 4 },
-        viewControl: { autoRotate: false, autoRotateSpeed: 0.5 },
-        layers
-      },
-      series
-    };
+return {
+  backgroundColor: 'transparent',
+  globe: {
+    baseTexture: baseDay,
+    heightTexture: s.showRelief ? PATH_EARTH_BUMP : undefined,
+    displacementScale: 0.025,
+    shading: 'realistic',
+    environment: PATH_STARFIELD,
+    postEffect: { enable: false },
+    light: {
+      ambient: { color: '#1f1f1f', intensity: 0.2 },
+      main: { color: '#FFFDED', intensity: 0.9 }
+    },
+    atmosphere: { show: true, color: '#a1a1a1', offset: 4 },
+    viewControl: {
+      autoRotate: false,
+      autoRotateSpeed: 0.5,
+      // Ces valeurs seront écrasées par refresh() si currentView existe
+      alpha: 40,
+      beta: 30,
+      distance: 150,
+    },
+    layers,
+  },
+  series,
+};
   }
 
 // --- ISS tracking ---
 //const ISS_ICON = 'https://upload.wikimedia.org/wikipedia/commons/f/f2/ISS_spacecraft_model_1.png';
 const ISS_ICON = './GLOBE/ISS.png';
 let issTrail = [];
-const MAX_TRAIL_POINTS = 20; // Nombre de points à afficher dans la traînée
-      
+const MAX_TRAIL_POINTS = 20;
+
 async function fetchISS() {
   try {
     const res = await fetch("https://api.wheretheiss.at/v1/satellites/25544");
@@ -355,7 +345,7 @@ async function fetchISS() {
     const newPos = [data.longitude, data.latitude];
     issTrail.push(newPos);
     if (issTrail.length > MAX_TRAIL_POINTS) {
-      issTrail.shift(); // Supprime le point le plus ancien
+      issTrail.shift();
     }
     return newPos;
   } catch (err) {
@@ -364,13 +354,10 @@ async function fetchISS() {
   }
 }
 
-
 let issCoord = null;
-
 const oldMakeOption = makeOption;
 makeOption = function(s) {
   const opt = oldMakeOption(s);
-
   if (issCoord) {
     opt.series.push({
       name: 'ISS',
@@ -392,9 +379,24 @@ makeOption = function(s) {
       }
     });
   }
-
+  // Ajoute la traînée de l'ISS
+  if (issTrail.length > 1) {
+    opt.series.push({
+      name: 'ISS Trail',
+      type: 'lines3D',
+      coordinateSystem: 'globe',
+      polyline: true,
+      data: [{
+        coords: issTrail,
+        lineStyle: { color: '#FF0000', width: 2, opacity: 0.7 }
+      }],
+      zlevel: 1
+    });
+  }
   return opt;
 };
+
+
 
 
 
@@ -415,11 +417,20 @@ makeOption = function(s) {
 function refresh() {
   const currentView = getCurrentView();
   const newOpt = makeOption(state);
+  // Force la conservation de la vue actuelle
   if (currentView) {
-    newOpt.globe.viewControl = { ...newOpt.globe.viewControl, ...currentView };
+    newOpt.globe.viewControl = {
+      ...newOpt.globe.viewControl,
+      alpha: currentView.alpha,
+      beta: currentView.beta,
+      rotation: currentView.rotation,
+      distance: currentView.distance,
+      autoRotate: false,
+    };
   }
-  globeChart.setOption(newOpt, { notMerge: true });
+  globeChart.setOption(newOpt, { notMerge: false });
 }
+
 
       
   // --- UI refs ---
@@ -800,13 +811,15 @@ document.getElementById('photoPopup').addEventListener('click', (e) => {
   voyagesListEl.style.display = state.showTrajets ? 'block' : 'none';
 
 // Mise à jour de la position ISS toutes les secondes
+let lastIssCoord = null;
 setInterval(async () => {
   const pos = await fetchISS();
   if (pos) {
     issCoord = pos;
     refresh();
   }
-}, 1000);
+}, 5000);
+
 
       
   refresh();
