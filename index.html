@@ -357,14 +357,10 @@ async function fetchISS() {
     return null;
   }
 }
-
-
-let issCoord = null;
-const oldMakeOption = makeOption;
-makeOption = function(s) {
-  const opt = oldMakeOption(s);
-  if (issCoord) {
-    opt.series.push({
+function updateISS() {
+  const series = [];
+  if (state.showISS && issCoord) {
+    series.push({
       name: 'ISS',
       type: 'scatter3D',
       coordinateSystem: 'globe',
@@ -378,38 +374,46 @@ makeOption = function(s) {
           color: '#fff',
           fontSize: 14,
           backgroundColor: 'rgba(0,0,0,0.6)',
-          padding: [2,4],
-          borderRadius: 3
-        }
-      }
+          padding: [2, 4],
+          borderRadius: 3,
+        },
+      },
     });
   }
-  // Ajoute la traînée de l'ISS
-if (issTrail.length > 1) {
-  opt.series.push({
-    name: 'ISS Trail',
-    type: 'lines3D',
-    coordinateSystem: 'globe',
-    polyline: true,
-    data: [{
-        coords: issTrail.map(coord => [coord[0], coord[1], coord[2] || 0.3])
-    }],
-    lineStyle: {
-      width: 2,
-      color: '#FF0000',
-      opacity: 0.3 // Opacité de base de la ligne
-    },
-    effect: {
-      show: true,
-      trailWidth: 3, // Largeur de la traînée
-      trailLength: 0.3, // Longueur de la traînée (0 à 1)
-      trailOpacity: 0.7, // Opacité de la traînée
-      trailColor: '#FF0000', // Couleur de la traînée
-    },
-    blendMode: 'lighter', // Mode de fusion pour un effet lumineux
-  });
+  if (state.showISS && issTrail.length > 1) {
+    series.push({
+      name: 'ISS Trail',
+      type: 'lines3D',
+      coordinateSystem: 'globe',
+      polyline: true,
+      data: [{
+        coords: issTrail.map(coord => [coord[0], coord[1], coord[2] || 0.3]),
+      }],
+      lineStyle: {
+        width: 2,
+        color: '#FF0000',
+        opacity: 0.3,
+      },
+      effect: {
+        show: true,
+        trailWidth: 3,
+        trailLength: 0.3,
+        trailOpacity: 0.7,
+        trailColor: '#FF0000',
+      },
+      blendMode: 'lighter',
+    });
+  }
+  // Met à jour uniquement les séries liées à l'ISS
+  globeChart.setOption({
+    series: series,
+  }, { notMerge: false });
 }
 
+let issCoord = null;
+const oldMakeOption = makeOption;
+makeOption = function(s) {
+  const opt = oldMakeOption(s);
   return opt;
 };
 
@@ -434,7 +438,6 @@ if (issTrail.length > 1) {
 function refresh() {
   const currentView = getCurrentView();
   const newOpt = makeOption(state);
-  // Force la conservation de la vue actuelle
   if (currentView) {
     newOpt.globe.viewControl = {
       ...newOpt.globe.viewControl,
@@ -445,8 +448,9 @@ function refresh() {
       autoRotate: false,
     };
   }
-  globeChart.setOption(newOpt, { notMerge: false });
+  globeChart.setOption(newOpt, { notMerge: true });
 }
+
 
 
       
@@ -844,10 +848,11 @@ setInterval(async () => {
   const pos = await fetchISS();
   if (pos) {
     issCoord = pos;
-    refresh();
+    updateISS();
   }
 }, 3000);
   refresh();
+updateISS();
 })();
 </script>
 </body>
