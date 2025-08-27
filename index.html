@@ -380,19 +380,31 @@ makeOption = function(s) {
     });
   }
   // Ajoute la traînée de l'ISS
-  if (issTrail.length > 1) {
-    opt.series.push({
-      name: 'ISS Trail',
-      type: 'lines3D',
-      coordinateSystem: 'globe',
-      polyline: true,
-      data: [{
-        coords: issTrail,
-        lineStyle: { color: '#FF0000', width: 2, opacity: 0.7 }
-      }],
-      zlevel: 1
-    });
-  }
+if (issTrail.length > 1) {
+  opt.series.push({
+    name: 'ISS Trail',
+    type: 'lines3D',
+    coordinateSystem: 'globe',
+    polyline: true,
+    data: [{
+      coords: issTrail
+    }],
+    lineStyle: {
+      width: 2,
+      color: '#FF0000',
+      opacity: 0.3 // Opacité de base de la ligne
+    },
+    effect: {
+      show: true,
+      trailWidth: 3, // Largeur de la traînée
+      trailLength: 0.3, // Longueur de la traînée (0 à 1)
+      trailOpacity: 0.7, // Opacité de la traînée
+      trailColor: '#FF0000', // Couleur de la traînée
+    },
+    blendMode: 'lighter', // Mode de fusion pour un effet lumineux
+  });
+}
+
   return opt;
 };
 
@@ -818,10 +830,7 @@ setInterval(async () => {
     issCoord = pos;
     refresh();
   }
-}, 5000);
-
-
-      
+}, 10000);
   refresh();
 })();
 </script>
