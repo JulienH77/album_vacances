@@ -232,28 +232,6 @@ Object.entries(mapColor).forEach(([transport, color])=>{
         }
       });
     }
-
-if (issCoord && issTrail.length > 1) {
-  opt.series.push({
-    name: 'ISS trail',
-    type: 'line3D',
-    coordinateSystem: 'globe',
-    data: issTrail.map((p, i) => {
-      return {
-        value: p,
-        lineStyle: {
-          width: 2,
-          color: 'rgba(255, 255, 255,' + (i / issTrail.length) + ')' // plus transparent au début
-        }
-      };
-    }),
-    polyline: true
-  });
-}
-
-
-
-        
     // pins des villes visitées qui deviennent filtrées par les voyages sélectionnés
     let pinsData = [];
     const allowedCities = new Set();
@@ -345,62 +323,6 @@ if (issCoord && issTrail.length > 1) {
       series
     };
   }
-
-// --- ISS tracking ---
-const ISS_ICON = 'https://upload.wikimedia.org/wikipedia/commons/f/f2/ISS_spacecraft_model_1.png';
-
-async function fetchISS() {
-  try {
-    const res = await fetch("https://api.wheretheiss.at/v1/satellites/25544");
-    if (!res.ok) throw new Error("HTTP " + res.status);
-    const data = await res.json();
-    return [data.longitude, data.latitude];
-  } catch (err) {
-    console.error("Erreur récupération ISS:", err);
-    return null;
-  }
-}
-
-let issTrail = [];
-
-function updateISSTrail(pos) {
-  issTrail.push(pos);
-  if (issTrail.length > 100) { // garde les 100 derniers points (~100 sec)
-    issTrail.shift();
-  }
-}
-
-
-let issCoord = null;
-
-const oldMakeOption = makeOption;
-makeOption = function(s) {
-  const opt = oldMakeOption(s);
-
-  if (issCoord) {
-    opt.series.push({
-      name: 'ISS',
-      type: 'scatter3D',
-      coordinateSystem: 'globe',
-      symbol: 'image://' + ISS_ICON,
-      symbolSize: 40,
-      data: [{ name: 'ISS', value: issCoord }],
-      label: {
-        show: false,
-        formatter: 'ISS',
-        textStyle: {
-          color: '#fff',
-          fontSize: 14,
-          backgroundColor: 'rgba(0,0,0,0.6)',
-          padding: [2,4],
-          borderRadius: 3
-        }
-      }
-    });
-  }
-
-  return opt;
-};
 
   // Récupère la vue du globe actuelle
   function getCurrentView() {
@@ -795,20 +717,9 @@ document.getElementById('photoPopup').addEventListener('click', (e) => {
     }
   });
 
-// Mise à jour de la position ISS toutes les secondes
-setInterval(async () => {
-  const pos = await fetchISS();
-  if (pos) {
-    issCoord = pos;
-    updateISSTrail(pos);
-    globeChart.setOption(makeOption(series), { replaceMerge: ['series'] }); 
-  }
-}, 1000);
-
-
-// rendu initial
-voyagesListEl.style.display = state.showTrajets ? 'block' : 'none';
-refresh();
+  // rendu initial
+  voyagesListEl.style.display = state.showTrajets ? 'block' : 'none';
+  refresh();
 })();
 </script>
 </body>
