@@ -37,10 +37,6 @@ html,body,#root { height:100%; margin:0; padding:0; }
     top: 142px;
     left: 18px;
   }
-  #toggleISS {
-    top: 100px; /* Positionne le bouton ISS en dessous des autres */
-    right: 20px;
-  }
   /* Bouton carré fond du jour (en bas à gauche) */
   #toggleDayBase {
     position: absolute;
