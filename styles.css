@@ -173,11 +173,6 @@ html,body,#root { height:100vh; width:100%; overflow:hidden; margin:0; padding:0
   z-index: 500;
 } 
 
-
-
-
-
-
 /* Cacher sur desktop */
 /* Bouton d'ouverture de la bobine */
 #toggleReel {
@@ -197,12 +192,11 @@ html,body,#root { height:100vh; width:100%; overflow:hidden; margin:0; padding:0
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
-
 /* Mobile uniquement */
 @media (max-width: 768px) {
   #toggleReel {
     display: flex;
-    bottom: 10px;
+    bottom: -25px;
   }
   /* Bouton EARTH (fond du jour) */
   #toggleDayBase {
@@ -233,11 +227,9 @@ html,body,#root { height:100vh; width:100%; overflow:hidden; margin:0; padding:0
     padding: 10px;
     transition: bottom 0.35s ease-in-out;
   }
-
   #cityReel.open {
     bottom: 0; /* remonte avec animation */
   }
-
   .city-card {
     display: inline-block;
     background: white;
@@ -252,8 +244,3 @@ html,body,#root { height:100vh; width:100%; overflow:hidden; margin:0; padding:0
     background: #f0f0f0;
   }
 }
-
-
-
-
-
