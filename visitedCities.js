@@ -395,7 +395,9 @@ const visitedCities = [
         { name:'An old tower', coords:[12.10843, 49.01792], photo:'./IMG/2025/Central Europe/Regensburg/IMG_20250725_121358.jpg' },
         { name:'Café Lorraine', coords:[12.10154, 49.01750], photo:'./IMG/2025/Central Europe/Regensburg/IMG_20250725_125458.jpg' },
         { name:'Us on the old bridge', coords:[12.09711, 49.02176], photo:'./IMG/2025/Central Europe/Regensburg/IMG_20250725_151922.jpg' },
-        { name:'View of Regensburg', coords:[12.10189, 49.02126], photo:'./IMG/2025/Central Europe/Regensburg/IMG_20250725_165907.jpg' }
+        { name:'View of Regensburg', coords:[12.10189, 49.02126], photo:'./IMG/2025/Central Europe/Regensburg/IMG_20250725_165907.jpg' },
+        { name:'Map of the middle-age town', coords:[12.09781, 49.02095], photo:'./IMG/2025/Central Europe/Regensburg/IMG_20250725_150953.jpg' },
+        { name:'A 2000 years old tower from roman empire', coords:[12.09900, 49.02013], photo:'./IMG/2025/Central Europe/Regensburg/IMG_20250725_170604.jpg' }
       ]
     },
     {
