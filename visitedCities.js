@@ -449,6 +449,10 @@ const visitedCities = [
         { name:'In the Ruin bar', coords:[19.06299, 47.49687], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250719_002000.jpg' },
         { name:'Us and the castel of Pest', coords:[19.08303, 47.51652], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250718_195500.jpg' },
         { name:'Luggage locker', coords:[19.08311, 47.50028], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250721_165000.jpg' },
+          
+        { name:'Me and a drunk guy', coords:[19.06284, 47.49683], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250718_223000.jpg' },
+        { name:'Piece of Berlin wall', coords:[19.06529, 47.50668], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250721_165000.jpg' },
+        { name:'Iron curtain', coords:[19.06544, 47.50679], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250721_165000.jpg' }
       ]
     },
     
