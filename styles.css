@@ -201,27 +201,25 @@ html,body,#root { height:100vh; width:100%; overflow:hidden; margin:0; padding:0
 /* Mobile uniquement */
 @media (max-width: 768px) {
   #toggleReel {
-    display: flex; /* visible seulement sur mobile */
-    bottom: 10px; /* reste collé au bas visible */
+    display: flex;
+    bottom: 10px;
   }
   /* Bouton EARTH (fond du jour) */
   #toggleDayBase {
-    bottom: 90px !important; /* remonte au-dessus du carrousel */
+    top: 204px !important;
     width: 40px;
     height: 40px;
     font-size: 10px;
     border-radius: 8px;
   }
   #cityReel {
-    height: 100px; /* un peu moins haut */
-    bottom: -110px; /* position cachée */
+    height: 100px; 
+    bottom: -110px;
   }
   #cityReel.open {
-    bottom: 60px; /* il s’arrête 60px au-dessus du bord → visible malgré overflow:hidden */
+    bottom: 60px;
   }
 }
-
-
   #cityReel {
     position: fixed;
     bottom: -140px; /* caché par défaut */
