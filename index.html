@@ -14,9 +14,6 @@
       /*LEAFLET use*/
       <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
       <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-      <!-- OSMBuildings -->
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/osmbuildings@0.2.3/OSMBuildings.css" />
-      <script src="https://cdn.jsdelivr.net/npm/osmbuildings@0.2.3/OSMBuildings.js"></script>
 </head>
 <body>
       <div id="root">
@@ -453,42 +450,30 @@ function openLeafletPopup(cityData) {
     attribution: '&copy; Google Maps Sat'
   });
 
-  // Ajoutez les buildings 3D comme une couche optionnelle
-  let osmbLayer = null;
-  const enableOSMBuildings = () => {
-      if (!osmbLayer) {
-          osmbLayer = new OSMBuildings(currentLeafletMap)
-              .load('https://{s}.data.osmbuildings.org/0.2/anonymous/tile/{z}/{x}/{y}.json');
-      }
-      return osmbLayer;
-  };
-      
   const baseMaps = {
     "OSM": osm,
     "Google Street": gmap,
     "Google Satellite": gsat
   };
-  const overlayMaps = {
-      "Buildings 3D": enableOSMBuildings()
-  };
-      
+
   const [lon, lat] = cityData.value;
   const config = cityViewConfig[cityData.name] || { center: [lat, lon], zoom: 13 };
   currentLeafletMap = L.map(leafletMapEl, { layers: [osm] }).setView(config.center, config.zoom);
 
-  L.control.layers(baseMaps, overlayMaps, {
-      position: 'topright'
-  }).addTo(currentLeafletMap);
-      
+  L.control.layers(baseMaps).addTo(currentLeafletMap);
+
   // --- Grouper photos par Année > Mois > Jour ---
   const photosByYear = {};
+
   (cityData.visites || []).forEach(v => {
     const [vlon, vlat] = v.coords;
+
     if (v.type === 'hotel') {
       L.marker([vlat, vlon], { icon: hotelIcon }).addTo(currentLeafletMap)
         .bindPopup(`<b>Hotel</b><br>Du ${v.datedeb} au ${v.datefin}`);
       return;
     }
+
     if (v.photo) {
       // Extraire la date
       let year, month, day, dateInfo = "";
@@ -556,27 +541,6 @@ function openLeafletPopup(cityData) {
     }
   });
 
-
-// Ajoutez les buildings 3D comme une overlay
-    let osmbLayer = null;
-    const enableOSMBuildings = () => {
-        if (!osmbLayer && typeof OSMBuildings !== 'undefined') {
-            osmbLayer = new OSMBuildings(currentLeafletMap)
-                .load('https://{s}.data.osmbuildings.org/0.2/anonymous/tile/{z}/{x}/{y}.json');
-            return osmbLayer;
-        }
-        return null;
-    };
-
-    // Ajoutez le contrôle des overlays (incluant les buildings 3D)
-    const overlayMaps = {
-        "Buildings 3D": enableOSMBuildings()
-    };
-
-    L.control.layers(null, overlayMaps, {
-        position: 'topright'
-    }).addTo(currentLeafletMap);
-      
   // --- Ajouter toutes les couches au départ ---
   Object.values(photosByYear).forEach(months =>
     Object.values(months).forEach(days =>
