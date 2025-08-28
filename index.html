@@ -97,7 +97,24 @@
   const loadJSON = url => fetch(url).then(r=>{ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); });
   const loadImage = url => new Promise((res, rej) => { const img = new Image(); img.crossOrigin = 'anonymous'; img.onload = ()=>res(img); img.onerror = rej; img.src = url; });
   const normalizeLng = lng => ((lng + 180) % 360) - 180;
+  const toggleReelBtn = document.getElementById('toggleReel');
+  const cityReelEl = document.getElementById('cityReel');
 
+// Toggle affichage bobine avec animation
+toggleReelBtn.addEventListener('click', ()=>{
+  cityReelEl.classList.toggle('open');
+});
+// Remplir la bobine avec les villes visitées
+visitedCities.forEach(city=>{
+  const div = document.createElement('div');
+  div.className = 'city-card';
+  div.textContent = city.name;
+  div.onclick = ()=> openLeafletPopup(city); // réutilise ta fonction
+  cityReelEl.appendChild(div);
+});
+
+
+      
   /* Je crois que ca sert pour les contours des pays */
   const linesFromPolygonGeom = geom => {
     const out = [];
