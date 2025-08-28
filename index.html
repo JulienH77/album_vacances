@@ -14,7 +14,9 @@
       /*LEAFLET use*/
       <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
       <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-      <script src="https://cdn.osmbuildings.org/classic/0.2.2b/OSMBuildings-Leaflet.js"></script>
+      <!-- OSMBuildings -->
+      <link rel="stylesheet" href="https://unpkg.com/osmbuildings/OSMBuildings.css" />
+      <script src="https://unpkg.com/osmbuildings/OSMBuildings.js"></script>
 </head>
 <body>
       <div id="root">
@@ -450,20 +452,34 @@ function openLeafletPopup(cityData) {
   const gsat = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
     attribution: '&copy; Google Maps Sat'
   });
-  const osmb = new OSMBuildings(currentLeafletMap).load('https://{s}.data.osmbuildings.org/0.2/59fcc2e8/tile/{z}/{x}/{y}.json');
+
+  // Ajoutez les buildings 3D comme une couche optionnelle
+  let osmbLayer = null;
+  const enableOSMBuildings = () => {
+      if (!osmbLayer) {
+          osmbLayer = new OSMBuildings(currentLeafletMap)
+              .load('https://{s}.data.osmbuildings.org/0.2/anonymous/tile/{z}/{x}/{y}.json');
+      }
+      return osmbLayer;
+  };
       
   const baseMaps = {
     "OSM": osm,
     "Google Street": gmap,
     "Google Satellite": gsat
   };
-
+  const overlayMaps = {
+      "Buildings 3D": enableOSMBuildings()
+  };
+      
   const [lon, lat] = cityData.value;
   const config = cityViewConfig[cityData.name] || { center: [lat, lon], zoom: 13 };
   currentLeafletMap = L.map(leafletMapEl, { layers: [osm] }).setView(config.center, config.zoom);
 
-  L.control.layers(baseMaps).addTo(currentLeafletMap);
-
+  L.control.layers(baseMaps, overlayMaps, {
+      position: 'topright'
+  }).addTo(currentLeafletMap);
+      
   // --- Grouper photos par Année > Mois > Jour ---
   const photosByYear = {};
 
