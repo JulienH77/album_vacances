@@ -482,7 +482,7 @@ const visitedCities = [
         { name:'Riding a wooden D', coords:[14.42076, 50.08628], photo:'./IMG/2025/Central Europe/Prague/IMG_20250722_174552.jpg' },
         { name:'The biggest', coords:[14.42082, 50.08628], photo:'./IMG/2025/Central Europe/Prague/IMG_20250722_182000.jpg' },
         { name:'Us in the tavern', coords:[14.40155, 50.08893], photo:'./IMG/2025/Central Europe/Prague/IMG_20250722_210000.jpg' },
-        { name:'How we see inside', coords:[14.40153, 50.08891], photo:'./IMG/2025/Central Europe/Prague/IMG_20250722_220100.gif' },
+        /*{ name:'How we see inside', coords:[14.40153, 50.08891], photo:'./IMG/2025/Central Europe/Prague/GIF_20250722_220100.gif' },*/
         { name:'Man hanging out', coords:[14.41827, 50.08440], photo:'./IMG/2025/Central Europe/Prague/IMG_20250723_144739.jpg' },
         { name:'Umbrella man', coords:[14.41814, 50.07778], photo:'./IMG/2025/Central Europe/Prague/IMG_20250723_151216.jpg' },
         { name:'Umbrella woman', coords:[14.41788, 50.07753], photo:'./IMG/2025/Central Europe/Prague/IMG_20250723_151506.jpg' },
