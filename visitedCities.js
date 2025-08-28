@@ -410,7 +410,9 @@ const visitedCities = [
         { name:'The townhall', coords:[9.993648, 48.39700], photo:'./IMG/2025/Central Europe/Ulm/IMG_20250726_160509.jpg' },
         { name:'The most leaning hotel in the world', coords:[9.991303, 48.39557], photo:'./IMG/2025/Central Europe/Ulm/IMG_20250726_162846.jpg' },
         { name:'Cute bridge, river and us', coords:[9.9909279, 48.395416], photo:'./IMG/2025/Central Europe/Ulm/IMG_20250726_163153.jpg' },
-        { name:'Einstein fountain', coords:[10.001146, 48.400465], photo:'./IMG/2025/Central Europe/Ulm/IMG_20250726_180211.jpg' }
+        { name:'Einstein fountain', coords:[10.001146, 48.400465], photo:'./IMG/2025/Central Europe/Ulm/IMG_20250726_180211.jpg' },
+        { name:'Mona loser', coords:[9.99772, 48.39899], photo:'./IMG/2025/Central Europe/Ulm/IMG_20250726_175104.jpg' },
+        { name:'Einstein fountain', coords:[10.001115, 48.40041], photo:'./IMG/2025/Central Europe/Ulm/IMG_20250726_180300.jpg' },
       ]
     },
     
