@@ -12,14 +12,8 @@
       <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/echarts-gl@2/dist/echarts-gl.min.js"></script>
       /*LEAFLET use*/
-      <!--<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-      <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>-->
-      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-      <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-      /* OSM BUILDINGS*/
-      <script src="https://cdn.osmbuildings.org/OSMBuildings-Leaflet.js"></script>
-
-
+      <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+      <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
 <body>
       <div id="root">
@@ -477,32 +471,18 @@ function openLeafletPopup(cityData) {
     attribution: '&copy; Google Maps Sat'
   });
 
-  // Création de la carte
-  const [lon, lat] = cityData.value;
-  const config = cityViewConfig[cityData.name] || { center: [lat, lon], zoom: 13 };
-  currentLeafletMap = L.map(leafletMapEl, { layers: [osm] }).setView(config.center, config.zoom);
-
-  // OSMBuildings comme overlay
-  const osmb = new OSMBuildings({
-    minZoom: 15,
-    attribution: '© OSM Buildings, © OSM contributors'
-  });
-  osmb.addTo(currentLeafletMap);
-
-  // Contrôles des fonds + overlay
   const baseMaps = {
     "OSM": osm,
     "Google Street": gmap,
     "Google Satellite": gsat
   };
 
-  const overlayMaps = {
-    "OSM Buildings (3D)": osmb
-  };
+  const [lon, lat] = cityData.value;
+  const config = cityViewConfig[cityData.name] || { center: [lat, lon], zoom: 13 };
+  currentLeafletMap = L.map(leafletMapEl, { layers: [osm] }).setView(config.center, config.zoom);
 
-  L.control.layers(baseMaps, overlayMaps).addTo(currentLeafletMap);
+  L.control.layers(baseMaps).addTo(currentLeafletMap);
 
-      
   // --- Grouper photos par Année > Mois > Jour ---
   const photosByYear = {};
 
