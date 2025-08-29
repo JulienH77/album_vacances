@@ -501,7 +501,7 @@ function openLeafletPopup(cityData) {
   };
 
   L.control.layers(baseMaps, overlayMaps).addTo(currentLeafletMap);
-}
+
       
   // --- Grouper photos par Année > Mois > Jour ---
   const photosByYear = {};
@@ -687,6 +687,7 @@ datesControl.onAdd = function () {
 };
 datesControl.addTo(currentLeafletMap);
   currentLeafletMap.invalidateSize();
+}
       
 // Fonction pour ouvrir la popup de photo agrandie
 function openPhotoPopup(photoUrl) {
