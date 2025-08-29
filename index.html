@@ -470,16 +470,11 @@ function openLeafletPopup(cityData) {
   });
   const gsat = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
     attribution: '&copy; Google Maps Sat'
-  });
-  const Stadia_AlidadeSmooth = L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.{ext}', {minZoom: 0, maxZoom: 20,
-    attribution: '&copy; Stadia Maps', ext: 'png'
-  });
-      
+  });      
   const osmb = new OSMBuildings(currentLeafletMap).load('https://{s}.data.osmbuildings.org/0.2/59fcc2e8/tile/{z}/{x}/{y}.json');
 
   const baseMaps = {
     "OpenStreetMap": osm,
-    "Light": Stadia_AlidadeSmooth,
     "Google Street": gmap,
     "Google Satellite": gsat
   };
