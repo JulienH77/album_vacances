@@ -14,7 +14,6 @@
       /*LEAFLET use*/
       <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
       <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-      <script src="https://cdn.osmbuildings.org/classic/0.2.2b/OSMBuildings-Leaflet.js"></script>
 </head>
 <body>
       <div id="root">
@@ -453,7 +452,7 @@ Object.entries(mapColor).forEach(([transport, color])=>{
 
   // Leaflet popup helpers
   let currentLeafletMap = null;
-/*function openLeafletPopup(cityData) {
+function openLeafletPopup(cityData) {
   leafletPopupEl.style.display = 'block';
   if (currentLeafletMap) {
     currentLeafletMap.remove();
@@ -472,62 +471,18 @@ Object.entries(mapColor).forEach(([transport, color])=>{
     attribution: '&copy; Google Maps Sat'
   });
 
-  const osmbLayer = new OSMBuildings(leafletMap);
-
-  const basemaps = {
-    "OSM": osmLayer,
-    "Google Maps": gmapsLayer,
-    "Google Satellite": gsatLayer
+  const baseMaps = {
+    "OSM": osm,
+    "Google Street": gmap,
+    "Google Satellite": gsat
   };
-
-// Définir tes overlays
-var overlays = {
-  "Bâtiments 3D": osmbLayer
-};
 
   const [lon, lat] = cityData.value;
   const config = cityViewConfig[cityData.name] || { center: [lat, lon], zoom: 13 };
   currentLeafletMap = L.map(leafletMapEl, { layers: [osm] }).setView(config.center, config.zoom);
 
-L.control.layers(basemaps, overlays).addTo(leafletMap);*/
+  L.control.layers(baseMaps).addTo(currentLeafletMap);
 
-
-function openLeafletPopup(cityData) {
-    leafletPopupEl.style.display = 'block';
-
-    if (currentLeafletMap) {
-        currentLeafletMap.remove(); // supprime la carte précédente
-        currentLeafletMap = null;   // réinitialise la variable
-    }
-
-    // NE PAS faire leafletMapEl.innerHTML = '';
-
-    // --- Basemaps ---
-    const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OSM' });
-    const gmap = L.tileLayer('https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}', { attribution: '&copy; Google Maps' });
-    const gsat = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', { attribution: '&copy; Google Maps Sat' });
-
-    currentLeafletMap = L.map(leafletMapEl, { layers: [osm] }).setView([cityData.value[1], cityData.value[0]], 13);
-
-    L.control.layers({ "OSM": osm, "Google Street": gmap, "Google Satellite": gsat }).addTo(currentLeafletMap);
-
-    const osmb = new OSMBuildings(currentLeafletMap)
-        .load('https://{s}.data.osmbuildings.org/0.2/59fcc2e8/tile/{z}/{x}/{y}.json');
-
-    // Checkbox pour OSMBuildings
-    const osmbCheckbox = document.getElementById('chkOSMBuildings');
-    if (osmbCheckbox) {
-        osmbCheckbox.addEventListener('change', e => {
-            if (e.target.checked) osmb.show();
-            else osmb.hide();
-        });
-    }
-const [lon, lat] = cityData.value;
-  const config = cityViewConfig[cityData.name] || { center: [lat, lon], zoom: 13 };
-  currentLeafletMap = L.map(leafletMapEl, { layers: [osm] }).setView(config.center, config.zoom);
-
-
-      
   // --- Grouper photos par Année > Mois > Jour ---
   const photosByYear = {};
 
