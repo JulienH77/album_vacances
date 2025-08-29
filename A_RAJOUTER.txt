@@ -1,0 +1,25 @@
+DES IDEES SUR LEAFLET:
+-  faire des mouvements de caméra smooth : https://ivansanchez.gitlab.io/Leaflet.ImageOverlay.Arrugator/demo.html
+-  affichage style lampe torche sur fond de carte : http://frogcat.github.io/leaflet-tilelayer-mask/
+-  inserer des fichiers externe : 
+            - https://gabriel-russo.github.io/Leaflet.BetterFileLayer/example/
+            - https://leaflet.calvinmetcalf.com/#9/48.8494/5.8392
+-  faire une échelle : https://daniellsu.github.io/leaflet-betterscale/
+-  faire un globe bien plus fluide : https://docs.mapbox.com/mapbox-gl-js/guides
+-  controler l'opacité des fonds de carte : https://github.com/dayjournal/Leaflet.Control.Opacity
+-  visualiser la pluie ou autre :
+            - https://mwasil.github.io/Leaflet.Rainviewer/demo/#
+            - https://krausmatthias.github.io/Leaflet.TimeDimension.Rainviewer/demo.html
+            - https://github.com/windycom/API
+-  données opendata environnementales : https://publiclab.github.io/leaflet-environmental-layers/example/index.html#lat=31.2582&lon=121.3704&zoom=12&layers=Standard,PLpeople,aqicnLayer
+-  carte incurvée et rotative : https://osmbuildings.org/
+
+
+
+DES IDEES POUR LE VISUEL :
+-  afficher des vidéos et des gif
+-  afficher le sens des photos
+-  Ajouter la maison ?
+-  afficher ou pas les points des villes avant ou apres trajet affichés ?
+-  animation des trajets du point de départ à la toute fin ?
+-  changer les visuels des points des photos
