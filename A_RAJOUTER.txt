@@ -4,13 +4,17 @@ DES IDEES SUR LEAFLET:
 -  inserer des fichiers externe : 
             - https://gabriel-russo.github.io/Leaflet.BetterFileLayer/example/
             - https://leaflet.calvinmetcalf.com/#9/48.8494/5.8392
--  faire une échelle : https://daniellsu.github.io/leaflet-betterscale/
+            - https://amrhh.github.io/leaflet.superbar/
+-  faire une échelle : 
+            - https://daniellsu.github.io/leaflet-betterscale/
+            - https://kalisio.github.io/leaflet-graphicscale/
 -  faire un globe bien plus fluide : https://docs.mapbox.com/mapbox-gl-js/guides
 -  controler l'opacité des fonds de carte : https://github.com/dayjournal/Leaflet.Control.Opacity
 -  visualiser la pluie ou autre :
             - https://mwasil.github.io/Leaflet.Rainviewer/demo/#
             - https://krausmatthias.github.io/Leaflet.TimeDimension.Rainviewer/demo.html
             - https://github.com/windycom/API
+            - https://oskosk.github.io/Leaflet.Weather/
 -  données opendata environnementales : https://publiclab.github.io/leaflet-environmental-layers/example/index.html#lat=31.2582&lon=121.3704&zoom=12&layers=Standard,PLpeople,aqicnLayer
 -  carte incurvée et rotative : https://osmbuildings.org/
 
@@ -40,9 +44,19 @@ DES IDEES POUR LE VISUEL :
 -  style de legende interessant : 
             - https://jjimenezshaw.github.io/Leaflet.Control.Layers.Tree/examples/options.html
             - https://ignaciofagian.github.io/L.LayerTreeControl/example/
-
-
-
-
-
+-  voir le niveau de zoom : https://flaviocarmo.github.io/Leaflet.zoominfo/examples/
+-  avoir un fullscreen : https://brunob.github.io/leaflet.fullscreen/
+-  voir la zone du monde que l'on voit :
+            - https://maneoverland.github.io/leaflet.WorldMiniMap/            
+            - https://norkart.github.io/Leaflet-MiniMap/example.html
+-  double carte comme remonterletemps avec fonds différents : https://jieter.github.io/Leaflet.Sync/examples/dual.html
+-  afficher les coordonnées de la souris : https://edihasaj.github.io/leaflet-coord-projection/
+-  controle du visuel des couches : https://serene-heyrovsky-2fb229.netlify.app/
+-  groupement de légende : https://adammertel.github.io/Leaflet.Control.Select/
+-  visuel de légende : https://ptma.github.io/Leaflet.Legend/examples/legend.html
+-  carousel de photos qui sont présentes dans le visuel actuel de la carte : https://utahemre.github.io/coordinatedimagepreviewdemo.html
+-  visuel de sidepanel : https://maxwell-ilai.github.io/Leaflet.SidePanel/examples/
+-  fleches sur les cotés pour préciser où se trouvent les objets en dehors de la carte : https://williamlow.github.io/leaflet-signpost/demo.html
+-  découpage pour impression en plusieurs cartes : https://hersle.github.io/leaflet-route-print/
+-  isochrone : https://www.trafforddatalab.io/leaflet.reachability/leaflet.reachability_example.html
 
