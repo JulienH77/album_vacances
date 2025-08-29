@@ -14,7 +14,10 @@
       /*LEAFLET use*/
       <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
       <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-      <script src="https://cdn.osmbuildings.org/classic/0.2.2b/OSMBuildings-Leaflet.js"></script>      
+      <script src="https://cdn.osmbuildings.org/classic/0.2.2b/OSMBuildings-Leaflet.js"></script>
+<!-- add L.Control.Zoominfo js and css after Leaflet -->
+<link rel="stylesheet" href="L.Control.Zoominfo.css" />
+<script src="L.Control.Zoominfo.js" ></script>
 </head>
 <body>
       <div id="root">
@@ -486,7 +489,7 @@ function openLeafletPopup(cityData) {
       
   const [lon, lat] = cityData.value;
   const config = cityViewConfig[cityData.name] || { center: [lat, lon], zoom: 13 };
-  currentLeafletMap = L.map(leafletMapEl, { layers: [osm] }).setView(config.center, config.zoom);
+  currentLeafletMap = L.map(leafletMapEl, {zoominfoControl: true, zoomControl: false},{ layers: [osm] }).setView(config.center, config.zoom);
 
   L.control.layers(baseMaps, overlayMaps).addTo(currentLeafletMap);
 
