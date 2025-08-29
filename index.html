@@ -12,10 +12,14 @@
       <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/echarts-gl@2/dist/echarts-gl.min.js"></script>
       /*LEAFLET use*/
-      <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-      <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+      <!--<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+      <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>-->
+      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+      <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
       /* OSM BUILDINGS*/
-      <script src="https://cdn.osmbuildings.org/OSMBuildings-Latest.js"></script>
+      <script src="https://cdn.osmbuildings.org/OSMBuildings-Leaflet.js"></script>
+
+
 </head>
 <body>
       <div id="root">
@@ -473,19 +477,19 @@ function openLeafletPopup(cityData) {
     attribution: '&copy; Google Maps Sat'
   });
 
-  // ⚠️ crée la carte AVANT de rajouter les couches
+  // Création de la carte
   const [lon, lat] = cityData.value;
   const config = cityViewConfig[cityData.name] || { center: [lat, lon], zoom: 13 };
   currentLeafletMap = L.map(leafletMapEl, { layers: [osm] }).setView(config.center, config.zoom);
 
-  // OSMBuildings comme overlay (3D)
+  // OSMBuildings comme overlay
   const osmb = new OSMBuildings({
-    baseURL: 'https://cdn.osmbuildings.org/0.2.0/',
     minZoom: 15,
     attribution: '© OSM Buildings, © OSM contributors'
-  }).addTo(currentLeafletMap);
+  });
+  osmb.addTo(currentLeafletMap);
 
-  // Contrôles des fonds + overlays
+  // Contrôles des fonds + overlay
   const baseMaps = {
     "OSM": osm,
     "Google Street": gmap,
