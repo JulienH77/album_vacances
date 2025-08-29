@@ -14,6 +14,7 @@
       /*LEAFLET use*/
       <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
       <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+      <script src="https://cdn.osmbuildings.org/classic/0.2.2b/OSMBuildings-Leaflet.js"></script>
 </head>
 <body>
       <div id="root">
@@ -471,18 +472,25 @@ function openLeafletPopup(cityData) {
     attribution: '&copy; Google Maps Sat'
   });
 
-  const baseMaps = {
-    "OSM": osm,
-    "Google Street": gmap,
-    "Google Satellite": gsat
+  const osmbLayer = new OSMBuildings(leafletMap);
+
+  const basemaps = {
+    "OSM": osmLayer,
+    "Google Maps": gmapsLayer,
+    "Google Satellite": gsatLayer
   };
+
+// Définir tes overlays
+var overlays = {
+  "Bâtiments 3D": osmbLayer
+};
 
   const [lon, lat] = cityData.value;
   const config = cityViewConfig[cityData.name] || { center: [lat, lon], zoom: 13 };
   currentLeafletMap = L.map(leafletMapEl, { layers: [osm] }).setView(config.center, config.zoom);
 
-  L.control.layers(baseMaps).addTo(currentLeafletMap);
-
+L.control.layers(basemaps, overlays).addTo(leafletMap);
+      
   // --- Grouper photos par Année > Mois > Jour ---
   const photosByYear = {};
 
