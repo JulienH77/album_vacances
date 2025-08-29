@@ -14,6 +14,8 @@
       /*LEAFLET use*/
       <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
       <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+      /* OSM BUILDINGS*/
+      <script src="https://cdn.osmbuildings.org/OSMBuildings-Latest.js"></script>
 </head>
 <body>
       <div id="root">
@@ -471,18 +473,34 @@ function openLeafletPopup(cityData) {
     attribution: '&copy; Google Maps Sat'
   });
 
-  const baseMaps = {
-    "OSM": osm,
-    "Google Street": gmap,
-    "Google Satellite": gsat
-  };
+const osmb = new OSMBuildings({
+  baseURL: 'https://cdn.osmbuildings.org/0.2.0/',
+  minZoom: 12,
+  /*maxZoom: 22,*/
+  attribution: '© OSM Buildings, © OSM contributors'
+});
+
+const osmb = new OSMBuildings();
+osm.addTo(currentLeafletMap);  // fond OSM
+osmb.addTo(currentLeafletMap); // batiments 3D par-dessus
+
+      
+const baseMaps = {
+  "OSM": osm,
+  "Google Street": gmap,
+  "Google Satellite": gsat
+};
+
+const overlayMaps = {
+  "OSM Buildings (3D)": osmb
+};
 
   const [lon, lat] = cityData.value;
   const config = cityViewConfig[cityData.name] || { center: [lat, lon], zoom: 13 };
   currentLeafletMap = L.map(leafletMapEl, { layers: [osm] }).setView(config.center, config.zoom);
 
-  L.control.layers(baseMaps).addTo(currentLeafletMap);
-
+  L.control.layers(baseMaps, overlayMaps).addTo(currentLeafletMap);
+      
   // --- Grouper photos par Année > Mois > Jour ---
   const photosByYear = {};
 
