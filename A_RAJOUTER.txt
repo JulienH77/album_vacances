@@ -21,5 +21,28 @@ DES IDEES POUR LE VISUEL :
 -  afficher le sens des photos
 -  Ajouter la maison ?
 -  afficher ou pas les points des villes avant ou apres trajet affichés ?
--  animation des trajets du point de départ à la toute fin ?
+-  animation des trajets du point de départ à la toute fin :
+            - https://rubenspgcavalcante.github.io/leaflet-ant-path/
+            - https://0n3byt3.github.io/
+            - https://igor-vladyka.github.io/leaflet.motion/
+            - https://ivansanchez.gitlab.io/Leaflet.Path.DashFlow/demo.html
+            - https://weijun-lab.github.io/Leaflet.TrackPlayer/
+            - https://leaflet-marker-motion.vercel.app/
+            - https://jwasilgeo.github.io/Leaflet.Canvas-Flowmap-Layer/docs/comparison/
+            - https://lin-123.github.io/leaflet.migration/demo
+            - https://lycheelin.github.io/leaflet.migrationLayer/
 -  changer les visuels des points des photos
+-  faire apparaitre a différents niveaux de zoom des objets : https://solfisk.github.io/Leaflet.LayerGroup.Conditional/examples/zoom.html
+-  afficher l'altitude tout le long du troncon : https://giscience.github.io/Leaflet.Heightgraph/
+-  changement de fond de carte smooth :
+            - https://urban96.github.io/L.basemapControl/examples/example1.html
+            - http://scanex.github.io/Leaflet-IconLayers/examples/
+-  style de legende interessant : 
+            - https://jjimenezshaw.github.io/Leaflet.Control.Layers.Tree/examples/options.html
+            - https://ignaciofagian.github.io/L.LayerTreeControl/example/
+
+
+
+
+
+
