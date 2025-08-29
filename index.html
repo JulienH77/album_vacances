@@ -675,11 +675,19 @@ function openPhotoPopup(photoUrl) {
   const photoPopupImg = document.getElementById('photoPopupImg');
   photoPopupImg.src = photoUrl;
   photoPopup.style.display = 'flex';
+  // masquer les contrôles Leaflet
+  document.querySelectorAll('.leaflet-control-container').forEach(el => {
+    el.style.display = 'none';
+  });
 }
 
 // Fonction pour fermer la popup de photo agrandie
 function closePhotoPopup() {
   document.getElementById('photoPopup').style.display = 'none';
+  // ré-afficher les contrôles Leaflet
+  document.querySelectorAll('.leaflet-control-container').forEach(el => {
+    el.style.display = '';
+  });
 }
 
 // Écouteurs d'événements pour la popup de photo
