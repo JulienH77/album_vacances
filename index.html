@@ -488,7 +488,7 @@ function openLeafletPopup(cityData) {
   const config = cityViewConfig[cityData.name] || { center: [lat, lon], zoom: 13 };
   currentLeafletMap = L.map(leafletMapEl, { layers: [osm] }).setView(config.center, config.zoom);
 
-  L.control.layers(/*baseMaps,*/ overlayMaps).addTo(currentLeafletMap);
+  L.control.layers(baseMaps/*, overlayMaps*/).addTo(currentLeafletMap);
 
   // --- Grouper photos par Année > Mois > Jour ---
   const photosByYear = {};
