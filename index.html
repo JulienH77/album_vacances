@@ -14,14 +14,6 @@
       /*LEAFLET use*/
       <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
       <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<style>
-    .hide-leaflet-controls .leaflet-control-container,
-    .hide-leaflet-controls .leaflet-bottom,
-    .hide-leaflet-controls .leaflet-top {
-        display: none !important;
-    }
-</style>
-
 </head>
 <body>
       <div id="root">
@@ -676,30 +668,6 @@ datesControl.onAdd = function () {
 datesControl.addTo(currentLeafletMap);
   currentLeafletMap.invalidateSize();
 }
-
-
-// Fonction pour masquer les contrôles Leaflet
-function openLargeImage() {
-    document.getElementById('leafletMap').classList.add('hide-leaflet-controls');
-}
-
-// Fonction pour réafficher les contrôles Leaflet
-function closeLargeImage() {
-    document.getElementById('leafletMap').classList.remove('hide-leaflet-controls');
-}
-
-// Exemple : Écouteur d'événement pour ouvrir une image en grand
-document.querySelectorAll('.leaflet-marker-icon').forEach(marker => {
-    marker.addEventListener('click', function() {
-        openLargeImage();
-    });
-});
-      
-// Exemple : Écouteur d'événement pour fermer une image en grand
-document.querySelector('.close-large-image').addEventListener('click', function() {
-    closeLargeImage();
-});
-
       
 // Fonction pour ouvrir la popup de photo agrandie
 function openPhotoPopup(photoUrl) {
