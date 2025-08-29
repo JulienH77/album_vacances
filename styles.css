@@ -180,7 +180,7 @@ html,body,#root { height:100vh; width:100%; overflow:hidden; margin:0; padding:0
   bottom: 10px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 9999; /* très au-dessus */
+  z-index: 9900; 
   background: rgba(255,255,255,0.95);
   border-radius: 50%;
   width: 55px;
