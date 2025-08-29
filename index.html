@@ -14,10 +14,7 @@
       /*LEAFLET use*/
       <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
       <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-      <script src="https://cdn.osmbuildings.org/classic/0.2.2b/OSMBuildings-Leaflet.js"></script>
-
-      <link rel="stylesheet" href="Control.FullScreen.css" />
-      <script src="Control.FullScreen.js"></script>
+      <script src="https://cdn.osmbuildings.org/classic/0.2.2b/OSMBuildings-Leaflet.js"></script>      
 </head>
 <body>
       <div id="root">
@@ -455,14 +452,6 @@ Object.entries(mapColor).forEach(([transport, color])=>{
   });
 
   // Leaflet popup helpers
-
-let map = new L.Map('currentLeafletMap', {
-	fullscreenControl: true,
-	fullscreenControlOptions: {
-		position: 'topleft'
-	}
-});
-      
   let currentLeafletMap = null;
 function openLeafletPopup(cityData) {
   leafletPopupEl.style.display = 'block';
