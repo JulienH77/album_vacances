@@ -494,57 +494,34 @@ L.control.layers(basemaps, overlays).addTo(leafletMap);*/
 
 function openLeafletPopup(cityData) {
     leafletPopupEl.style.display = 'block';
+
     if (currentLeafletMap) {
-        currentLeafletMap.remove();
-        currentLeafletMap = null;
+        currentLeafletMap.remove(); // supprime la carte précédente
+        currentLeafletMap = null;   // réinitialise la variable
     }
-    leafletMapEl.innerHTML = '';
+
+    // NE PAS faire leafletMapEl.innerHTML = '';
 
     // --- Basemaps ---
-    const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OSM'
-    });
-    const gmap = L.tileLayer('https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}', {
-        attribution: '&copy; Google Maps'
-    });
-    const gsat = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
-        attribution: '&copy; Google Maps Sat'
-    });
+    const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OSM' });
+    const gmap = L.tileLayer('https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}', { attribution: '&copy; Google Maps' });
+    const gsat = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', { attribution: '&copy; Google Maps Sat' });
 
     currentLeafletMap = L.map(leafletMapEl, { layers: [osm] }).setView([cityData.value[1], cityData.value[0]], 13);
 
-    const baseMaps = {
-        "OSM": osm,
-        "Google Street": gmap,
-        "Google Satellite": gsat
-    };
-    L.control.layers(baseMaps).addTo(currentLeafletMap);
+    L.control.layers({ "OSM": osm, "Google Street": gmap, "Google Satellite": gsat }).addTo(currentLeafletMap);
 
-    // --- OSMBuildings ---
     const osmb = new OSMBuildings(currentLeafletMap)
         .load('https://{s}.data.osmbuildings.org/0.2/59fcc2e8/tile/{z}/{x}/{y}.json');
 
     // Checkbox pour OSMBuildings
-    const osmbCheckbox = document.createElement('input');
-    osmbCheckbox.type = 'checkbox';
-    osmbCheckbox.id = 'chkOSMBuildings';
-    osmbCheckbox.checked = false;
-
-    const label = document.createElement('label');
-    label.textContent = 'OSM Buildings';
-    label.style.display = 'flex';
-    label.style.alignItems = 'center';
-    label.style.gap = '6px';
-    label.prepend(osmbCheckbox);
-    document.querySelector('#legend').appendChild(label);
-
-    osmbCheckbox.addEventListener('change', e => {
-        if (e.target.checked) {
-            osmb.show();
-        } else {
-            osmb.hide();
-        }
-    });
+    const osmbCheckbox = document.getElementById('chkOSMBuildings');
+    if (osmbCheckbox) {
+        osmbCheckbox.addEventListener('change', e => {
+            if (e.target.checked) osmb.show();
+            else osmb.hide();
+        });
+    }
 const [lon, lat] = cityData.value;
   const config = cityViewConfig[cityData.name] || { center: [lat, lon], zoom: 13 };
   currentLeafletMap = L.map(leafletMapEl, { layers: [osm] }).setView(config.center, config.zoom);
