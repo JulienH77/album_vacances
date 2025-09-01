@@ -75,7 +75,7 @@
                     <img id="photoPopupImg" src="" alt="Photo agrandie">
                     <button id="photoClose">X</button>
             </div>
-            </div>
+      </div>
 
 
 			<!-- Side Panel left -->
@@ -560,20 +560,18 @@ function openLeafletPopup(cityData) {
       
   const [lon, lat] = cityData.value;
   const config = cityViewConfig[cityData.name] || { center: [lat, lon], zoom: 13 };
-  currentLeafletMap = L.map(leafletMapEl, { layers: [osm] }/*, {zoomControl: false}*/).setView(config.center, config.zoom);
+  currentLeafletMap = L.map(leafletMapEl, { layers: [osm] }).setView(config.center, config.zoom);
   L.control.scale({position: 'bottomleft'}).addTo(currentLeafletMap);
 
   // Initialiser le sidepanel
-  const sidepanelLeft = L.control.sidepanel('mySidepanelLeft', {
-    panelPosition: 'left',
-    tabsPosition: 'left',
-    startTab: 'tab-5',
-    pushControls: true
-  }).addTo(currentLeafletMap);
+L.control.sidepanel('mySidepanelLeft', {
+  panelPosition: 'left',
+  tabsPosition: 'left',
+  startTab: 'tab-5',
+  pushControls: true
+}).addTo(currentLeafletMap);
 
-	
   /*L.control.zoom({position: 'topleft'}).addTo(currentLeafletMap);*/
-      
   L.control.layers(baseMaps/*, overlayMaps*/).addTo(currentLeafletMap);
       
   // --- Grouper photos par Année > Mois > Jour ---
