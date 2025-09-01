@@ -101,6 +101,7 @@ html,body,#root { height:100vh; width:100%; overflow:hidden; margin:0; padding:0
     background: #fff; border: none;
     border-radius: 50%; width: 36px; height: 36px;
     cursor: pointer; font-size: 18px; font-weight: bold;
+    z-index: 900;
   }
   /* --- AJOUT: styles de la liste dépliable des voyages --- */
   #voyagesDetails { margin-top:8px; }
@@ -132,8 +133,8 @@ html,body,#root { height:100vh; width:100%; overflow:hidden; margin:0; padding:0
 }
 #photoClose {
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 1px;
+  right: 1px;
   background: #fff;
   border: none;
   border-radius: 50%;
