@@ -123,26 +123,44 @@
 				<div class="sidepanel-content-wrapper">
 					<div class="sidepanel-content">
 						<div class="sidepanel-tab-content" data-tab-content="tab-1">
-							<h4>Content 1</h4>
-							<p>Nam nec lacinia purus, in accumsan arcu. Aenean at maximus tortor, eget porttitor leo. Fusce</p>
+							<h4>Mes vacances</h4></h4>
+							<p>Ce site me sert d'album photo pour mes vacances à partir de mon voyage en Chine en Mai 2025.
+							   Je compte bien le remplir et y prendre un grand plaisir à développer l'entièreté du site en repoussant mes limites en code.</p>
+							<br><br>
+							<p>Bonne découverte de mes différentes vacances !</p>
 						</div>
 						<div class="sidepanel-tab-content" data-tab-content="tab-2">
-							<h4>Content 2</h4>
-							<p>Etiam varius in </p>
+							<h4>Les villes du monde visitées</h4>
+							<p>Il faudra que les noms des villes deviennent des boutons pour montrer l'emplacement des villes.</p>
+							<ul>
+								<li>Beijing</li>
+								<li>Xi'an</li>
+								<li>Shanghai</li>
+								<li>Hangzhou</li>
+								<li>Guilin</li>
+								<li>Yangshuo</li>
+								<li>Tianjin</li>
+								<li>Munich</li>
+								<li>Marquartstein</li>
+								<li>Salzburg</li>
+								<li>Budapest</li>
+								<li>Prague</li>
+								<li>Regensburg</li>
+								<li>Ulm</li>
+						    </ul>
 						</div>
 						<div class="sidepanel-tab-content" data-tab-content="tab-3">
-							<h4>Content 3</h4>
-							<p>Nam nec lacinia purus, in accumsan arcu. Aenean at maximus tortor, eget porttitor leo. Fusce justo lorem, dictum nec rutrum sed, mattis faucibus
-								diam.</p>
+							<h4>Les photos</h4>
+							<p>Soit j'affiche les photos ici et elles seront cliquables, soit je met juste l'ordre des photos et cela montre l'emplacement de la photo au clic 
+							   (en gros visuel ou pas dans l'onglet).</p>
 						</div>
 						<div class="sidepanel-tab-content" data-tab-content="tab-4">
-							<h4>Content 4</h4>
+							<h4>Ne sert à rien</h4>
 							<p>Etiam varius in neque a</p>
 						</div>
 						<div class="sidepanel-tab-content active" data-tab-content="tab-5">
-							<h4>Content 5</h4>
-							<p>Nam nec lacinia purus, in accumsan arcu. Aenean at maximus tortor, eget porttitor leo. Fusce justo lorem, dictum nec rutrum sed, mattis faucibus
-								diam.</p>
+							<h4>Settings</h4>
+							<p>A voir si je peux faire des dingueries dedans.</p>
 						</div>
 					</div>
 				</div>
@@ -563,11 +581,10 @@ function openLeafletPopup(cityData) {
   /*L.control.zoom({position: 'topleft'}).addTo(currentLeafletMap);*/
   L.control.layers(baseMaps/*, overlayMaps*/).addTo(currentLeafletMap);
 	
-// juste après L.control.layers(baseMaps/*...*/).addTo(currentLeafletMap);
 const sidepanelLeft = L.control.sidepanel('mySidepanelLeft', {
   panelPosition: 'left',
   tabsPosition: 'left',
-  startTab: 'tab-5',   // ou 'tab-1' si tu préfères
+  startTab: 'tab-1',
   pushControls: true
 }).addTo(currentLeafletMap);
 
