@@ -562,9 +562,9 @@ function openLeafletPopup(cityData) {
       
   const [lon, lat] = cityData.value;
   const config = cityViewConfig[cityData.name] || { center: [lat, lon], zoom: 13 };
-  currentLeafletMap = L.map(leafletMapEl, { layers: [osm] }, {zoomControl: false}).setView(config.center, config.zoom);
+  currentLeafletMap = L.map(leafletMapEl, { layers: [osm] }/*, {zoomControl: false}*/).setView(config.center, config.zoom);
   L.control.scale({position: 'bottomleft'}).addTo(currentLeafletMap);
-  L.control.zoom({position: 'topleft'}).addTo(currentLeafletMap);
+  /*L.control.zoom({position: 'topleft'}).addTo(currentLeafletMap);*/
       
   L.control.layers(baseMaps/*, overlayMaps*/).addTo(currentLeafletMap);
       
