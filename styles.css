@@ -143,7 +143,7 @@ html,body,#root { height:100vh; width:100%; overflow:hidden; margin:0; padding:0
   cursor: pointer;
   font-size: 18px;
   font-weight: bold;
-  z-index: 501;
+  z-index: 950;
 }
 #photoClose:hover {
   background: #eee;
