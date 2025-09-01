@@ -563,17 +563,17 @@ function openLeafletPopup(cityData) {
   currentLeafletMap = L.map(leafletMapEl, { layers: [osm] }).setView(config.center, config.zoom);
   L.control.scale({position: 'bottomleft'}).addTo(currentLeafletMap);
 
-  // Initialiser le sidepanel
-L.control.sidepanel('mySidepanelLeft', {
+  /*L.control.zoom({position: 'topleft'}).addTo(currentLeafletMap);*/
+  L.control.layers(baseMaps/*, overlayMaps*/).addTo(currentLeafletMap);
+	
+// juste après L.control.layers(baseMaps/*...*/).addTo(currentLeafletMap);
+const sidepanelLeft = L.control.sidepanel('mySidepanelLeft', {
   panelPosition: 'left',
   tabsPosition: 'left',
-  startTab: 'tab-5',
+  startTab: 'tab-5',   // ou 'tab-1' si tu préfères
   pushControls: true
 }).addTo(currentLeafletMap);
 
-  /*L.control.zoom({position: 'topleft'}).addTo(currentLeafletMap);*/
-  L.control.layers(baseMaps/*, overlayMaps*/).addTo(currentLeafletMap);
-      
   // --- Grouper photos par Année > Mois > Jour ---
   const photosByYear = {};
 
