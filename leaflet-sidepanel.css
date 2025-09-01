@@ -1,3 +1,6 @@
+#mySidepanelLeft { position: fixed; top: 0; left: 0; height: 95vh; z-index: 10000; }
+
+
 .sidepanel {
   width: 400px;
   height: 100%;
