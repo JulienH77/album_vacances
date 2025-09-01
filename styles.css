@@ -195,6 +195,9 @@ html,body,#root { height:100vh; width:100%; overflow:hidden; margin:0; padding:0
 }
 /* Mobile uniquement */
 @media (max-width: 768px) {
+  #mySidepanelLeft{
+    display: none;
+  }
   #toggleReel {
     display: flex;
     bottom: -25px;
