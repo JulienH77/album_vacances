@@ -12,49 +12,17 @@
       <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/echarts-gl@2/dist/echarts-gl.min.js"></script>
       /*LEAFLET use*/
-      <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-      <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-      <!--<link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ==" crossorigin="">
-      <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ==" crossorigin=""></script>-->
+      <!--<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+      <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>-->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ==" crossorigin="">
+        <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ==" crossorigin=""></script>
+        
+	
       /*Sidepanel leaflet*/
-      <!--<link rel="stylesheet" href="leaflet-sidepanel.css" />
-      <script src="leaflet-sidepanel.min.js"></script>-->
+      <link rel="stylesheet" href="leaflet-sidepanel.css" />
+      <script src="leaflet-sidepanel.min.js"></script>
       /*OSMBuilding 3D*/
       <!--<script src="https://cdn.osmbuildings.org/classic/0.2.2b/OSMBuildings-Leaflet.js"></script>-->
-	<style>
-	#sidepanel {
-        position: absolute;
-        left: -300px; /* Masqué par défaut */
-        top: 0;
-        width: 300px;
-        height: 100%;
-        background: white;
-        box-shadow: 2px 0 5px rgba(0,0,0,0.2);
-        transition: left 0.3s;
-        z-index: 1000;
-        padding: 10px;
-        box-sizing: border-box;
-        overflow-y: auto; /* Pour le scroll si nécessaire */
-    }
-    #sidepanel.open {
-        left: 0; /* Affiché quand ouvert */
-    }
-    #toggleSidePanelBtn {
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        z-index: 1001;
-        padding: 5px 10px;
-        cursor: pointer;
-    }
-    .city-buttons button {
-        display: block;
-        width: 100%;
-        margin: 5px 0;
-        padding: 8px;
-        cursor: pointer;
-    }
-	</style>
 </head>
 <body>
       <div id="root">
@@ -100,7 +68,7 @@
       </div>
       <!-- Popup Leaflet -->
       <div id="leafletPopup">
-            <div id="leafletMap" class="leaflet-container leaflet-touch leaflet-fade-anim leaflet-grab leaflet-touch-drag leaflet-touch-zoom" tabindex="0" style="position: relative;"></div>
+            <div id="leafletMap" class="leaflet-container leaflet-touch leaflet-fade-anim leaflet-grab leaflet-touch-drag leaflet-touch-zoom" tabindex="0" style="position: relative;"></div> 
             <button id="leafletClose">X</button>
             <!-- Popup d'agrandissement de photo -->
             <div id="photoPopup" style="display: none;">
@@ -108,54 +76,89 @@
                     <button id="photoClose">X</button>
             </div>
       </div>
-<!-- Bouton pour ouvrir/fermer le sidepanel -->
-<button id="toggleSidePanelBtn" onclick="toggleSidePanel()">☰ Menu</button>
 
-<!-- Sidepanel personnalisé -->
-<div id="sidepanel">
-    <h3>Villes</h3>
-    <div class="city-buttons">
-        <button onclick="centerGlobeOnCity('Paris')">Voir Paris sur le globe</button>
-        <button onclick="showLeafletMap('Paris')">Carte Leaflet de Paris</button>
-        <button onclick="centerGlobeOnCity('New York')">Voir New York sur le globe</button>
-        <button onclick="showLeafletMap('New York')">Carte Leaflet de New York</button>
-        <!-- Ajoute d'autres villes ici -->
-    </div>
-</div>
+
+			<!-- Side Panel left -->
+		<div id="mySidepanelLeft" class="sidepanel sidepanel-left tabs-left opened" aria-label="side panel" aria-hidden="false">
+			<div class="sidepanel-inner-wrapper">
+				<nav class="sidepanel-tabs-wrapper" aria-label="sidepanel tab navigation">
+					<ul class="sidepanel-tabs">
+						<li class="sidepanel-tab">
+							<a href="#" class="sidebar-tab-link" role="tab" data-tab-link="tab-1">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+									<path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"></path>
+								</svg>
+							</a>
+						</li>
+						<li class="sidepanel-tab">
+							<a href="#" class="sidebar-tab-link" role="tab" data-tab-link="tab-2">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-geo" viewBox="0 0 16 16">
+									<path fill-rule="evenodd" d="M8 1a3 3 0 1 0 0 6 3 3 0 0 0 0-6zM4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999zm2.493 8.574a.5.5 0 0 1-.411.575c-.712.118-1.28.295-1.655.493a1.319 1.319 0 0 0-.37.265.301.301 0 0 0-.057.09V14l.002.008a.147.147 0 0 0 .016.033.617.617 0 0 0 .145.15c.165.13.435.27.813.395.751.25 1.82.414 3.024.414s2.273-.163 3.024-.414c.378-.126.648-.265.813-.395a.619.619 0 0 0 .146-.15.148.148 0 0 0 .015-.033L12 14v-.004a.301.301 0 0 0-.057-.09 1.318 1.318 0 0 0-.37-.264c-.376-.198-.943-.375-1.655-.493a.5.5 0 1 1 .164-.986c.77.127 1.452.328 1.957.594C12.5 13 13 13.4 13 14c0 .426-.26.752-.544.977-.29.228-.68.413-1.116.558-.878.293-2.059.465-3.34.465-1.281 0-2.462-.172-3.34-.465-.436-.145-.826-.33-1.116-.558C3.26 14.752 3 14.426 3 14c0-.599.5-1 .961-1.243.505-.266 1.187-.467 1.957-.594a.5.5 0 0 1 .575.411z"></path>
+								</svg>
+							</a>
+						</li>
+						<li class="sidepanel-tab">
+							<a href="#" class="sidebar-tab-link" role="tab" data-tab-link="tab-3">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+									<path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"></path>
+									<path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"></path>
+								</svg>
+							</a>
+						</li>
+						<li class="sidepanel-tab">
+							<a href="#" class="sidebar-tab-link" role="tab" data-tab-link="tab-4">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-bookmarks" viewBox="0 0 16 16">
+									<path d="M2 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v11.5a.5.5 0 0 1-.777.416L7 13.101l-4.223 2.815A.5.5 0 0 1 2 15.5V4zm2-1a1 1 0 0 0-1 1v10.566l3.723-2.482a.5.5 0 0 1 .554 0L11 14.566V4a1 1 0 0 0-1-1H4z"></path>
+									<path d="M4.268 1H12a1 1 0 0 1 1 1v11.768l.223.148A.5.5 0 0 0 14 13.5V2a2 2 0 0 0-2-2H6a2 2 0 0 0-1.732 1z"></path>
+								</svg>
+							</a>
+						</li>
+						<li class="sidepanel-tab">
+							<a href="#" class="sidebar-tab-link active" role="tab" data-tab-link="tab-5">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
+									<path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"></path>
+									<path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"></path>
+								</svg>
+							</a>
+						</li>
+					</ul>
+				</nav>
+				<div class="sidepanel-content-wrapper">
+					<div class="sidepanel-content">
+						<div class="sidepanel-tab-content" data-tab-content="tab-1">
+							<h4>Content 1</h4>
+							<p>Nam nec lacinia purus, in accumsan arcu. Aenean at maximus tortor, eget porttitor leo. Fusce</p>
+						</div>
+						<div class="sidepanel-tab-content" data-tab-content="tab-2">
+							<h4>Content 2</h4>
+							<p>Etiam varius in </p>
+						</div>
+						<div class="sidepanel-tab-content" data-tab-content="tab-3">
+							<h4>Content 3</h4>
+							<p>Nam nec lacinia purus, in accumsan arcu. Aenean at maximus tortor, eget porttitor leo. Fusce justo lorem, dictum nec rutrum sed, mattis faucibus
+								diam.</p>
+						</div>
+						<div class="sidepanel-tab-content" data-tab-content="tab-4">
+							<h4>Content 4</h4>
+							<p>Etiam varius in neque a</p>
+						</div>
+						<div class="sidepanel-tab-content active" data-tab-content="tab-5">
+							<h4>Content 5</h4>
+							<p>Nam nec lacinia purus, in accumsan arcu. Aenean at maximus tortor, eget porttitor leo. Fusce justo lorem, dictum nec rutrum sed, mattis faucibus
+								diam.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="sidepanel-toggle-container">
+				<button class="sidepanel-toggle-button" type="button" aria-label="toggle side panel"></button>
+			</div>
+		</div>
 
       
 // villes visitées avec photos et coordonnées
 <script src="visitedCities.js"></script> 
 <script>
-// Fonction pour ouvrir/fermer le sidepanel
-function toggleSidePanel() {
-    const panel = document.getElementById('sidepanel');
-    panel.classList.toggle('open');
-}
-
-// Coordonnées des villes (à adapter selon tes besoins)
-const cities = {
-    'Paris': [48.8566, 2.3522],
-    'New York': [40.7128, -74.0060]
-};
-
-// Fonction pour centrer le globe sur une ville
-function centerGlobeOnCity(city) {
-    if (cities[city] && typeof mainMap !== 'undefined') {
-        mainMap.setView(cities[city], 5); // Zoom adapté pour un effet "globe"
-    }
-}
-
-// Fonction pour afficher une carte Leaflet détaillée
-function showLeafletMap(city) {
-    if (cities[city] && typeof mainMap !== 'undefined') {
-        mainMap.setView(cities[city], 12); // Zoom rapproché pour une carte détaillée
-        L.marker(cities[city]).addTo(mainMap)
-            .bindPopup(`Carte détaillée de ${city}`)
-            .openPopup();
-    }
-}
-	
 (async function(){
   /* Les variables */
   const PATH_EARTH_DAY_1 = './GLOBE/earth.jpg';
@@ -171,7 +174,7 @@ function showLeafletMap(city) {
   const normalizeLng = lng => ((lng + 180) % 360) - 180;
   const toggleReelBtn = document.getElementById('toggleReel');
   const cityReelEl = document.getElementById('cityReel');
-	
+
 // Toggle affichage bobine avec animation
 toggleReelBtn.addEventListener('click', ()=>{
   cityReelEl.classList.toggle('open');
@@ -562,6 +565,14 @@ function openLeafletPopup(cityData) {
 
   /*L.control.zoom({position: 'topleft'}).addTo(currentLeafletMap);*/
   L.control.layers(baseMaps/*, overlayMaps*/).addTo(currentLeafletMap);
+	
+// juste après L.control.layers(baseMaps/*...*/).addTo(currentLeafletMap);
+const sidepanelLeft = L.control.sidepanel('mySidepanelLeft', {
+  panelPosition: 'left',
+  tabsPosition: 'left',
+  startTab: 'tab-5',   // ou 'tab-1' si tu préfères
+  pushControls: true
+}).addTo(currentLeafletMap);
 
   // --- Grouper photos par Année > Mois > Jour ---
   const photosByYear = {};
