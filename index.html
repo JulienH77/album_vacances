@@ -151,7 +151,7 @@
 				</div>
 			</div>
 			<div class="sidepanel-toggle-container">
-				<button class="sidepanel-toggle-button" type="button" aria-label="toggle side panel"></button>
+				<button class="sidepanel-toggle-button" id="toggleSidePanelBtn" type="button" aria-label="toggle side panel"></button>
 			</div>
 		</div>
 
@@ -175,6 +175,13 @@
   const toggleReelBtn = document.getElementById('toggleReel');
   const cityReelEl = document.getElementById('cityReel');
 
+// Fonction pour ouvrir/fermer le sidepanel
+function toggleSidePanel() {
+    sidePanel.toggle();
+}
+document.getElementById('toggleSidePanelBtn').addEventListener('click', toggleSidePanel);
+
+	
 // Toggle affichage bobine avec animation
 toggleReelBtn.addEventListener('click', ()=>{
   cityReelEl.classList.toggle('open');
