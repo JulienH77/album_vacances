@@ -127,22 +127,6 @@
 // villes visitées avec photos et coordonnées
 <script src="visitedCities.js"></script> 
 <script>
-(async function(){
-  /* Les variables */
-  const PATH_EARTH_DAY_1 = './GLOBE/earth.jpg';
-  const PATH_EARTH_DAY_2 = './GLOBE/world.topo.bathy.200401.jpg';
-  const CLOUDS = 'https://clouds.matteason.co.uk/images/4096x2048/clouds-alpha.png';
-  const PATH_EARTH_NIGHT_RAW = './GLOBE/night.jpg';
-  const PATH_STARFIELD = './GLOBE/starfield.jpg';
-  const PATH_COUNTRIES = './GEOJSON/countries_10m_new.geojson';
-  const PATH_TRAJETS = './GEOJSON/TRAJETS_ALL_vacances_wgs.geojson';
-  const PATH_EARTH_BUMP = './GLOBE/world.topo.bathy.200401.jpg';
-  const loadJSON = url => fetch(url).then(r=>{ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); });
-  const loadImage = url => new Promise((res, rej) => { const img = new Image(); img.crossOrigin = 'anonymous'; img.onload = ()=>res(img); img.onerror = rej; img.src = url; });
-  const normalizeLng = lng => ((lng + 180) % 360) - 180;
-  const toggleReelBtn = document.getElementById('toggleReel');
-  const cityReelEl = document.getElementById('cityReel');
-
 // Fonction pour ouvrir/fermer le sidepanel
 function toggleSidePanel() {
     const panel = document.getElementById('sidepanel');
@@ -171,13 +155,22 @@ function showLeafletMap(city) {
             .openPopup();
     }
 }
-
-
-
-
-
-
 	
+(async function(){
+  /* Les variables */
+  const PATH_EARTH_DAY_1 = './GLOBE/earth.jpg';
+  const PATH_EARTH_DAY_2 = './GLOBE/world.topo.bathy.200401.jpg';
+  const CLOUDS = 'https://clouds.matteason.co.uk/images/4096x2048/clouds-alpha.png';
+  const PATH_EARTH_NIGHT_RAW = './GLOBE/night.jpg';
+  const PATH_STARFIELD = './GLOBE/starfield.jpg';
+  const PATH_COUNTRIES = './GEOJSON/countries_10m_new.geojson';
+  const PATH_TRAJETS = './GEOJSON/TRAJETS_ALL_vacances_wgs.geojson';
+  const PATH_EARTH_BUMP = './GLOBE/world.topo.bathy.200401.jpg';
+  const loadJSON = url => fetch(url).then(r=>{ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); });
+  const loadImage = url => new Promise((res, rej) => { const img = new Image(); img.crossOrigin = 'anonymous'; img.onload = ()=>res(img); img.onerror = rej; img.src = url; });
+  const normalizeLng = lng => ((lng + 180) % 360) - 180;
+  const toggleReelBtn = document.getElementById('toggleReel');
+  const cityReelEl = document.getElementById('cityReel');
 	
 // Toggle affichage bobine avec animation
 toggleReelBtn.addEventListener('click', ()=>{
