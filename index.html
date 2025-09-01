@@ -542,14 +542,7 @@ Object.entries(mapColor).forEach(([transport, color])=>{
 
   // Leaflet popup helpers
   let currentLeafletMap = null;
-	// Initialisation du sidepanel au chargement de la page
-	const sidepanelLeft = L.control.sidepanel('mySidepanelLeft', {
-	    panelPosition: 'left',
-	    tabsPosition: 'left',
-	    startTab: 'tab-1',
-	    pushControls: true
-	});
-function openLeafletPopup(cityData) {
+  function openLeafletPopup(cityData) {
   leafletPopupEl.style.display = 'block';
   if (currentLeafletMap) {
     currentLeafletMap.remove();
@@ -588,6 +581,13 @@ function openLeafletPopup(cityData) {
   /*L.control.zoom({position: 'topleft'}).addTo(currentLeafletMap);*/
   L.control.layers(baseMaps/*, overlayMaps*/).addTo(currentLeafletMap);
 
+const sidepanelLeft = L.control.sidepanel('mySidepanelLeft', {
+    panelPosition: 'left',
+    tabsPosition: 'left',
+    startTab: 'tab-1',
+    pushControls: true
+}).addTo(currentLeafletMap);
+	  
   // --- Grouper photos par Année > Mois > Jour ---
   const photosByYear = {};
 
