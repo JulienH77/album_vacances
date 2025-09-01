@@ -564,6 +564,16 @@ function openLeafletPopup(cityData) {
   const config = cityViewConfig[cityData.name] || { center: [lat, lon], zoom: 13 };
   currentLeafletMap = L.map(leafletMapEl, { layers: [osm] }/*, {zoomControl: false}*/).setView(config.center, config.zoom);
   L.control.scale({position: 'bottomleft'}).addTo(currentLeafletMap);
+
+  // Initialiser le sidepanel
+  const sidepanelLeft = L.control.sidepanel('mySidepanelLeft', {
+    panelPosition: 'left',
+    tabsPosition: 'left',
+    startTab: 'tab-5',
+    pushControls: true
+  }).addTo(currentLeafletMap);
+
+	
   /*L.control.zoom({position: 'topleft'}).addTo(currentLeafletMap);*/
       
   L.control.layers(baseMaps/*, overlayMaps*/).addTo(currentLeafletMap);
