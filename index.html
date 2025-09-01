@@ -68,8 +68,17 @@
       </div>
       <!-- Popup Leaflet -->
       <div id="leafletPopup">
-            <div id="leafletMap" class="leaflet-container leaflet-touch leaflet-fade-anim leaflet-grab leaflet-touch-drag leaflet-touch-zoom" tabindex="0" style="position: relative;"></div>
-		<!-- Side Panel left -->
+            <div id="leafletMap" class="leaflet-container leaflet-touch leaflet-fade-anim leaflet-grab leaflet-touch-drag leaflet-touch-zoom" tabindex="0" style="position: relative;"></div> 
+            <button id="leafletClose">X</button>
+            <!-- Popup d'agrandissement de photo -->
+            <div id="photoPopup" style="display: none;">
+                    <img id="photoPopupImg" src="" alt="Photo agrandie">
+                    <button id="photoClose">X</button>
+            </div>
+            </div>
+
+
+			<!-- Side Panel left -->
 		<div id="mySidepanelLeft" class="sidepanel sidepanel-left tabs-left opened" aria-label="side panel" aria-hidden="false">
 			<div class="sidepanel-inner-wrapper">
 				<nav class="sidepanel-tabs-wrapper" aria-label="sidepanel tab navigation">
@@ -145,17 +154,6 @@
 				<button class="sidepanel-toggle-button" type="button" aria-label="toggle side panel"></button>
 			</div>
 		</div>
-
-
-
-                  
-            <button id="leafletClose">X</button>
-            <!-- Popup d'agrandissement de photo -->
-            <div id="photoPopup" style="display: none;">
-                    <img id="photoPopupImg" src="" alt="Photo agrandie">
-                    <button id="photoClose">X</button>
-            </div>
-            </div>
 
       
 // villes visitées avec photos et coordonnées
