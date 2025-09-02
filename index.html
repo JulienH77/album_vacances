@@ -861,10 +861,9 @@ document.getElementById('photoPopup').addEventListener('click', (e) => {
   // rendu initial
   voyagesListEl.style.display = state.showTrajets ? 'block' : 'none';
   refresh();
-})();
 
 
-// Sélectionner tous les boutons de villes
+// Brancher les boutons de villes à la fin de l'IIFE
 document.querySelectorAll('.city-btn').forEach(btn => {
   const cityName = btn.querySelector('span').textContent.trim();
   const cityData = visitedCities.find(c => c.name === cityName);
@@ -872,20 +871,21 @@ document.querySelectorAll('.city-btn').forEach(btn => {
   if (!cityData) return;
 
   btn.addEventListener('click', () => {
-    // Si Leaflet est déjà affiché → on ouvre directement la popup
+    // Si Leaflet est déjà affiché → ouvrir directement
     if (document.getElementById('leafletPopup').style.display === 'block') {
       openLeafletPopup(cityData);
     } else {
-      // Sinon → on centre le globe sur la ville
+      // Sinon → centrer le globe sur la ville
       globeChart.dispatchAction({
         type: 'globeChangeView',
-        // coord = [longitude, latitude] (dans visitedCities c'est value = [lon, lat])
         targetCoord: cityData.value,
-        duration: 1500, // animation douce
+        duration: 1500,
       });
     }
   });
 });
+	
+})();
 </script>
 </body>
 </html>
