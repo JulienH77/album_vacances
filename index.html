@@ -588,18 +588,15 @@ Object.entries(mapColor).forEach(([transport, color])=>{
     attribution: '&copy; Google Maps Sat'
   });      
   /*const osmb = new OSMBuildings(currentLeafletMap).load('https://{s}.data.osmbuildings.org/0.2/59fcc2e8/tile/{z}/{x}/{y}.json');*/
-
   const baseMaps = {
     "OpenStreetMap": osm,
     "Google Street": gmap,
     "Google Satellite": gsat
   };
-
   /*const overlayMaps = {
       "3D buildings": osmb
   };*/
-
-      
+	  
   const [lon, lat] = cityData.value;
   const config = cityViewConfig[cityData.name] || { center: [lat, lon], zoom: 13 };
   currentLeafletMap = L.map(leafletMapEl, { layers: [osm] }).setView(config.center, config.zoom);
@@ -678,6 +675,78 @@ const sidepanelLeft = L.control.sidepanel('mySidepanelLeft', {
       L.marker([vlat, vlon]).addTo(currentLeafletMap).bindPopup(`<b>${v.name || ''}</b>`);
     }
   });
+
+// --- Mettre à jour l'onglet 3 (photos) ---
+const photosTab = document.querySelector('[data-tab-content="tab-3"]');
+photosTab.innerHTML = "<h4>Les photos</h4>";
+
+// Récupérer toutes les visites avec photo + date
+const photosList = (cityData.visites || [])
+  .filter(v => v.photo)
+  .map(v => {
+    // extraire la date depuis le nom de fichier
+    const photoName = v.photo.split('/').pop();
+    const dateMatch = photoName.match(/IMG[-_]?(\d{4})(\d{2})(\d{2})/);
+    let dateKey = "99999999";
+    if (dateMatch) dateKey = dateMatch[1] + dateMatch[2] + dateMatch[3];
+    return { ...v, dateKey, photoName };
+  })
+  .sort((a, b) => a.dateKey.localeCompare(b.dateKey)); // tri par date
+
+if (photosList.length === 0) {
+  photosTab.innerHTML += "<p>Aucune photo pour cette ville.</p>";
+} else {
+  const container = document.createElement('div');
+  container.className = "photos-list";
+
+  photosList.forEach(v => {
+    const item = document.createElement('div');
+    item.className = "photo-item";
+
+    // Version avec image miniature :
+    item.innerHTML = `
+      <div style="cursor:pointer; margin-bottom:10px;">
+        <img src="${v.photo}" width="120" style="border-radius:6px; display:block;"/>
+        <small>${v.photoName}</small>
+      </div>
+    `;
+
+    // Version avec juste le nom (si tu préfères, tu vires l'<img> ci-dessus)
+    // item.innerHTML = `<div style="cursor:pointer; margin:6px 0;">${v.photoName}</div>`;
+
+    // Clic => centrer la carte et ouvrir popup
+    item.addEventListener('click', () => {
+      if (currentLeafletMap) {
+        const [lon, lat] = v.coords;
+        currentLeafletMap.setView([lat, lon], 17); // zoom sur la photo
+        // ouvrir le popup si déjà créé
+        currentLeafletMap.eachLayer(layer => {
+          if (layer.getLatLng && layer.getLatLng().lat === lat && layer.getLatLng().lng === lon) {
+            layer.openPopup();
+          }
+        });
+      }
+    });
+
+    container.appendChild(item);
+  });
+
+  photosTab.appendChild(container);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+	  
 
   // --- Ajouter toutes les couches au départ ---
   Object.values(photosByYear).forEach(months =>
