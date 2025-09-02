@@ -422,13 +422,13 @@ const visitedCities = [
       value: [13.04159, 47.80523, 0],
       visites: [
         { type: 'hotel', datedeb:'13/07/2025', datefin:'15/07/2025', coords:[13.037606, 47.810420] },
+        { name:'Beautiful view of the old town', coords:[13.04112, 47.802834], photo:'./IMG/2025/Central Europe/Salzburg/IMG_20250713_183644.jpg' },
         { name:'Mozart Diner Concert', coords:[13.0441398, 47.7970268], photo:'./IMG/2025/Central Europe/Salzburg/IMG_20250713_185800.jpg' },
         { name:'Mozart Birth Place', coords:[13.043580, 47.79991], photo:'./IMG/2025/Central Europe/Salzburg/IMG_20250714_131540.jpg' },
         { name:'Roof of the Castle', coords:[13.046522, 47.794979], photo:'./IMG/2025/Central Europe/Salzburg/IMG_20250714_165226.jpg' },
         { name:'First evening apéro ', coords:[13.052116, 47.796713], photo:'./IMG/2025/Central Europe/Salzburg/IMG_20250714_214406.jpg' },
         { name:'Beautiful night sky view', coords:[13.037349, 47.804998], photo:'./IMG/2025/Central Europe/Salzburg/IMG_20250714_012446.jpg' },
         { name:'My street', coords:[13.03803, 47.810573], photo:'./IMG/2025/Central Europe/Salzburg/IMG_20250714_115800.jpg' },
-        { name:'Beautiful view of the old town', coords:[13.04112, 47.802834], photo:'./IMG/2025/Central Europe/Salzburg/IMG_20250713_183644.jpg' },
         { name:'Us after the Mozart Diner Concert on not very legal stands', coords:[13.04546, 47.797928], photo:'./IMG/2025/Central Europe/Salzburg/IMG_20250713_220915.jpg' }
       ]
     },
