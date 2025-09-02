@@ -1,3 +1,9 @@
+JE DOIS COMMENCER SUR UNE CARTE LEAFLET AVEC LE SIDEPANEL.
+DANS LE SIDEPANEL J'AURAI UN BOUTON POUR AFFICHER LE GLOBE AU PIRE.
+
+
+
+
 DES IDEES SUR LEAFLET:
 -  faire des mouvements de caméra smooth : https://ivansanchez.gitlab.io/Leaflet.ImageOverlay.Arrugator/demo.html
 -  affichage style lampe torche sur fond de carte : http://frogcat.github.io/leaflet-tilelayer-mask/
