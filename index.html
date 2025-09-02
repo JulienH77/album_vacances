@@ -825,7 +825,7 @@ datesControl.onAdd = function () {
     Object.keys(photosByYear[year]).sort().forEach(month => {
       const monthDetails = document.createElement('details');
       monthDetails.style.marginLeft = "15px";
-      monthDetails.open = false;
+      monthDetails.open = true;
 
       const monthSummary = document.createElement('summary');
 
