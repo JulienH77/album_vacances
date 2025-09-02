@@ -21,6 +21,56 @@
       <script src="leaflet-sidepanel.min.js"></script>
       /*OSMBuilding 3D*/
       <!--<script src="https://cdn.osmbuildings.org/classic/0.2.2b/OSMBuildings-Leaflet.js"></script>-->
+	<style>
+.city-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.city-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 120px;
+  border: none;
+  border-radius: 12px;
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.city-btn span {
+  position: relative;
+  z-index: 2;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: black;
+  transition: color 0.3s ease;
+}
+
+.city-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0); /* transparent par défaut */
+  transition: background 0.3s ease;
+}
+
+.city-btn:hover::after {
+  background: rgba(0,0,0,0.5); /* assombrit au hover */
+}
+
+.city-btn:hover span {
+  color: white; /* texte en blanc au hover */
+}
+
+		
+	</style>
 </head>
 <body>
       <div id="root">
@@ -132,22 +182,50 @@
 						<div class="sidepanel-tab-content" data-tab-content="tab-2">
 							<h4>Les villes du monde visitées</h4>
 							<p>Il faudra que les noms des villes deviennent des boutons pour montrer l'emplacement des villes.</p>
-							<ul>
-								<li>Beijing</li>
-								<li>Xi'an</li>
-								<li>Shanghai</li>
-								<li>Hangzhou</li>
-								<li>Guilin</li>
-								<li>Yangshuo</li>
-								<li>Tianjin</li>
-								<li>Munich</li>
-								<li>Marquartstein</li>
-								<li>Salzburg</li>
-								<li>Budapest</li>
-								<li>Prague</li>
-								<li>Regensburg</li>
-								<li>Ulm</li>
-						    </ul>
+							<div class="city-list">
+							  <button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/Beijing.jpg');">
+							    <span>Beijing</span>
+							  </button>
+							  <button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/xian.jpg');">
+							    <span>Xi'an</span>
+							  </button>
+							  <button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/shanghai.jpg');">
+							    <span>Shanghai</span>
+							  </button>
+								<button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/hangzhou.jpg');">
+							    <span>Hangzhou</span>
+							  </button>
+								<button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/guilin.jpg');">
+							    <span>Guilin</span>
+							  </button>
+								<button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/yangshuo.jpg');">
+							    <span>Yangshuo</span>
+							  </button>
+								<button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/tianjin.jpg');">
+							    <span>Tianjin</span>
+							  </button>
+								<button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/munich.png');">
+							    <span>Munich</span>
+							  </button>
+								<button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/beijing.jpg');">
+							    <span>Marquartstein</span>
+							  </button>
+								<button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/salzburg.jpg');">
+							    <span>Salzburg</span>
+							  </button>
+								<button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/budapest.jpg');">
+							    <span>Budapest</span>
+							  </button>
+								<button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/prague.jpg');">
+							    <span>Prague</span>
+							  </button>
+								<button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/regensburg.jpg');">
+							    <span>Regensburg</span>
+							  </button>
+								<button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/Ulm.jpg');">
+							    <span>Ulm</span>
+							  </button>
+							</div>
 						</div>
 						<div class="sidepanel-tab-content" data-tab-content="tab-3">
 							<h4>Les photos</h4>
