@@ -1,1108 +1,305 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-      <meta charset="utf-8"/>
-      <meta name="viewport" content="width=device-width,initial-scale=1"/>
-      <link rel="icon" href="./GLOBE/icone_onglet.png">
-      <title>Mes vacances</title>
-      <link rel="stylesheet" href="styles.css">
-      /*GEOJSON use*/
-      <script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
-      /* ECHART use*/
-      <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/echarts-gl@2/dist/echarts-gl.min.js"></script>
-      /*LEAFLET use*/
-      <!--<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-      <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>-->
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ==" crossorigin="">
-        <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ==" crossorigin=""></script>
-      /*Sidepanel leaflet*/
-      <link rel="stylesheet" href="leaflet-sidepanel.css" />
-      <script src="leaflet-sidepanel.min.js"></script>
-      /*OSMBuilding 3D*/
-      <!--<script src="https://cdn.osmbuildings.org/classic/0.2.2b/OSMBuildings-Leaflet.js"></script>-->
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Mes vacances</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ==" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ==" crossorigin=""></script>
+    <link rel="stylesheet" href="leaflet-sidepanel.css" />
+    <script src="leaflet-sidepanel.min.js"></script>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+        }
+        #mainMap {
+            width: 100%;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        #globePopup, #leafletPopup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+        }
+    </style>
 </head>
 <body>
-      <div id="root">  
-			<div id="mainMap" style="width: 100%; height: 100vh; position: fixed; top: 0; left: 0; z-index: 1;"></div>
+    <div id="mainMap"></div>
 
-		  
-            <!-- A QUOI SERS TU ? -->
-            <div id="trajetPopup"></div>
-            <!-- Bouton pour ouvrir la bobine -->
-            <div id="toggleReel">^</div>
-            <!-- Bobine horizontale -->
-            <div id="cityReel"></div>
-      </div>
-      <!-- Popup Leaflet -->
-      <div id="leafletPopup">
-            <div id="leafletMap" class="leaflet-container leaflet-touch leaflet-fade-anim leaflet-grab leaflet-touch-drag leaflet-touch-zoom" tabindex="0" style="position: relative;"></div> 
-            <button id="leafletClose">X</button>
-            <!-- Popup d'agrandissement de photo -->
-            <div id="photoPopup" style="display: none;">
-                    <img id="photoPopupImg" src="" alt="Photo agrandie">
-                    <button id="photoClose">X</button>
+    <!-- Popup Leaflet -->
+    <div id="leafletPopup">
+        <div id="leafletMap" style="width: 100%; height: 100%;"></div>
+        <button id="leafletClose" style="position: absolute; top: 10px; right: 10px; background: white; border: none; padding: 5px 10px; cursor: pointer;">Fermer</button>
+    </div>
+
+    <!-- Sidepanel -->
+    <div id="mySidepanelLeft" class="sidepanel sidepanel-left tabs-left opened" aria-label="side panel" aria-hidden="false">
+        <div class="sidepanel-inner-wrapper">
+            <nav class="sidepanel-tabs-wrapper" aria-label="sidepanel tab navigation">
+                <ul class="sidepanel-tabs">
+                    <li class="sidepanel-tab">
+                        <a href="#" class="sidebar-tab-link" role="tab" data-tab-link="tab-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"></path>
+                            </svg>
+                        </a>
+                    </li>
+                    <li class="sidepanel-tab">
+                        <a href="#" class="sidebar-tab-link" role="tab" data-tab-link="tab-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-geo" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 1a3 3 0 1 0 0 6 3 3 0 0 0 0-6zM4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999zm2.493 8.574a.5.5 0 0 1-.411.575c-.712.118-1.28.295-1.655.493a1.319 1.319 0 0 0-.37.265.301.301 0 0 0-.057.09V14l.002.008a.147.147 0 0 0 .016.033.617.617 0 0 0 .145.15c.165.13.435.27.813.395.751.25 1.82.414 3.024.414s2.273-.163 3.024-.414c.378-.126.648-.265.813-.395a.619.619 0 0 0 .146-.15.148.148 0 0 0 .015-.033L12 14v-.004a.301.301 0 0 0-.057-.09 1.318 1.318 0 0 0-.37-.264c-.376-.198-.943-.375-1.655-.493a.5.5 0 1 1 .164-.986c.77.127 1.452.328 1.957.594C12.5 13 13 13.4 13 14c0 .426-.26.752-.544.977-.29.228-.68.413-1.116.558-.878.293-2.059.465-3.34.465-1.281 0-2.462-.172-3.34-.465-.436-.145-.826-.33-1.116-.558C3.26 14.752 3 14.426 3 14c0-.599.5-1 .961-1.243.505-.266 1.187-.467 1.957-.594a.5.5 0 0 1 .575.411z"></path>
+                            </svg>
+                        </a>
+                    </li>
+                    <li class="sidepanel-tab">
+                        <a href="#" class="sidebar-tab-link" role="tab" data-tab-link="tab-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                                <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"></path>
+                                <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"></path>
+                            </svg>
+                        </a>
+                    </li>
+                    <li class="sidepanel-tab">
+                        <a href="#" class="sidebar-tab-link" role="tab" data-tab-link="tab-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <circle cx="12" cy="12" r="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20z" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M2 12h20" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M12 2v20" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="sidepanel-content-wrapper">
+                <div class="sidepanel-content">
+                    <div class="sidepanel-tab-content" data-tab-content="tab-1">
+                        <h4>Mes vacances</h4>
+                        <p>Ce site me sert d'album photo pour mes vacances...</p>
+                    </div>
+                    <div class="sidepanel-tab-content" data-tab-content="tab-2">
+                        <h4>Les villes du monde que j'ai visitées</h4>
+                        <div class="city-list">
+                            <!-- Liste des villes -->
+                        </div>
+                    </div>
+                    <div class="sidepanel-tab-content" data-tab-content="tab-3">
+                        <h4>Contrôles de la carte</h4>
+                        <label><input id="chkTrajetsLeaflet" type="checkbox" checked> Afficher les trajets</label>
+                        <label><input id="chkVillesLeaflet" type="checkbox" checked> Afficher les villes</label>
+                        <label><input id="chkHotelsLeaflet" type="checkbox" checked> Afficher les hôtels</label>
+                    </div>
+                    <div class="sidepanel-tab-content" data-tab-content="tab-4">
+                        <h4>Afficher le globe</h4>
+                        <button id="openGlobeBtn" style="padding: 8px 12px; background: #4CAF50; color: white; border: none; cursor: pointer;">Ouvrir le globe</button>
+                    </div>
+                </div>
             </div>
-      </div>
-
-			<!-- Side Panel left -->
-		<div id="mySidepanelLeft" class="sidepanel sidepanel-left tabs-left opened" aria-label="side panel" aria-hidden="false">
-			<div class="sidepanel-inner-wrapper">
-				<nav class="sidepanel-tabs-wrapper" aria-label="sidepanel tab navigation">
-					<ul class="sidepanel-tabs">
-						<li class="sidepanel-tab">
-							<a href="#" class="sidebar-tab-link" role="tab" data-tab-link="tab-1">
-								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
-									<path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"></path>
-								</svg>
-							</a>
-						</li>
-						<li class="sidepanel-tab">
-							<a href="#" class="sidebar-tab-link" role="tab" data-tab-link="tab-2">
-								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-geo" viewBox="0 0 16 16">
-									<path fill-rule="evenodd" d="M8 1a3 3 0 1 0 0 6 3 3 0 0 0 0-6zM4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999zm2.493 8.574a.5.5 0 0 1-.411.575c-.712.118-1.28.295-1.655.493a1.319 1.319 0 0 0-.37.265.301.301 0 0 0-.057.09V14l.002.008a.147.147 0 0 0 .016.033.617.617 0 0 0 .145.15c.165.13.435.27.813.395.751.25 1.82.414 3.024.414s2.273-.163 3.024-.414c.378-.126.648-.265.813-.395a.619.619 0 0 0 .146-.15.148.148 0 0 0 .015-.033L12 14v-.004a.301.301 0 0 0-.057-.09 1.318 1.318 0 0 0-.37-.264c-.376-.198-.943-.375-1.655-.493a.5.5 0 1 1 .164-.986c.77.127 1.452.328 1.957.594C12.5 13 13 13.4 13 14c0 .426-.26.752-.544.977-.29.228-.68.413-1.116.558-.878.293-2.059.465-3.34.465-1.281 0-2.462-.172-3.34-.465-.436-.145-.826-.33-1.116-.558C3.26 14.752 3 14.426 3 14c0-.599.5-1 .961-1.243.505-.266 1.187-.467 1.957-.594a.5.5 0 0 1 .575.411z"></path>
-								</svg>
-							</a>
-						</li>
-						<li class="sidepanel-tab">
-							<a href="#" class="sidebar-tab-link" role="tab" data-tab-link="tab-3">
-								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
-									<path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"></path>
-									<path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"></path>
-								</svg>
-							</a>
-						</li>
-						<li class="sidepanel-tab">
-							<a href="#" class="sidebar-tab-link" role="tab" data-tab-link="tab-4">
-								<!--<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-bookmarks" viewBox="0 0 16 16">
-									<path d="M2 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v11.5a.5.5 0 0 1-.777.416L7 13.101l-4.223 2.815A.5.5 0 0 1 2 15.5V4zm2-1a1 1 0 0 0-1 1v10.566l3.723-2.482a.5.5 0 0 1 .554 0L11 14.566V4a1 1 0 0 0-1-1H4z"></path>
-									<path d="M4.268 1H12a1 1 0 0 1 1 1v11.768l.223.148A.5.5 0 0 0 14 13.5V2a2 2 0 0 0-2-2H6a2 2 0 0 0-1.732 1z"></path>
-								</svg>-->
-								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-								    <circle cx="12" cy="12" r="10" stroke-linecap="round" stroke-linejoin="round"/>
-								    <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20z" stroke-linecap="round" stroke-linejoin="round"/>
-								    <path d="M2 12h20" stroke-linecap="round" stroke-linejoin="round"/>
-								    <path d="M12 2v20" stroke-linecap="round" stroke-linejoin="round"/>
-								</svg>
-
-							</a>
-						</li>
-						<li class="sidepanel-tab">
-							<a href="#" class="sidebar-tab-link" role="tab" data-tab-link="tab-5">
-								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
-									<path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"></path>
-									<path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"></path>
-								</svg>
-							</a>
-						</li>
-					</ul>
-				</nav>
-				<div class="sidepanel-content-wrapper">
-					<div class="sidepanel-content">
-						<div class="sidepanel-tab-content" data-tab-content="tab-1">
-							<h4>Mes vacances</h4></h4>
-							<p>Ce site me sert d'album photo pour mes vacances à partir de mon voyage en Chine en Mai 2025.
-							   Je compte bien le remplir et y prendre un grand plaisir à développer l'entièreté du site en repoussant mes limites en code.</p>
-							<br><br>
-							<p>Bonne découverte de mes différentes vacances !</p>
-						</div>
-						<div class="sidepanel-tab-content" data-tab-content="tab-2">
-							<h4>Les villes du monde que j'ai visitées</h4>
-							<div class="city-list">
-							  <button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/Beijing.jpg');">
-							    <span>Beijing</span>
-							  </button>
-							  <button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/xian.jpg');">
-							    <span>Xi'an</span>
-							  </button>
-							  <button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/shanghai.jpg');">
-							    <span>Shanghai</span>
-							  </button>
-								<button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/hangzhou.jpg');">
-							    <span>Hangzhou</span>
-							  </button>
-								<button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/guilin.jpg');">
-							    <span>Guilin</span>
-							  </button>
-								<button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/yangshuo.jpg');">
-							    <span>Yangshuo</span>
-							  </button>
-								<button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/tianjin.jpg');">
-							    <span>Tianjin</span>
-							  </button>
-								<button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/munich.png');">
-							    <span>Munich</span>
-							  </button>
-								<button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/marquartstein.jpg');">
-							    <span>Marquartstein</span>
-							  </button>
-								<button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/salzburg.jpg');">
-							    <span>Salzburg</span>
-							  </button>
-								<button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/budapest.jpg');">
-							    <span>Budapest</span>
-							  </button>
-								<button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/prague.jpg');">
-							    <span>Prague</span>
-							  </button>
-								<button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/regensburg.jpg');">
-							    <span>Regensburg</span>
-							  </button>
-								<button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/Ulm.jpg');">
-							    <span>Ulm</span>
-							  </button>
-							</div>
-						</div>
-						<div class="sidepanel-tab-content" data-tab-content="tab-3">
-						    <h4>Contrôles de la carte</h4>
-						    <label><input id="chkTrajetsLeaflet" type="checkbox" checked> Afficher les trajets</label>
-						    <label><input id="chkVillesLeaflet" type="checkbox" checked> Afficher les villes</label>
-						    <label><input id="chkHotelsLeaflet" type="checkbox" checked> Afficher les hôtels</label>
-						</div>
-
-						<div class="sidepanel-tab-content" data-tab-content="tab-4">
-						    <h4>Afficher le globe</h4>
-						    <button id="openGlobeBtn" style="padding: 8px 12px; background: #4CAF50; color: white; border: none; cursor: pointer;">Ouvrir le globe</button>
-						</div>
-
-						<div class="sidepanel-tab-content" data-tab-content="tab-5">
-							<h4>Settings</h4>
-							<p>A voir si je peux faire des dingueries dedans.</p>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="sidepanel-toggle-container">
-				<button class="sidepanel-toggle-button" type="button" aria-label="toggle side panel"></button>
-			</div>
-		</div>
-
-
-
-<div id="globePopup" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); z-index: 1000;">
-    <div id="globeContainer" class="echarts-for-globe" style="width: 100%; height: 100%;"></div>
-    <!-- Boutons du globe -->
-    <div id="toggleNight" class="toggle-btn" role="button" aria-pressed="false" aria-label="Basculer ombre de nuit">
-        <svg viewBox="0 0 24 24" width="22" height="22">
-            <path d="M21 12.79A9 9 0 0112.21 3 7 7 0 1021 12.79z" fill="#FFDD66"/>
-        </svg>
-    </div>
-    <div id="toggleRelief" class="toggle-btn" role="button" aria-pressed="false" aria-label="Basculer relief">
-        <svg viewBox="0 0 24 30">
-            <path d="M3 20l5-9 4 7 5-10 5 12z" fill="#444"/>
-            <path d="M3 20h18v1H3z" fill="#777"/>
-        </svg>
-    </div>
-    <div id="toggleClouds" class="toggle-btn" role="button" aria-pressed="false" aria-label="Afficher/masquer les nuages">
-        <svg viewBox="0 0 24 24" width="22" height="22">
-            <path d="M6 19h11a4 4 0 0 0 0-8 5 5 0 0 0-9.8-1.7A4 4 0 0 0 6 19z" fill="#4a90e2"/>
-        </svg>
-    </div>
-    <div id="toggleDayBase" role="button" aria-label="Changer fond du jour" title="Changer fond du jour">EARTH</div>
-    <!-- Légende du globe -->
-    <div id="trajetLegend" style="position: absolute; bottom: 30px; right: 20px; background: white; padding: 8px 12px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.3); font-size: 14px;">
-        <strong style="display: block; margin-bottom: 6px;">Légende trajets</strong>
-    </div>
-    <!-- Bouton pour fermer la popup -->
-    <button id="globeClose" style="position: absolute; top: 10px; right: 10px; background: white; border: none; padding: 5px 10px; cursor: pointer;">Fermer</button>
-</div>
-
-
-
-	
-      
-// villes visitées avec photos et coordonnées
-<script src="visitedCities.js"></script> 
-<script>
-// Ouvrir/fermer la popup du globe
-document.getElementById('openGlobeBtn').addEventListener('click', () => {
-    document.getElementById('globePopup').style.display = 'block';
-    // Initialiser le globe si ce n'est pas déjà fait
-    if (!globeChart) {
-        globeChart = echarts.init(document.getElementById('globeContainer'), null, { renderer: 'webgl' });
-        refresh();
-    }
-});
-
-// Fermer la popup du globe
-document.getElementById('globeClose').addEventListener('click', () => {
-    document.getElementById('globePopup').style.display = 'none';
-});
-
-// Gérer les boutons du globe (night, relief, clouds, dayBase)
-document.getElementById('toggleNight').addEventListener('click', () => {
-    state.showNightShadow = !state.showNightShadow;
-    refresh();
-});
-
-document.getElementById('toggleRelief').addEventListener('click', () => {
-    state.showRelief = !state.showRelief;
-    refresh();
-});
-
-document.getElementById('toggleClouds').addEventListener('click', () => {
-    state.showNuages = !state.showNuages;
-    refresh();
-});
-
-document.getElementById('toggleDayBase').addEventListener('click', () => {
-    state.dayBase = (state.dayBase === 'earth') ? 'topo' : 'earth';
-    document.getElementById('toggleDayBase').textContent = (state.dayBase === 'earth') ? 'EARTH' : 'TOPO';
-    refresh();
-});
-
-// Initialiser la carte Leaflet
-const mainMap = L.map('mainMap').setView([48.8566, 2.3522], 5); // Centré sur la France par défaut
-
-// Ajouter une couche de tuiles (exemple : OpenStreetMap)
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(mainMap);
-
-// Charger et afficher les trajets
-fetch('./GEOJSON/TRAJETS_ALL_vacances_wgs.geojson')
-    .then(response => response.json())
-    .then(data => {
-        L.geoJSON(data, {
-            style: function(feature) {
-                const color = {
-                    'avion': '#00dbc5',
-                    'train': '#db0016',
-                    'bus': '#dbc500',
-                    'voiture': '#0016db',
-                    'bateau': '#0084db'
-                }[feature.properties.trajet?.toLowerCase()] || '#00ffff';
-                return { color: color, weight: 2.5 };
-            }
-        }).addTo(mainMap);
-    });
-// Références aux cases à cocher
-const chkTrajetsLeaflet = document.getElementById('chkTrajetsLeaflet');
-const chkVillesLeaflet = document.getElementById('chkVillesLeaflet');
-const chkHotelsLeaflet = document.getElementById('chkHotelsLeaflet');
-
-// Variables pour stocker les couches
-let trajetsLayer = null;
-let villesLayer = null;
-let hotelsLayer = null;
-
-// Fonction pour charger et afficher les trajets
-function loadTrajets() {
-    fetch('./GEOJSON/TRAJETS_ALL_vacances_wgs.geojson')
-        .then(response => response.json())
-        .then(data => {
-            trajetsLayer = L.geoJSON(data, {
-                style: function(feature) {
-                    const color = {
-                        'avion': '#00dbc5',
-                        'train': '#db0016',
-                        'bus': '#dbc500',
-                        'voiture': '#0016db',
-                        'bateau': '#0084db'
-                    }[feature.properties.trajet?.toLowerCase()] || '#00ffff';
-                    return { color: color, weight: 2.5 };
-                }
-            });
-            if (chkTrajetsLeaflet.checked) {
-                trajetsLayer.addTo(mainMap);
-            }
-        });
-}
-
-// Écouteurs d'événements pour les cases à cocher
-chkTrajetsLeaflet.addEventListener('change', (e) => {
-    if (e.target.checked && trajetsLayer) {
-        trajetsLayer.addTo(mainMap);
-    } else if (trajetsLayer) {
-        mainMap.removeLayer(trajetsLayer);
-    }
-});
-
-// Initialiser les couches
-loadTrajets();
-
-
-	
-
-
-
-
-
-	
-	
-(async function(){
-  /* Les variables */
-  const PATH_EARTH_DAY_1 = './GLOBE/earth.jpg';
-  const PATH_EARTH_DAY_2 = './GLOBE/world.topo.bathy.200401.jpg';
-  const CLOUDS = 'https://clouds.matteason.co.uk/images/4096x2048/clouds-alpha.png';
-  const PATH_EARTH_NIGHT_RAW = './GLOBE/night.jpg';
-  const PATH_STARFIELD = './GLOBE/starfield.jpg';
-  const PATH_COUNTRIES = './GEOJSON/countries_10m_new.geojson';
-  const PATH_TRAJETS = './GEOJSON/TRAJETS_ALL_vacances_wgs.geojson';
-  const PATH_EARTH_BUMP = './GLOBE/world.topo.bathy.200401.jpg';
-  const loadJSON = url => fetch(url).then(r=>{ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); });
-  const loadImage = url => new Promise((res, rej) => { const img = new Image(); img.crossOrigin = 'anonymous'; img.onload = ()=>res(img); img.onerror = rej; img.src = url; });
-  const normalizeLng = lng => ((lng + 180) % 360) - 180;
-  const toggleReelBtn = document.getElementById('toggleReel');
-  const cityReelEl = document.getElementById('cityReel');
-
-// Toggle affichage bobine avec animation
-toggleReelBtn.addEventListener('click', ()=>{
-  cityReelEl.classList.toggle('open');
-});
-// Remplir la bobine avec les villes visitées
-visitedCities.forEach(city=>{
-  const div = document.createElement('div');
-  div.className = 'city-card';
-  div.textContent = city.name;
-  div.onclick = ()=> openLeafletPopup(city); // réutilise ta fonction
-  cityReelEl.appendChild(div);
-});
-
-
-      
-  /* Je crois que ca sert pour les contours des pays */
-  const linesFromPolygonGeom = geom => {
-    const out = [];
-    if(!geom) return out;
-    if(geom.type === 'Polygon'){
-      geom.coordinates.forEach(ring => out.push({ coords: ring.map(([x,y]) => [normalizeLng(x), y, 0.001]) }));
-    } else if(geom.type === 'MultiPolygon'){
-      geom.coordinates.forEach(poly => poly.forEach(ring => out.push({ coords: ring.map(([x,y]) => [normalizeLng(x), y, 0.001]) })));
-    }
-    return out;
-  };
-      
-  /* Je crois que ca sert pour les trajets */
-  const extractLinesFromFeature = feature => {
-    const out = [], g = feature && feature.geometry;
-    if(!g) return out;
-    if(g.type === 'LineString'){
-      out.push({ coords: g.coordinates.map(([x,y]) => [normalizeLng(x), y]) });
-    } else if(g.type === 'MultiLineString'){
-      g.coordinates.forEach(lineCoords => out.push({ coords: lineCoords.map(([x,y]) => [normalizeLng(x), y]) }));
-    } else if(g.type === 'Polygon' || g.type === 'MultiPolygon'){
-      linesFromPolygonGeom(g).forEach(l => out.push(l));
-    }
-    return out;
-  };
-
-  // texture nuit
-  const nightTexture = (await loadImage(PATH_EARTH_NIGHT_RAW)).src;
-  // chargement des données
-  const [countriesGeo, trajetsGeo] = await Promise.all([
-    loadJSON(PATH_COUNTRIES),
-    loadJSON(PATH_TRAJETS)
-  ]);
-      
-  // frontières
-  const countryLines = [];
-  (countriesGeo.features || []).forEach(f => linesFromPolygonGeom(f.geometry).forEach(l => countryLines.push(l)));
-      
-  // trajets + collecte des valeurs uniques de `voyage`
-  const trajetLines = [];
-  const voyagesSet = new Set();
-  const mapColor = { avion:'#00dbc5', train:'#db0016', bus:'#dbc500', voiture:'#0016db', bateau:'#0084db' };
-  (trajetsGeo.features || []).forEach(f => {
-    const col = mapColor[(f.properties?.trajet || f.properties?.transport || '').toLowerCase()] || '#00ffff';
-    const voyageVal = (f.properties?.voyage ?? 'Inconnu');
-    voyagesSet.add(voyageVal);
-    extractLinesFromFeature(f).forEach(l => trajetLines.push({
-      ...l,
-      lineStyle:{ color: col, width: 2.5, opacity: 0.95 },
-      properties:f.properties,
-      voyage: voyageVal
-    }));
-  });
-// --- Génération de la légende des trajets ---
-const trajetLegendEl = document.getElementById('trajetLegend');
-Object.entries(mapColor).forEach(([transport, color])=>{
-  const item = document.createElement('div');
-  item.style.display = 'flex';
-  item.style.alignItems = 'center';
-  item.style.marginBottom = '4px';
-  item.innerHTML = `
-    <span style="display:inline-block; width:16px; height:3px; background:${color}; margin-right:6px;"></span>
-    ${transport.charAt(0).toUpperCase() + transport.slice(1)}
-  `;
-  trajetLegendEl.appendChild(item);
-});
-
-      
-  // Style des logos des hotels
-  const hotelIcon = L.divIcon({
-    html: `
-      <div style="
-        width:33px; height:33px;
-        background:#FFFFFF;;
-        border:2px solid #000;
-        border-radius:15%;
-        display:flex; align-items:center; 
-        justify-content:center;
-        font-size:25px;
-        box-shadow:0 3px 4px rgba(0,0,0,0.3);
-      ">
-        🏢
-      </div>
-    `,
-    className: '',
-    iconSize: [28,28],
-    iconAnchor: [14,14]
-  });
-
-  // Chargement de la page avec ce qui est affiché ou non
-  const globeChart = echarts.init(document.getElementById('globeContainer'), null, { renderer:'webgl' });
-  let state = {
-    showPays:false,
-    showTrajets:false,
-    showNuages:false,
-    showNightShadow: false,
-    showRelief:false,
-    dayBase:'earth',
-    activeVoyages: new Set(voyagesSet)
-  };
-
-  // Fonction qui fait plein de trucs
-  function makeOption(s) {
-    const series = [];
-    // Frontières des pays
-    if(s.showPays){
-      series.push({
-        name: 'Pays',
-        type: 'lines3D',
-        coordinateSystem: 'globe',
-        polyline: true,
-        data: countryLines,
-        lineStyle: { color: '#f0f0f0', width: 1, opacity: 0.98 }
-      });
-    }
-    // Affiche les trajets
-    if(s.showTrajets){
-      const filteredTrajets = trajetLines.filter(l => s.activeVoyages.has(l.voyage));
-      series.push({
-        name: 'Trajets',
-        type: 'lines3D',
-        coordinateSystem: 'globe',
-        polyline: true,
-        data: filteredTrajets,
-        effect: {
-          show: true,
-          period: 10,
-          constantSpeed: 5,
-          trailLength: 0.15,
-          symbolSize: 6,
-          color: '#FFFFFF',
-        },
-        lineStyle: {
-          width: 2.5,
-          opacity: 0.95,
-        }
-      });
-    }
-    // pins des villes visitées qui deviennent filtrées par les voyages sélectionnés
-    let pinsData = [];
-    const allowedCities = new Set();
-    if(s.activeVoyages && s.activeVoyages.size){
-      s.activeVoyages.forEach(v => {
-        const list = voyagesToCities[v];
-        if(Array.isArray(list)) list.forEach(city => allowedCities.add(city));
-      });
-    }
-    if(allowedCities.size > 0){
-      pinsData = visitedCities.filter(c => allowedCities.has(c.name));
-    } else {
-      pinsData = [];
-    }
-    series.push({
-      name: 'Pins',
-      type: 'scatter3D',
-      coordinateSystem: 'globe',
-      symbol: 'circle',
-      symbolSize: 10,
-      itemStyle: {
-        color: '#FFFFFF',
-        borderColor: '#000000',
-        borderWidth: 0.75,
-      },
-      emphasis: {
-        itemStyle: {
-          color: '#FFD700',
-          borderColor: '#000000',
-          borderWidth: 1,
-        },
-        label: {
-          show: true,
-          formatter: p => p.name,
-          position: 'top',
-          textStyle: {
-            color: '#fff',
-            padding: [2, 2],
-            borderRadius: 3,
-            backgroundColor: 'rgba(0,0,0,1)',
-            fontSize: 15,
-          }
-        }
-      },
-      data: pinsData
-    });
-    // Affiche le monde de nuit
-    const layers = [];
-    if(s.showNightShadow){
-      layers.push({
-        show: true,
-        name: 'Ombre nuit',
-        type: 'blend',
-        intensity: 1.3,
-        blendTo: 'emission',
-        texture: PATH_EARTH_NIGHT_RAW
-      });
-    }
-    // Affiche les nuages
-    if(s.showNuages){
-      layers.push({
-        show: true,
-        name: 'Nuages',
-        type: 'overlay',
-        texture: CLOUDS,
-        shading: 'lambert',
-        distance: 2
-      });
-    }
-    // Change le fond du globe
-    const baseDay = (s.dayBase === 'earth') ? PATH_EARTH_DAY_1 : PATH_EARTH_DAY_2;
-    return {
-      backgroundColor: 'transparent',
-      globe: {
-        baseTexture: baseDay,
-        heightTexture: s.showRelief ? PATH_EARTH_BUMP : undefined,
-        displacementScale: 0.025,
-        shading: 'realistic',
-        environment: PATH_STARFIELD,
-        postEffect: { enable: false },
-        light: {
-          ambient: { color: '#1f1f1f', intensity: 0.2 },
-          main: { color: '#FFFDED', intensity: 0.9 }
-        },
-        atmosphere: { show: true, color: '#a1a1a1', offset: 4 },
-        viewControl: { autoRotate: false, autoRotateSpeed: 0.5 },
-        layers
-      },
-      series
-    };
-  }
-
-  // Récupère la vue du globe actuelle
-  function getCurrentView() {
-    const opt = globeChart.getOption();
-    if(opt && opt.globe && opt.globe[0] && opt.globe[0].viewControl){
-      return { ...opt.globe[0].viewControl };
-    }
-    return null;
-  }
-      
-  // Permet de rafraichir l'affichage sans reset la vue
-  function refresh(){
-    const currentView = getCurrentView();
-    const newOpt = makeOption(state);
-    if(currentView) {
-      newOpt.globe.viewControl = { ...newOpt.globe.viewControl, ...currentView };
-    }
-    globeChart.setOption(newOpt, { notMerge:true });
-  }
-      
-  // --- UI refs ---
-  const toggleNightEl = document.getElementById('toggleNight');
-  const toggleReliefEl = document.getElementById('toggleRelief');
-  const toggleCloudsEl = document.getElementById('toggleClouds');
-  const toggleDayBaseEl = document.getElementById('toggleDayBase');
-  const chkPays = document.getElementById('chkPays');
-  const chkTrajets = document.getElementById('chkTrajets');
-  const popupEl = document.getElementById('trajetPopup');
-  const leafletPopupEl = document.getElementById('leafletPopup');
-  const leafletMapEl = document.getElementById('leafletMap');
-  const leafletCloseBtn = document.getElementById('leafletClose');
-  const voyagesListEl = document.getElementById('voyagesList');
-
-  // Remplit la liste avec les valeurs uniques de `voyage` (je ne sais pas a quoi tu sers)
-  Array.from(voyagesSet).sort().forEach(v => {
-    const id = 'voy_'+v.replace(/[^A-Za-z0-9_-]/g,'_');
-    const label = document.createElement('label');
-    label.setAttribute('for', id);
-    const cb = document.createElement('input');
-    cb.type = 'checkbox';
-    cb.id = id;
-    cb.className = 'voyageChk';
-    cb.value = v;
-    cb.checked = true;
-    cb.setAttribute('aria-label', 'Voyage '+v);
-    label.appendChild(cb);
-    label.appendChild(document.createTextNode(' '+v));
-    voyagesListEl.appendChild(label);
-  });
-
-  // --- événements ---
-  toggleNightEl.addEventListener('click', ()=>{
-    state.showNightShadow = !state.showNightShadow;
-    toggleNightEl.classList.toggle('active', state.showNightShadow);
-    toggleNightEl.setAttribute('aria-pressed', String(state.showNightShadow));
-    refresh();
-  });
-      
-  toggleReliefEl.addEventListener('click', ()=>{
-    state.showRelief = !state.showRelief;
-    toggleReliefEl.classList.toggle('active', state.showRelief);
-    toggleReliefEl.setAttribute('aria-pressed', String(state.showRelief));
-    refresh();
-  });
-      
-  toggleCloudsEl.addEventListener('click', ()=>{
-    state.showNuages = !state.showNuages;
-    toggleCloudsEl.classList.toggle('active', state.showNuages);
-    toggleCloudsEl.setAttribute('aria-pressed', String(state.showNuages));
-    refresh();
-  });
-
-  // Fonction pour changer le fond du globe
-  function updateDayBaseButtonLabel(){
-    toggleDayBaseEl.textContent = (state.dayBase === 'earth') ? 'EARTH' : 'TOPO';
-  }
-      
-  toggleDayBaseEl.addEventListener('click', ()=>{
-    state.dayBase = (state.dayBase === 'earth') ? 'topo' : 'earth';
-    updateDayBaseButtonLabel();
-    refresh();
-  });
-
-  updateDayBaseButtonLabel();
-
-  [['Pays', chkPays], ['Trajets', chkTrajets]].forEach(([name, el])=>{
-    el.addEventListener('change', e=>{
-      state['show'+name] = e.target.checked;
-      if(name === 'Trajets'){
-        voyagesListEl.style.display = state.showTrajets ? 'block' : 'none';
-        trajetLegendEl.style.display = state.showTrajets ? 'block' : 'none';
-      }
-      refresh();
-    });
-  });
-
-  // Gestion des cases des voyages
-  voyagesListEl.addEventListener('change', (e)=>{
-    const t = e.target;
-    if(t && t.classList.contains('voyageChk')){
-      if(t.checked) state.activeVoyages.add(t.value);
-      else state.activeVoyages.delete(t.value);
-      refresh();
-    }
-  });
-
-  // Leaflet popup helpers
-  let currentLeafletMap = null;
-  function openLeafletPopup(cityData) {
-  leafletPopupEl.style.display = 'block';
-  if (currentLeafletMap) {
-    currentLeafletMap.remove();
-    currentLeafletMap = null;
-  }
-  leafletMapEl.innerHTML = '';
-
-  // --- Basemaps ---
-  const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OSM'
-  });
-  const gmap = L.tileLayer('https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}', {
-    attribution: '&copy; Google Maps'
-  });
-  const gsat = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
-    attribution: '&copy; Google Maps Sat'
-  });      
-  /*const osmb = new OSMBuildings(currentLeafletMap).load('https://{s}.data.osmbuildings.org/0.2/59fcc2e8/tile/{z}/{x}/{y}.json');*/
-  const baseMaps = {
-    "OpenStreetMap": osm,
-    "Google Street": gmap,
-    "Google Satellite": gsat
-  };
-  /*const overlayMaps = {
-      "3D buildings": osmb
-  };*/
-	  
-  const [lon, lat] = cityData.value;
-  const config = cityViewConfig[cityData.name] || { center: [lat, lon], zoom: 13 };
-  currentLeafletMap = L.map(leafletMapEl, { layers: [osm] }).setView(config.center, config.zoom);
-  L.control.scale({position: 'bottomleft'}).addTo(currentLeafletMap);
-
-  /*L.control.zoom({position: 'topleft'}).addTo(currentLeafletMap);*/
-  L.control.layers(baseMaps/*, overlayMaps*/).addTo(currentLeafletMap);
-
-const sidepanelLeft = L.control.sidepanel('mySidepanelLeft', {
-    panelPosition: 'left',
-    tabsPosition: 'left',
-    startTab: 'tab-1',
-    pushControls: true
-}).addTo(currentLeafletMap);
-	  
-  // --- Grouper photos par Année > Mois > Jour ---
-  const photosByYear = {};
-
-  (cityData.visites || []).forEach(v => {
-    const [vlon, vlat] = v.coords;
-
-    if (v.type === 'hotel') {
-      L.marker([vlat, vlon], { icon: hotelIcon }).addTo(currentLeafletMap)
-        .bindPopup(`<b>Hotel</b><br>Du ${v.datedeb} au ${v.datefin}`);
-      return;
-    }
-
-    if (v.photo) {
-      // Extraire la date
-      let year, month, day, dateInfo = "";
-      const photoName = v.photo.split('/').pop();
-      const dateMatch = photoName.match(/IMG[-_]?(\d{4})(\d{2})(\d{2})[-_]?([A-Za-z]{2})?(\d{6})?/);
-
-      if (dateMatch) {
-        year = dateMatch[1];
-        month = dateMatch[2];
-        day = dateMatch[3];
-        const time = dateMatch[5];
-        dateInfo = `Le ${day}/${month}/${year}`;
-        if (time) {
-          const h = time.substring(0, 2);
-          const m = time.substring(2, 4);
-          const s = time.substring(4, 6);
-          dateInfo += ` à ${h}h${m}m${s}s`;
-        }
-      }
-
-      if (!photosByYear[year]) photosByYear[year] = {};
-      if (!photosByYear[year][month]) photosByYear[year][month] = {};
-      if (!photosByYear[year][month][day]) photosByYear[year][month][day] = L.layerGroup();
-
-      // Contenu du popup
-      const popupContent = document.createElement('div');
-      popupContent.style.position = 'relative';
-      popupContent.innerHTML = `
-        <b>${v.name || ''}</b><br>
-        <div style="position: relative; display: inline-block;">
-          <img src="${v.photo}" width="250" style="display: block; border-radius: 4px;"/>
-          <button class="enlarge-btn" data-photo="${v.photo}">⤢</button>
         </div>
-        <small style="display: block; margin-top: 4px; color: #666;">${dateInfo}</small>
-      `;
+    </div>
 
-      const marker = L.marker([vlat, vlon]).bindPopup(popupContent);
-      marker.on('popupopen', function () {
-        document.querySelectorAll('.enlarge-btn').forEach(btn => {
-          btn.onclick = function (e) {
-            e.stopPropagation();
-            openPhotoPopup(this.getAttribute('data-photo'));
-          };
+    <!-- Popup du globe -->
+    <div id="globePopup">
+        <div id="globeContainer" class="echarts-for-globe" style="width: 100%; height: 100%;"></div>
+        <button id="globeClose" style="position: absolute; top: 10px; right: 10px; background: white; border: none; padding: 5px 10px; cursor: pointer;">Fermer</button>
+    </div>
+
+    <script>
+        // Variable pour suivre la carte active
+        let activeMap = null;
+
+        // Initialiser la carte principale
+        const mainMap = L.map('mainMap').setView([48.8566, 2.3522], 5);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(mainMap);
+
+        // Ajouter le sidepanel à mainMap
+        const sidepanel = L.control.sidepanel('mySidepanelLeft', {
+            panelPosition: 'left',
+            tabsPosition: 'left',
+            startTab: 'tab-1',
+            pushControls: true
+        }).addTo(mainMap);
+
+        // Définir mainMap comme carte active par défaut
+        activeMap = mainMap;
+
+        // Gestion des onglets du sidepanel
+        document.querySelectorAll('.sidebar-tab-link').forEach(tabLink => {
+            tabLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                const tabId = tabLink.getAttribute('data-tab-link');
+                document.querySelectorAll('.sidepanel-tab-content').forEach(content => {
+                    content.style.display = 'none';
+                });
+                document.querySelector(`.sidepanel-tab-content[data-tab-content="${tabId}"]`).style.display = 'block';
+            });
         });
-      });
 
-      photosByYear[year][month][day].addLayer(marker);
-    } else {
-      L.marker([vlat, vlon]).addTo(currentLeafletMap).bindPopup(`<b>${v.name || ''}</b>`);
-    }
-  });
+        // Afficher le premier onglet par défaut
+        document.querySelector('.sidepanel-tab-content[data-tab-content="tab-1"]').style.display = 'block';
 
-// --- Mettre à jour l'onglet 3 (photos) ---
-const photosTab = document.querySelector('[data-tab-content="tab-3"]');
-photosTab.innerHTML = "<h4>Les photos</h4>";
+        // Références aux cases à cocher
+        const chkTrajetsLeaflet = document.getElementById('chkTrajetsLeaflet');
+        const chkVillesLeaflet = document.getElementById('chkVillesLeaflet');
+        const chkHotelsLeaflet = document.getElementById('chkHotelsLeaflet');
 
-// Extraire toutes les visites avec photo + infos date/heure
-const photosList = (cityData.visites || [])
-  .filter(v => v.photo)
-  .map(v => {
-    const photoName = v.photo.split('/').pop();
-    const dateMatch = photoName.match(/IMG[-_]?(\d{4})(\d{2})(\d{2})(?:[-_]?([A-Za-z]{2}))?(\d{6})?/);
+        // Variables pour stocker les couches
+        let trajetsLayer = null;
+        let villesLayer = null;
+        let hotelsLayer = null;
 
-    let dateKey = "99999999";
-    let timeText = "";
-    if (dateMatch) {
-      dateKey = dateMatch[1] + dateMatch[2] + dateMatch[3];
-      if (dateMatch[5]) {
-        const h = dateMatch[5].substring(0, 2);
-        const m = dateMatch[5].substring(2, 4);
-        const s = dateMatch[5].substring(4, 6);
-        timeText = `${h}h${m}m${s}s`;
-      }
-    }
-    return { ...v, photoName, dateKey, timeText };
-  })
-  .sort((a, b) => a.dateKey.localeCompare(b.dateKey) || a.timeText.localeCompare(b.timeText));
-
-// Grouper par jour
-const groupedByDay = {};
-photosList.forEach(v => {
-  if (!groupedByDay[v.dateKey]) groupedByDay[v.dateKey] = [];
-  groupedByDay[v.dateKey].push(v);
-});
-
-// Si pas de photo
-if (photosList.length === 0) {
-  photosTab.innerHTML += "<p>Aucune photo pour cette ville.</p>";
-} else {
-  const container = document.createElement('div');
-  container.className = "photos-list";
-
-  Object.keys(groupedByDay).sort().forEach(dateKey => {
-    // Date formatée
-    const year = dateKey.slice(0,4);
-    const month = dateKey.slice(4,6);
-    const day = dateKey.slice(6,8);
-    const dateObj = new Date(`${year}-${month}-${day}`);
-    const dateFormatted = dateObj.toLocaleDateString("fr-FR", { day:"numeric", month:"long", year:"numeric" });
-
-    // Titre du jour
-    const dayTitle = document.createElement('div');
-    dayTitle.innerHTML = `<strong style="display:block; margin-top:100px; font-size:15px;">${dateFormatted}</strong>
-                          <hr style="margin:4px 0 10px; border:none; border-top:1px solid #ccc;">`;
-    container.appendChild(dayTitle);
-
-    // Les photos du jour
-    groupedByDay[dateKey].forEach(v => {
-      const item = document.createElement('div');
-      item.className = "photo-item";
-      item.style.marginBottom = "14px";
-
-      const displayName = v.name || v.photoName;
-		
-		item.innerHTML = `
-		  <div style="cursor:pointer; text-align:center;">
-		    <img src="${v.photo}" style="width:90%; border-radius:6px; display:block; margin:0 auto;"/>
-		    <div style="margin-top:4px; font-weight:600;">
-		      ${displayName} 
-		      ${v.timeText ? `<span style="font-size:12px; color:#666;"> (${v.timeText})</span>` : ""}
-		    </div>
-		  </div>
-		`;
-		
-      // Clic => centrer la carte et ouvrir popup
-      item.addEventListener('click', () => {
-        if (currentLeafletMap) {
-          const [lon, lat] = v.coords;
-          currentLeafletMap.setView([lat, lon], 17);
-          currentLeafletMap.eachLayer(layer => {
-            if (layer.getLatLng && layer.getLatLng().lat === lat && layer.getLatLng().lng === lon) {
-              layer.openPopup();
-            }
-          });
+        // Fonction pour charger et afficher les trajets
+        function loadTrajets() {
+            fetch('./GEOJSON/TRAJETS_ALL_vacances_wgs.geojson')
+                .then(response => response.json())
+                .then(data => {
+                    trajetsLayer = L.geoJSON(data, {
+                        style: function(feature) {
+                            const color = {
+                                'avion': '#00dbc5',
+                                'train': '#db0016',
+                                'bus': '#dbc500',
+                                'voiture': '#0016db',
+                                'bateau': '#0084db'
+                            }[feature.properties.trajet?.toLowerCase()] || '#00ffff';
+                            return { color: color, weight: 2.5 };
+                        }
+                    });
+                    if (chkTrajetsLeaflet.checked) {
+                        trajetsLayer.addTo(activeMap);
+                    }
+                });
         }
-      });
 
-      container.appendChild(item);
-    });
-  });
+        // Fonction pour charger et afficher les villes
+        function loadVilles() {
+            villesLayer = L.layerGroup();
+            visitedCities.forEach(city => {
+                const marker = L.marker(city.value.reverse(), {
+                    icon: L.divIcon({
+                        html: `<div style="background: white; border: 2px solid black; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-weight: bold;">${city.name.charAt(0)}</div>`,
+                        className: '',
+                        iconSize: [20, 20]
+                    })
+                }).bindPopup(`<b>${city.name}</b>`);
+                villesLayer.addLayer(marker);
+            });
+            if (chkVillesLeaflet.checked) {
+                villesLayer.addTo(activeMap);
+            }
+        }
 
-  photosTab.appendChild(container);
-}
-	  
-  // --- Ajouter toutes les couches au départ ---
-  Object.values(photosByYear).forEach(months =>
-    Object.values(months).forEach(days =>
-      Object.values(days).forEach(group => group.addTo(currentLeafletMap))
-    )
-  );
+        // Fonction pour charger et afficher les hôtels
+        function loadHotels() {
+            hotelsLayer = L.layerGroup();
+            visitedCities.forEach(city => {
+                (city.visites || []).forEach(visite => {
+                    if (visite.type === 'hotel') {
+                        const marker = L.marker(visite.coords.reverse(), {
+                            icon: hotelIcon
+                        }).bindPopup(`<b>Hôtel</b><br>Du ${visite.datedeb} au ${visite.datefin}`);
+                        hotelsLayer.addLayer(marker);
+                    }
+                });
+            });
+            if (chkHotelsLeaflet.checked) {
+                hotelsLayer.addTo(activeMap);
+            }
+        }
 
- // --- Contrôle hiérarchique Année → Mois → Jour ---
-const datesControl = L.control({ position: 'topright' });
-datesControl.onAdd = function () {
-  const div = L.DomUtil.create('div', 'dates-control');
-  div.style.background = 'white';
-  div.style.padding = '6px';
-  div.style.borderRadius = '6px';
-  div.style.maxHeight = '250px';
-  div.style.overflowY = 'auto';
-  div.style.boxShadow = '0 2px 6px rgba(0,0,0,0.3)';
-  div.style.fontSize = "13px";
-  div.style.lineHeight = "1.4em";
-
-  const title = document.createElement('strong');
-  title.textContent = "📅 Photos by date";
-  title.style.display = "block";
-  title.style.marginBottom = "6px";
-  div.appendChild(title);
-
-  Object.keys(photosByYear).sort().forEach(year => {
-    const yearDetails = document.createElement('details');
-    yearDetails.open = true; // ouvert par défaut
-    const yearSummary = document.createElement('summary');
-
-    const yearCb = document.createElement('input');
-    yearCb.type = 'checkbox';
-    yearCb.checked = true;
-    yearCb.style.marginRight = "5px";
-    yearCb.onchange = () => {
-      Object.values(photosByYear[year]).forEach(monthObj =>
-        Object.values(monthObj).forEach(dayGroup => {
-          if (yearCb.checked) dayGroup.addTo(currentLeafletMap);
-          else currentLeafletMap.removeLayer(dayGroup);
-        })
-      );
-      yearDetails.querySelectorAll('input[type=checkbox]').forEach(cb => cb.checked = yearCb.checked);
-    };
-
-    yearSummary.appendChild(yearCb);
-    yearSummary.append(year);
-    yearDetails.appendChild(yearSummary);
-
-    // --- Mois ---
-    Object.keys(photosByYear[year]).sort().forEach(month => {
-      const monthDetails = document.createElement('details');
-      monthDetails.style.marginLeft = "15px";
-      monthDetails.open = false;
-
-      const monthSummary = document.createElement('summary');
-
-      const monthCb = document.createElement('input');
-      monthCb.type = 'checkbox';
-      monthCb.checked = true;
-      monthCb.style.marginRight = "5px";
-      monthCb.onchange = () => {
-        Object.values(photosByYear[year][month]).forEach(dayGroup => {
-          if (monthCb.checked) dayGroup.addTo(currentLeafletMap);
-          else currentLeafletMap.removeLayer(dayGroup);
+        // Écouteurs d'événements pour les cases à cocher
+        chkTrajetsLeaflet.addEventListener('change', (e) => {
+            if (e.target.checked && trajetsLayer) {
+                trajetsLayer.addTo(activeMap);
+            } else if (trajetsLayer) {
+                activeMap.removeLayer(trajetsLayer);
+            }
         });
-        monthDetails.querySelectorAll('input[type=checkbox]').forEach(cb => cb.checked = monthCb.checked);
-      };
 
-      // Traduction mois
-      const moisNoms = {
-        "01": "January", "02": "February", "03": "March", "04": "April",
-        "05": "May", "06": "June", "07": "July", "08": "August",
-        "09": "September", "10": "October", "11": "November", "12": "December"
-      };
+        chkVillesLeaflet.addEventListener('change', (e) => {
+            if (e.target.checked && villesLayer) {
+                villesLayer.addTo(activeMap);
+            } else if (villesLayer) {
+                activeMap.removeLayer(villesLayer);
+            }
+        });
 
-      monthSummary.appendChild(monthCb);
-      monthSummary.append(moisNoms[month] || month);
-      monthDetails.appendChild(monthSummary);
+        chkHotelsLeaflet.addEventListener('change', (e) => {
+            if (e.target.checked && hotelsLayer) {
+                hotelsLayer.addTo(activeMap);
+            } else if (hotelsLayer) {
+                activeMap.removeLayer(hotelsLayer);
+            }
+        });
 
-      // --- Jours ---
-      Object.keys(photosByYear[year][month]).sort().forEach(day => {
-        const dayDiv = document.createElement('div');
-        dayDiv.style.marginLeft = "20px";
-        const dayCb = document.createElement('input');
-        dayCb.type = 'checkbox';
-        dayCb.checked = true;
-        dayCb.style.marginRight = "5px";
-        dayCb.onchange = () => {
-          if (dayCb.checked) photosByYear[year][month][day].addTo(currentLeafletMap);
-          else currentLeafletMap.removeLayer(photosByYear[year][month][day]);
-        };
-        dayDiv.appendChild(dayCb);
-        dayDiv.append(day);
-        monthDetails.appendChild(dayDiv);
-      });
-      yearDetails.appendChild(monthDetails);
-    });
-    div.appendChild(yearDetails);
-  });
-  L.DomEvent.disableClickPropagation(div);
-  return div;
-};
-datesControl.addTo(currentLeafletMap);
-  currentLeafletMap.invalidateSize();
-}
-      
-// Fonction pour ouvrir la popup de photo agrandie
-function openPhotoPopup(photoUrl) {
-  const photoPopup = document.getElementById('photoPopup');
-  const photoPopupImg = document.getElementById('photoPopupImg');
-  photoPopupImg.src = photoUrl;
-  photoPopup.style.display = 'flex';
-  // masquer les contrôles Leaflet
-  document.querySelectorAll('.leaflet-control-container').forEach(el => {
-    el.style.display = 'none';
-  });
-}
+        // Initialiser les couches
+        loadTrajets();
+        loadVilles();
+        loadHotels();
 
-// Fonction pour fermer la popup de photo agrandie
-function closePhotoPopup() {
-  document.getElementById('photoPopup').style.display = 'none';
-  // ré-afficher les contrôles Leaflet
-  document.querySelectorAll('.leaflet-control-container').forEach(el => {
-    el.style.display = '';
-  });
-}
+        // Gérer la popup du globe
+        document.getElementById('openGlobeBtn').addEventListener('click', () => {
+            document.getElementById('globePopup').style.display = 'block';
+        });
 
-// Écouteurs d'événements pour la popup de photo
-document.getElementById('photoClose').addEventListener('click', closePhotoPopup);
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    closePhotoPopup();
-    closeLeafletPopup();
-  }
-});
-document.getElementById('photoPopup').addEventListener('click', (e) => {
-  if (e.target === document.getElementById('photoPopup')) {
-    closePhotoPopup();
-  }
-});
+        document.getElementById('globeClose').addEventListener('click', () => {
+            document.getElementById('globePopup').style.display = 'none';
+        });
 
+        // Gérer la popup Leaflet
+        let currentLeafletMap = null;
+        const leafletPopupEl = document.getElementById('leafletPopup');
+        const leafletMapEl = document.getElementById('leafletMap');
+        const leafletCloseBtn = document.getElementById('leafletClose');
 
-  function closeLeafletPopup(){
-    leafletPopupEl.style.display = 'none';
-    if(currentLeafletMap){ currentLeafletMap.remove(); currentLeafletMap = null; }
-  }
+        function openLeafletPopup(cityData) {
+            leafletPopupEl.style.display = 'block';
+            if (currentLeafletMap) {
+                currentLeafletMap.remove();
+            }
+            leafletMapEl.innerHTML = '';
 
-  leafletCloseBtn.addEventListener('click', closeLeafletPopup);
-  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeLeafletPopup(); });
-  leafletPopupEl.addEventListener('click', (e)=>{ if(e.target === leafletPopupEl) closeLeafletPopup(); });
+            const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OSM'
+            });
+            const [lon, lat] = cityData.value;
+            currentLeafletMap = L.map(leafletMapEl, { layers: [osm] }).setView([lat, lon], 13);
 
+            // Ajouter le sidepanel à currentLeafletMap
+            L.control.sidepanel('mySidepanelLeft', {
+                panelPosition: 'left',
+                tabsPosition: 'left',
+                startTab: 'tab-1',
+                pushControls: true
+            }).addTo(currentLeafletMap);
 
-  // CETTE FONCTION NE MARCHE PAS
-  // clic sur globe
-  globeChart.on('click', params => {
-    if(params.seriesName === 'Trajets' && params.data && params.data.properties){
-      const p = params.data.properties;
-      const popupEl = document.getElementById('trajetPopup');
-      popupEl.innerHTML = `
-        <strong>Trajet:</strong> ${p.trajet || ''}<br/>
-        <strong>Voyage:</strong> ${p.voyage || ''}<br/>
-        <strong>Date début:</strong> ${p.date_deb || ''}<br/>
-        <strong>Date fin:</strong> ${p.date_fin || ''}<br/>
-        <strong>Durée:</strong> ${p.duree || ''}<br/>
-        <strong>Distance:</strong> ${p.distanceKM || ''} km
-      `;
-      popupEl.style.display = 'block';
-    } else if(params.seriesName === 'Pins' && params.data){
-      const popupEl = document.getElementById('trajetPopup');
-      popupEl.style.display = 'none';
-      openLeafletPopup(params.data);
-    } else {
-      const popupEl = document.getElementById('trajetPopup');
-      popupEl.style.display = 'none';
-    }
-  });
+            // Mettre à jour activeMap
+            activeMap = currentLeafletMap;
 
-  // rendu initial
-  voyagesListEl.style.display = state.showTrajets ? 'block' : 'none';
-  refresh();
+            // Charger les données spécifiques à la ville
+            // ...
+        }
 
+        function closeLeafletPopup() {
+            leafletPopupEl.style.display = 'none';
+            activeMap = mainMap; // Revenir à mainMap
+        }
 
-// Brancher les boutons de villes à la fin de l'IIFE
-document.querySelectorAll('.city-btn').forEach(btn => {
-  const cityName = btn.querySelector('span').textContent.trim();
-  const cityData = visitedCities.find(c => c.name === cityName);
-
-  if (!cityData) return;
-
-  btn.addEventListener('click', () => {
-    // Si Leaflet est déjà affiché → ouvrir directement
-    if (document.getElementById('leafletPopup').style.display === 'block') {
-      openLeafletPopup(cityData);
-    } else {
-      // Sinon → centrer le globe sur la ville
-      globeChart.dispatchAction({
-        type: 'globeChangeView',
-        targetCoord: cityData.value,
-        duration: 1500,
-      });
-    }
-  });
-});
-	
-})();
-</script>
+        leafletCloseBtn.addEventListener('click', closeLeafletPopup);
+    </script>
 </body>
 </html>
