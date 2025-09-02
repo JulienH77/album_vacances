@@ -23,40 +23,10 @@
       <!--<script src="https://cdn.osmbuildings.org/classic/0.2.2b/OSMBuildings-Leaflet.js"></script>-->
 </head>
 <body>
-      <div id="root">
-            <div id="globeContainer" class="echarts-for-globe"></div>
-            <!-- Buttons -->
-            <!-- night -->
-            <div id="toggleNight" class="toggle-btn" role="button" aria-pressed="false" aria-label="Basculer ombre de nuit">
-                <svg viewBox="0 0 24 24" width="22" height="22">
-                    <path d="M21 12.79A9 9 0 0112.21 3 7 7 0 1021 12.79z" fill="#FFDD66"/>
-                </svg>
-            </div>
-            <!-- relief -->
-            <div id="toggleRelief" class="toggle-btn" role="button" aria-pressed="false" aria-label="Basculer relief">
-                <svg viewBox="0 0 24 30">
-                    <path d="M3 20l5-9 4 7 5-10 5 12z" fill="#444"/>
-                    <path d="M3 20h18v1H3z" fill="#777"/>
-                </svg>
-            </div>
-            <!-- clouds -->
-            <div id="toggleClouds" class="toggle-btn" role="button" aria-pressed="false" aria-label="Afficher/masquer les nuages">
-                <svg viewBox="0 0 24 24" width="22" height="22">
-                    <path d="M6 19h11a4 4 0 0 0 0-8 5 5 0 0 0-9.8-1.7A4 4 0 0 0 6 19z" fill="#4a90e2"/>
-                </svg>
-            </div>
-            <!-- Basemap -->
-            <div id="toggleDayBase" role="button" aria-label="Changer fond du jour" title="Changer fond du jour">EARTH</div>
-            <!-- Legend -->
-            <div id="legend" role="group" aria-label="Contrôles des couches">
-                <label><input id="chkPays" type="checkbox"> Limites (Pays)</label>
-                <label><input id="chkTrajets" type="checkbox"> Trajets</label>
-                <!-- AJOUT : liste des voyages directement sous "Trajets" -->
-                <div id="voyagesList" role="group" aria-label="Liste des voyages" style="display:none; margin-top:6px; max-height:260px; overflow:auto;"></div>         
-            </div>
-            <div id="trajetLegend" style="position:absolute; bottom:30px; right:20px; background:white; padding:8px 12px; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,0.3); font-size:14px; display:none;">
-                <strong style="display:block; margin-bottom:6px;">Légende trajets</strong>
-            </div>   
+      <div id="root">  
+			<div id="mainMap" style="width: 100%; height: 100vh; position: fixed; top: 0; left: 0; z-index: 1;"></div>
+
+		  
             <!-- A QUOI SERS TU ? -->
             <div id="trajetPopup"></div>
             <!-- Bouton pour ouvrir la bobine -->
@@ -108,12 +78,12 @@
 									<path d="M2 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v11.5a.5.5 0 0 1-.777.416L7 13.101l-4.223 2.815A.5.5 0 0 1 2 15.5V4zm2-1a1 1 0 0 0-1 1v10.566l3.723-2.482a.5.5 0 0 1 .554 0L11 14.566V4a1 1 0 0 0-1-1H4z"></path>
 									<path d="M4.268 1H12a1 1 0 0 1 1 1v11.768l.223.148A.5.5 0 0 0 14 13.5V2a2 2 0 0 0-2-2H6a2 2 0 0 0-1.732 1z"></path>
 								</svg>-->
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-    <circle cx="12" cy="12" r="10" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20z" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M2 12h20" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M12 2v20" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+								    <circle cx="12" cy="12" r="10" stroke-linecap="round" stroke-linejoin="round"/>
+								    <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20z" stroke-linecap="round" stroke-linejoin="round"/>
+								    <path d="M2 12h20" stroke-linecap="round" stroke-linejoin="round"/>
+								    <path d="M12 2v20" stroke-linecap="round" stroke-linejoin="round"/>
+								</svg>
 
 							</a>
 						</li>
@@ -184,11 +154,17 @@
 							</div>
 						</div>
 						<div class="sidepanel-tab-content" data-tab-content="tab-3">
+						    <h4>Contrôles de la carte</h4>
+						    <label><input id="chkTrajetsLeaflet" type="checkbox" checked> Afficher les trajets</label>
+						    <label><input id="chkVillesLeaflet" type="checkbox" checked> Afficher les villes</label>
+						    <label><input id="chkHotelsLeaflet" type="checkbox" checked> Afficher les hôtels</label>
 						</div>
+
 						<div class="sidepanel-tab-content" data-tab-content="tab-4">
-							<h4>Afficher le globe</h4>
-							<p>Ajouter un bouton pour afficher le globe.</p>
+						    <h4>Afficher le globe</h4>
+						    <button id="openGlobeBtn" style="padding: 8px 12px; background: #4CAF50; color: white; border: none; cursor: pointer;">Ouvrir le globe</button>
 						</div>
+
 						<div class="sidepanel-tab-content" data-tab-content="tab-5">
 							<h4>Settings</h4>
 							<p>A voir si je peux faire des dingueries dedans.</p>
@@ -201,10 +177,159 @@
 			</div>
 		</div>
 
+
+
+<div id="globePopup" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); z-index: 1000;">
+    <div id="globeContainer" class="echarts-for-globe" style="width: 100%; height: 100%;"></div>
+    <!-- Boutons du globe -->
+    <div id="toggleNight" class="toggle-btn" role="button" aria-pressed="false" aria-label="Basculer ombre de nuit">
+        <svg viewBox="0 0 24 24" width="22" height="22">
+            <path d="M21 12.79A9 9 0 0112.21 3 7 7 0 1021 12.79z" fill="#FFDD66"/>
+        </svg>
+    </div>
+    <div id="toggleRelief" class="toggle-btn" role="button" aria-pressed="false" aria-label="Basculer relief">
+        <svg viewBox="0 0 24 30">
+            <path d="M3 20l5-9 4 7 5-10 5 12z" fill="#444"/>
+            <path d="M3 20h18v1H3z" fill="#777"/>
+        </svg>
+    </div>
+    <div id="toggleClouds" class="toggle-btn" role="button" aria-pressed="false" aria-label="Afficher/masquer les nuages">
+        <svg viewBox="0 0 24 24" width="22" height="22">
+            <path d="M6 19h11a4 4 0 0 0 0-8 5 5 0 0 0-9.8-1.7A4 4 0 0 0 6 19z" fill="#4a90e2"/>
+        </svg>
+    </div>
+    <div id="toggleDayBase" role="button" aria-label="Changer fond du jour" title="Changer fond du jour">EARTH</div>
+    <!-- Légende du globe -->
+    <div id="trajetLegend" style="position: absolute; bottom: 30px; right: 20px; background: white; padding: 8px 12px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.3); font-size: 14px;">
+        <strong style="display: block; margin-bottom: 6px;">Légende trajets</strong>
+    </div>
+    <!-- Bouton pour fermer la popup -->
+    <button id="globeClose" style="position: absolute; top: 10px; right: 10px; background: white; border: none; padding: 5px 10px; cursor: pointer;">Fermer</button>
+</div>
+
+
+
+	
       
 // villes visitées avec photos et coordonnées
 <script src="visitedCities.js"></script> 
 <script>
+// Ouvrir/fermer la popup du globe
+document.getElementById('openGlobeBtn').addEventListener('click', () => {
+    document.getElementById('globePopup').style.display = 'block';
+    // Initialiser le globe si ce n'est pas déjà fait
+    if (!globeChart) {
+        globeChart = echarts.init(document.getElementById('globeContainer'), null, { renderer: 'webgl' });
+        refresh();
+    }
+});
+
+// Fermer la popup du globe
+document.getElementById('globeClose').addEventListener('click', () => {
+    document.getElementById('globePopup').style.display = 'none';
+});
+
+// Gérer les boutons du globe (night, relief, clouds, dayBase)
+document.getElementById('toggleNight').addEventListener('click', () => {
+    state.showNightShadow = !state.showNightShadow;
+    refresh();
+});
+
+document.getElementById('toggleRelief').addEventListener('click', () => {
+    state.showRelief = !state.showRelief;
+    refresh();
+});
+
+document.getElementById('toggleClouds').addEventListener('click', () => {
+    state.showNuages = !state.showNuages;
+    refresh();
+});
+
+document.getElementById('toggleDayBase').addEventListener('click', () => {
+    state.dayBase = (state.dayBase === 'earth') ? 'topo' : 'earth';
+    document.getElementById('toggleDayBase').textContent = (state.dayBase === 'earth') ? 'EARTH' : 'TOPO';
+    refresh();
+});
+
+// Initialiser la carte Leaflet
+const mainMap = L.map('mainMap').setView([48.8566, 2.3522], 5); // Centré sur la France par défaut
+
+// Ajouter une couche de tuiles (exemple : OpenStreetMap)
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(mainMap);
+
+// Charger et afficher les trajets
+fetch('./GEOJSON/TRAJETS_ALL_vacances_wgs.geojson')
+    .then(response => response.json())
+    .then(data => {
+        L.geoJSON(data, {
+            style: function(feature) {
+                const color = {
+                    'avion': '#00dbc5',
+                    'train': '#db0016',
+                    'bus': '#dbc500',
+                    'voiture': '#0016db',
+                    'bateau': '#0084db'
+                }[feature.properties.trajet?.toLowerCase()] || '#00ffff';
+                return { color: color, weight: 2.5 };
+            }
+        }).addTo(mainMap);
+    });
+// Références aux cases à cocher
+const chkTrajetsLeaflet = document.getElementById('chkTrajetsLeaflet');
+const chkVillesLeaflet = document.getElementById('chkVillesLeaflet');
+const chkHotelsLeaflet = document.getElementById('chkHotelsLeaflet');
+
+// Variables pour stocker les couches
+let trajetsLayer = null;
+let villesLayer = null;
+let hotelsLayer = null;
+
+// Fonction pour charger et afficher les trajets
+function loadTrajets() {
+    fetch('./GEOJSON/TRAJETS_ALL_vacances_wgs.geojson')
+        .then(response => response.json())
+        .then(data => {
+            trajetsLayer = L.geoJSON(data, {
+                style: function(feature) {
+                    const color = {
+                        'avion': '#00dbc5',
+                        'train': '#db0016',
+                        'bus': '#dbc500',
+                        'voiture': '#0016db',
+                        'bateau': '#0084db'
+                    }[feature.properties.trajet?.toLowerCase()] || '#00ffff';
+                    return { color: color, weight: 2.5 };
+                }
+            });
+            if (chkTrajetsLeaflet.checked) {
+                trajetsLayer.addTo(mainMap);
+            }
+        });
+}
+
+// Écouteurs d'événements pour les cases à cocher
+chkTrajetsLeaflet.addEventListener('change', (e) => {
+    if (e.target.checked && trajetsLayer) {
+        trajetsLayer.addTo(mainMap);
+    } else if (trajetsLayer) {
+        mainMap.removeLayer(trajetsLayer);
+    }
+});
+
+// Initialiser les couches
+loadTrajets();
+
+
+	
+
+
+
+
+
+	
+	
 (async function(){
   /* Les variables */
   const PATH_EARTH_DAY_1 = './GLOBE/earth.jpg';
