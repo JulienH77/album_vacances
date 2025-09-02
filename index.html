@@ -64,12 +64,6 @@
             <!-- Bobine horizontale -->
             <div id="cityReel"></div>
       </div>
-	  <!-- Popup du globe -->
-<div id="globePopup">
-  <div id="globeContainer" class="echarts-for-globe"></div>
-  <button id="closeGlobeBtn">X</button>
-</div>
-
       <!-- Popup Leaflet -->
       <div id="leafletPopup">
             <div id="leafletMap" class="leaflet-container leaflet-touch leaflet-fade-anim leaflet-grab leaflet-touch-drag leaflet-touch-zoom" tabindex="0" style="position: relative;"></div> 
@@ -192,12 +186,12 @@
 						<div class="sidepanel-tab-content" data-tab-content="tab-3">
 						</div>
 						<div class="sidepanel-tab-content" data-tab-content="tab-4">
-						  <h4>Afficher le globe</h4>
-						<button id="openGlobeBtn" class="cool-btn">🌍 Voir le globe</button>
+							<h4>Afficher le globe</h4>
+							<p>Ajouter un bouton pour afficher le globe.</p>
 						</div>
 						<div class="sidepanel-tab-content" data-tab-content="tab-5">
 							<h4>Settings</h4>
-							<p>A voir si je peux faire des dingueries dedans. Comme le style des couches? ou autres ?</p>
+							<p>A voir si je peux faire des dingueries dedans.</p>
 						</div>
 					</div>
 				</div>
@@ -960,15 +954,6 @@ document.getElementById('photoPopup').addEventListener('click', (e) => {
   voyagesListEl.style.display = state.showTrajets ? 'block' : 'none';
   refresh();
 
-	
-// === Initialiser Leaflet directement au chargement ===
-(function initLeafletOnLoad() {
-  const firstCity = visitedCities[0];
-  if (firstCity) {
-    openLeafletPopup(firstCity);
-  }
-})();
-
 
 // Brancher les boutons de villes à la fin de l'IIFE
 document.querySelectorAll('.city-btn').forEach(btn => {
@@ -991,23 +976,6 @@ document.querySelectorAll('.city-btn').forEach(btn => {
     }
   });
 });
-
-
-
-// --- Gestion popup globe ---
-const openGlobeBtn = document.getElementById('openGlobeBtn');
-const globePopup = document.getElementById('globePopup');
-const closeGlobeBtn = document.getElementById('closeGlobeBtn');
-
-openGlobeBtn.addEventListener('click', () => {
-  globePopup.style.display = 'block';
-  globeChart.resize(); // redessiner correctement le globe
-});
-
-closeGlobeBtn.addEventListener('click', () => {
-  globePopup.style.display = 'none';
-});
-	
 	
 })();
 </script>
