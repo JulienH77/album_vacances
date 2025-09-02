@@ -304,17 +304,93 @@ function loadTrajets() {
                 }
             });
             if (chkTrajetsLeaflet.checked) {
-                trajetsLayer.addTo(mainMap);
+                trajetsLayer.addTo(activeMap);
             }
         });
 }
 
+// Fonction pour charger et afficher les villes
+function loadVilles() {
+    villesLayer = L.layerGroup();
+    visitedCities.forEach(city => {
+        const marker = L.marker(city.value.reverse(), {
+            icon: L.divIcon({
+                html: `<div style="background: white; border: 2px solid black; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-weight: bold;">${city.name.charAt(0)}</div>`,
+                className: '',
+                iconSize: [20, 20]
+            })
+        }).bindPopup(`<b>${city.name}</b>`);
+        villesLayer.addLayer(marker);
+    });
+    if (chkVillesLeaflet.checked) {
+        villesLayer.addTo(activeMap);
+    }
+}
+
+// Fonction pour charger et afficher les hôtels
+function loadHotels() {
+    hotelsLayer = L.layerGroup();
+    visitedCities.forEach(city => {
+        (city.visites || []).forEach(visite => {
+            if (visite.type === 'hotel') {
+                const marker = L.marker(visite.coords.reverse(), {
+                    icon: hotelIcon
+                }).bindPopup(`<b>Hôtel</b><br>Du ${visite.datedeb} au ${visite.datefin}`);
+                hotelsLayer.addLayer(marker);
+            }
+        });
+    });
+    if (chkHotelsLeaflet.checked) {
+        hotelsLayer.addTo(activeMap);
+    }
+}
+
+
+
+
+
+// Gestion des onglets du sidepanel
+document.querySelectorAll('.sidebar-tab-link').forEach(tabLink => {
+    tabLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        const tabId = tabLink.getAttribute('data-tab-link');
+        document.querySelectorAll('.sidepanel-tab-content').forEach(content => {
+            content.style.display = 'none';
+        });
+        document.querySelector(`.sidepanel-tab-content[data-tab-content="${tabId}"]`).style.display = 'block';
+    });
+});
+
+// Afficher le premier onglet par défaut
+document.querySelector('.sidepanel-tab-content[data-tab-content="tab-1"]').style.display = 'block';
+
+
+
+
+	
+
 // Écouteurs d'événements pour les cases à cocher
 chkTrajetsLeaflet.addEventListener('change', (e) => {
     if (e.target.checked && trajetsLayer) {
-        trajetsLayer.addTo(mainMap);
+        trajetsLayer.addTo(activeMap);
     } else if (trajetsLayer) {
-        mainMap.removeLayer(trajetsLayer);
+        activeMap.removeLayer(trajetsLayer);
+    }
+});
+
+chkVillesLeaflet.addEventListener('change', (e) => {
+    if (e.target.checked && villesLayer) {
+        villesLayer.addTo(activeMap);
+    } else if (villesLayer) {
+        activeMap.removeLayer(villesLayer);
+    }
+});
+
+chkHotelsLeaflet.addEventListener('change', (e) => {
+    if (e.target.checked && hotelsLayer) {
+        hotelsLayer.addTo(activeMap);
+    } else if (hotelsLayer) {
+        activeMap.removeLayer(hotelsLayer);
     }
 });
 
@@ -1077,10 +1153,16 @@ document.getElementById('photoPopup').addEventListener('click', (e) => {
 });
 
 
-  function closeLeafletPopup(){
+function closeLeafletPopup() {
     leafletPopupEl.style.display = 'none';
-    if(currentLeafletMap){ currentLeafletMap.remove(); currentLeafletMap = null; }
-  }
+    if (currentLeafletMap) {
+        currentLeafletMap.remove();
+        currentLeafletMap = null;
+    }
+    // Revenir à mainMap
+    activeMap = mainMap;
+}
+
 
   leafletCloseBtn.addEventListener('click', closeLeafletPopup);
   document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeLeafletPopup(); });
