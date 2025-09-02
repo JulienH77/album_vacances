@@ -862,6 +862,30 @@ document.getElementById('photoPopup').addEventListener('click', (e) => {
   voyagesListEl.style.display = state.showTrajets ? 'block' : 'none';
   refresh();
 })();
+
+
+// Sélectionner tous les boutons de villes
+document.querySelectorAll('.city-btn').forEach(btn => {
+  const cityName = btn.querySelector('span').textContent.trim();
+  const cityData = visitedCities.find(c => c.name === cityName);
+
+  if (!cityData) return;
+
+  btn.addEventListener('click', () => {
+    // Si Leaflet est déjà affiché → on ouvre directement la popup
+    if (document.getElementById('leafletPopup').style.display === 'block') {
+      openLeafletPopup(cityData);
+    } else {
+      // Sinon → on centre le globe sur la ville
+      globeChart.dispatchAction({
+        type: 'globeChangeView',
+        // coord = [longitude, latitude] (dans visitedCities c'est value = [lon, lat])
+        targetCoord: cityData.value,
+        duration: 1500, // animation douce
+      });
+    }
+  });
+});
 </script>
 </body>
 </html>
