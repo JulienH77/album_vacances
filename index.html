@@ -21,17 +21,6 @@
       <script src="leaflet-sidepanel.min.js"></script>
       /*OSMBuilding 3D*/
       <!--<script src="https://cdn.osmbuildings.org/classic/0.2.2b/OSMBuildings-Leaflet.js"></script>-->
-	<style>
-		@keyframes bounce {
-  0%   { transform: translateY(0); }
-  50%  { transform: translateY(-10px); }
-  100% { transform: translateY(0); }
-}
-.bounce-marker {
-  animation: bounce 0.6s infinite;
-}
-
-	</style>
 </head>
 <body>
       <div id="root">
@@ -782,41 +771,6 @@ if (photosList.length === 0) {
 
   photosTab.appendChild(container);
 }
-
-
-// Icône par défaut (bleu)
-const defaultIcon = new L.Icon.Default();
-
-// Icône rouge pour le hover
-const redIcon = new L.Icon({
-  iconUrl: 'https://unpkg.com/leaflet@1.8.0/dist/images/marker-icon-red.png',
-  shadowUrl: 'https://unpkg.com/leaflet@1.8.0/dist/images/marker-shadow.png',
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  shadowSize: [41, 41]
-});
-item.addEventListener('mouseenter', () => {
-  currentLeafletMap.eachLayer(layer => {
-    if (layer.getLatLng && layer.getLatLng().lat === v.coords[1] && layer.getLatLng().lng === v.coords[0]) {
-      layer.setIcon(redIcon);
-      layer._icon.classList.add('bounce-marker');
-    }
-  });
-});
-
-item.addEventListener('mouseleave', () => {
-  currentLeafletMap.eachLayer(layer => {
-    if (layer.getLatLng && layer.getLatLng().lat === v.coords[1] && layer.getLatLng().lng === v.coords[0]) {
-      layer.setIcon(defaultIcon);
-      if (layer._icon) layer._icon.classList.remove('bounce-marker');
-    }
-  });
-});
-
-
-
-	  
 	  
   // --- Ajouter toutes les couches au départ ---
   Object.values(photosByYear).forEach(months =>
