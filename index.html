@@ -21,6 +21,30 @@
       <script src="leaflet-sidepanel.min.js"></script>
       /*OSMBuilding 3D*/
       <!--<script src="https://cdn.osmbuildings.org/classic/0.2.2b/OSMBuildings-Leaflet.js"></script>-->
+	<style>
+		.cool-btn {
+		  padding: 12px 20px;
+		  border: none;
+		  border-radius: 8px;
+		  background: linear-gradient(135deg, #4a90e2, #9013fe);
+		  color: white;
+		  font-size: 16px;
+		  cursor: pointer;
+		  transition: transform 0.2s, box-shadow 0.2s;
+		}
+		.cool-btn:hover {
+		  transform: scale(1.05);
+		  box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+		}
+		@keyframes bounce {
+		  from { transform: translateY(0); }
+		  to { transform: translateY(-6px); }
+		}
+		.photo-time {
+		  font-size: 12px;
+		  color: #999;
+		}
+	</style>
 </head>
 <body>
       <div id="root">
@@ -187,7 +211,7 @@
 						</div>
 						<div class="sidepanel-tab-content" data-tab-content="tab-4">
 							<h4>Afficher le globe</h4>
-							<p>Ajouter un bouton pour afficher le globe.</p>
+							<button id="openGlobeBtn" class="cool-btn">🌍 Voir le globe</button>
 						</div>
 						<div class="sidepanel-tab-content" data-tab-content="tab-5">
 							<h4>Settings</h4>
@@ -221,6 +245,17 @@
   const toggleReelBtn = document.getElementById('toggleReel');
   const cityReelEl = document.getElementById('cityReel');
 
+document.getElementById('openGlobeBtn').addEventListener('click', ()=>{
+  document.getElementById('globeContainer').style.display = 'block';
+  document.getElementById('globeContainer').style.width = '90vw';
+  document.getElementById('globeContainer').style.height = '90vh';
+  document.getElementById('globeContainer').style.position = 'fixed';
+  document.getElementById('globeContainer').style.top = '5vh';
+  document.getElementById('globeContainer').style.left = '5vw';
+  document.getElementById('globeContainer').style.zIndex = '10000';
+});
+
+	
 // Toggle affichage bobine avec animation
 toggleReelBtn.addEventListener('click', ()=>{
   cityReelEl.classList.toggle('open');
@@ -745,25 +780,33 @@ if (photosList.length === 0) {
 		item.innerHTML = `
 		  <div style="cursor:pointer; text-align:center;">
 		    <img src="${v.photo}" style="width:90%; border-radius:6px; display:block; margin:0 auto;"/>
-		    <div style="margin-top:4px; font-weight:600;">
-		      ${displayName} 
-		      ${v.timeText ? `<span style="font-size:12px; color:#666;"> (${v.timeText})</span>` : ""}
-		    </div>
+<div style="margin-top:4px; font-weight:600;">
+  ${displayName}
+  ${v.timeText ? `<span class="photo-time"> ${v.timeText}</span>` : ""}
+</div>
 		  </div>
 		`;
 		
       // Clic => centrer la carte et ouvrir popup
-      item.addEventListener('click', () => {
-        if (currentLeafletMap) {
-          const [lon, lat] = v.coords;
-          currentLeafletMap.setView([lat, lon], 17);
-          currentLeafletMap.eachLayer(layer => {
-            if (layer.getLatLng && layer.getLatLng().lat === lat && layer.getLatLng().lng === lon) {
-              layer.openPopup();
-            }
-          });
-        }
-      });
+item.addEventListener('mouseenter', () => {
+  currentLeafletMap.eachLayer(layer => {
+    if (layer.getLatLng && layer.getLatLng().lat === v.coords[1] && layer.getLatLng().lng === v.coords[0]) {
+      layer.setIcon(L.divIcon({
+        html: '<div style="width:20px;height:20px;background:red;border-radius:50%;animation:bounce 0.6s infinite alternate;"></div>',
+        className: ''
+      }));
+    }
+  });
+});
+item.addEventListener('mouseleave', () => {
+  // remettre l’icône par défaut
+  currentLeafletMap.eachLayer(layer => {
+    if (layer.getLatLng && layer.getLatLng().lat === v.coords[1] && layer.getLatLng().lng === v.coords[0]) {
+      layer.setIcon(new L.Icon.Default());
+    }
+  });
+});
+
 
       container.appendChild(item);
     });
