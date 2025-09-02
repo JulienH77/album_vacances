@@ -680,72 +680,91 @@ const sidepanelLeft = L.control.sidepanel('mySidepanelLeft', {
 const photosTab = document.querySelector('[data-tab-content="tab-3"]');
 photosTab.innerHTML = "<h4>Les photos</h4>";
 
-// Récupérer toutes les visites avec photo + date
+// Extraire toutes les visites avec photo + infos date/heure
 const photosList = (cityData.visites || [])
   .filter(v => v.photo)
   .map(v => {
-    // extraire la date depuis le nom de fichier
     const photoName = v.photo.split('/').pop();
-    const dateMatch = photoName.match(/IMG[-_]?(\d{4})(\d{2})(\d{2})/);
-    let dateKey = "99999999";
-    if (dateMatch) dateKey = dateMatch[1] + dateMatch[2] + dateMatch[3];
-    return { ...v, dateKey, photoName };
-  })
-  .sort((a, b) => a.dateKey.localeCompare(b.dateKey)); // tri par date
+    const dateMatch = photoName.match(/IMG[-_]?(\d{4})(\d{2})(\d{2})(?:[-_]?([A-Za-z]{2}))?(\d{6})?/);
 
+    let dateKey = "99999999";
+    let timeText = "";
+    if (dateMatch) {
+      dateKey = dateMatch[1] + dateMatch[2] + dateMatch[3];
+      if (dateMatch[5]) {
+        const h = dateMatch[5].substring(0, 2);
+        const m = dateMatch[5].substring(2, 4);
+        const s = dateMatch[5].substring(4, 6);
+        timeText = `${h}h${m}m${s}s`;
+      }
+    }
+    return { ...v, photoName, dateKey, timeText };
+  })
+  .sort((a, b) => a.dateKey.localeCompare(b.dateKey) || a.timeText.localeCompare(b.timeText));
+
+// Grouper par jour
+const groupedByDay = {};
+photosList.forEach(v => {
+  if (!groupedByDay[v.dateKey]) groupedByDay[v.dateKey] = [];
+  groupedByDay[v.dateKey].push(v);
+});
+
+// Si pas de photo
 if (photosList.length === 0) {
   photosTab.innerHTML += "<p>Aucune photo pour cette ville.</p>";
 } else {
   const container = document.createElement('div');
   container.className = "photos-list";
 
-  photosList.forEach(v => {
-    const item = document.createElement('div');
-    item.className = "photo-item";
+  Object.keys(groupedByDay).sort().forEach(dateKey => {
+    // Date formatée
+    const year = dateKey.slice(0,4);
+    const month = dateKey.slice(4,6);
+    const day = dateKey.slice(6,8);
+    const dateObj = new Date(`${year}-${month}-${day}`);
+    const dateFormatted = dateObj.toLocaleDateString("fr-FR", { day:"numeric", month:"long", year:"numeric" });
 
-    // Version avec image miniature :
-    item.innerHTML = `
-      <div style="cursor:pointer; margin-bottom:10px;">
-        <img src="${v.photo}" width="90%" style="border-radius:6px; display:block;"/>
-        <small>${v.photoName}</small>
-      </div>
-    `;
+    // Titre du jour
+    const dayTitle = document.createElement('div');
+    dayTitle.innerHTML = `<strong style="display:block; margin-top:12px; font-size:15px;">${dateFormatted}</strong>
+                          <hr style="margin:4px 0 10px; border:none; border-top:1px solid #ccc;">`;
+    container.appendChild(dayTitle);
 
-    // Version avec juste le nom (si tu préfères, tu vires l'<img> ci-dessus)
-    // item.innerHTML = `<div style="cursor:pointer; margin:6px 0;">${v.photoName}</div>`;
+    // Les photos du jour
+    groupedByDay[dateKey].forEach(v => {
+      const item = document.createElement('div');
+      item.className = "photo-item";
+      item.style.marginBottom = "14px";
 
-    // Clic => centrer la carte et ouvrir popup
-    item.addEventListener('click', () => {
-      if (currentLeafletMap) {
-        const [lon, lat] = v.coords;
-        currentLeafletMap.setView([lat, lon], 17); // zoom sur la photo
-        // ouvrir le popup si déjà créé
-        currentLeafletMap.eachLayer(layer => {
-          if (layer.getLatLng && layer.getLatLng().lat === lat && layer.getLatLng().lng === lon) {
-            layer.openPopup();
-          }
-        });
-      }
+      const displayName = v.name || v.photoName;
+
+      item.innerHTML = `
+        <div style="cursor:pointer; text-align:center;">
+          <img src="${v.photo}" style="width:90%; border-radius:6px; display:block; margin:0 auto;"/>
+          <div style="margin-top:4px; font-weight:600;">${displayName}</div>
+          <div style="font-size:12px; color:#666;">${v.timeText || ""}</div>
+        </div>
+      `;
+
+      // Clic => centrer la carte et ouvrir popup
+      item.addEventListener('click', () => {
+        if (currentLeafletMap) {
+          const [lon, lat] = v.coords;
+          currentLeafletMap.setView([lat, lon], 17);
+          currentLeafletMap.eachLayer(layer => {
+            if (layer.getLatLng && layer.getLatLng().lat === lat && layer.getLatLng().lng === lon) {
+              layer.openPopup();
+            }
+          });
+        }
+      });
+
+      container.appendChild(item);
     });
-
-    container.appendChild(item);
   });
 
   photosTab.appendChild(container);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 	  
 
   // --- Ajouter toutes les couches au départ ---
