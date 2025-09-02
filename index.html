@@ -21,10 +21,35 @@
       <script src="leaflet-sidepanel.min.js"></script>
       /*OSMBuilding 3D*/
       <!--<script src="https://cdn.osmbuildings.org/classic/0.2.2b/OSMBuildings-Leaflet.js"></script>-->
+	<style>
+		#globePopup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+}
+
+#mainMap {
+    width: 100%;
+    height: 100vh;
+}
+
+	</style>
 </head>
 <body>
       <div id="root">
-            <div id="globeContainer" class="echarts-for-globe"></div>
+
+<div id="mainMap" style="width: 100%; height: 100vh;"></div>
+
+		  
+			<div id="globePopup" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); z-index: 1000;">
+			    <div id="globeContainer" class="echarts-for-globe" style="width: 100%; height: 100%;"></div>
+			    <button id="globeClose" style="position: absolute; top: 10px; right: 10px; background: white; border: none; padding: 5px 10px; cursor: pointer;">Fermer</button>
+			</div>
             <!-- Buttons -->
             <!-- night -->
             <div id="toggleNight" class="toggle-btn" role="button" aria-pressed="false" aria-label="Basculer ombre de nuit">
@@ -186,8 +211,8 @@
 						<div class="sidepanel-tab-content" data-tab-content="tab-3">
 						</div>
 						<div class="sidepanel-tab-content" data-tab-content="tab-4">
-							<h4>Afficher le globe</h4>
-							<p>Ajouter un bouton pour afficher le globe.</p>
+						    <h4>Afficher le globe</h4>
+						    <button id="openGlobeBtn" style="padding: 8px 12px; background: #4CAF50; color: white; border: none; cursor: pointer;">Ouvrir le globe</button>
 						</div>
 						<div class="sidepanel-tab-content" data-tab-content="tab-5">
 							<h4>Settings</h4>
@@ -205,6 +230,36 @@
 // villes visitées avec photos et coordonnées
 <script src="visitedCities.js"></script> 
 <script>
+document.getElementById('openGlobeBtn').addEventListener('click', () => {
+    document.getElementById('globePopup').style.display = 'block';
+    // Initialiser le globe ici si ce n'est pas déjà fait
+});
+
+document.getElementById('globeClose').addEventListener('click', () => {
+    document.getElementById('globePopup').style.display = 'none';
+});
+
+// Initialisation de la carte Leaflet
+const mainMap = L.map('mainMap').setView([48.8566, 2.3522], 5); // Exemple : centré sur la France
+
+// Ajouter une couche de tuiles (exemple : OpenStreetMap)
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(mainMap);
+
+// Charger et afficher les trajets (exemple simplifié)
+fetch('./GEOJSON/TRAJETS_ALL_vacances_wgs.geojson')
+    .then(response => response.json())
+    .then(data => {
+        L.geoJSON(data, {
+            style: function(feature) {
+                return { color: feature.properties.color || '#00ffff', weight: 2.5 };
+            }
+        }).addTo(mainMap);
+    });
+
+
+	
 (async function(){
   /* Les variables */
   const PATH_EARTH_DAY_1 = './GLOBE/earth.jpg';
