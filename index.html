@@ -591,15 +591,15 @@ Object.entries(mapColor).forEach(([transport, color])=>{
   const gsat = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
     attribution: '&copy; Google Maps Sat'
   });      
-  /*const osmb = new OSMBuildings(currentLeafletMap).load('https://{s}.data.osmbuildings.org/0.2/59fcc2e8/tile/{z}/{x}/{y}.json');*/
+  const osmb = new OSMBuildings(currentLeafletMap).load('https://{s}.data.osmbuildings.org/0.2/59fcc2e8/tile/{z}/{x}/{y}.json');
   const baseMaps = {
     "OpenStreetMap": osm,
     "Google Street": gmap,
     "Google Satellite": gsat
   };
-  /*const overlayMaps = {
+  const overlayMaps = {
       "3D buildings": osmb
-  };*/
+  };
 	  
   const [lon, lat] = cityData.value;
   const config = cityViewConfig[cityData.name] || { center: [lat, lon], zoom: 13 };
@@ -607,7 +607,7 @@ Object.entries(mapColor).forEach(([transport, color])=>{
   L.control.scale({position: 'bottomleft'}).addTo(currentLeafletMap);
 
   /*L.control.zoom({position: 'topleft'}).addTo(currentLeafletMap);*/
-  L.control.layers(baseMaps/*, overlayMaps*/).addTo(currentLeafletMap);
+  L.control.layers(baseMaps, overlayMaps).addTo(currentLeafletMap);
 
 const sidepanelLeft = L.control.sidepanel('mySidepanelLeft', {
     panelPosition: 'left',
