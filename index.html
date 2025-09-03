@@ -591,7 +591,7 @@ let currentLeafletMap = L.map('mainMap').setView([30, 110], 4);
 
 // Fonds
 const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '&copy; OSM'
+  attribution: 'OSM'
 }).addTo(currentLeafletMap);
 
 const gmap = L.tileLayer('https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}', {
@@ -631,17 +631,17 @@ fetch('GEOJSON/TRAJETS_ALL_vacances_wgs.geojson')
   .then(data => {
     const trajetsLayer = L.geoJSON(data, {
       style: feature => {
-        const type = feature.properties.type || "";
-        let color = "#ffcc00";
-        if (type === "avion") color = "#ff0000";
-        else if (type === "train") color = "#00aa00";
-        else if (type === "bus") color = "#0000ff";
-        else if (type === "voiture") color = "#ffa500";
-
+        const type = feature.properties.trajet || "";
+        let color = "black";
+        if (type === "avion") color = "#00dbc5";
+        else if (type === "train") color = "#db0016";
+        else if (type === "bus") color = "#dbc500";
+        else if (type === "voiture") color = "#0016db";
+        else if (type === "bateau") color = "#0084db";		  
         return {
           color: color,
           weight: 2,
-          opacity: 0.8
+          opacity: 0.9
         };
       }
     }).addTo(currentLeafletMap);
