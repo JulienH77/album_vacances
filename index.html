@@ -582,13 +582,11 @@ Object.entries(mapColor).forEach(([transport, color])=>{
   });
 
 // === Init mainMap ===
-let currentLeafletMap = L.map('mainMap').setView([30, 110], 4);
-
+let currentLeafletMap = L.map('mainMap').setView([11.953125, 21.371244], 3);
 // Fonds
 const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: 'OSM'
 }).addTo(currentLeafletMap);
-
 const gmap = L.tileLayer('https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}', {
   attribution: '&copy; Google Maps'
 });
@@ -598,7 +596,6 @@ const gsat = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
 const osmb = new OSMBuildings(currentLeafletMap).load(
   'https://{s}.data.osmbuildings.org/0.2/59fcc2e8/tile/{z}/{x}/{y}.json'
 );
-
 const baseMaps = { 
   "OpenStreetMap": osm, 
   "Google Street": gmap, 
@@ -607,12 +604,9 @@ const baseMaps = {
 const overlayMaps = { 
   "3D buildings": osmb 
 };
-
 const layerControl = L.control.layers(baseMaps, overlayMaps).addTo(currentLeafletMap);
 currentLeafletMap._layerControl = layerControl;
-
 L.control.scale({ position: 'bottomleft' }).addTo(currentLeafletMap);
-
 L.control.sidepanel('mySidepanelLeft', {
   panelPosition: 'left',
   tabsPosition: 'left',
@@ -644,12 +638,9 @@ fetch('GEOJSON/TRAJETS_ALL_vacances_wgs.geojson')
     currentLeafletMap._trajetsLayer = trajetsLayer;
     currentLeafletMap._layerControl.addOverlay(trajetsLayer, "Trajets");
   });
-
-
 	
 function openLeafletPopup(cityData) {
   if (!currentLeafletMap) return;
-
   // Recentrer la map principale
   const [lon, lat] = cityData.value;
   const config = cityViewConfig[cityData.name] || { center: [lat, lon], zoom: 13 };
@@ -657,21 +648,17 @@ function openLeafletPopup(cityData) {
 
   // --- Grouper photos par Année > Mois > Jour ---
   const photosByYear = {};
-
   (cityData.visites || []).forEach(v => {
     const [vlon, vlat] = v.coords;
-
     if (v.type === 'hotel') {
       L.marker([vlat, vlon], { icon: hotelIcon }).addTo(currentLeafletMap)
         .bindPopup(`<b>Hotel</b><br>Du ${v.datedeb} au ${v.datefin}`);
       return;
     }
-
     if (v.photo) {
       let year, month, day, dateInfo = "";
       const photoName = v.photo.split('/').pop();
       const dateMatch = photoName.match(/IMG[-_]?(\d{4})(\d{2})(\d{2})[-_]?([A-Za-z]{2})?(\d{6})?/);
-
       if (dateMatch) {
         year = dateMatch[1];
         month = dateMatch[2];
@@ -685,11 +672,9 @@ function openLeafletPopup(cityData) {
           dateInfo += ` à ${h}h${m}m${s}s`;
         }
       }
-
       if (!photosByYear[year]) photosByYear[year] = {};
       if (!photosByYear[year][month]) photosByYear[year][month] = {};
       if (!photosByYear[year][month][day]) photosByYear[year][month][day] = L.layerGroup();
-
       const popupContent = document.createElement('div');
       popupContent.style.position = 'relative';
       popupContent.innerHTML = `
@@ -700,7 +685,6 @@ function openLeafletPopup(cityData) {
         </div>
         <small style="display: block; margin-top: 4px; color: #666;">${dateInfo}</small>
       `;
-
       const marker = L.marker([vlat, vlon]).bindPopup(popupContent);
       marker.on('popupopen', function () {
         document.querySelectorAll('.enlarge-btn').forEach(btn => {
@@ -710,23 +694,19 @@ function openLeafletPopup(cityData) {
           };
         });
       });
-
       photosByYear[year][month][day].addLayer(marker);
     } else {
       L.marker([vlat, vlon]).addTo(currentLeafletMap).bindPopup(`<b>${v.name || ''}</b>`);
     }
   });
-
   // --- Mettre à jour l'onglet 3 (photos) ---
   const photosTab = document.querySelector('[data-tab-content="tab-3"]');
   photosTab.innerHTML = `<h4 style="font-size:2em; margin-bottom:-70px; margin-top:-5px;">Les photos</h4>`;
-
   const photosList = (cityData.visites || [])
     .filter(v => v.photo)
     .map(v => {
       const photoName = v.photo.split('/').pop();
       const dateMatch = photoName.match(/IMG[-_]?(\d{4})(\d{2})(\d{2})(?:[-_]?([A-Za-z]{2}))?(\d{6})?/);
-
       let dateKey = "99999999";
       let timeText = "";
       if (dateMatch) {
@@ -741,7 +721,6 @@ function openLeafletPopup(cityData) {
       return { ...v, photoName, dateKey, timeText };
     })
     .sort((a, b) => a.dateKey.localeCompare(b.dateKey) || a.timeText.localeCompare(b.timeText));
-
   const groupedByDay = {};
   photosList.forEach(v => {
     if (!groupedByDay[v.dateKey]) groupedByDay[v.dateKey] = [];
@@ -753,26 +732,21 @@ function openLeafletPopup(cityData) {
   } else {
     const container = document.createElement('div');
     container.className = "photos-list";
-
     Object.keys(groupedByDay).sort().forEach(dateKey => {
       const year = dateKey.slice(0, 4);
       const month = dateKey.slice(4, 6);
       const day = dateKey.slice(6, 8);
       const dateObj = new Date(`${year}-${month}-${day}`);
       const dateFormatted = dateObj.toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
-
       const dayTitle = document.createElement('div');
       dayTitle.innerHTML = `<strong style="display:block; margin-top:100px; font-size:15px;">${dateFormatted}</strong>
                             <hr style="margin:4px 0 10px; border:none; border-top:1px solid #ccc;">`;
       container.appendChild(dayTitle);
-
       groupedByDay[dateKey].forEach(v => {
         const item = document.createElement('div');
         item.className = "photo-item";
         item.style.marginBottom = "14px";
-
         const displayName = v.name || v.photoName;
-
         item.innerHTML = `
           <div style="cursor:pointer; text-align:center;">
             <img src="${v.photo}" style="width:90%; border-radius:6px; display:block; margin:0 auto;"/>
@@ -782,7 +756,6 @@ function openLeafletPopup(cityData) {
             </div>
           </div>
         `;
-
         item.addEventListener('click', () => {
           if (currentLeafletMap) {
             const [lon, lat] = v.coords;
@@ -794,11 +767,9 @@ function openLeafletPopup(cityData) {
             });
           }
         });
-
         container.appendChild(item);
       });
     });
-
     photosTab.appendChild(container);
   }
 
@@ -836,7 +807,6 @@ function openLeafletPopup(cityData) {
       const yearDetails = document.createElement('details');
       yearDetails.open = true;
       const yearSummary = document.createElement('summary');
-
       const yearCb = document.createElement('input');
       yearCb.type = 'checkbox';
       yearCb.checked = true;
@@ -850,7 +820,6 @@ function openLeafletPopup(cityData) {
         );
         yearDetails.querySelectorAll('input[type=checkbox]').forEach(cb => cb.checked = yearCb.checked);
       };
-
       yearSummary.appendChild(yearCb);
       yearSummary.append(year);
       yearDetails.appendChild(yearSummary);
@@ -859,7 +828,6 @@ function openLeafletPopup(cityData) {
         const monthDetails = document.createElement('details');
         monthDetails.style.marginLeft = "15px";
         monthDetails.open = true;
-
         const monthSummary = document.createElement('summary');
         const monthCb = document.createElement('input');
         monthCb.type = 'checkbox';
@@ -872,17 +840,15 @@ function openLeafletPopup(cityData) {
           });
           monthDetails.querySelectorAll('input[type=checkbox]').forEach(cb => cb.checked = monthCb.checked);
         };
-
         const moisNoms = {
           "01": "January", "02": "February", "03": "March", "04": "April",
           "05": "May", "06": "June", "07": "July", "08": "August",
           "09": "September", "10": "October", "11": "November", "12": "December"
         };
-
         monthSummary.appendChild(monthCb);
         monthSummary.append(moisNoms[month] || month);
         monthDetails.appendChild(monthSummary);
-
+		  
         Object.keys(photosByYear[year][month]).sort().forEach(day => {
           const dayDiv = document.createElement('div');
           dayDiv.style.marginLeft = "20px";
@@ -946,7 +912,6 @@ document.getElementById('photoPopup').addEventListener('click', (e) => {
   }
 });
 
-
   function closeLeafletPopup(){
     leafletPopupEl.style.display = 'none';
     if(currentLeafletMap){ currentLeafletMap.remove(); currentLeafletMap = null; }
@@ -955,7 +920,6 @@ document.getElementById('photoPopup').addEventListener('click', (e) => {
   leafletCloseBtn.addEventListener('click', closeLeafletPopup);
   document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeLeafletPopup(); });
   leafletPopupEl.addEventListener('click', (e)=>{ if(e.target === leafletPopupEl) closeLeafletPopup(); });
-
 
   // CETTE FONCTION NE MARCHE PAS
   // clic sur globe
@@ -996,14 +960,11 @@ document.querySelectorAll('.city-btn').forEach(btn => {
     openLeafletPopup(cityData); // → met à jour mainMap et tab3
   });
 });
-
-
 	
 // Gestion du globe popup
 const globePopup = document.getElementById('globePopup');
 const toggleGlobeBtn = document.getElementById('toggleGlobeBtn');
 const globeClose = document.getElementById('globeClose');
-
 toggleGlobeBtn.addEventListener('click', () => {
   if (globePopup.style.display === 'block') {
     globePopup.style.display = 'none';
@@ -1012,60 +973,9 @@ toggleGlobeBtn.addEventListener('click', () => {
     globeChart.resize(); // très important : recalculer echarts
   }
 });
-
 globeClose.addEventListener('click', () => {
   globePopup.style.display = 'none';
 });
-
-
-
-function logMapInfo() {
-  const center = currentLeafletMap.getCenter();
-  const zoomLevel = currentLeafletMap.getZoom();
-  console.log(`Centre de la carte : ${center.lat}, ${center.lng}`);
-  console.log(`Niveau de zoom : ${zoomLevel}`);
-}
-
-currentLeafletMap.on('move', logMapInfo);
-currentLeafletMap.on('zoomend', logMapInfo);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-// Écoute l'événement 'move' pour le déplacement de la carte
-currentLeafletMap.on('move', function() {
-  const center = currentLeafletMap.getCenter();
-  const zoomLevel = currentLeafletMap.getZoom();
-  console.log(`Centre de la carte : ${center.lat}, ${center.lng}`);
-  console.log(`Niveau de zoom : ${zoomLevel}`);
-});
-
-// Écoute l'événement 'zoomend' pour le changement de niveau de zoom
-currentLeafletMap.on('zoomend', function() {
-  const center = currentLeafletMap.getCenter();
-  const zoomLevel = currentLeafletMap.getZoom();
-  console.log(`Centre de la carte : ${center.lat}, ${center.lng}`);
-  console.log(`Niveau de zoom : ${zoomLevel}`);
-});
-
-
-
 })();	
 </script>
 </body>
