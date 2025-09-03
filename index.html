@@ -598,16 +598,25 @@ const gmap = L.tileLayer('https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}', {
   attribution: '&copy; Google Maps'
 });
 const gsat = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
-  attribution: '&copy; Google Maps Sat'
+  attribution: '&copy; Google Satellite'
 });
-const osmb = new OSMBuildings(currentLeafletMap).load('https://{s}.data.osmbuildings.org/0.2/59fcc2e8/tile/{z}/{x}/{y}.json');
+const osmb = new OSMBuildings(currentLeafletMap).load(
+  'https://{s}.data.osmbuildings.org/0.2/59fcc2e8/tile/{z}/{x}/{y}.json'
+);
 
-L.control.layers(
-  { "OpenStreetMap": osm, "Google Street": gmap, "Google Satellite": gsat },
-  { "3D buildings": osmb }
-).addTo(currentLeafletMap);
+const baseMaps = { 
+  "OpenStreetMap": osm, 
+  "Google Street": gmap, 
+  "Google Satellite": gsat 
+};
+const overlayMaps = { 
+  "3D buildings": osmb 
+};
 
-L.control.scale({position: 'bottomleft'}).addTo(currentLeafletMap);
+const layerControl = L.control.layers(baseMaps, overlayMaps).addTo(currentLeafletMap);
+currentLeafletMap._layerControl = layerControl;
+
+L.control.scale({ position: 'bottomleft' }).addTo(currentLeafletMap);
 
 L.control.sidepanel('mySidepanelLeft', {
   panelPosition: 'left',
@@ -616,14 +625,31 @@ L.control.sidepanel('mySidepanelLeft', {
   pushControls: true
 }).addTo(currentLeafletMap);
 
-// === Charger trajets GEOJSON ===
+// === Trajets ===
 fetch('GEOJSON/TRAJETS_ALL_vacances_wgs.geojson')
   .then(r => r.json())
   .then(data => {
-    L.geoJSON(data, {
-      style: { color: "red", weight: 2 }
+    const trajetsLayer = L.geoJSON(data, {
+      style: feature => {
+        const type = feature.properties.type || "";
+        let color = "#ffcc00";
+        if (type === "avion") color = "#ff0000";
+        else if (type === "train") color = "#00aa00";
+        else if (type === "bus") color = "#0000ff";
+        else if (type === "voiture") color = "#ffa500";
+
+        return {
+          color: color,
+          weight: 2,
+          opacity: 0.8
+        };
+      }
     }).addTo(currentLeafletMap);
+
+    currentLeafletMap._trajetsLayer = trajetsLayer;
+    currentLeafletMap._layerControl.addOverlay(trajetsLayer, "Trajets");
   });
+
 
 	
 function openLeafletPopup(cityData) {
@@ -633,34 +659,6 @@ function openLeafletPopup(cityData) {
   const [lon, lat] = cityData.value;
   const config = cityViewConfig[cityData.name] || { center: [lat, lon], zoom: 13 };
   currentLeafletMap.setView(config.center, config.zoom);
-
-  // --- Basemaps (à ajouter une seule fois max, donc vérifier si pas déjà fait) ---
-  if (!currentLeafletMap._hasBaseLayers) {
-    const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OSM'
-    }).addTo(currentLeafletMap);
-    const gmap = L.tileLayer('https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}', {
-      attribution: '&copy; Google Maps'
-    });
-    const gsat = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
-      attribution: '&copy; Google Maps Sat'
-    });
-    const osmb = new OSMBuildings(currentLeafletMap).load('https://{s}.data.osmbuildings.org/0.2/59fcc2e8/tile/{z}/{x}/{y}.json');
-
-    const baseMaps = {
-      "OpenStreetMap": osm,
-      "Google Street": gmap,
-      "Google Satellite": gsat
-    };
-    const overlayMaps = {
-      "3D buildings": osmb
-    };
-
-    L.control.layers(baseMaps, overlayMaps).addTo(currentLeafletMap);
-
-
-    currentLeafletMap._hasBaseLayers = true;
-  }
 
   // --- Grouper photos par Année > Mois > Jour ---
   const photosByYear = {};
@@ -762,11 +760,11 @@ function openLeafletPopup(cityData) {
     container.className = "photos-list";
 
     Object.keys(groupedByDay).sort().forEach(dateKey => {
-      const year = dateKey.slice(0,4);
-      const month = dateKey.slice(4,6);
-      const day = dateKey.slice(6,8);
+      const year = dateKey.slice(0, 4);
+      const month = dateKey.slice(4, 6);
+      const day = dateKey.slice(6, 8);
       const dateObj = new Date(`${year}-${month}-${day}`);
-      const dateFormatted = dateObj.toLocaleDateString("fr-FR", { day:"numeric", month:"long", year:"numeric" });
+      const dateFormatted = dateObj.toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
 
       const dayTitle = document.createElement('div');
       dayTitle.innerHTML = `<strong style="display:block; margin-top:100px; font-size:15px;">${dateFormatted}</strong>
@@ -816,7 +814,11 @@ function openLeafletPopup(cityData) {
     )
   );
 
-  // --- Contrôle hiérarchique Année → Mois → Jour ---
+  // --- Contrôle hiérarchique Année → Mois → Jour (remplacer l’ancien si déjà là) ---
+  if (currentLeafletMap._photosControl) {
+    currentLeafletMap.removeControl(currentLeafletMap._photosControl);
+  }
+
   const datesControl = L.control({ position: 'topright' });
   datesControl.onAdd = function () {
     const div = L.DomUtil.create('div', 'dates-control');
@@ -909,10 +911,10 @@ function openLeafletPopup(cityData) {
     return div;
   };
   datesControl.addTo(currentLeafletMap);
+  currentLeafletMap._photosControl = datesControl;
 
   currentLeafletMap.invalidateSize();
 }
-
       
 // Fonction pour ouvrir la popup de photo agrandie
 function openPhotoPopup(photoUrl) {
