@@ -5,7 +5,7 @@ MODIF A FAIRE :
 -  points rond sur les villes visitées (comme pour le globe) / ou alors zoom = affiche hotels et photos - dezoom = desaffiche hotels et photos
 -  (voir au dessus) ce qui veut dire zoom = affiche liste jours des photos ?????
 -  desafficher hotels et photos a un zoom mondial
--  faire un bouton pour le globe trop stylé
+-  faire un bouton pour le globe trop stylé (idée : faire un globe geant cliquable ???)
 -  ajouter des settings ?? des settings qui se gardent dans le navigateur en question ???
 -  mettre les boutons du globe en haut ou en bas car le sidepanel les cache
 -  quand clique sur une ville dans le globe cela affiche un texte qui disparait "Carte chargée en arriere-plan"
