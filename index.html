@@ -682,7 +682,7 @@ const sidepanelLeft = L.control.sidepanel('mySidepanelLeft', {
 
 // --- Mettre à jour l'onglet 3 (photos) ---
 const photosTab = document.querySelector('[data-tab-content="tab-3"]');
-photosTab.innerHTML = "<h4>Les photos</h4>";
+photosTab.innerHTML = "<h4 style="font-size:2em; margin-bottom:-70px; margin-top:-5px;" >Les photos</h4>";
 
 // Extraire toutes les visites avec photo + infos date/heure
 const photosList = (cityData.visites || [])
