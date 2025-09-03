@@ -12,6 +12,7 @@ MODIF A FAIRE :
 -  responsive telephone a revoir
 -  visuel des trajets sens de déplacement
 -  popup statistique des trajets
+-  epaisseur des trajets en fonction du zoom
 
 --------------------------------------------------------------------------------------------------------------------------------
 
