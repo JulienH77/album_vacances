@@ -1,4 +1,5 @@
 MODIF A FAIRE :
+-  ATTENTION - cliquer plusieurs fois sur une ville ajoute les points encore et encore
 -  au survol des photos dans le sidepanel le marker de celle ci saute et/ou est plus gros et/ou est rouge
 -  ne pas commencer avec OSMBuildings activé
 -  points rond sur les villes visitées (comme pour le globe) / ou alors zoom = affiche hotels et photos - dezoom = desaffiche hotels et photos
