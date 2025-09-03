@@ -597,7 +597,7 @@ const gmap = L.tileLayer('https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}', {
 const gsat = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
   attribution: 'Julien Houziaux | Google Satellite'
 });
-const osmb = new OSMBuildings(currentLeafletMap).load(
+const osmb = new OSMBuildings().load(
   'https://{s}.data.osmbuildings.org/0.2/59fcc2e8/tile/{z}/{x}/{y}.json'
 );
 const baseMaps = { 
