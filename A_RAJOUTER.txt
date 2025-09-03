@@ -10,6 +10,8 @@ MODIF A FAIRE :
 -  quand clique sur une ville dans le globe cela affiche un texte qui disparait "Carte chargée en arriere-plan"
 -  le bouton pour afficher les photos en grand ne fonctionne plus 
 -  responsive telephone a revoir
+-  visuel des trajets sens de déplacement
+-  popup statistique des trajets
 
 --------------------------------------------------------------------------------------------------------------------------------
 
