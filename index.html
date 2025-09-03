@@ -622,26 +622,70 @@ L.control.sidepanel('mySidepanelLeft', {
 fetch('GEOJSON/TRAJETS_ALL_vacances_wgs.geojson')
   .then(r => r.json())
   .then(data => {
-    const trajetsLayer = L.geoJSON(data, {
-      style: feature => {
-        const type = feature.properties.trajet || "";
-        let color = "black";
-        if (type === "avion") color = "#00dbc5";
-        else if (type === "train") color = "#db0016";
-        else if (type === "bus") color = "#dbc500";
-        else if (type === "voiture") color = "#0016db";
-        else if (type === "bateau") color = "#0084db";		  
-        return {
-          color: color,
-          weight: 2,
-          opacity: 1
-        };
-      }
-    }).addTo(currentLeafletMap);
+	const trajetsLayer = L.geoJSON(data, {
+	  style: feature => {
+	    const type = feature.properties.trajet || "";
+	    let color = "black";
+	    if (type === "avion") color = "#00dbc5";
+	    else if (type === "train") color = "#db0016";
+	    else if (type === "bus") color = "#dbc500";
+	    else if (type === "voiture") color = "#0016db";
+	    else if (type === "bateau") color = "#0084db";		  
+	    return { color, weight: 2, opacity: 1 };
+	  },
+	  onEachFeature: (feature, layer) => {
+	    const p = feature.properties;
+	    const formatDateTime = str => {
+	      if (!str) return "";
+	      const d = new Date(str);
+	      const pad = n => n.toString().padStart(2, "0");
+	      return `${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()} `
+	           + `${pad(d.getHours())}h${pad(d.getMinutes())}m${pad(d.getSeconds())}s`;
+	    };
+	    const content = `
+	      <strong>Trajet:</strong> ${p.trajet || ''}<br/>
+	      <strong>Voyage:</strong> ${p.voyage || ''}<br/>
+	      <strong>Date début:</strong> ${formatDateTime(p.date_deb)}<br/>
+	      <strong>Date fin:</strong> ${formatDateTime(p.date_fin)}<br/>
+	      <strong>Durée:</strong> ${p.duree || ''}<br/>
+	      <strong>Distance:</strong> ${p.distanceKM || ''} km
+	    `;
+	    layer.bindPopup(content);
+	  }
+	}).addTo(currentLeafletMap);
+
 
     currentLeafletMap._trajetsLayer = trajetsLayer;
     currentLeafletMap._layerControl.addOverlay(trajetsLayer, "Trajets");
   });
+
+	
+const cloudsOverlay = L.imageOverlay(
+  CLOUDS,
+  [[-85, -180], [85, 180]], // bbox quasi monde
+  { opacity: 0.4 }
+);
+const nightOverlay = L.imageOverlay(
+  PATH_EARTH_NIGHT_RAW,
+  [[-85, -180], [85, 180]],
+  { opacity: 0.6 }
+);
+// Ajoute à ta carte si tu veux qu’elles soient actives direct
+// cloudsOverlay.addTo(currentLeafletMap);
+// nightOverlay.addTo(currentLeafletMap);
+
+// et ajoute-les au contrôle couches
+currentLeafletMap._layerControl.addOverlay(cloudsOverlay, "Nuages");
+currentLeafletMap._layerControl.addOverlay(nightOverlay, "Nuit");
+
+
+
+
+
+
+
+
+	
 	
 function openLeafletPopup(cityData) {
   if (!currentLeafletMap) return;
@@ -924,18 +968,25 @@ document.getElementById('photoPopup').addEventListener('click', (e) => {
 
   // CETTE FONCTION NE MARCHE PAS
   // clic sur globe
-  globeChart.on('click', params => {
-    if(params.seriesName === 'Trajets' && params.data && params.data.properties){
-      const p = params.data.properties;
-      const popupEl = document.getElementById('trajetPopup');
-      popupEl.innerHTML = `
-        <strong>Trajet:</strong> ${p.trajet || ''}<br/>
-        <strong>Voyage:</strong> ${p.voyage || ''}<br/>
-        <strong>Date début:</strong> ${p.date_deb || ''}<br/>
-        <strong>Date fin:</strong> ${p.date_fin || ''}<br/>
-        <strong>Durée:</strong> ${p.duree || ''}<br/>
-        <strong>Distance:</strong> ${p.distanceKM || ''} km
-      `;
+	function formatDateTime(str) {
+	  if (!str) return "";
+	  const d = new Date(str);
+	  const pad = n => n.toString().padStart(2, "0");
+	  return `${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()} `
+	       + `${pad(d.getHours())}h${pad(d.getMinutes())}m${pad(d.getSeconds())}s`;
+	}
+	  globeChart.on('click', params => {
+	    if(params.seriesName === 'Trajets' && params.data && params.data.properties){
+	      const p = params.data.properties;
+	      const popupEl = document.getElementById('trajetPopup');
+	popupEl.innerHTML = `
+	  <strong>Trajet:</strong> ${p.trajet || ''}<br/>
+	  <strong>Voyage:</strong> ${p.voyage || ''}<br/>
+	  <strong>Date début:</strong> ${formatDateTime(p.date_deb)}<br/>
+	  <strong>Date fin:</strong> ${formatDateTime(p.date_fin)}<br/>
+	  <strong>Durée:</strong> ${p.duree || ''}<br/>
+	  <strong>Distance:</strong> ${p.distanceKM || ''} km
+	`;
       popupEl.style.display = 'block';
     } else if(params.seriesName === 'Pins' && params.data){
       const popupEl = document.getElementById('trajetPopup');
