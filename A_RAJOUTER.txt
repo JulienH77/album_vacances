@@ -13,10 +13,12 @@ MODIF A FAIRE :
 -  visuel des trajets sens de déplacement
 -  popup statistique des trajets
 -  epaisseur des trajets en fonction du zoom
+-  ajouter les nuages / la nuit et le relief (si possible?) et y mettre le choix de transparence
 
 --------------------------------------------------------------------------------------------------------------------------------
 
 DES IDEES POUR LE VISUEL LIE A LEAFLET :
+-  afficher la carte leaflet en globe : https://globeletjs.org/
 -  faire des mouvements de caméra smooth : https://ivansanchez.gitlab.io/Leaflet.ImageOverlay.Arrugator/demo.html
 -  affichage style lampe torche sur fond de carte : http://frogcat.github.io/leaflet-tilelayer-mask/
 -  inserer des fichiers externe : 
