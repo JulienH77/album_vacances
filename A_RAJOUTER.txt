@@ -20,6 +20,7 @@ MODIF A FAIRE :
 --------------------------------------------------------------------------------------------------------------------------------
 
 DES IDEES POUR LE VISUEL LIE A LEAFLET :
+-  3D terrain mais pas avec leaflet : https://maplibre.org/maplibre-gl-js/docs/examples/3d-terrain/
 -  afficher la carte leaflet en globe : https://globeletjs.org/
 -  faire des mouvements de caméra smooth : https://ivansanchez.gitlab.io/Leaflet.ImageOverlay.Arrugator/demo.html
 -  affichage style lampe torche sur fond de carte : http://frogcat.github.io/leaflet-tilelayer-mask/
