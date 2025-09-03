@@ -588,6 +588,19 @@ Object.entries(mapColor).forEach(([transport, color])=>{
 
 // Carte principale = Leaflet
 let currentLeafletMap = L.map('mainMap').setView([30, 110], 4);
+	L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+	  attribution: '&copy; OSM'
+	}).addTo(currentLeafletMap);
+
+    L.control.scale({position: 'bottomleft'}).addTo(currentLeafletMap);
+
+    // sidepanel lié à la carte
+    L.control.sidepanel('mySidepanelLeft', {
+      panelPosition: 'left',
+      tabsPosition: 'left',
+      startTab: 'tab-1',
+      pushControls: true
+    }).addTo(currentLeafletMap);
 	
 function openLeafletPopup(cityData) {
   if (!currentLeafletMap) return;
@@ -620,15 +633,7 @@ function openLeafletPopup(cityData) {
     };
 
     L.control.layers(baseMaps, overlayMaps).addTo(currentLeafletMap);
-    L.control.scale({position: 'bottomleft'}).addTo(currentLeafletMap);
 
-    // sidepanel lié à la carte
-    L.control.sidepanel('mySidepanelLeft', {
-      panelPosition: 'left',
-      tabsPosition: 'left',
-      startTab: 'tab-1',
-      pushControls: true
-    }).addTo(currentLeafletMap);
 
     currentLeafletMap._hasBaseLayers = true;
   }
