@@ -585,13 +585,13 @@ Object.entries(mapColor).forEach(([transport, color])=>{
 let currentLeafletMap = L.map('mainMap').setView([11.953125, 21.371244], 3);
 // Fonds
 const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: 'OSM'
+  attribution: 'Julien Houziaux | OSM'
 }).addTo(currentLeafletMap);
 const gmap = L.tileLayer('https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}', {
-  attribution: '&copy; Google Maps'
+  attribution: 'Julien Houziaux | Google Maps'
 });
 const gsat = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
-  attribution: '&copy; Google Satellite'
+  attribution: 'Julien Houziaux | Google Satellite'
 });
 const osmb = new OSMBuildings(currentLeafletMap).load(
   'https://{s}.data.osmbuildings.org/0.2/59fcc2e8/tile/{z}/{x}/{y}.json'
