@@ -658,37 +658,38 @@ fetch('GEOJSON/TRAJETS_ALL_vacances_wgs.geojson')
     currentLeafletMap._trajetsLayer = trajetsLayer;
     currentLeafletMap._layerControl.addOverlay(trajetsLayer, "Trajets");
   });
-
-	
 const cloudsOverlay = L.imageOverlay(
   CLOUDS,
-  [[-85, -180], [85, 180]], // bbox quasi monde
-  { opacity: 0.4 }
-);
-const nightOverlay = L.imageOverlay(
-  PATH_EARTH_NIGHT_RAW,
-  [[-85, -180], [85, 180]],
+  [[-60, -180], [85, 180]], // on évite les pôles extrêmes
   { opacity: 0.6 }
+);
+const nightTiles = L.tileLayer(
+  "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_Black_Marble/default/{time}/GoogleMapsCompatible_Level8/{z}/{y}/{x}.jpg", 
+  {
+    attribution: "NASA Earth at Night",
+    bounds: [[-85, -180], [85, 180]],
+    minZoom: 1,
+    maxZoom: 8,
+    time: "2020-01-01"
+  }
 );
 // Ajoute à ta carte si tu veux qu’elles soient actives direct
 // cloudsOverlay.addTo(currentLeafletMap);
-// nightOverlay.addTo(currentLeafletMap);
+// nightTiles.addTo(currentLeafletMap);
 
 // et ajoute-les au contrôle couches
 currentLeafletMap._layerControl.addOverlay(cloudsOverlay, "Nuages");
-currentLeafletMap._layerControl.addOverlay(nightOverlay, "Nuit");
+currentLeafletMap._layerControl.addOverlay(nightTiles, "Nuit");
 
-
-
-
-
-
-
-
-	
-	
 function openLeafletPopup(cityData) {
   if (!currentLeafletMap) return;
+
+  // --- Supprimer les anciens markers photo si déjà présents ---
+  if (currentLeafletMap._photoMarkers) {
+    currentLeafletMap._photoMarkers.forEach(m => currentLeafletMap.removeLayer(m));
+  }
+  currentLeafletMap._photoMarkers = [];
+
   // Recentrer la map principale
   const [lon, lat] = cityData.value;
   const config = cityViewConfig[cityData.name] || { center: [lat, lon], zoom: 13 };
@@ -698,11 +699,17 @@ function openLeafletPopup(cityData) {
   const photosByYear = {};
   (cityData.visites || []).forEach(v => {
     const [vlon, vlat] = v.coords;
+
+    // --- Hôtel ---
     if (v.type === 'hotel') {
-      L.marker([vlat, vlon], { icon: hotelIcon }).addTo(currentLeafletMap)
+      const marker = L.marker([vlat, vlon], { icon: hotelIcon })
+        .addTo(currentLeafletMap)
         .bindPopup(`<b>Hotel</b><br>Du ${v.datedeb} au ${v.datefin}`);
+      currentLeafletMap._photoMarkers.push(marker);
       return;
     }
+
+    // --- Photo ---
     if (v.photo) {
       let year, month, day, dateInfo = "";
       const photoName = v.photo.split('/').pop();
@@ -720,9 +727,11 @@ function openLeafletPopup(cityData) {
           dateInfo += ` à ${h}h${m}m${s}s`;
         }
       }
+
       if (!photosByYear[year]) photosByYear[year] = {};
       if (!photosByYear[year][month]) photosByYear[year][month] = {};
       if (!photosByYear[year][month][day]) photosByYear[year][month][day] = L.layerGroup();
+
       const popupContent = document.createElement('div');
       popupContent.style.position = 'relative';
       popupContent.innerHTML = `
@@ -733,7 +742,13 @@ function openLeafletPopup(cityData) {
         </div>
         <small style="display: block; margin-top: 4px; color: #666;">${dateInfo}</small>
       `;
+
       const marker = L.marker([vlat, vlon]).bindPopup(popupContent);
+
+      // Sauvegarde du marker dans l'objet pour y accéder depuis la photothèque
+      v._marker = marker;
+
+      // Activer le bouton agrandir
       marker.on('popupopen', function () {
         document.querySelectorAll('.enlarge-btn').forEach(btn => {
           btn.onclick = function (e) {
@@ -742,14 +757,20 @@ function openLeafletPopup(cityData) {
           };
         });
       });
+
       photosByYear[year][month][day].addLayer(marker);
+      currentLeafletMap._photoMarkers.push(marker);
     } else {
-      L.marker([vlat, vlon]).addTo(currentLeafletMap).bindPopup(`<b>${v.name || ''}</b>`);
+      const marker = L.marker([vlat, vlon]).addTo(currentLeafletMap)
+        .bindPopup(`<b>${v.name || ''}</b>`);
+      currentLeafletMap._photoMarkers.push(marker);
     }
   });
+
   // --- Mettre à jour l'onglet 3 (photos) ---
   const photosTab = document.querySelector('[data-tab-content="tab-3"]');
   photosTab.innerHTML = `<h4 style="font-size:2em; margin-bottom:-70px; margin-top:-5px;">Les photos</h4>`;
+
   const photosList = (cityData.visites || [])
     .filter(v => v.photo)
     .map(v => {
@@ -769,6 +790,7 @@ function openLeafletPopup(cityData) {
       return { ...v, photoName, dateKey, timeText };
     })
     .sort((a, b) => a.dateKey.localeCompare(b.dateKey) || a.timeText.localeCompare(b.timeText));
+
   const groupedByDay = {};
   photosList.forEach(v => {
     if (!groupedByDay[v.dateKey]) groupedByDay[v.dateKey] = [];
@@ -780,21 +802,25 @@ function openLeafletPopup(cityData) {
   } else {
     const container = document.createElement('div');
     container.className = "photos-list";
+
     Object.keys(groupedByDay).sort().forEach(dateKey => {
       const year = dateKey.slice(0, 4);
       const month = dateKey.slice(4, 6);
       const day = dateKey.slice(6, 8);
       const dateObj = new Date(`${year}-${month}-${day}`);
       const dateFormatted = dateObj.toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
+
       const dayTitle = document.createElement('div');
       dayTitle.innerHTML = `<strong style="display:block; margin-top:100px; font-size:15px;">${dateFormatted}</strong>
                             <hr style="margin:4px 0 10px; border:none; border-top:1px solid #ccc;">`;
       container.appendChild(dayTitle);
+
       groupedByDay[dateKey].forEach(v => {
         const item = document.createElement('div');
         item.className = "photo-item";
         item.style.marginBottom = "14px";
         const displayName = v.name || v.photoName;
+
         item.innerHTML = `
           <div style="cursor:pointer; text-align:center;">
             <img src="${v.photo}" style="width:90%; border-radius:6px; display:block; margin:0 auto;"/>
@@ -804,20 +830,34 @@ function openLeafletPopup(cityData) {
             </div>
           </div>
         `;
+
+        // Clic = recentrer sur le marker correspondant
         item.addEventListener('click', () => {
-          if (currentLeafletMap) {
-            const [lon, lat] = v.coords;
-            currentLeafletMap.setView([lat, lon], 16);
-            currentLeafletMap.eachLayer(layer => {
-              if (layer.getLatLng && layer.getLatLng().lat === lat && layer.getLatLng().lng === lon) {
-                layer.openPopup();
-              }
-            });
+          if (v._marker) {
+            currentLeafletMap.setView(v._marker.getLatLng(), 16);
+            v._marker.openPopup();
           }
         });
+
+        // Survol = changer l’icône du marker
+        item.addEventListener('mouseenter', () => {
+          if (v._marker) {
+            v._marker.setIcon(L.divIcon({
+              className: "highlight-marker",
+              html: "<div style='width:20px;height:20px;background:red;border-radius:50%;border:2px solid white;'></div>"
+            }));
+          }
+        });
+        item.addEventListener('mouseleave', () => {
+          if (v._marker) {
+            v._marker.setIcon(new L.Icon.Default());
+          }
+        });
+
         container.appendChild(item);
       });
     });
+
     photosTab.appendChild(container);
   }
 
@@ -828,7 +868,7 @@ function openLeafletPopup(cityData) {
     )
   );
 
-  // --- Contrôle hiérarchique Année → Mois → Jour (remplacer l’ancien si déjà là) ---
+  // --- Contrôle hiérarchique Année → Mois → Jour ---
   if (currentLeafletMap._photosControl) {
     currentLeafletMap.removeControl(currentLeafletMap._photosControl);
   }
@@ -896,7 +936,7 @@ function openLeafletPopup(cityData) {
         monthSummary.appendChild(monthCb);
         monthSummary.append(moisNoms[month] || month);
         monthDetails.appendChild(monthSummary);
-		  
+
         Object.keys(photosByYear[year][month]).sort().forEach(day => {
           const dayDiv = document.createElement('div');
           dayDiv.style.marginLeft = "20px";
@@ -912,13 +952,17 @@ function openLeafletPopup(cityData) {
           dayDiv.append(day);
           monthDetails.appendChild(dayDiv);
         });
+
         yearDetails.appendChild(monthDetails);
       });
+
       div.appendChild(yearDetails);
     });
+
     L.DomEvent.disableClickPropagation(div);
     return div;
   };
+
   datesControl.addTo(currentLeafletMap);
   currentLeafletMap._photosControl = datesControl;
 
