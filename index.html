@@ -1018,28 +1018,55 @@ globeClose.addEventListener('click', () => {
 });
 
 
-// Récupérer le centre de la carte
-const center = currentLeafletMap.getCenter();
-// Récupérer le niveau de zoom
-const zoomLevel = currentLeafletMap.getZoom();
 
-// Afficher les informations dans la console
-console.log("Centre de la carte :", center);
-console.log("Niveau de zoom :", zoomLevel);
+function logMapInfo() {
+  const center = currentLeafletMap.getCenter();
+  const zoomLevel = currentLeafletMap.getZoom();
+  console.log(`Centre de la carte : ${center.lat}, ${center.lng}`);
+  console.log(`Niveau de zoom : ${zoomLevel}`);
+}
+
+currentLeafletMap.on('move', logMapInfo);
+currentLeafletMap.on('zoomend', logMapInfo);
 
 
-})();
 
-// Récupérer le centre de la carte
-const center = currentLeafletMap.getCenter();
-// Récupérer le niveau de zoom
-const zoomLevel = currentLeafletMap.getZoom();
 
-// Afficher les informations dans la console
-console.log("Centre de la carte :", center);
-console.log("Niveau de zoom :", zoomLevel);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	
+// Écoute l'événement 'move' pour le déplacement de la carte
+currentLeafletMap.on('move', function() {
+  const center = currentLeafletMap.getCenter();
+  const zoomLevel = currentLeafletMap.getZoom();
+  console.log(`Centre de la carte : ${center.lat}, ${center.lng}`);
+  console.log(`Niveau de zoom : ${zoomLevel}`);
+});
+
+// Écoute l'événement 'zoomend' pour le changement de niveau de zoom
+currentLeafletMap.on('zoomend', function() {
+  const center = currentLeafletMap.getCenter();
+  const zoomLevel = currentLeafletMap.getZoom();
+  console.log(`Centre de la carte : ${center.lat}, ${center.lng}`);
+  console.log(`Niveau de zoom : ${zoomLevel}`);
+});
+
+
+
+})();	
 </script>
 </body>
 </html>
