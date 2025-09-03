@@ -15,6 +15,7 @@ MODIF A FAIRE :
 -  epaisseur des trajets en fonction du zoom
 -  ajouter les nuages / la nuit et le relief (si possible?) et y mettre le choix de transparence
 -  passer le zoom de 1 en 1
+-  faire un onglet trajet dans le sidepanel avec choix du voyage et cela affiche un deplacement le long d'une ligne (avec un des liens en dessous qui faire un suivi)
 
 --------------------------------------------------------------------------------------------------------------------------------
 
