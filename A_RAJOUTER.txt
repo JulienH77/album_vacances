@@ -12,6 +12,7 @@ ONGLET SETTINGS IDEES :
 
 
 MODIF A FAIRE :
+-  faire que la carte leaflet suive en taille le sidepanel ?
 -  ATTENTION - cliquer plusieurs fois sur une ville ajoute les points encore et encore -> DONC PREFERABLE DE FAIRE UN AFFICHAGE AU ZOOM ET LES BOUTONS NE FERONS QUE SUIVRE LES COORDS ET ZOOM DE MON JS
 -  au survol des photos dans le sidepanel le marker de celle ci saute et/ou est plus gros et/ou est rouge
 -  ne pas commencer avec OSMBuildings activé
