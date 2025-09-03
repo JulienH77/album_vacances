@@ -747,7 +747,7 @@ function openLeafletPopup(cityData) {
 
   // --- Mettre à jour l'onglet 3 (photos) ---
   const photosTab = document.querySelector('[data-tab-content="tab-3"]');
-  photosTab.innerHTML = `<h4 style="font-size:2em; margin-bottom:-70px; margin-top:-5px;">Les photos</h4>`;
+  photosTab.innerHTML = `<h4 style="font-size:1.2em; margin-bottom:-70px; margin-top:-5px;">Les photos</h4>`;
 
   const photosList = (cityData.visites || [])
     .filter(v => v.photo)
@@ -822,7 +822,8 @@ function openLeafletPopup(cityData) {
           if (v._marker) {
             v._marker.setIcon(L.divIcon({
               className: "highlight-marker",
-              html: "<div style='width:20px;height:20px;background:red;border-radius:50%;border:2px solid white;'></div>"
+              /*html: "<div style='width:20px;height:20px;background:red;border-radius:50%;border:2px solid white;'></div>"*/
+				// AJOUTER ICI LE MARKER ROUGE
             }));
           }
         });
