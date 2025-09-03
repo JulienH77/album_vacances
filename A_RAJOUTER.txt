@@ -14,6 +14,7 @@ MODIF A FAIRE :
 -  popup statistique des trajets
 -  epaisseur des trajets en fonction du zoom
 -  ajouter les nuages / la nuit et le relief (si possible?) et y mettre le choix de transparence
+-  passer le zoom de 1 en 1
 
 --------------------------------------------------------------------------------------------------------------------------------
 
