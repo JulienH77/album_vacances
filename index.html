@@ -586,21 +586,45 @@ Object.entries(mapColor).forEach(([transport, color])=>{
     }
   });
 
-// Carte principale = Leaflet
+// === Init mainMap ===
 let currentLeafletMap = L.map('mainMap').setView([30, 110], 4);
-	L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-	  attribution: '&copy; OSM'
-	}).addTo(currentLeafletMap);
 
-    L.control.scale({position: 'bottomleft'}).addTo(currentLeafletMap);
+// Fonds
+const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; OSM'
+}).addTo(currentLeafletMap);
 
-    // sidepanel lié à la carte
-    L.control.sidepanel('mySidepanelLeft', {
-      panelPosition: 'left',
-      tabsPosition: 'left',
-      startTab: 'tab-1',
-      pushControls: true
+const gmap = L.tileLayer('https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}', {
+  attribution: '&copy; Google Maps'
+});
+const gsat = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+  attribution: '&copy; Google Maps Sat'
+});
+const osmb = new OSMBuildings(currentLeafletMap).load('https://{s}.data.osmbuildings.org/0.2/59fcc2e8/tile/{z}/{x}/{y}.json');
+
+L.control.layers(
+  { "OpenStreetMap": osm, "Google Street": gmap, "Google Satellite": gsat },
+  { "3D buildings": osmb }
+).addTo(currentLeafletMap);
+
+L.control.scale({position: 'bottomleft'}).addTo(currentLeafletMap);
+
+L.control.sidepanel('mySidepanelLeft', {
+  panelPosition: 'left',
+  tabsPosition: 'left',
+  startTab: 'tab-1',
+  pushControls: true
+}).addTo(currentLeafletMap);
+
+// === Charger trajets GEOJSON ===
+fetch('GEOJSON/TRAJETS_ALL_vacances_wgs.geojson')
+  .then(r => r.json())
+  .then(data => {
+    L.geoJSON(data, {
+      style: { color: "red", weight: 2 }
     }).addTo(currentLeafletMap);
+  });
+
 	
 function openLeafletPopup(cityData) {
   if (!currentLeafletMap) return;
@@ -966,27 +990,16 @@ document.getElementById('photoPopup').addEventListener('click', (e) => {
   refresh();
 
 
-// Brancher les boutons de villes à la fin de l'IIFE
 document.querySelectorAll('.city-btn').forEach(btn => {
   const cityName = btn.querySelector('span').textContent.trim();
   const cityData = visitedCities.find(c => c.name === cityName);
-
   if (!cityData) return;
 
   btn.addEventListener('click', () => {
-    // Si Leaflet est déjà affiché → ouvrir directement
-    if (document.getElementById('leafletPopup').style.display === 'block') {
-      openLeafletPopup(cityData);
-    } else {
-      // Sinon → centrer le globe sur la ville
-      globeChart.dispatchAction({
-        type: 'globeChangeView',
-        targetCoord: cityData.value,
-        duration: 1500,
-      });
-    }
+    openLeafletPopup(cityData); // → met à jour mainMap et tab3
   });
 });
+
 
 	
 // Gestion du globe popup
