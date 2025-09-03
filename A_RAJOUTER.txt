@@ -12,6 +12,11 @@ ONGLET SETTINGS IDEES :
 
 
 MODIF A FAIRE :
+
+-  refaire marcher le globe et ses boutons
+-  rendre beaucoup plus beau les stats des trajets
+
+
 -  faire que la carte leaflet suive en taille le sidepanel ?
 -  ATTENTION - cliquer plusieurs fois sur une ville ajoute les points encore et encore -> DONC PREFERABLE DE FAIRE UN AFFICHAGE AU ZOOM ET LES BOUTONS NE FERONS QUE SUIVRE LES COORDS ET ZOOM DE MON JS
 -  au survol des photos dans le sidepanel le marker de celle ci saute et/ou est plus gros et/ou est rouge
@@ -26,7 +31,6 @@ MODIF A FAIRE :
 -  le bouton pour afficher les photos en grand ne fonctionne plus 
 -  responsive telephone a revoir
 -  visuel des trajets sens de déplacement
--  popup statistique des trajets
 -  epaisseur des trajets en fonction du zoom
 -  ajouter les nuages / la nuit et le relief (si possible?) et y mettre le choix de transparence
 -  passer le zoom de 1 en 1
