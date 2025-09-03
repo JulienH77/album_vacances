@@ -1,10 +1,19 @@
-JE DOIS COMMENCER SUR UNE CARTE LEAFLET AVEC TRAJETS (le globe en leaflet en gros) AVEC LE SIDEPANEL.
-DANS LE SIDEPANEL J'AURAI UN BOUTON POUR AFFICHER LE GLOBE.
+MODIF A FAIRE :
+-  cahnger les couleurs des trajets
+-  ne pas commecner avec OSMBuildings activé
+-  points rond sur les villes visitées (comme pour le globe) / ou alors zoom = affiche hotels et photos - dezoom = desaffiche hotels et photos
+-  (voir au dessus) ce qui veut dire zoom = affiche liste jours des photos ?????
+-  desafficher hotels et photos a un zoom mondial
+-  faire un bouton pour le globe trop stylé
+-  ajouter des settings ?? des settings qui se gardent dans le navigateur en question ???
+-  mettre les boutons du globe en haut ou en bas car le sidepanel les cache
+-  quand clique sur une ville dans le globe cela affiche un texte qui disparait "Carte chargée en arriere-plan"
 
 
 
+--------------------------------------------------------------------------------------------------------------------------------
 
-DES IDEES SUR LEAFLET:
+DES IDEES POUR LE VISUEL LIE A LEAFLET :
 -  faire des mouvements de caméra smooth : https://ivansanchez.gitlab.io/Leaflet.ImageOverlay.Arrugator/demo.html
 -  affichage style lampe torche sur fond de carte : http://frogcat.github.io/leaflet-tilelayer-mask/
 -  inserer des fichiers externe : 
@@ -23,10 +32,6 @@ DES IDEES SUR LEAFLET:
             - https://oskosk.github.io/Leaflet.Weather/
 -  données opendata environnementales : https://publiclab.github.io/leaflet-environmental-layers/example/index.html#lat=31.2582&lon=121.3704&zoom=12&layers=Standard,PLpeople,aqicnLayer
 -  carte incurvée et rotative : https://osmbuildings.org/
-
-
-
-DES IDEES POUR LE VISUEL :
 -  afficher des vidéos et des gif
 -  afficher le sens des photos
 -  Ajouter la maison ?
@@ -61,8 +66,13 @@ DES IDEES POUR LE VISUEL :
 -  groupement de légende : https://adammertel.github.io/Leaflet.Control.Select/
 -  visuel de légende : https://ptma.github.io/Leaflet.Legend/examples/legend.html
 -  carousel de photos qui sont présentes dans le visuel actuel de la carte : https://utahemre.github.io/coordinatedimagepreviewdemo.html
--  visuel de sidepanel : https://maxwell-ilai.github.io/Leaflet.SidePanel/examples/
 -  fleches sur les cotés pour préciser où se trouvent les objets en dehors de la carte : https://williamlow.github.io/leaflet-signpost/demo.html
 -  découpage pour impression en plusieurs cartes : https://hersle.github.io/leaflet-route-print/
 -  isochrone : https://www.trafforddatalab.io/leaflet.reachability/leaflet.reachability_example.html
 
+
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+VISUEL FAIT :
+-  visuel de sidepanel : https://maxwell-ilai.github.io/Leaflet.SidePanel/examples/
