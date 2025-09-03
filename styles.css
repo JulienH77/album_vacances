@@ -287,9 +287,9 @@ html, body {
 }
 /* Mobile uniquement */
 @media (max-width: 768px) {
-  #mySidepanelLeft{
+  /*#mySidepanelLeft{
     display: none;
-  }
+  }*/
   #toggleReel {
     display: flex;
     bottom: -25px;
