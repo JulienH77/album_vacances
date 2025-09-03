@@ -8,6 +8,7 @@ ONGLET SETTINGS IDEES :
 -  contraste / description textuelle des photos
 -  theme clair/sombre
 -  activer/desactiver ombre temps reel de OSMBUILDINGS
+-  sens des photos
 
 
 MODIF A FAIRE :
