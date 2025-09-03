@@ -47,6 +47,72 @@ html, body {
   z-index: 9999;
 }
 
+ /* Style du bouton */
+        #toggleGlobeBtn {
+            position: relative;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            background-size: 200% 200%;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            transition: all 0.4s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        /* Animation du dégradé au survol */
+        #toggleGlobeBtn:hover {
+            background-position: 100% 100%;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Animation de l'icône globe */
+        #toggleGlobeBtn::before {
+            content: "🌍";
+            font-size: 20px;
+            display: inline-block;
+            animation: spin 8s linear infinite;
+        }
+
+        /* Effet de brillance */
+        #toggleGlobeBtn::after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.2) 50%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            transform: rotate(30deg);
+            transition: all 0.4s ease;
+        }
+
+        /* Animation de rotation de l'icône */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Texte du bouton */
+        #toggleGlobeBtn span {
+            position: relative;
+            z-index: 1;
+        }
+
 
   /* Boutons ronds */
   .toggle-btn {
