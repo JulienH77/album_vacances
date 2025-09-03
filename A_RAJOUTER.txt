@@ -1,3 +1,15 @@
+ONGLET SETTINGS IDEES :
+-  opacite de chaque cocuhe et img layers
+-  taille marker
+-  taille popup ou photo dedans
+-  filtrer les voyages
+-  mode plein écran
+-  langue
+-  contraste / description textuelle des photos
+-  theme clair/sombre
+-  activer/desactiver ombre temps reel de OSMBUILDINGS
+
+
 MODIF A FAIRE :
 -  ATTENTION - cliquer plusieurs fois sur une ville ajoute les points encore et encore -> DONC PREFERABLE DE FAIRE UN AFFICHAGE AU ZOOM ET LES BOUTONS NE FERONS QUE SUIVRE LES COORDS ET ZOOM DE MON JS
 -  au survol des photos dans le sidepanel le marker de celle ci saute et/ou est plus gros et/ou est rouge
