@@ -24,7 +24,19 @@
 </head>
 <body>
       <div id="root">
-            <div id="globeContainer" class="echarts-for-globe"></div>
+		    <!-- Nouvelle carte Leaflet principale -->
+  			<div id="mainMap"></div>
+		    <!-- Bouton pour ouvrir la bobine -->
+            <div id="toggleReel">^</div>
+            <!-- Bobine horizontale -->
+            <div id="cityReel"></div>
+      </div>
+
+
+	
+<div id="globePopup">
+  <button id="globeClose">X</button>
+		            <div id="globeContainer" class="echarts-for-globe"></div>
             <!-- Buttons -->
             <!-- night -->
             <div id="toggleNight" class="toggle-btn" role="button" aria-pressed="false" aria-label="Basculer ombre de nuit">
@@ -59,11 +71,13 @@
             </div>   
             <!-- A QUOI SERS TU ? -->
             <div id="trajetPopup"></div>
-            <!-- Bouton pour ouvrir la bobine -->
-            <div id="toggleReel">^</div>
-            <!-- Bobine horizontale -->
-            <div id="cityReel"></div>
-      </div>
+	</div>
+
+
+
+
+	
+	
       <!-- Popup Leaflet -->
       <div id="leafletPopup">
             <div id="leafletMap" class="leaflet-container leaflet-touch leaflet-fade-anim leaflet-grab leaflet-touch-drag leaflet-touch-zoom" tabindex="0" style="position: relative;"></div> 
@@ -108,12 +122,12 @@
 									<path d="M2 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v11.5a.5.5 0 0 1-.777.416L7 13.101l-4.223 2.815A.5.5 0 0 1 2 15.5V4zm2-1a1 1 0 0 0-1 1v10.566l3.723-2.482a.5.5 0 0 1 .554 0L11 14.566V4a1 1 0 0 0-1-1H4z"></path>
 									<path d="M4.268 1H12a1 1 0 0 1 1 1v11.768l.223.148A.5.5 0 0 0 14 13.5V2a2 2 0 0 0-2-2H6a2 2 0 0 0-1.732 1z"></path>
 								</svg>-->
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-    <circle cx="12" cy="12" r="10" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20z" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M2 12h20" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M12 2v20" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+								    <circle cx="12" cy="12" r="10" stroke-linecap="round" stroke-linejoin="round"/>
+								    <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20z" stroke-linecap="round" stroke-linejoin="round"/>
+								    <path d="M2 12h20" stroke-linecap="round" stroke-linejoin="round"/>
+								    <path d="M12 2v20" stroke-linecap="round" stroke-linejoin="round"/>
+								</svg>
 
 							</a>
 						</li>
@@ -186,8 +200,8 @@
 						<div class="sidepanel-tab-content" data-tab-content="tab-3">
 						</div>
 						<div class="sidepanel-tab-content" data-tab-content="tab-4">
-							<h4>Afficher le globe</h4>
-							<p>Ajouter un bouton pour afficher le globe.</p>
+						  <h4>Globe 3D</h4>
+						  <button id="toggleGlobeBtn">🌍 Afficher/Masquer le globe</button>
 						</div>
 						<div class="sidepanel-tab-content" data-tab-content="tab-5">
 							<h4>Settings</h4>
@@ -976,7 +990,29 @@ document.querySelectorAll('.city-btn').forEach(btn => {
     }
   });
 });
+
 	
+// Gestion du globe popup
+const globePopup = document.getElementById('globePopup');
+const toggleGlobeBtn = document.getElementById('toggleGlobeBtn');
+const globeClose = document.getElementById('globeClose');
+
+toggleGlobeBtn.addEventListener('click', () => {
+  if (globePopup.style.display === 'block') {
+    globePopup.style.display = 'none';
+  } else {
+    globePopup.style.display = 'block';
+    globeChart.resize(); // très important : recalculer echarts
+  }
+});
+
+globeClose.addEventListener('click', () => {
+  globePopup.style.display = 'none';
+});
+
+
+
+
 })();
 </script>
 </body>
