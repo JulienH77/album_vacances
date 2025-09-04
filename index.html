@@ -21,6 +21,39 @@
       <script src="leaflet-sidepanel.min.js"></script>
       /*OSMBuilding 3D*/
       <script src="https://cdn.osmbuildings.org/classic/0.2.2b/OSMBuildings-Leaflet.js"></script>
+	<style>
+		/* --- Toggle switch style --- */
+		.switch {
+		  position: relative;
+		  display: inline-block;
+		  width: 46px;
+		  height: 24px;
+		}
+		.switch input { display: none; }
+		.slider {
+		  position: absolute;
+		  cursor: pointer;
+		  top: 0; left: 0; right: 0; bottom: 0;
+		  background-color: #ccc;
+		  transition: .3s;
+		  border-radius: 24px;
+		}
+		.slider:before {
+		  position: absolute;
+		  content: "";
+		  height: 18px; width: 18px;
+		  left: 3px; bottom: 3px;
+		  background-color: white;
+		  transition: .3s;
+		  border-radius: 50%;
+		}
+		input:checked + .slider {
+		  background-color: #2196F3;
+		}
+		input:checked + .slider:before {
+		  transform: translateX(22px);
+		}
+	</style>
 </head>
 <body>
       <div id="root">
@@ -205,6 +238,13 @@
 						<div class="sidepanel-tab-content" data-tab-content="tab-5">
 							<h4>Settings</h4>
 							<p>A voir si je peux faire des dingueries dedans.</p>
+							<div class="setting-item">
+							  <label class="switch">
+							    <input type="checkbox" id="toggleDirections">
+							    <span class="slider"></span>
+							  </label>
+							  <span style="margin-left:10px;">Afficher direction des photos</span>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -707,7 +747,43 @@ const redIcon = new L.Icon({
 
 
 
+function createPhotoIcon(color = "blue", rotation = 0, showDirection = false) {
+  // couleur marker : "blue" ou "red"
+  const markerUrl = color === "red" 
+    ? "./icons/marker-icon-red.png" 
+    : "https://unpkg.com/leaflet/dist/images/marker-icon.png";
+  const shadowUrl = "https://unpkg.com/leaflet/dist/images/marker-shadow.png";
 
+  if (!showDirection) {
+    return new L.Icon({
+      iconUrl: markerUrl,
+      shadowUrl,
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41]
+    });
+  }
+
+  // sinon marker + flèche (SVG)
+  const arrowColor = color === "red" ? "red" : "black";
+  const html = `
+    <div style="position:relative; transform:rotate(${rotation}deg);">
+      <svg width="30" height="50" viewBox="0 0 30 50" style="display:block">
+        <image href="${markerUrl}" x="0" y="0" height="41" width="25" />
+        <polygon points="12,0 18,0 15,-12" 
+          fill="${arrowColor}" stroke="white" stroke-width="1"/>
+      </svg>
+    </div>
+  `;
+  return L.divIcon({
+    className: "",
+    html: html,
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34]
+  });
+}
 
 
 
@@ -778,10 +854,13 @@ function openLeafletPopup(cityData) {
 	      <small style="display: block; margin-top: 4px; color: #666;">${dateInfo}</small>
 		`;
 
-		const marker = L.marker([vlat, vlon]).bindPopup(popupContent);
+		const showDir = document.getElementById("toggleDirections").checked;
+		const marker = L.marker([vlat, vlon], {
+		  icon: createPhotoIcon("blue", v.rotation || 0, showDir)
+		}).bindPopup(popupContent);
 		
-        // Sauvegarde du marker dans l'objet pour y accéder depuis la photothèque
-        v._marker = marker;
+		v._marker = marker;
+
 
         // Activer le bouton agrandir
 		marker.on('popupopen', (e) => {
@@ -880,21 +959,42 @@ function openLeafletPopup(cityData) {
             v._marker.openPopup();
           }
         });
-
-        // Survol = changer l’icône du marker
+		// Survol = changer l’icône du marker
 		item.addEventListener('mouseenter', () => {
 		  if (v._marker) {
-		    v._marker.setIcon(redIcon);
+		    const showDir = document.getElementById("toggleDirections").checked;
+		    v._marker.setIcon(createPhotoIcon("red", v.rotation || 0, showDir));
 		  }
 		});
 		item.addEventListener('mouseleave', () => {
 		  if (v._marker) {
-		    v._marker.setIcon(new L.Icon.Default());
+		    const showDir = document.getElementById("toggleDirections").checked;
+		    v._marker.setIcon(createPhotoIcon("blue", v.rotation || 0, showDir));
 		  }
 		});
-        container.appendChild(item);
+		container.appendChild(item);
       });
     });
+
+// Survol = changer l’icône du marker
+item.addEventListener('mouseenter', () => {
+  if (v._marker) {
+    const showDir = document.getElementById("toggleDirections").checked;
+    v._marker.setIcon(createPhotoIcon("red", v.rotation || 0, showDir));
+  }
+});
+
+item.addEventListener('mouseleave', () => {
+  if (v._marker) {
+    const showDir = document.getElementById("toggleDirections").checked;
+    v._marker.setIcon(createPhotoIcon("blue", v.rotation || 0, showDir));
+  }
+});
+
+container.appendChild(item);
+
+
+	  
 
     photosTab.appendChild(container);
   }
