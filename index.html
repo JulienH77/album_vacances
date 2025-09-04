@@ -762,95 +762,82 @@ function createArrowIcon(color = "black", rotation = 0) {
 function openLeafletPopup(cityData) {
   if (!currentLeafletMap) return;
 
-  // --- Supprimer les anciens markers photo si déjà présents ---
+  // Supprimer anciens markers
   if (currentLeafletMap._photoMarkers) {
     currentLeafletMap._photoMarkers.forEach(m => currentLeafletMap.removeLayer(m));
   }
   currentLeafletMap._photoMarkers = [];
 
-  // Recentrer la map principale
+  // Recentrer la carte
   const [lon, lat] = cityData.value;
   const config = cityViewConfig[cityData.name] || { center: [lat, lon], zoom: 13 };
   currentLeafletMap.setView(config.center, config.zoom);
 
+  // --- Markers / popups ---
+  (cityData.visites || []).forEach(v => {
+    const [vlon, vlat] = v.coords;
 
-// --- Photos ---
-(cityData.visites || []).forEach(v => {
-  const [vlon, vlat] = v.coords;
-
-  // Hôtel
-  if (v.type === 'hotel') {
-    const marker = L.marker([vlat, vlon], { icon: hotelIcon })
-      .addTo(currentLeafletMap)
-      .bindPopup(`<b>Hotel</b><br>Du ${v.datedeb} au ${v.datefin}`);
-    currentLeafletMap._photoMarkers.push(marker);
-    return;
-  }
-
-  // Photo
-  if (v.photo) {
-    const popupContent = document.createElement('div');
-    popupContent.style.position = 'relative';
-    popupContent.innerHTML = `
-      <b>${v.name || ''}</b><br>
-      <div style="position: relative; display: inline-block;">
-        <img src="${v.photo}" width="250" style="display:block;border-radius:4px;"/>
-        <button class="enlarge-btn" data-photo="${v.photo}">⤢</button>
-      </div>
-    `;
-
-    const showDir = document.getElementById("toggleDirections").checked;
-
-    // Marker principal (bleu par défaut)
-    const marker = L.marker([vlat, vlon], {
-      icon: new L.Icon.Default()
-    }).bindPopup(popupContent).addTo(currentLeafletMap);
-
-    // Flèche directionnelle
-    let arrowMarker = null;
-    if (showDir) {
-      arrowMarker = L.marker([vlat, vlon], {
-        icon: createArrowIcon("black", v.rotation || 0),
-        interactive: false
-      }).addTo(currentLeafletMap);
+    // Hôtel
+    if (v.type === "hotel") {
+      const marker = L.marker([vlat, vlon], { icon: hotelIcon })
+        .addTo(currentLeafletMap)
+        .bindPopup(`<b>Hotel</b><br>Du ${v.datedeb} au ${v.datefin}`);
+      currentLeafletMap._photoMarkers.push(marker);
+      return;
     }
 
-    // Stockage
-    v._marker = marker;
-    v._arrow = arrowMarker;
-    currentLeafletMap._photoMarkers.push(marker);
+    // Photo
+    if (v.photo) {
+      const popupContent = document.createElement("div");
+      popupContent.innerHTML = `
+        <b>${v.name || ""}</b><br>
+        <div style="position: relative; display: inline-block;">
+          <img src="${v.photo}" width="250" style="display:block;border-radius:4px;"/>
+          <button class="enlarge-btn" data-photo="${v.photo}">⤢</button>
+        </div>
+      `;
 
-    // Activer le bouton agrandir
-    marker.on('popupopen', (e) => {
-      const container = e.popup.getElement();
-      if (!container) return;
-      const btns = container.querySelectorAll('.enlarge-btn');
-      btns.forEach((btn) => {
-        L.DomEvent.disableClickPropagation(btn);
-        btn.addEventListener('click', (ev) => {
-          ev.preventDefault();
-          ev.stopPropagation();
-          const url = btn.getAttribute('data-photo');
-          if (window.openPhotoPopup) window.openPhotoPopup(url);
+      const showDir = document.getElementById("toggleDirections").checked;
+
+      const marker = L.marker([vlat, vlon], {
+        icon: new L.Icon.Default()
+      }).bindPopup(popupContent).addTo(currentLeafletMap);
+
+      let arrowMarker = null;
+      if (showDir) {
+        arrowMarker = L.marker([vlat, vlon], {
+          icon: createArrowIcon("black", v.rotation || 0),
+          interactive: false
+        }).addTo(currentLeafletMap);
+      }
+
+      v._marker = marker;
+      v._arrow = arrowMarker;
+      currentLeafletMap._photoMarkers.push(marker);
+
+      // Bouton agrandir
+      marker.on("popupopen", (e) => {
+        const container = e.popup.getElement();
+        if (!container) return;
+        const btns = container.querySelectorAll(".enlarge-btn");
+        btns.forEach((btn) => {
+          L.DomEvent.disableClickPropagation(btn);
+          btn.addEventListener("click", (ev) => {
+            ev.preventDefault();
+            ev.stopPropagation();
+            const url = btn.getAttribute("data-photo");
+            if (window.openPhotoPopup) window.openPhotoPopup(url);
+          });
         });
       });
-    });
+    }
+  });
 
-  } else {
-    // Marker générique sans photo
-    const marker = L.marker([vlat, vlon])
-      .addTo(currentLeafletMap)
-      .bindPopup(`<b>${v.name || ''}</b>`);
-    currentLeafletMap._photoMarkers.push(marker);
-  }
-});
-
-	
-
-  // --- Mettre à jour l'onglet 3 (photos) ---
+  // --- Mettre à jour l’onglet 3 (photos) ---
   const photosTab = document.querySelector('[data-tab-content="tab-3"]');
-  photosTab.innerHTML = `<h4 style="font-size:1.2em; margin-bottom:-70px; margin-top:-5px;">Les photos</h4>`;
+  photosTab.innerHTML = `<h4 style="font-size:1.2em; margin-bottom:10px;">Les photos</h4>`;
 
+  // Trier photos par date
   const photosList = (cityData.visites || [])
     .filter(v => v.photo)
     .map(v => {
@@ -871,6 +858,7 @@ function openLeafletPopup(cityData) {
     })
     .sort((a, b) => a.dateKey.localeCompare(b.dateKey) || a.timeText.localeCompare(b.timeText));
 
+  // Regrouper par jour
   const groupedByDay = {};
   photosList.forEach(v => {
     if (!groupedByDay[v.dateKey]) groupedByDay[v.dateKey] = [];
@@ -880,7 +868,7 @@ function openLeafletPopup(cityData) {
   if (photosList.length === 0) {
     photosTab.innerHTML += "<p>Aucune photo pour cette ville.</p>";
   } else {
-    const container = document.createElement('div');
+    const container = document.createElement("div");
     container.className = "photos-list";
 
     Object.keys(groupedByDay).sort().forEach(dateKey => {
@@ -888,15 +876,19 @@ function openLeafletPopup(cityData) {
       const month = dateKey.slice(4, 6);
       const day = dateKey.slice(6, 8);
       const dateObj = new Date(`${year}-${month}-${day}`);
-      const dateFormatted = dateObj.toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
+      const dateFormatted = dateObj.toLocaleDateString("fr-FR", {
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+      });
 
-      const dayTitle = document.createElement('div');
-      dayTitle.innerHTML = `<strong style="display:block; margin-top:100px; font-size:15px;">${dateFormatted}</strong>
+      const dayTitle = document.createElement("div");
+      dayTitle.innerHTML = `<strong style="display:block; margin-top:20px; font-size:15px;">${dateFormatted}</strong>
                             <hr style="margin:4px 0 10px; border:none; border-top:1px solid #ccc;">`;
       container.appendChild(dayTitle);
 
       groupedByDay[dateKey].forEach(v => {
-        const item = document.createElement('div');
+        const item = document.createElement("div");
         item.className = "photo-item";
         item.style.marginBottom = "14px";
         const displayName = v.name || v.photoName;
@@ -911,38 +903,31 @@ function openLeafletPopup(cityData) {
           </div>
         `;
 
-        // Clic = recentrer sur le marker correspondant
-        item.addEventListener('click', () => {
+        // Clic = zoomer sur marker
+        item.addEventListener("click", () => {
           if (v._marker) {
             currentLeafletMap.setView(v._marker.getLatLng(), 16);
             v._marker.openPopup();
           }
         });
-		// Survol = changer l’icône du marker
-		item.addEventListener('mouseenter', () => {
-		  if (v._marker) {
-		    v._marker.setIcon(redIcon);
-		    if (v._arrow) v._arrow.setIcon(createArrowIcon("red", v.rotation || 0));
-		  }
-		});
-		item.addEventListener('mouseleave', () => {
-		  if (v._marker) {
-		    v._marker.setIcon(new L.Icon.Default());
-		    if (v._arrow) v._arrow.setIcon(createArrowIcon("black", v.rotation || 0));
-		  }
-		});
 
+        // Survol = marker rouge + flèche rouge
+        item.addEventListener("mouseenter", () => {
+          if (v._marker) v._marker.setIcon(redIcon);
+          if (v._arrow) v._arrow.setIcon(createArrowIcon("red", v.rotation || 0));
+        });
+        item.addEventListener("mouseleave", () => {
+          if (v._marker) v._marker.setIcon(new L.Icon.Default());
+          if (v._arrow) v._arrow.setIcon(createArrowIcon("black", v.rotation || 0));
+        });
         container.appendChild(item);
       });
-    });	  
-
+    });
     photosTab.appendChild(container);
   }
-
- 
-
   currentLeafletMap.invalidateSize();
 }
+
       
 // Fonction pour ouvrir la popup de photo agrandie
 function openPhotoPopup(photoUrl) {
