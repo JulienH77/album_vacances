@@ -773,101 +773,79 @@ function openLeafletPopup(cityData) {
   const config = cityViewConfig[cityData.name] || { center: [lat, lon], zoom: 13 };
   currentLeafletMap.setView(config.center, config.zoom);
 
-  // --- Grouper photos par Année > Mois > Jour ---
-  const photosByYear = {};
-  (cityData.visites || []).forEach(v => {
-    const [vlon, vlat] = v.coords;
 
-    // --- Hôtel ---
-    if (v.type === 'hotel') {
-      const marker = L.marker([vlat, vlon], { icon: hotelIcon })
-        .addTo(currentLeafletMap)
-        .bindPopup(`<b>Hotel</b><br>Du ${v.datedeb} au ${v.datefin}`);
-      currentLeafletMap._photoMarkers.push(marker);
-      return;
+// --- Photos ---
+(cityData.visites || []).forEach(v => {
+  const [vlon, vlat] = v.coords;
+
+  // Hôtel
+  if (v.type === 'hotel') {
+    const marker = L.marker([vlat, vlon], { icon: hotelIcon })
+      .addTo(currentLeafletMap)
+      .bindPopup(`<b>Hotel</b><br>Du ${v.datedeb} au ${v.datefin}`);
+    currentLeafletMap._photoMarkers.push(marker);
+    return;
+  }
+
+  // Photo
+  if (v.photo) {
+    const popupContent = document.createElement('div');
+    popupContent.style.position = 'relative';
+    popupContent.innerHTML = `
+      <b>${v.name || ''}</b><br>
+      <div style="position: relative; display: inline-block;">
+        <img src="${v.photo}" width="250" style="display:block;border-radius:4px;"/>
+        <button class="enlarge-btn" data-photo="${v.photo}">⤢</button>
+      </div>
+    `;
+
+    const showDir = document.getElementById("toggleDirections").checked;
+
+    // Marker principal (bleu par défaut)
+    const marker = L.marker([vlat, vlon], {
+      icon: new L.Icon.Default()
+    }).bindPopup(popupContent).addTo(currentLeafletMap);
+
+    // Flèche directionnelle
+    let arrowMarker = null;
+    if (showDir) {
+      arrowMarker = L.marker([vlat, vlon], {
+        icon: createArrowIcon("black", v.rotation || 0),
+        interactive: false
+      }).addTo(currentLeafletMap);
     }
 
-    // --- Photo ---
-    if (v.photo) {
-      let year, month, day, dateInfo = "";
-      const photoName = v.photo.split('/').pop();
-      const dateMatch = photoName.match(/IMG[-_]?(\d{4})(\d{2})(\d{2})[-_]?([A-Za-z]{2})?(\d{6})?/);
-      if (dateMatch) {
-        year = dateMatch[1];
-        month = dateMatch[2];
-        day = dateMatch[3];
-        const time = dateMatch[5];
-        dateInfo = `Le ${day}/${month}/${year}`;
-        if (time) {
-          const h = time.substring(0, 2);
-          const m = time.substring(2, 4);
-          const s = time.substring(4, 6);
-          dateInfo += ` à ${h}h${m}m${s}s`;
-        }
-      }
+    // Stockage
+    v._marker = marker;
+    v._arrow = arrowMarker;
+    currentLeafletMap._photoMarkers.push(marker);
 
-      if (!photosByYear[year]) photosByYear[year] = {};
-      if (!photosByYear[year][month]) photosByYear[year][month] = {};
-      if (!photosByYear[year][month][day]) photosByYear[year][month][day] = L.layerGroup();
+    // Activer le bouton agrandir
+    marker.on('popupopen', (e) => {
+      const container = e.popup.getElement();
+      if (!container) return;
+      const btns = container.querySelectorAll('.enlarge-btn');
+      btns.forEach((btn) => {
+        L.DomEvent.disableClickPropagation(btn);
+        btn.addEventListener('click', (ev) => {
+          ev.preventDefault();
+          ev.stopPropagation();
+          const url = btn.getAttribute('data-photo');
+          if (window.openPhotoPopup) window.openPhotoPopup(url);
+        });
+      });
+    });
 
-      const popupContent = document.createElement('div');
-      popupContent.style.position = 'relative';
-		popupContent.innerHTML = `
-		  <b>${v.name || ''}</b><br>
-		  <div style="position: relative; display: inline-block;">
-		    <img src="${v.photo}" width="250" style="display:block;border-radius:4px;"/>
-		    <button class="enlarge-btn" data-photo="${v.photo}">⤢</button>
-		  </div>
-	      <small style="display: block; margin-top: 4px; color: #666;">${dateInfo}</small>
-		`;
+  } else {
+    // Marker générique sans photo
+    const marker = L.marker([vlat, vlon])
+      .addTo(currentLeafletMap)
+      .bindPopup(`<b>${v.name || ''}</b>`);
+    currentLeafletMap._photoMarkers.push(marker);
+  }
+});
 
-const showDir = document.getElementById("toggleDirections").checked;
-
-// Marker principal (bleu par défaut)
-const marker = L.marker([vlat, vlon], {
-  icon: new L.Icon.Default()
-}).bindPopup(popupContent);
-
-// Flèche directionnelle
-let arrowMarker = null;
-if (showDir) {
-  arrowMarker = L.marker([vlat, vlon], {
-    icon: createArrowIcon("black", v.rotation || 0),
-    interactive: false // important pour que la flèche ne capte pas les clics
-  }).addTo(currentLeafletMap);
-}
-
-// On stocke pour y accéder plus tard
-v._marker = marker;
-v._arrow = arrowMarker;
-
-
-
-        // Activer le bouton agrandir
-		marker.on('popupopen', (e) => {
-		  const container = e.popup.getElement();
-		  if (!container) return;
-		  const btns = container.querySelectorAll('.enlarge-btn');
-		  btns.forEach((btn) => {
-		    // Empêche Leaflet d’intercepter l’événement
-		    L.DomEvent.disableClickPropagation(btn);
-		    btn.addEventListener('click', (ev) => {
-		      ev.preventDefault();
-		      ev.stopPropagation();
-		      const url = btn.getAttribute('data-photo');
-		      if (window.openPhotoPopup) window.openPhotoPopup(url);
-		    });
-		  });
-		});
-
-      photosByYear[year][month][day].addLayer(marker);
-      currentLeafletMap._photoMarkers.push(marker);
-    } else {
-      const marker = L.marker([vlat, vlon]).addTo(currentLeafletMap)
-        .bindPopup(`<b>${v.name || ''}</b>`);
-      currentLeafletMap._photoMarkers.push(marker);
-    }
-  });
+	
 
   // --- Mettre à jour l'onglet 3 (photos) ---
   const photosTab = document.querySelector('[data-tab-content="tab-3"]');
@@ -960,6 +938,9 @@ v._arrow = arrowMarker;
 
     photosTab.appendChild(container);
   }
+
+ 
+
   currentLeafletMap.invalidateSize();
 }
       
