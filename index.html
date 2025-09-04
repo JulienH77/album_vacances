@@ -21,80 +21,6 @@
       <script src="leaflet-sidepanel.min.js"></script>
       /*OSMBuilding 3D*/
       <script src="https://cdn.osmbuildings.org/classic/0.2.2b/OSMBuildings-Leaflet.js"></script>
-	<style>
-		/* --- Toggle switch style --- */
-		.switch {
-		  position: relative;
-		  display: inline-block;
-		  width: 46px;
-		  height: 24px;
-		}
-		.switch input { display: none; }
-		.slider {
-		  position: absolute;
-		  cursor: pointer;
-		  top: 0; left: 0; right: 0; bottom: 0;
-		  background-color: #ccc;
-		  transition: .3s;
-		  border-radius: 24px;
-		}
-		.slider:before {
-		  position: absolute;
-		  content: "";
-		  height: 18px; width: 18px;
-		  left: 3px; bottom: 3px;
-		  background-color: white;
-		  transition: .3s;
-		  border-radius: 50%;
-		}
-		input:checked + .slider {
-		  background-color: #2196F3;
-		}
-		input:checked + .slider:before {
-		  transform: translateX(22px);
-		}
-
-	    .language-selector {
-	        display: flex;
-	        gap: 5px;
-	        padding: 5px;
-	        background: transparent;
-			justify-content: space-around;
-	    }
-	    .language-option {
-	        width: 40px;
-	        height: 40px;
-	        border: 1px solid #ccc;
-	        background: white;
-	        color: #333;
-	        font-weight: bold;
-	        cursor: pointer;
-	        display: flex;
-	        align-items: center;
-	        justify-content: center;
-			border-radius: 20%;
-	    }
-	    .language-option.active {
-	        background: #f0f0f0;
-	        border-color: #999;
-	    }
-		/* Ligne grise fine */
-		.divider {
-		    border: 0;
-		    height: 1px;
-		    background: #ccc;
-		    margin: 10px 0;
-		}
-		
-		/* Texte \"Choix de la langue\" */
-		.language-label {
-		    margin: 5px 0;
-		    font-size: 14px;
-		    color: #333;
-		    text-align: center;
-		}
-
-	</style>
 </head>
 <body>
       <div id="root">
@@ -279,7 +205,9 @@
 						<div class="sidepanel-tab-content" data-tab-content="tab-5">
 						    <h4>Settings</h4>
 						    <p>A voir si je peux faire des dingueries dedans.</p>
-						    <div class="setting-item">
+						    <!-- Ligne grise fine -->
+						    <hr class="divider">
+							<div class="setting-item">
 						        <label class="switch">
 						            <input type="checkbox" id="toggleDirections">
 						            <span class="slider"></span>
@@ -288,8 +216,7 @@
 						    </div>
 						    <!-- Ligne grise fine -->
 						    <hr class="divider">
-						    <!-- Texte \"Choix de la langue\" -->
-						    <p class="language-label">Choix de la langue</p>
+						    <p>Choix de la langue</p>
 						    <!-- Sélecteur de langue -->
 						    <div class="language-selector">
 						        <button class="language-option active" data-lang="FR">FR</button>
