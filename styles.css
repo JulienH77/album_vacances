@@ -36,8 +36,8 @@ html, body {
 
 #globeClose {
   position: absolute;
-  top: 5px; right: 5px;
-  background: #fff;
+  top: -10px; right: -15px;
+  background: red;
   border: none;
   border-radius: 50%;
   width: 36px; height: 36px;
