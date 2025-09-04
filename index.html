@@ -21,17 +21,6 @@
       <script src="leaflet-sidepanel.min.js"></script>
       /*OSMBuilding 3D*/
       <script src="https://cdn.osmbuildings.org/classic/0.2.2b/OSMBuildings-Leaflet.js"></script>
-	<style>
-		/* ---- Fullscreen photo overlay ---- */
-		.photo-overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.85);z-index:10000}
-		.photo-overlay.open{display:flex}
-		.photo-overlay img{max-width:95vw;max-height:95vh;box-shadow:0 10px 40px rgba(0,0,0,.6);border-radius:8px}
-		.photo-overlay .overlay-close{position:absolute;top:16px;right:16px;font-size:32px;background:transparent;border:none;color:#fff;cursor:pointer;line-height:1}
-		
-		/* ---- Button in Leaflet popup ---- */
-		.enlarge-btn{position:absolute;top:6px;right:6px;background:rgba(0,0,0,.65);color:#fff;border:none;border-radius:6px;padding:4px 8px;cursor:pointer;z-index:1}
-		.enlarge-btn:active{transform:scale(0.98)}
-	</style>
 </head>
 <body>
       <div id="root">
