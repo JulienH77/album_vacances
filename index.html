@@ -788,6 +788,22 @@ function openLeafletPopup(cityData) {
 
     // Photo
     if (v.photo) {
+      let year, month, day, dateInfo = "";
+      const photoName = v.photo.split('/').pop();
+      const dateMatch = photoName.match(/IMG[-_]?(\d{4})(\d{2})(\d{2})[-_]?([A-Za-z]{2})?(\d{6})?/);
+      if (dateMatch) {
+        year = dateMatch[1];
+        month = dateMatch[2];
+        day = dateMatch[3];
+        const time = dateMatch[5];
+        dateInfo = `Le ${day}/${month}/${year}`;
+        if (time) {
+          const h = time.substring(0, 2);
+          const m = time.substring(2, 4);
+          const s = time.substring(4, 6);
+          dateInfo += ` à ${h}h${m}m${s}s`;
+        }
+      }
       const popupContent = document.createElement("div");
       popupContent.innerHTML = `
         <b>${v.name || ""}</b><br>
@@ -795,6 +811,7 @@ function openLeafletPopup(cityData) {
           <img src="${v.photo}" width="250" style="display:block;border-radius:4px;"/>
           <button class="enlarge-btn" data-photo="${v.photo}">⤢</button>
         </div>
+		<small style="display: block; margin-top: 4px; color: #666;">${dateInfo}</small>
       `;
 
       const showDir = document.getElementById("toggleDirections").checked;
