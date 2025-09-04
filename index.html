@@ -974,27 +974,7 @@ function openLeafletPopup(cityData) {
 		});
 		container.appendChild(item);
       });
-    });
-
-// Survol = changer l’icône du marker
-item.addEventListener('mouseenter', () => {
-  if (v._marker) {
-    const showDir = document.getElementById("toggleDirections").checked;
-    v._marker.setIcon(createPhotoIcon("red", v.rotation || 0, showDir));
-  }
-});
-
-item.addEventListener('mouseleave', () => {
-  if (v._marker) {
-    const showDir = document.getElementById("toggleDirections").checked;
-    v._marker.setIcon(createPhotoIcon("blue", v.rotation || 0, showDir));
-  }
-});
-
-container.appendChild(item);
-
-
-	  
+    });	  
 
     photosTab.appendChild(container);
   }
