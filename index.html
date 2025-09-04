@@ -238,9 +238,23 @@
 <script src="visitedCities.js"></script> 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Fonction pour changer la langue
+    // Langue par défaut
+    let currentLanguage = 'FR';
+
+    // Fonction pour obtenir la traduction d'un objet GeoJSON
+    function getTranslatedName(item, lang) {
+        if (item.name && item.name[lang]) {
+            return item.name[lang];
+        }
+        // Retourne le nom par défaut (FR) si la traduction n'existe pas
+        return item.name ? item.name.FR || item.name.EN || item.name : '';
+    }
+
+    // Fonction pour changer la langue dans l'interface
     function changeLanguage(lang) {
-        // Mettre à jour l'état "active" des boutons
+        currentLanguage = lang;
+
+        // Mettre à jour l'état "active" des boutons de langue
         document.querySelectorAll('.language-option').forEach(button => {
             button.classList.remove('active');
             if (button.getAttribute('data-lang') === lang) {
@@ -248,7 +262,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        // Mettre à jour les textes traduisibles
+        // Mettre à jour les textes statiques (HTML)
         document.querySelectorAll('[data-lang-text]').forEach(element => {
             const translations = element.getAttribute('data-lang-text').split(';');
             let textForLang = '';
@@ -262,6 +276,26 @@ document.addEventListener('DOMContentLoaded', function() {
                 element.textContent = textForLang;
             }
         });
+
+        // Mettre à jour les noms dynamiques (GeoJSON) si nécessaire
+        // Exemple : si tu as une liste ou des popups à mettre à jour
+        updateDynamicNames(lang);
+    }
+
+    // Fonction pour mettre à jour les noms dynamiques (ex: popups Leaflet, listes, etc.)
+    function updateDynamicNames(lang) {
+        // Exemple : Parcours tes données GeoJSON et mets à jour les éléments affichés
+        // Remplace `visites` par ton tableau de données GeoJSON
+        if (typeof visites !== 'undefined') {
+            visites.forEach(visite => {
+                if (visite.marker && visite.marker.getPopup) {
+                    const popup = visite.marker.getPopup();
+                    const translatedName = getTranslatedName(visite, lang);
+                    popup.setContent(translatedName);
+                }
+                // Ajoute ici d'autres mises à jour pour listes, infobulles, etc.
+            });
+        }
     }
 
     // Écouter les clics sur les boutons de langue
@@ -271,7 +305,11 @@ document.addEventListener('DOMContentLoaded', function() {
             changeLanguage(lang);
         });
     });
+
+    // Initialisation : appliquer la langue par défaut au chargement
+    changeLanguage(currentLanguage);
 });
+
 
 (async function(){
 	
