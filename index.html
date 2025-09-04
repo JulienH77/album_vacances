@@ -53,6 +53,29 @@
 		input:checked + .slider:before {
 		  transform: translateX(22px);
 		}
+
+	    .language-selector {
+	        display: flex;
+	        gap: 5px;
+	        padding: 5px;
+	        background: transparent;
+	    }
+	    .language-option {
+	        width: 40px;
+	        height: 40px;
+	        border: 1px solid #ccc;
+	        background: white;
+	        color: #333;
+	        font-weight: bold;
+	        cursor: pointer;
+	        display: flex;
+	        align-items: center;
+	        justify-content: center;
+	    }
+	    .language-option.active {
+	        background: #f0f0f0;
+	        border-color: #999;
+	    }
 	</style>
 </head>
 <body>
@@ -245,6 +268,11 @@
 							  </label>
 							  <span style="margin-left:10px;">Afficher direction des photos</span>
 							</div>
+							<div class="language-selector">
+							    <button class="language-option active" data-lang="FR">FR</button>
+							    <button class="language-option" data-lang="EN">EN</button>
+							    <button class="language-option" data-lang="CH">CH</button>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -258,6 +286,13 @@
 // villes visitées avec photos et coordonnées
 <script src="visitedCities.js"></script> 
 <script>
+document.querySelectorAll('.language-option').forEach(button => {
+    button.addEventListener('click', function() {
+        document.querySelectorAll('.language-option').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+    });
+});
+
 (async function(){
 
   /* Les variables */
