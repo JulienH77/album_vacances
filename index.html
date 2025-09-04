@@ -59,6 +59,7 @@
 	        gap: 5px;
 	        padding: 5px;
 	        background: transparent;
+			justify-content: space-around;
 	    }
 	    .language-option {
 	        width: 40px;
@@ -71,11 +72,28 @@
 	        display: flex;
 	        align-items: center;
 	        justify-content: center;
+			border-radius: 20%;
 	    }
 	    .language-option.active {
 	        background: #f0f0f0;
 	        border-color: #999;
 	    }
+		/* Ligne grise fine */
+		.divider {
+		    border: 0;
+		    height: 1px;
+		    background: #ccc;
+		    margin: 10px 0;
+		}
+		
+		/* Texte \"Choix de la langue\" */
+		.language-label {
+		    margin: 5px 0;
+		    font-size: 14px;
+		    color: #333;
+		    text-align: center;
+		}
+
 	</style>
 </head>
 <body>
@@ -259,20 +277,25 @@
 						  <button id="toggleGlobeBtn"><span>Afficher le Globe</span></button>
 						</div>
 						<div class="sidepanel-tab-content" data-tab-content="tab-5">
-							<h4>Settings</h4>
-							<p>A voir si je peux faire des dingueries dedans.</p>
-							<div class="setting-item">
-							  <label class="switch">
-							    <input type="checkbox" id="toggleDirections">
-							    <span class="slider"></span>
-							  </label>
-							  <span style="margin-left:10px;">Afficher direction des photos</span>
-							</div>
-							<div class="language-selector">
-							    <button class="language-option active" data-lang="FR">FR</button>
-							    <button class="language-option" data-lang="EN">EN</button>
-							    <button class="language-option" data-lang="CH">CH</button>
-							</div>
+						    <h4>Settings</h4>
+						    <p>A voir si je peux faire des dingueries dedans.</p>
+						    <div class="setting-item">
+						        <label class="switch">
+						            <input type="checkbox" id="toggleDirections">
+						            <span class="slider"></span>
+						        </label>
+						        <span style="margin-left:10px;">Afficher direction des photos</span>
+						    </div>
+						    <!-- Ligne grise fine -->
+						    <hr class="divider">
+						    <!-- Texte \"Choix de la langue\" -->
+						    <p class="language-label">Choix de la langue</p>
+						    <!-- Sélecteur de langue -->
+						    <div class="language-selector">
+						        <button class="language-option active" data-lang="FR">FR</button>
+						        <button class="language-option" data-lang="EN">EN</button>
+						        <button class="language-option" data-lang="CH">CH</button>
+						    </div>
 						</div>
 					</div>
 				</div>
