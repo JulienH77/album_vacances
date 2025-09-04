@@ -15,7 +15,7 @@ MODIF A FAIRE :
 
 -  refaire marcher le globe et ses boutons
 -  rendre beaucoup plus beau les stats des trajets
-
+-  HEURE TRAJETS QUE SUR LES HEURES FRANCAISE DONC ATTENTION CHINE
 
 -  faire que la carte leaflet suive en taille le sidepanel ?
 -  ATTENTION - cliquer plusieurs fois sur une ville ajoute les points encore et encore -> DONC PREFERABLE DE FAIRE UN AFFICHAGE AU ZOOM ET LES BOUTONS NE FERONS QUE SUIVRE LES COORDS ET ZOOM DE MON JS
