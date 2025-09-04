@@ -711,6 +711,23 @@ const redIcon = new L.Icon({
 
 
 
+function createArrowIcon(color = "black", rotation = 0) {
+  const size = 20;
+  return L.divIcon({
+    className: "",
+    html: `
+      <div style="transform: rotate(${rotation}deg); width:${size}px; height:${size}px; display:flex; align-items:center; justify-content:center;">
+        <svg width="${size}" height="${size}" viewBox="0 0 24 24">
+          <polygon points="12,2 22,22 12,17 2,22" fill="${color}" />
+        </svg>
+      </div>
+    `,
+    iconSize: [size, size],
+    iconAnchor: [size/2, size/2 + 20] // pour que ça se cale juste sous le marker
+  });
+}
+
+
 
 
 
@@ -742,56 +759,6 @@ const redIcon = new L.Icon({
   };
 })();
 
-
-
-
-
-
-function createPhotoIcon(color = "blue", rotation = 0, showDirection = false) {
-  // couleur marker : "blue" ou "red"
-  const markerUrl = color === "red" 
-    ? "./icons/marker-icon-red.png" 
-    : "https://unpkg.com/leaflet/dist/images/marker-icon.png";
-  const shadowUrl = "https://unpkg.com/leaflet/dist/images/marker-shadow.png";
-
-  if (!showDirection) {
-    return new L.Icon({
-      iconUrl: markerUrl,
-      shadowUrl,
-      iconSize: [25, 41],
-      iconAnchor: [12, 41],
-      popupAnchor: [1, -34],
-      shadowSize: [41, 41]
-    });
-  }
-
-  // sinon marker + flèche (SVG)
-  const arrowColor = color === "red" ? "red" : "black";
-  const html = `
-    <div style="position:relative; transform:rotate(${rotation}deg);">
-      <svg width="30" height="50" viewBox="0 0 30 50" style="display:block">
-        <image href="${markerUrl}" x="0" y="0" height="41" width="25" />
-        <polygon points="12,0 18,0 15,-12" 
-          fill="${arrowColor}" stroke="white" stroke-width="1"/>
-      </svg>
-    </div>
-  `;
-  return L.divIcon({
-    className: "",
-    html: html,
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34]
-  });
-}
-
-
-
-
-
-
-
-	
 function openLeafletPopup(cityData) {
   if (!currentLeafletMap) return;
 
@@ -854,12 +821,26 @@ function openLeafletPopup(cityData) {
 	      <small style="display: block; margin-top: 4px; color: #666;">${dateInfo}</small>
 		`;
 
-		const showDir = document.getElementById("toggleDirections").checked;
-		const marker = L.marker([vlat, vlon], {
-		  icon: createPhotoIcon("blue", v.rotation || 0, showDir)
-		}).bindPopup(popupContent);
-		
-		v._marker = marker;
+const showDir = document.getElementById("toggleDirections").checked;
+
+// Marker principal (bleu par défaut)
+const marker = L.marker([vlat, vlon], {
+  icon: new L.Icon.Default()
+}).bindPopup(popupContent);
+
+// Flèche directionnelle
+let arrowMarker = null;
+if (showDir) {
+  arrowMarker = L.marker([vlat, vlon], {
+    icon: createArrowIcon("black", v.rotation || 0),
+    interactive: false // important pour que la flèche ne capte pas les clics
+  }).addTo(currentLeafletMap);
+}
+
+// On stocke pour y accéder plus tard
+v._marker = marker;
+v._arrow = arrowMarker;
+
 
 
         // Activer le bouton agrandir
@@ -962,17 +943,18 @@ function openLeafletPopup(cityData) {
 		// Survol = changer l’icône du marker
 		item.addEventListener('mouseenter', () => {
 		  if (v._marker) {
-		    const showDir = document.getElementById("toggleDirections").checked;
-		    v._marker.setIcon(createPhotoIcon("red", v.rotation || 0, showDir));
+		    v._marker.setIcon(redIcon);
+		    if (v._arrow) v._arrow.setIcon(createArrowIcon("red", v.rotation || 0));
 		  }
 		});
 		item.addEventListener('mouseleave', () => {
 		  if (v._marker) {
-		    const showDir = document.getElementById("toggleDirections").checked;
-		    v._marker.setIcon(createPhotoIcon("blue", v.rotation || 0, showDir));
+		    v._marker.setIcon(new L.Icon.Default());
+		    if (v._arrow) v._arrow.setIcon(createArrowIcon("black", v.rotation || 0));
 		  }
 		});
-		container.appendChild(item);
+
+        container.appendChild(item);
       });
     });	  
 
