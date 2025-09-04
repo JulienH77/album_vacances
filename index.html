@@ -237,15 +237,44 @@
 // villes visitées avec photos et coordonnées
 <script src="visitedCities.js"></script> 
 <script>
-document.querySelectorAll('.language-option').forEach(button => {
-    button.addEventListener('click', function() {
-        document.querySelectorAll('.language-option').forEach(b => b.classList.remove('active'));
-        this.classList.add('active');
+document.addEventListener('DOMContentLoaded', function() {
+    // Fonction pour changer la langue
+    function changeLanguage(lang) {
+        // Mettre à jour l'état "active" des boutons
+        document.querySelectorAll('.language-option').forEach(button => {
+            button.classList.remove('active');
+            if (button.getAttribute('data-lang') === lang) {
+                button.classList.add('active');
+            }
+        });
+
+        // Mettre à jour les textes traduisibles
+        document.querySelectorAll('[data-lang-text]').forEach(element => {
+            const translations = element.getAttribute('data-lang-text').split(';');
+            let textForLang = '';
+            translations.forEach(translation => {
+                const [langCode, text] = translation.split(':');
+                if (langCode === lang) {
+                    textForLang = text;
+                }
+            });
+            if (textForLang) {
+                element.textContent = textForLang;
+            }
+        });
+    }
+
+    // Écouter les clics sur les boutons de langue
+    document.querySelectorAll('.language-option').forEach(button => {
+        button.addEventListener('click', function() {
+            const lang = this.getAttribute('data-lang');
+            changeLanguage(lang);
+        });
     });
 });
 
 (async function(){
-
+	
   /* Les variables */
   const PATH_EARTH_DAY_1 = './GLOBE/earth.jpg';
   const PATH_EARTH_DAY_2 = './GLOBE/world.topo.bathy.200401.jpg';
