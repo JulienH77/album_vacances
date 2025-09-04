@@ -32,15 +32,15 @@ const visitedCities = [
     
     /*-------------------------------------------------------- C H I N A ------------------------------------------------------------*/
     {
-      name: 'Beijing',
+      name: {FR:'Beijing', EN:'Beijing', CH:'北京'}
       value: [116.383331, 39.916668, 0],
       visites: [
         { type: 'hotel', datedeb:'11/05/2025', datefin:'15/05/2025', coords:[116.4106, 39.90006] },
         { type: 'hotel', datedeb:'28/05/2025', datefin:'30/05/2025', coords:[116.38023, 39.86887] },
         /*The great wall*/
-        { name:'Entering the Great Wall', coords:[116.5379, 40.41597], photo:'./IMG/2025/China/Beijing/IMG_20250512_130110.jpg', rotation: 25 },
-        { name:'Arriving in cabble car', coords:[116.55903, 40.43878], photo:'./IMG/2025/China/Beijing/IMG_20250512_140556.jpg', rotation: 90 },
-        { name:'Me on the Great Wall', coords:[116.55938, 40.44054], photo:'./IMG/2025/China/Beijing/IMG_20250512_141016.jpg', rotation: 312 },
+        { name:{FR:'Entrée vers la Grande Muraille de Chine', EN:'Entering the Great Wall', CH:'進入長城'}, coords:[116.5379, 40.41597], photo:'./IMG/2025/China/Beijing/IMG_20250512_130110.jpg', rotation: 25 },
+        { name:{FR:'Arrivée en téléphérique', EN:'Arriving in cabble car', CH:'搭乘纜車抵達'}, coords:[116.55903, 40.43878], photo:'./IMG/2025/China/Beijing/IMG_20250512_140556.jpg', rotation: 90 },
+        { name:{FR:'Moi sur la Grande Muraille de Chine', EN:'Me on the Great Wall', CH:'我在長城上'}, coords:[116.55938, 40.44054], photo:'./IMG/2025/China/Beijing/IMG_20250512_141016.jpg', rotation: 312 },
         { name:'The long line of the Great Wall', coords:[116.56053, 40.43988], photo:'./IMG/2025/China/Beijing/IMG_20250512_141348.jpg', rotation: 157 },
         { name:'The long line of the Great Wall', coords:[116.56099, 40.43901], photo:'./IMG/2025/China/Beijing/IMG_20250512_141844.jpg', rotation: 157 },
         { name:'My fat body on the Great Wall', coords:[116.56119, 40.43869], photo:'./IMG/2025/China/Beijing/IMG_20250512_142025.jpg', rotation: 162 },
