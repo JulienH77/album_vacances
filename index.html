@@ -21,6 +21,17 @@
       <script src="leaflet-sidepanel.min.js"></script>
       /*OSMBuilding 3D*/
       <script src="https://cdn.osmbuildings.org/classic/0.2.2b/OSMBuildings-Leaflet.js"></script>
+	<style>
+		/* ---- Fullscreen photo overlay ---- */
+		.photo-overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.85);z-index:10000}
+		.photo-overlay.open{display:flex}
+		.photo-overlay img{max-width:95vw;max-height:95vh;box-shadow:0 10px 40px rgba(0,0,0,.6);border-radius:8px}
+		.photo-overlay .overlay-close{position:absolute;top:16px;right:16px;font-size:32px;background:transparent;border:none;color:#fff;cursor:pointer;line-height:1}
+		
+		/* ---- Button in Leaflet popup ---- */
+		.enlarge-btn{position:absolute;top:6px;right:6px;background:rgba(0,0,0,.65);color:#fff;border:none;border-radius:6px;padding:4px 8px;cursor:pointer;z-index:1}
+		.enlarge-btn:active{transform:scale(0.98)}
+	</style>
 </head>
 <body>
       <div id="root">
@@ -669,6 +680,53 @@ const redIcon = new L.Icon({
   shadowSize: [41, 41]
 });
 
+
+
+
+
+
+
+
+// Crée l’overlay plein écran si absent, et expose window.openPhotoPopup(...)
+(function ensurePhotoOverlay(){
+  if (document.getElementById('photoOverlay')) return;
+  const overlay = document.createElement('div');
+  overlay.id = 'photoOverlay';
+  overlay.className = 'photo-overlay';
+  overlay.innerHTML = `
+    <button class="overlay-close" aria-label="Fermer">&times;</button>
+    <img id="photoOverlayImg" alt="">
+  `;
+  document.body.appendChild(overlay);
+
+  const img = overlay.querySelector('#photoOverlayImg');
+  const close = () => overlay.classList.remove('open');
+
+  overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+  overlay.querySelector('.overlay-close').addEventListener('click', close);
+  window.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+
+  // Fonction globale appelée par le bouton "agrandir"
+  window.openPhotoPopup = (url) => {
+    img.src = url;
+    overlay.classList.add('open');
+  };
+})();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
 function openLeafletPopup(cityData) {
   if (!currentLeafletMap) return;
 
@@ -722,29 +780,35 @@ function openLeafletPopup(cityData) {
 
       const popupContent = document.createElement('div');
       popupContent.style.position = 'relative';
-      popupContent.innerHTML = `
-        <b>${v.name || ''}</b><br>
-        <div style="position: relative; display: inline-block;">
-          <img src="${v.photo}" width="250" style="display: block; border-radius: 4px;"/>
-          <button class="enlarge-btn" data-photo="${v.photo}">⤢</button>
-        </div>
-        <small style="display: block; margin-top: 4px; color: #666;">${dateInfo}</small>
-      `;
+		popupContent.innerHTML = `
+		  <b>${v.name || ''}</b><br>
+		  <div style="position: relative; display: inline-block;">
+		    <img src="${v.photo}" width="250" style="display:block;border-radius:4px;"/>
+		    <button class="enlarge-btn" data-photo="${v.photo}">⤢</button>
+		  </div>
+		`;
 
-      const marker = L.marker([vlat, vlon]).bindPopup(popupContent);
+		const marker = L.marker([vlat, vlon]).bindPopup(popupContent);
+		
+        // Sauvegarde du marker dans l'objet pour y accéder depuis la photothèque
+        v._marker = marker;
 
-      // Sauvegarde du marker dans l'objet pour y accéder depuis la photothèque
-      v._marker = marker;
-
-      // Activer le bouton agrandir
-      marker.on('popupopen', function () {
-        document.querySelectorAll('.enlarge-btn').forEach(btn => {
-          btn.onclick = function (e) {
-            e.stopPropagation();
-            openPhotoPopup(this.getAttribute('data-photo'));
-          };
-        });
-      });
+        // Activer le bouton agrandir
+		marker.on('popupopen', (e) => {
+		  const container = e.popup.getElement();
+		  if (!container) return;
+		  const btns = container.querySelectorAll('.enlarge-btn');
+		  btns.forEach((btn) => {
+		    // Empêche Leaflet d’intercepter l’événement
+		    L.DomEvent.disableClickPropagation(btn);
+		    btn.addEventListener('click', (ev) => {
+		      ev.preventDefault();
+		      ev.stopPropagation();
+		      const url = btn.getAttribute('data-photo');
+		      if (window.openPhotoPopup) window.openPhotoPopup(url);
+		    });
+		  });
+		});
 
       photosByYear[year][month][day].addLayer(marker);
       currentLeafletMap._photoMarkers.push(marker);
