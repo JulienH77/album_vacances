@@ -786,6 +786,7 @@ function openLeafletPopup(cityData) {
 		    <img src="${v.photo}" width="250" style="display:block;border-radius:4px;"/>
 		    <button class="enlarge-btn" data-photo="${v.photo}">⤢</button>
 		  </div>
+	      <small style="display: block; margin-top: 4px; color: #666;">${dateInfo}</small>
 		`;
 
 		const marker = L.marker([vlat, vlon]).bindPopup(popupContent);
