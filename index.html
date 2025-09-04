@@ -710,27 +710,27 @@ const redIcon = new L.Icon({
 });
 
 
+
 function createArrowIcon(color = "black", rotation = 0) {
+  const size = 20;
   return L.divIcon({
-    className: "arrow-icon",
+    className: "",
     html: `
-      <div style="
-        transform: rotate(${rotation}deg);
-        width: 24px;
-        height: 24px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      ">
-        <svg width="20" height="20" viewBox="0 0 24 24">
+      <div style="transform: rotate(${rotation}deg); width:${size}px; height:${size}px; display:flex; align-items:center; justify-content:center;">
+        <svg width="${size}" height="${size}" viewBox="0 0 24 24">
           <polygon points="12,2 22,22 12,17 2,22" fill="${color}" />
         </svg>
       </div>
     `,
-    iconSize: [24, 24],
-    iconAnchor: [12, -6] // ancre ajustée : colle la flèche sous le marker
+    iconSize: [size, size],
+    iconAnchor: [size/2, size/2 + 20] // pour que ça se cale juste sous le marker
   });
 }
+
+
+
+
+
 
 
 // Crée l’overlay plein écran si absent, et expose window.openPhotoPopup(...)
@@ -826,26 +826,20 @@ const showDir = document.getElementById("toggleDirections").checked;
 // Marker principal (bleu par défaut)
 const marker = L.marker([vlat, vlon], {
   icon: new L.Icon.Default()
-}).bindPopup(popupContent).addTo(currentLeafletMap);
+}).bindPopup(popupContent);
 
 // Flèche directionnelle
 let arrowMarker = null;
 if (showDir) {
   arrowMarker = L.marker([vlat, vlon], {
     icon: createArrowIcon("black", v.rotation || 0),
-    interactive: false, // pour ne pas gêner les clics
-    zIndexOffset: -1000 // pour que la flèche reste sous le marker
+    interactive: false // important pour que la flèche ne capte pas les clics
   }).addTo(currentLeafletMap);
 }
 
-// Stockage
+// On stocke pour y accéder plus tard
 v._marker = marker;
 v._arrow = arrowMarker;
-
-// Mémoriser pour suppression
-currentLeafletMap._photoMarkers.push(marker);
-if (arrowMarker) currentLeafletMap._photoMarkers.push(arrowMarker);
-
 
 
 
@@ -948,15 +942,17 @@ if (arrowMarker) currentLeafletMap._photoMarkers.push(arrowMarker);
         });
 		// Survol = changer l’icône du marker
 		item.addEventListener('mouseenter', () => {
-		  if (v._marker) v._marker.setIcon(redIcon);
-		  if (v._arrow) v._arrow.setIcon(createArrowIcon("red", v.rotation || 0));
+		  if (v._marker) {
+		    v._marker.setIcon(redIcon);
+		    if (v._arrow) v._arrow.setIcon(createArrowIcon("red", v.rotation || 0));
+		  }
 		});
-		
 		item.addEventListener('mouseleave', () => {
-		  if (v._marker) v._marker.setIcon(new L.Icon.Default());
-		  if (v._arrow) v._arrow.setIcon(createArrowIcon("black", v.rotation || 0));
+		  if (v._marker) {
+		    v._marker.setIcon(new L.Icon.Default());
+		    if (v._arrow) v._arrow.setIcon(createArrowIcon("black", v.rotation || 0));
+		  }
 		});
-
 
         container.appendChild(item);
       });
