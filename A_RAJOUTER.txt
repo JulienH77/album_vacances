@@ -17,14 +17,12 @@ MODIF A FAIRE :
 -  rendre beaucoup plus beau les stats des trajets
 -  HEURE TRAJETS QUE SUR LES HEURES FRANCAISE DONC ATTENTION CHINE
 
--  faire que la carte leaflet suive en taille le sidepanel ?
--  ATTENTION - cliquer plusieurs fois sur une ville ajoute les points encore et encore -> DONC PREFERABLE DE FAIRE UN AFFICHAGE AU ZOOM ET LES BOUTONS NE FERONS QUE SUIVRE LES COORDS ET ZOOM DE MON JS
--  au survol des photos dans le sidepanel le marker de celle ci saute et/ou est plus gros et/ou est rouge
--  ne pas commencer avec OSMBuildings activé
+-  faire que la carte leaflet suive en taille le sidepanel ? (NUL)
+-  PREFERABLE DE FAIRE UN AFFICHAGE AU ZOOM ET LES BOUTONS NE FERONS QUE SUIVRE LES COORDS ET ZOOM DE MON JS ?
 -  points rond sur les villes visitées (comme pour le globe) / ou alors zoom = affiche hotels et photos - dezoom = desaffiche hotels et photos
--  (voir au dessus) ce qui veut dire zoom = affiche liste jours des photos ?????
+-  supprimer liste jours des photos a cocher car embetant pour le reste je pense
 -  desafficher hotels et photos a un zoom mondial
--  faire un bouton pour le globe trop stylé (idée : faire un globe geant cliquable ???)
+-  faire un bouton pour le globe trop stylé (idée : faire un globe geant cliquable : https://stackoverflow.com/questions/27781634/rotating-globe-in-css )
 -  ajouter des settings ?? des settings qui se gardent dans le navigateur en question ???
 -  mettre les boutons du globe en haut ou en bas car le sidepanel les cache
 -  quand clique sur une ville dans le globe cela affiche un texte qui disparait "Carte chargée en arriere-plan"
@@ -104,3 +102,5 @@ DES IDEES POUR LE VISUEL LIE A LEAFLET :
 
 VISUEL FAIT :
 -  visuel de sidepanel : https://maxwell-ilai.github.io/Leaflet.SidePanel/examples/
+-  au survol des photos dans le sidepanel le marker de celle ci saute et/ou est plus gros et/ou est rouge
+-  ne pas commencer avec OSMBuildings activé
