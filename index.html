@@ -22,24 +22,15 @@
       /*OSMBuilding 3D*/
       <script src="https://cdn.osmbuildings.org/classic/0.2.2b/OSMBuildings-Leaflet.js"></script>
 	<style>
-		.voyages-control {
-		  background: rgba(255,255,255,0.9);
-		  padding: 8px 12px;
-		  border-radius: 8px;
-		  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
-		  font-size: 14px;
-		  line-height: 1.4;
-		  max-height: 250px;
-		  overflow-y: auto;
+		.voyages-container {
+		  margin-top: 8px;
 		}
-		.voyages-control strong {
+		.voyages-container strong {
 		  display: block;
-		  margin-bottom: 6px;
-		  font-size: 15px;
-		}
-		.voyages-control label {
 		  margin-bottom: 4px;
-		  display: block;
+		}
+		.voyages-container label {
+		  font-weight: normal;
 		}
 	</style>
 </head>
@@ -716,7 +707,9 @@ const baseMaps = {
 const overlayMaps = { 
   "3D buildings": osmb 
 };
-const layerControl = L.control.layers(baseMaps, overlayMaps).addTo(currentLeafletMap);
+/*const layerControl = L.control.layers(baseMaps, overlayMaps).addTo(currentLeafletMap);
+currentLeafletMap._layerControl = layerControl;*/
+const layerControl = L.control.layers(baseMaps, overlayMaps/*, { collapsed: false }*/).addTo(currentLeafletMap);
 currentLeafletMap._layerControl = layerControl;
 L.control.scale({ position: 'bottomleft' }).addTo(currentLeafletMap);
 L.control.sidepanel('mySidepanelLeft', {
@@ -726,11 +719,25 @@ L.control.sidepanel('mySidepanelLeft', {
   pushControls: true
 }).addTo(currentLeafletMap);
 
+
+// Création du bloc "Mes voyages"
+const voyagesGroups = {}; // rempli dans fetch (voir plus bas)
+
+// Ajout d'un conteneur custom DANS le panneau Leaflet
+const voyagesContainer = L.DomUtil.create("div", "leaflet-control-layers-separator voyages-container");
+voyagesContainer.innerHTML = `<strong>Mes voyages</strong><div id="voyagesListLeaflet"></div>`;
+
+// Ajoute le bloc après les couches existantes
+const layersList = layerControl._container.querySelector(".leaflet-control-layers-overlays");
+layersList.appendChild(voyagesContainer);
+
+	
 // === Trajets ===
 fetch('GEOJSON/TRAJETS_ALL_vacances_wgs.geojson')
   .then(r => r.json())
   .then(data => {
     const voyagesGroups = {};
+    const voyagesListLeaflet = document.getElementById("voyagesListLeaflet");
     function trajetStyle(feature) {
       const type = feature.properties.trajet || "";
       let color = "black";
@@ -748,7 +755,7 @@ fetch('GEOJSON/TRAJETS_ALL_vacances_wgs.geojson')
       return `${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()} `
            + `${pad(d.getHours())}h${pad(d.getMinutes())}`;
     }
-    // Création des trajets groupés par voyage
+    // Construction des voyages
     data.features.forEach(f => {
       const voyage = f.properties.voyage || "Autres";
       if (!voyagesGroups[voyage]) voyagesGroups[voyage] = L.layerGroup();
@@ -769,39 +776,27 @@ fetch('GEOJSON/TRAJETS_ALL_vacances_wgs.geojson')
       });
       voyagesGroups[voyage].addLayer(trajetLayer);
     });
-    // Création du contrôle custom
-    const voyagesControl = L.control({ position: "bottomright" });
-    voyagesControl.onAdd = function(map) {
-      const div = L.DomUtil.create("div", "voyages-control");
-      div.innerHTML = `<strong>Mes voyages</strong><br/>`;
-      Object.keys(voyagesGroups).sort().forEach(v => {
-        const id = "voy_" + v.replace(/[^A-Za-z0-9_-]/g, "_");
-        const label = document.createElement("label");
-        label.style.display = "block";
-        label.style.cursor = "pointer";
-        label.innerHTML = `<input type="checkbox" id="${id}" checked> ${v}`;
-        div.appendChild(label);
-        // gestion checkbox
-        setTimeout(() => {
-          const cb = div.querySelector("#" + id);
-          cb.addEventListener("change", () => {
-            if (cb.checked) {
-              voyagesGroups[v].addTo(map);
-            } else {
-              map.removeLayer(voyagesGroups[v]);
-            }
-          });
-          // ajoute par défaut
-          voyagesGroups[v].addTo(map);
-        }, 0);
+    // Ajoute les cases dans la légende Leaflet
+    Object.keys(voyagesGroups).sort().forEach(v => {
+      const id = "voy_" + v.replace(/[^A-Za-z0-9_-]/g, "_");
+      const label = document.createElement("label");
+      label.style.display = "block";
+      label.style.cursor = "pointer";
+      label.innerHTML = `<input type="checkbox" id="${id}" checked> ${v}`;
+      voyagesListLeaflet.appendChild(label);
+      // Gestion case
+      const cb = label.querySelector("input");
+      cb.addEventListener("change", () => {
+        if (cb.checked) {
+          voyagesGroups[v].addTo(currentLeafletMap);
+        } else {
+          currentLeafletMap.removeLayer(voyagesGroups[v]);
+        }
       });
-      // empêcher la carte de bouger quand on clique sur le contrôle
-      L.DomEvent.disableClickPropagation(div);
-      return div;
-    };
-    voyagesControl.addTo(currentLeafletMap);
+      // coche par défaut
+      voyagesGroups[v].addTo(currentLeafletMap);
+    });
   });
-
 
 const redIcon = new L.Icon({
   iconUrl: './GLOBE/symboles/marker-icon-red.png',
