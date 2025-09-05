@@ -757,7 +757,7 @@ fetch('GEOJSON/TRAJETS_ALL_vacances_wgs.geojson')
         style: trajetStyle,
         onEachFeature: (feature, layer) => {
           const p = feature.properties;
-		  // Fonction pour formater une date en "DD/MM/YYYY HHhMMmSSs"
+		  // Fonction pour formater une date en "DD/MM/YYYY HHhMM"
 		  function formatDate(dateString) {
 		    const date = new Date(dateString);
 		    const day = String(date.getDate()).padStart(2, '0');
@@ -765,9 +765,8 @@ fetch('GEOJSON/TRAJETS_ALL_vacances_wgs.geojson')
 		    const year = date.getFullYear();
 		    const hours = String(date.getHours()).padStart(2, '0');
 		    const minutes = String(date.getMinutes()).padStart(2, '0');
-		    const seconds = String(date.getSeconds()).padStart(2, '0');
 		
-		    return `${day}/${month}/${year} ${hours}h${minutes}m${seconds}s`;
+		    return `${day}/${month}/${year} ${hours}h${minutes}`;
 		  }
 		  // Tableau de couleurs pour les voyages
 		  const voyageColors = ['#FFDAB9', '#E6E6FA', '#FFB6C1', '#98FB98', '#ADD8E6', '#F0E68C'];
@@ -788,33 +787,39 @@ fetch('GEOJSON/TRAJETS_ALL_vacances_wgs.geojson')
 				    Trajet fait en ${p.trajet || ''}
 				  </div>
 				  <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
-				    <tr>
-				      <th style="border: 1px solid #ccc; padding: 8px; text-align: center; background-color: #f9f9f9;">Départ</th>
-				      <th style="border: 1px solid #ccc; padding: 8px; text-align: center; background-color: #f9f9f9;">Arrivée</th>
-				    </tr>
-				    <tr>
-				      <td style="border: 1px solid #ccc; padding: 8px; text-align: center;">
-				        ${formatDate(p.date_deb).split(' ')[0]}
-				      </td>
-				      <td style="border: 1px solid #ccc; padding: 8px; text-align: center;">
-				        ${formatDate(p.date_fin).split(' ')[0]}
-				      </td>
-				    </tr>
-				    <tr>
-				      <td style="border: 1px solid #ccc; padding: 8px; text-align: center;">
-				        ${formatDate(p.date_deb).split(' ')[1]}
-				      </td>
-				      <td style="border: 1px solid #ccc; padding: 8px; text-align: center; position: relative;">
-				        ${formatDate(p.date_fin).split(' ')[1]}
-				        <div style="position: absolute; left: 0; right: 0; text-align: center; font-size: 0.8em; top: 50%; transform: translateY(-50%); background-color: rgba(255, 255, 255, 0.8);">
-				          durée: ${p.duree || ''}
-				        </div>
-				      </td>
-				    </tr>
+				    <thead>
+				      <tr>
+				        <th colspan="2" style="border: 1px solid #ccc; padding: 8px; text-align: center; background-color: #f9f9f9;">Départ</th>
+				        <th colspan="2" style="border: 1px solid #ccc; padding: 8px; text-align: center; background-color: #f9f9f9;">Arrivée</th>
+				      </tr>
+				    </thead>
+				    <tbody>
+				      <tr>
+				        <td style="border: 1px solid #ccc; padding: 8px; text-align: center;">
+				          ${formatDate(p.date_deb).split(' ')[0]}
+				        </td>
+				        <td colspan="2" rowspan="2" style="border: 1px solid #ccc; padding: 8px; text-align: center; vertical-align: middle; background-color: #f9f9f9;">
+				          Durée: ${p.duree || ''}
+				        </td>
+				        <td style="border: 1px solid #ccc; padding: 8px; text-align: center;">
+				          ${formatDate(p.date_fin).split(' ')[0]}
+				        </td>
+				      </tr>
+				      <tr>
+				        <td style="border: 1px solid #ccc; padding: 8px; text-align: center;">
+				          ${formatDate(p.date_deb).split(' ')[1]}
+				        </td>
+				        <td style="border: 1px solid #ccc; padding: 8px; text-align: center;">
+				          ${formatDate(p.date_fin).split(' ')[1]}
+				        </td>
+				      </tr>
+				      <tr>
+				        <td colspan="4" style="border: 1px solid #ccc; padding: 8px; text-align: center;">
+				          Distance: ${p.distanceKM || ''} km
+				        </td>
+				      </tr>
+				    </tbody>
 				  </table>
-				  <div style="text-align: center; margin-top: 10px; padding: 5px; border-top: 1px solid #ccc;">
-				    Distance : ${p.distanceKM || ''} km
-				  </div>
 				</div>
 			`;
           layer.bindPopup(content);
