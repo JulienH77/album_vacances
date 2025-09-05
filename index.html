@@ -256,14 +256,6 @@
 // villes visitées avec photos et coordonnées
 <script src="visitedCities.js"></script> 
 <script>
-document.getElementById("arrowSwitch").addEventListener("change", e => {
-  if (e.target.checked) {
-    map.addLayer(arrowLayer);
-  } else {
-    map.removeLayer(arrowLayer);
-  }
-});
-
 	
 document.addEventListener('DOMContentLoaded', function() {
     // Langue par défaut
@@ -1134,7 +1126,6 @@ globeClose.addEventListener('click', () => {
 })();
 
 
-	
 
 window.addEventListener("DOMContentLoaded", () => {
   document.getElementById("arrowSwitch").addEventListener("change", e => {
