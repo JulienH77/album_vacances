@@ -24,6 +24,8 @@
 	<style>
 		.voyages-container {
 		  margin-top: 8px;
+		  padding-top: 6px;
+		  border-top: 1px solid #ccc;
 		}
 		.voyages-container strong {
 		  display: block;
@@ -737,7 +739,14 @@ fetch('GEOJSON/TRAJETS_ALL_vacances_wgs.geojson')
   .then(r => r.json())
   .then(data => {
     const voyagesGroups = {};
-    const voyagesListLeaflet = document.getElementById("voyagesListLeaflet");
+    const layersList = currentLeafletMap._layerControl._container
+      .querySelector(".leaflet-control-layers-overlays");
+    // Crée un conteneur supplémentaire dans la légende
+    const voyagesContainer = document.createElement("div");
+    voyagesContainer.className = "voyages-container";
+    voyagesContainer.innerHTML = `<strong>Mes voyages</strong>`;
+    layersList.appendChild(voyagesContainer);
+    // Style des trajets
     function trajetStyle(feature) {
       const type = feature.properties.trajet || "";
       let color = "black";
@@ -776,15 +785,14 @@ fetch('GEOJSON/TRAJETS_ALL_vacances_wgs.geojson')
       });
       voyagesGroups[voyage].addLayer(trajetLayer);
     });
-    // Ajoute les cases dans la légende Leaflet
+    // Ajoute chaque voyage comme case à cocher
     Object.keys(voyagesGroups).sort().forEach(v => {
       const id = "voy_" + v.replace(/[^A-Za-z0-9_-]/g, "_");
       const label = document.createElement("label");
       label.style.display = "block";
       label.style.cursor = "pointer";
       label.innerHTML = `<input type="checkbox" id="${id}" checked> ${v}`;
-      voyagesListLeaflet.appendChild(label);
-      // Gestion case
+      voyagesContainer.appendChild(label);
       const cb = label.querySelector("input");
       cb.addEventListener("change", () => {
         if (cb.checked) {
@@ -793,7 +801,7 @@ fetch('GEOJSON/TRAJETS_ALL_vacances_wgs.geojson')
           currentLeafletMap.removeLayer(voyagesGroups[v]);
         }
       });
-      // coche par défaut
+      // ajoute par défaut
       voyagesGroups[v].addTo(currentLeafletMap);
     });
   });
