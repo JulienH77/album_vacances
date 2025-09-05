@@ -763,36 +763,28 @@ fetch('GEOJSON/TRAJETS_ALL_vacances_wgs.geojson')
 			const bgColor = colors[colorIndex];
 			
 			const content = `
-			  <div style="font-family: Arial, sans-serif; border: 1px solid #ccc; border-radius: 8px; overflow: hidden; max-width: 500px;">
-			    <div style="background-color: ${bgColor}; padding: 10px; font-weight: bold; font-size: 16px; text-align: center;">
-			      ${p.voyage || ''}
-			    </div>
-			    <div style="padding: 10px;">
-			      <strong>Véhicule:</strong> ${p.trajet || ''}<br/><br/>
-			      <table style="width: 100%; border-collapse: collapse; text-align: center;">
-			        <thead>
-			          <tr style="background-color: #f0f0f0;">
-			            <th style="border: 1px solid #ccc; padding: 5px;">Départ</th>
-			            <th style="border: 1px solid #ccc; padding: 5px;">Arrivée</th>
-			          </tr>
-			        </thead>
-			        <tbody>
-			          <tr>
-			            <td style="border: 1px solid #ccc; padding: 5px;">${formatDateTime(p.date_deb, 'date')}</td>
-			            <td style="border: 1px solid #ccc; padding: 5px;">${formatDateTime(p.date_fin, 'date')}</td>
-			          </tr>
-			          <tr>
-			            <td style="border: 1px solid #ccc; padding: 5px;">${formatDateTime(p.date_deb, 'time')}</td>
-			            <td style="border: 1px solid #ccc; padding: 5px;">${p.duree || ''}</td>
-			            <td style="border: 1px solid #ccc; padding: 5px;">${formatDateTime(p.date_fin, 'time')}</td>
-			          </tr>
-			          <tr>
-			            <td style="border: 1px solid #ccc; padding: 5px;" colspan="2">Distance: ${p.distanceKM || ''} km</td>
-			          </tr>
-			        </tbody>
-			      </table>
-			    </div>
-			  </div>
+				<table style="font-family: Arial, sans-serif; border-collapse: collapse; width: 100%; margin-bottom: 20px;">
+				  <tr style="background-color: #ffe4c4; font-weight: bold;">
+				    <td colspan="2" style="padding: 10px; border-radius: 5px;">Voyage: ${p.voyage || ''}</td>
+				  </tr>
+				  <tr>
+				    <td colspan="2" style="font-weight: bold; padding: 10px 0 5px 0;">Véhicule: ${p.trajet || ''}</td>
+				  </tr>
+				  <tr style="font-weight: bold; background-color: #f2f2f2;">
+				    <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">Départ</td>
+				    <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">Arrivée</td>
+				  </tr>
+				  <tr>
+				    <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">${formatDateTime(p.date_deb)}</td>
+				    <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">${formatDateTime(p.date_fin)}</td>
+				  </tr>
+				  <tr>
+				    <td colspan="2" style="padding: 8px; border: 1px solid #ddd; text-align: center;">Durée: ${p.duree || ''}</td>
+				  </tr>
+				  <tr>
+				    <td colspan="2" style="padding: 8px; border: 1px solid #ddd; text-align: center;">Distance: ${p.distanceKM || ''} km</td>
+				  </tr>
+				</table>
 			`;
           layer.bindPopup(content);
         }
