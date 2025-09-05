@@ -28,22 +28,6 @@
 		  text-shadow: 0 0 3px black;
 		  transform-origin: center center;
 		}
-		.trajet-popup {
-		  background: white;
-		  color: #222;
-		  padding: 10px 14px;
-		  border-radius: 8px;
-		  font-size: 14px;
-		  line-height: 1.4;
-		  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
-		}
-		.trajet-popup h3 {
-		  margin: 0 0 8px 0;
-		  font-size: 16px;
-		  color: #1a2a6c;
-		  border-bottom: 1px solid #ddd;
-		  padding-bottom: 4px;
-		}
 	</style>
 </head>
 <body>
@@ -256,7 +240,6 @@
 // villes visitées avec photos et coordonnées
 <script src="visitedCities.js"></script> 
 <script>
-	
 document.addEventListener('DOMContentLoaded', function() {
     // Langue par défaut
     let currentLanguage = 'FR';
@@ -782,8 +765,6 @@ const redIcon = new L.Icon({
   shadowSize: [41, 41]
 });
 
-
-
 function createArrowMarker(lat, lng, rotation) {
   return L.divIcon({
     className: "arrow-marker",
@@ -1073,14 +1054,12 @@ document.getElementById('photoPopup').addEventListener('click', (e) => {
 	      const p = params.data.properties;
 	      const popupEl = document.getElementById('trajetPopup');
 	popupEl.innerHTML = `
- 	  <div class="trajet-popup">
- 	  	<h3>${p.voyage || ''}</h3><br/>
-	  	<strong>Trajet:</strong> ${p.trajet || ''}<br/>
-	 	 <strong>Date début:</strong> ${formatDateTime(p.date_deb)}<br/>
-	 	 <strong>Date fin:</strong> ${formatDateTime(p.date_fin)}<br/>
-	 	 <strong>Durée:</strong> ${p.duree || ''}<br/>
-	  	<strong>Distance:</strong> ${p.distanceKM || ''} km
-      </div>
+	  <strong>Trajet:</strong> ${p.trajet || ''}<br/>
+	  <strong>Voyage:</strong> ${p.voyage || ''}<br/>
+	  <strong>Date début:</strong> ${formatDateTime(p.date_deb)}<br/>
+	  <strong>Date fin:</strong> ${formatDateTime(p.date_fin)}<br/>
+	  <strong>Durée:</strong> ${p.duree || ''}<br/>
+	  <strong>Distance:</strong> ${p.distanceKM || ''} km
 	`;
       popupEl.style.display = 'block';
     } else if(params.seriesName === 'Pins' && params.data){
@@ -1123,19 +1102,7 @@ toggleGlobeBtn.addEventListener('click', () => {
 globeClose.addEventListener('click', () => {
   globePopup.style.display = 'none';
 });
-})();
-
-
-
-window.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("arrowSwitch").addEventListener("change", e => {
-    if (e.target.checked) {
-      map.addLayer(arrowLayer);
-    } else {
-      map.removeLayer(arrowLayer);
-    }
-  });
-});
+})();	
 </script>
 </body>
 </html>
