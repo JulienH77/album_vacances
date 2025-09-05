@@ -757,34 +757,47 @@ fetch('GEOJSON/TRAJETS_ALL_vacances_wgs.geojson')
         style: trajetStyle,
         onEachFeature: (feature, layer) => {
           const p = feature.properties;
-			// Tableau des couleurs pour les voyages
-			const colors = ["#FFDAB9", "#ADD8E6", "#FFC0CB", "#90EE90", "#FFFACD"]; // orange clair, bleu clair, rose clair, vert clair, jaune clair
-			const colorIndex = p.index % colors.length; // p.index doit être un numéro unique pour chaque voyage
-			const bgColor = colors[colorIndex];
+		  // Tableau de couleurs pour les voyages
+		  const voyageColors = ['#FFDAB9', '#E6E6FA', '#FFB6C1', '#98FB98', '#ADD8E6', '#F0E68C'];
+		  // Fonction pour obtenir une couleur en fonction d'un index ou d'un identifiant
+		  function getVoyageColor(voyageName) {
+			// Exemple simple : utiliser le hash du nom du voyage pour choisir une couleur
+			let index = 0;
+			if (voyageName) {
+			  // Calculer un index basé sur le nom du voyage
+			  index = voyageName.split('').reduce((a, b) => a + b.charCodeAt(0), 0) % voyageColors.length;
+			}
+			return voyageColors[index];
+		  }
 			
 			const content = `
-				<table style="font-family: Arial, sans-serif; border-collapse: collapse; width: 100%; margin-bottom: 20px;">
-				  <tr style="background-color: #ffe4c4; font-weight: bold;">
-				    <td colspan="2" style="padding: 10px; border-radius: 5px;">Voyage: ${p.voyage || ''}</td>
-				  </tr>
-				  <tr>
-				    <td colspan="2" style="font-weight: bold; padding: 10px 0 5px 0;">Véhicule: ${p.trajet || ''}</td>
-				  </tr>
-				  <tr style="font-weight: bold; background-color: #f2f2f2;">
-				    <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">Départ</td>
-				    <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">Arrivée</td>
-				  </tr>
-				  <tr>
-				    <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">${formatDateTime(p.date_deb)}</td>
-				    <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">${formatDateTime(p.date_fin)}</td>
-				  </tr>
-				  <tr>
-				    <td colspan="2" style="padding: 8px; border: 1px solid #ddd; text-align: center;">Durée: ${p.duree || ''}</td>
-				  </tr>
-				  <tr>
-				    <td colspan="2" style="padding: 8px; border: 1px solid #ddd; text-align: center;">Distance: ${p.distanceKM || ''} km</td>
-				  </tr>
-				</table>
+				<div style="margin-bottom: 15px; border-radius: 8px; padding: 10px; font-family: Arial, sans-serif; max-width: 400px;">
+				  <div style="padding: 8px; border-radius: 5px; color: white; font-weight: bold; margin-bottom: 10px; text-align: center; background-color: ${getVoyageColor(p.voyage)};">
+				    ${p.voyage || ''}
+				  </div>
+				  <div style="margin-top: 10px;">
+				    <strong>Trajet fait en </strong> ${p.trajet || ''}
+				  </div>
+				  <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+				    <!-- Le reste du tableau reste inchangé -->
+				    <tr>
+				      <td style="padding: 6px; border: 1px solid #ddd; text-align: center; font-weight: bold; background-color: #f2f2f2;">Départ</td>
+				      <td style="padding: 6px; border: 1px solid #ddd; text-align: center; font-weight: bold; background-color: #f2f2f2;">Arrivée</td>
+				    </tr>
+				    <tr>
+				      <td style="padding: 6px; border: 1px solid #ddd; text-align: center;">${formatDate(p.date_deb).split(' ')[0]}</td>
+				      <td style="padding: 6px; border: 1px solid #ddd; text-align: center;">${formatDate(p.date_fin).split(' ')[0]}</td>
+				    </tr>
+				    <tr>
+				      <td style="padding: 6px; border: 1px solid #ddd; text-align: center;">${formatDate(p.date_deb).split(' ')[1]}</td>
+				      <td style="padding: 6px; border: 1px solid #ddd; text-align: center;">${p.duree || ''}</td>
+				      <td style="padding: 6px; border: 1px solid #ddd; text-align: center;">${formatDate(p.date_fin).split(' ')[1]}</td>
+				    </tr>
+				    <tr>
+				      <td colspan="2" style="padding: 6px; border: 1px solid #ddd; text-align: center;">Distance : ${p.distanceKM || ''} km</td>
+				    </tr>
+				  </table>
+				</div>
 			`;
           layer.bindPopup(content);
         }
