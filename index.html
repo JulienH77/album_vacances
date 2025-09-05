@@ -757,7 +757,7 @@ fetch('GEOJSON/TRAJETS_ALL_vacances_wgs.geojson')
         style: trajetStyle,
         onEachFeature: (feature, layer) => {
           const p = feature.properties;
-		  // Fonction pour formater une date en "jour/mois/année HHhMMmSSs"
+		  // Fonction pour formater une date en "DD/MM/YYYY HHhMMmSSs"
 		  function formatDate(dateString) {
 		    const date = new Date(dateString);
 		    const day = String(date.getDate()).padStart(2, '0');
@@ -766,6 +766,7 @@ fetch('GEOJSON/TRAJETS_ALL_vacances_wgs.geojson')
 		    const hours = String(date.getHours()).padStart(2, '0');
 		    const minutes = String(date.getMinutes()).padStart(2, '0');
 		    const seconds = String(date.getSeconds()).padStart(2, '0');
+		
 		    return `${day}/${month}/${year} ${hours}h${minutes}m${seconds}s`;
 		  }
 		  // Tableau de couleurs pour les voyages
@@ -779,32 +780,41 @@ fetch('GEOJSON/TRAJETS_ALL_vacances_wgs.geojson')
 		    return voyageColors[index];
 		  }
 			const content = `
-				<div style="margin-bottom: 15px; border-radius: 8px; padding: 10px; font-family: Arial, sans-serif; max-width: 400px;">
-				  <div style="padding: 8px; border-radius: 5px; color: white; font-weight: bold; margin-bottom: 10px; text-align: center; background-color: ${getVoyageColor(p.voyage)};">
+				<div style="font-family: Arial, sans-serif; max-width: 400px; border: 1px solid #ccc; border-radius: 5px; padding: 10px; background-color: white; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+				  <div style="background-color: #E3F2FD; padding: 8px; border-radius: 5px; text-align: center; font-weight: bold; margin-bottom: 10px;">
 				    ${p.voyage || ''}
 				  </div>
-				  <div style="margin-top: 10px;">
-				    <strong>Trajet fait en </strong> ${p.trajet || ''}
+				  <div style="margin-bottom: 5px; font-style: italic; text-align: center;">
+				    Trajet fait en ${p.trajet || ''}
 				  </div>
 				  <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
-				    <!-- Le reste du tableau reste inchangé -->
 				    <tr>
-				      <td style="padding: 6px; border: 1px solid #ddd; text-align: center; font-weight: bold; background-color: #f2f2f2;">Départ</td>
-				      <td style="padding: 6px; border: 1px solid #ddd; text-align: center; font-weight: bold; background-color: #f2f2f2;">Arrivée</td>
+				      <th style="border: 1px solid #ccc; padding: 8px; text-align: center; background-color: #f9f9f9;">Départ</th>
+				      <th style="border: 1px solid #ccc; padding: 8px; text-align: center; background-color: #f9f9f9;">Arrivée</th>
 				    </tr>
 				    <tr>
-				      <td style="padding: 6px; border: 1px solid #ddd; text-align: center;">${formatDate(p.date_deb).split(' ')[0]}</td>
-				      <td style="padding: 6px; border: 1px solid #ddd; text-align: center;">${formatDate(p.date_fin).split(' ')[0]}</td>
+				      <td style="border: 1px solid #ccc; padding: 8px; text-align: center;">
+				        ${formatDate(p.date_deb).split(' ')[0]}
+				      </td>
+				      <td style="border: 1px solid #ccc; padding: 8px; text-align: center;">
+				        ${formatDate(p.date_fin).split(' ')[0]}
+				      </td>
 				    </tr>
 				    <tr>
-				      <td style="padding: 6px; border: 1px solid #ddd; text-align: center;">${formatDate(p.date_deb).split(' ')[1]}</td>
-				      <td style="padding: 6px; border: 1px solid #ddd; text-align: center;">${p.duree || ''}</td>
-				      <td style="padding: 6px; border: 1px solid #ddd; text-align: center;">${formatDate(p.date_fin).split(' ')[1]}</td>
-				    </tr>
-				    <tr>
-				      <td colspan="2" style="padding: 6px; border: 1px solid #ddd; text-align: center;">Distance : ${p.distanceKM || ''} km</td>
+				      <td style="border: 1px solid #ccc; padding: 8px; text-align: center;">
+				        ${formatDate(p.date_deb).split(' ')[1]}
+				      </td>
+				      <td style="border: 1px solid #ccc; padding: 8px; text-align: center; position: relative;">
+				        ${formatDate(p.date_fin).split(' ')[1]}
+				        <div style="position: absolute; left: 0; right: 0; text-align: center; font-size: 0.8em; top: 50%; transform: translateY(-50%); background-color: rgba(255, 255, 255, 0.8);">
+				          durée: ${p.duree || ''}
+				        </div>
+				      </td>
 				    </tr>
 				  </table>
+				  <div style="text-align: center; margin-top: 10px; padding: 5px; border-top: 1px solid #ccc;">
+				    Distance : ${p.distanceKM || ''} km
+				  </div>
 				</div>
 			`;
           layer.bindPopup(content);
