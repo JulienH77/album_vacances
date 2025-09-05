@@ -597,7 +597,6 @@ Object.entries(mapColor).forEach(([transport, color])=>{
   const popupEl = document.getElementById('trajetPopup');
   const leafletPopupEl = document.getElementById('leafletPopup');
   const leafletMapEl = document.getElementById('leafletMap');
-  const leafletCloseBtn = document.getElementById('leafletClose');
   const voyagesListEl = document.getElementById('voyagesList');
 
   // Remplit la liste avec les valeurs uniques de `voyage` (je ne sais pas a quoi tu sers)
@@ -984,7 +983,6 @@ document.getElementById('photoClose').addEventListener('click', closePhotoPopup)
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     closePhotoPopup();
-    closeLeafletPopup();
   }
 });
 document.getElementById('photoPopup').addEventListener('click', (e) => {
@@ -993,14 +991,6 @@ document.getElementById('photoPopup').addEventListener('click', (e) => {
   }
 });
 
-  function closeLeafletPopup(){
-    leafletPopupEl.style.display = 'none';
-    if(currentLeafletMap){ currentLeafletMap.remove(); currentLeafletMap = null; }
-  }
-
-  leafletCloseBtn.addEventListener('click', closeLeafletPopup);
-  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeLeafletPopup(); });
-  leafletPopupEl.addEventListener('click', (e)=>{ if(e.target === leafletPopupEl) closeLeafletPopup(); });
 
   // CETTE FONCTION NE MARCHE PAS
   // clic sur globe
