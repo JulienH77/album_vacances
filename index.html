@@ -779,8 +779,8 @@ fetch('GEOJSON/TRAJETS_ALL_vacances_wgs.geojson')
 		    return voyageColors[index];
 		  }
 			const content = `
-				<div style="font-family: Arial, sans-serif; padding: 8px; border-radius: 5px; color: white; font-weight: bold; margin-bottom: 10px; text-align: center; background-color: ${getVoyageColor(p.voyage)};">
-				    Voyage : ${p.voyage || ''}
+				<div style="font-family: Arial, sans-serif; padding: 8px; border-radius: 5px 5px 0 0; color: white; font-weight: bold; margin-bottom: 10px; text-align: center; background-color: ${getVoyageColor(p.voyage)};">
+					${p.voyage || ''}
 				</div>
 				<div style="font-family: Arial, sans-serif; max-width: 400px; border: 1px solid #ccc; border-radius: 5px; padding: 10px; background-color: white; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
 				  <div style="margin-bottom: 5px; font-style: italic; text-align: center;">
@@ -799,7 +799,7 @@ fetch('GEOJSON/TRAJETS_ALL_vacances_wgs.geojson')
 				          ${formatDate(p.date_deb).split(' ')[0]}
 				        </td>
 				        <td colspan="2" rowspan="2" style="border: 1px solid #ccc; padding: 8px; text-align: center; vertical-align: middle; background-color: #f9f9f9;">
-				          Durée: ${p.duree || ''}
+				          ${p.duree || ''}
 				        </td>
 				        <td style="border: 1px solid #ccc; padding: 8px; text-align: center;">
 				          ${formatDate(p.date_fin).split(' ')[0]}
@@ -815,7 +815,7 @@ fetch('GEOJSON/TRAJETS_ALL_vacances_wgs.geojson')
 				      </tr>
 				      <tr>
 				        <td colspan="4" style="border: 1px solid #ccc; padding: 8px; text-align: center;">
-				          Distance: ${p.distanceKM || ''} km
+				          ${p.distanceKM || ''} km
 				        </td>
 				      </tr>
 				    </tbody>
