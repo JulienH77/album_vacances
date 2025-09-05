@@ -26,7 +26,6 @@ MODIF A FAIRE :
 -  ajouter des settings ?? des settings qui se gardent dans le navigateur en question ???
 -  mettre les boutons du globe en haut ou en bas car le sidepanel les cache
 -  quand clique sur une ville dans le globe cela affiche un texte qui disparait "Carte chargée en arriere-plan"
--  le bouton pour afficher les photos en grand ne fonctionne plus 
 -  responsive telephone a revoir
 -  visuel des trajets sens de déplacement
 -  epaisseur des trajets en fonction du zoom
