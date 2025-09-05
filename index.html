@@ -780,8 +780,8 @@ fetch('GEOJSON/TRAJETS_ALL_vacances_wgs.geojson')
 		  }
 			const content = `
 				<div style="font-family: Arial, sans-serif; max-width: 400px; border: 1px solid #ccc; border-radius: 5px; padding: 10px; background-color: white; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-				  <div style="background-color: #E3F2FD; padding: 8px; border-radius: 5px; text-align: center; font-weight: bold; margin-bottom: 10px;">
-				    ${p.voyage || ''}
+				  <div style="padding: 8px; border-radius: 5px; color: white; font-weight: bold; margin-bottom: 10px; text-align: center; background-color: ${getVoyageColor(p.voyage)};">
+				    Voyage : ${p.voyage || ''}
 				  </div>
 				  <div style="margin-bottom: 5px; font-style: italic; text-align: center;">
 				    Trajet fait en ${p.trajet || ''}
