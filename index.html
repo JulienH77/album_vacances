@@ -21,6 +21,27 @@
       <script src="leaflet-sidepanel.min.js"></script>
       /*OSMBuilding 3D*/
       <script src="https://cdn.osmbuildings.org/classic/0.2.2b/OSMBuildings-Leaflet.js"></script>
+	<style>
+		.voyages-control {
+		  background: rgba(255,255,255,0.9);
+		  padding: 8px 12px;
+		  border-radius: 8px;
+		  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+		  font-size: 14px;
+		  line-height: 1.4;
+		  max-height: 250px;
+		  overflow-y: auto;
+		}
+		.voyages-control strong {
+		  display: block;
+		  margin-bottom: 6px;
+		  font-size: 15px;
+		}
+		.voyages-control label {
+		  margin-bottom: 4px;
+		  display: block;
+		}
+	</style>
 </head>
 <body>
       <div id="root">
@@ -709,8 +730,7 @@ L.control.sidepanel('mySidepanelLeft', {
 fetch('GEOJSON/TRAJETS_ALL_vacances_wgs.geojson')
   .then(r => r.json())
   .then(data => {
-    const voyagesGroups = {}; // dictionnaire voyage → LayerGroup
-    // Fonction de style pour les trajets
+    const voyagesGroups = {};
     function trajetStyle(feature) {
       const type = feature.properties.trajet || "";
       let color = "black";
@@ -721,7 +741,6 @@ fetch('GEOJSON/TRAJETS_ALL_vacances_wgs.geojson')
       else if (type === "bateau") color = "#0084db";		  
       return { color, weight: 2, opacity: 1 };
     }
-    // Fonction pour formater les dates
     function formatDateTime(str) {
       if (!str) return "";
       const d = new Date(str);
@@ -729,14 +748,10 @@ fetch('GEOJSON/TRAJETS_ALL_vacances_wgs.geojson')
       return `${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()} `
            + `${pad(d.getHours())}h${pad(d.getMinutes())}`;
     }
-    // Parcours de chaque feature
+    // Création des trajets groupés par voyage
     data.features.forEach(f => {
       const voyage = f.properties.voyage || "Autres";
-      // Crée le groupe si besoin
-      if (!voyagesGroups[voyage]) {
-        voyagesGroups[voyage] = L.layerGroup();
-      }
-      // Crée un layer GeoJSON pour cette feature
+      if (!voyagesGroups[voyage]) voyagesGroups[voyage] = L.layerGroup();
       const trajetLayer = L.geoJSON(f, {
         style: trajetStyle,
         onEachFeature: (feature, layer) => {
@@ -752,19 +767,39 @@ fetch('GEOJSON/TRAJETS_ALL_vacances_wgs.geojson')
           layer.bindPopup(content);
         }
       });
-      // Ajoute ce trajet au bon groupe
       voyagesGroups[voyage].addLayer(trajetLayer);
     });
-    // Crée un objet "Trajets" avec les sous-groupes par voyage
-    const trajetsOverlay = {};
-    Object.keys(voyagesGroups).forEach(voyage => {
-      trajetsOverlay[voyage] = voyagesGroups[voyage];
-    });
-    // Ajoute au contrôle des couches
-    currentLeafletMap._layerControl.addOverlay(L.layerGroup(Object.values(voyagesGroups)), "Trajets"); // couche globale
-    Object.entries(trajetsOverlay).forEach(([voyage, layer]) => {
-      currentLeafletMap._layerControl.addOverlay(layer, "  ↳ " + voyage);
-    });
+    // Création du contrôle custom
+    const voyagesControl = L.control({ position: "bottomright" });
+    voyagesControl.onAdd = function(map) {
+      const div = L.DomUtil.create("div", "voyages-control");
+      div.innerHTML = `<strong>Mes voyages</strong><br/>`;
+      Object.keys(voyagesGroups).sort().forEach(v => {
+        const id = "voy_" + v.replace(/[^A-Za-z0-9_-]/g, "_");
+        const label = document.createElement("label");
+        label.style.display = "block";
+        label.style.cursor = "pointer";
+        label.innerHTML = `<input type="checkbox" id="${id}" checked> ${v}`;
+        div.appendChild(label);
+        // gestion checkbox
+        setTimeout(() => {
+          const cb = div.querySelector("#" + id);
+          cb.addEventListener("change", () => {
+            if (cb.checked) {
+              voyagesGroups[v].addTo(map);
+            } else {
+              map.removeLayer(voyagesGroups[v]);
+            }
+          });
+          // ajoute par défaut
+          voyagesGroups[v].addTo(map);
+        }, 0);
+      });
+      // empêcher la carte de bouger quand on clique sur le contrôle
+      L.DomEvent.disableClickPropagation(div);
+      return div;
+    };
+    voyagesControl.addTo(currentLeafletMap);
   });
 
 
