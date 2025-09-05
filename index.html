@@ -709,9 +709,7 @@ const baseMaps = {
 const overlayMaps = { 
   "3D buildings": osmb 
 };
-/*const layerControl = L.control.layers(baseMaps, overlayMaps).addTo(currentLeafletMap);
-currentLeafletMap._layerControl = layerControl;*/
-const layerControl = L.control.layers(baseMaps, overlayMaps/*, { collapsed: false }*/).addTo(currentLeafletMap);
+const layerControl = L.control.layers(baseMaps, overlayMaps).addTo(currentLeafletMap);
 currentLeafletMap._layerControl = layerControl;
 L.control.scale({ position: 'bottomleft' }).addTo(currentLeafletMap);
 L.control.sidepanel('mySidepanelLeft', {
@@ -720,19 +718,6 @@ L.control.sidepanel('mySidepanelLeft', {
   startTab: 'tab-1',
   pushControls: true
 }).addTo(currentLeafletMap);
-
-
-// Création du bloc "Mes voyages"
-const voyagesGroups = {}; // rempli dans fetch (voir plus bas)
-
-// Ajout d'un conteneur custom DANS le panneau Leaflet
-const voyagesContainer = L.DomUtil.create("div", "leaflet-control-layers-separator voyages-container");
-voyagesContainer.innerHTML = `<strong>Mes voyages</strong><div id="voyagesListLeaflet"></div>`;
-
-// Ajoute le bloc après les couches existantes
-const layersList = layerControl._container.querySelector(".leaflet-control-layers-overlays");
-layersList.appendChild(voyagesContainer);
-
 	
 // === Trajets ===
 fetch('GEOJSON/TRAJETS_ALL_vacances_wgs.geojson')
