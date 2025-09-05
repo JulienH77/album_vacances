@@ -765,25 +765,6 @@ const redIcon = new L.Icon({
   shadowSize: [41, 41]
 });
 
-function createArrowMarker(lat, lng, rotation) {
-  return L.divIcon({
-    className: "arrow-marker",
-    html: `<div class="arrow" style="transform: rotate(${rotation}deg)">↑</div>`,
-    iconSize: [20, 20],
-    iconAnchor: [10, 10]
-  });
-}
-
-// Exemple d’utilisation :
-let arrow = L.marker([lat, lng], {
-  icon: createArrowMarker(lat, lng, rotation) // rotation en degrés, nord = 0
-});
-
-
-
-
-
-
 
 
 // Crée l’overlay plein écran si absent, et expose window.openPhotoPopup(...)
@@ -873,10 +854,20 @@ function openLeafletPopup(cityData) {
         icon: new L.Icon.Default()
       }).bindPopup(popupContent).addTo(currentLeafletMap);
 
+
+	function createArrowMarker(lat, lng, rotation) {
+	  return L.divIcon({
+	    className: "arrow-marker",
+	    html: `<div class="arrow" style="transform: rotate(${rotation}deg)">↑</div>`,
+	    iconSize: [20, 20],
+	    iconAnchor: [10, 10]
+	  });
+	}
+
       let arrowMarker = null;
       if (showDir) {
         arrowMarker = L.marker([vlat, vlon], {
-          icon: createArrowIcon("black", v.rotation || 0),
+          icon: createArrowMarker("black", v.rotation || 0),
           interactive: false
         }).addTo(currentLeafletMap);
       }
