@@ -154,7 +154,7 @@
 							<p data-lang-text="FR:Le quatrième onglet contient le globe terrestre avec les trajets et villes visitées aussi.;EN:The fourth tab contains a globe showing the routes and cities visited.;CH:第四個標籤包含地球儀以及所造訪的路線和城市。"></p><br>
 							<p data-lang-text="FR:Le dernier onglet contiendra des paramètres à modifier en fonction de l'utilisateur.;EN:The last tab will contain settings that can be modified according to the user's preferences.;CH:最後一個選項卡將包含根據使用者需求修改的設定。"></p>
 							<br><br>
-							<p data-lang-text="FR:Bonne découverte de mes différentes vacances !;EN:Enjoy discovering my various vacation experiences!;CH:享受探索我不同的假期！"></p>
+							<p data-lang-text="FR:Bonne découverte de mes différentes vacances !;EN:Enjoy discovering my various vacation experiences!;CH:享受探索我不同的假期"></p>
 						</div>
 						<div class="sidepanel-tab-content" data-tab-content="tab-2">
 							<h4 data-lang-text="FR:Les villes du monde que j'ai visitées;EN:The cities around the world that I have visited;CH:我去過的世界各地的城市"></h4>
@@ -896,7 +896,7 @@ function openLeafletPopup(cityData) {
 
   // --- Mettre à jour l’onglet 3 (photos) ---
   const photosTab = document.querySelector('[data-tab-content="tab-3"]');
-  photosTab.innerHTML = `<h4 style="font-size:1.2em; margin-bottom:10px;">Les photos</h4>`;
+  photosTab.innerHTML = `<h4 style="font-size:1.2em; margin-bottom:10px;" data-lang-text="FR:Les photos;EN:The photos;CH:照片"></h4>`;
 
   // Trier photos par date
   const photosList = (cityData.visites || [])
