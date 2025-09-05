@@ -711,7 +711,7 @@ const overlayMaps = {
 };
 const layerControl = L.control.layers(baseMaps, overlayMaps).addTo(currentLeafletMap);
 currentLeafletMap._layerControl = layerControl;
-L.control.scale({ position: 'bottomleft' }).addTo(currentLeafletMap);
+L.control.scale({ position: 'bottomright' }).addTo(currentLeafletMap);
 L.control.sidepanel('mySidepanelLeft', {
   panelPosition: 'left',
   tabsPosition: 'left',
