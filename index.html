@@ -1131,7 +1131,20 @@ toggleGlobeBtn.addEventListener('click', () => {
 globeClose.addEventListener('click', () => {
   globePopup.style.display = 'none';
 });
-})();	
+})();
+
+
+	
+
+window.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("arrowSwitch").addEventListener("change", e => {
+    if (e.target.checked) {
+      map.addLayer(arrowLayer);
+    } else {
+      map.removeLayer(arrowLayer);
+    }
+  });
+});
 </script>
 </body>
 </html>
