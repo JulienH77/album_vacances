@@ -12,6 +12,9 @@ ONGLET SETTINGS IDEES :
 
 
 MODIF A FAIRE :
+
+-  FAIRE QUE LES FLECHES NE SOIENT PAS APPARENTES QUAND LE MARKER LIEE A ELLE NE L'EST PAS
+
 -  differentes couleurs de markers : https://github.com/pointhi/leaflet-color-markers/tree/master
 -  faire que la carte leaflet suive en taille le sidepanel ? (NUL)
 -  PREFERABLE DE FAIRE UN AFFICHAGE AU ZOOM ET LES BOUTONS NE FERONS QUE SUIVRE LES COORDS ET ZOOM DE MON JS ?
