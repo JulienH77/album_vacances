@@ -708,15 +708,26 @@ function createDirectionMarkers() {
     visitedCities.forEach(city => {
         city.visites.forEach(visit => {
             if (visit.rotation !== undefined && visit.coords) {
+                // id unique basé sur la photo
+                const arrowId = "arrow_" + btoa(visit.photo || city.name).replace(/=/g,"");
+
                 let arrowIcon = L.divIcon({
                     className: "arrow-icon",
-                    html: `<div class="arrow" style="transform: rotate(${visit.rotation}deg);">⇧</div>`,
-                    iconSize: [20, 20],
-                    iconAnchor: [10, 10]
+                    html: `
+                        <svg id="${arrowId}" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                             style="transform: rotate(${visit.rotation}deg);">
+                          <path d="M12 2L19 20H5L12 2Z" fill="black" stroke="black" stroke-width="1"/>
+                        </svg>
+                    `,
+                    iconSize: [32, 32],
+                    iconAnchor: [16, 16]
                 });
 
-                L.marker([visit.coords[1], visit.coords[0]], { icon: arrowIcon })
-                 .addTo(directionsLayer);
+                const marker = L.marker([visit.coords[1], visit.coords[0]], { icon: arrowIcon })
+                                .addTo(directionsLayer);
+
+                // On garde un lien entre la visite et son flèche
+                visit._arrowId = arrowId;
             }
         });
     });
@@ -1089,13 +1100,21 @@ function openLeafletPopup(cityData) {
           }
         });
 
-        // Survol = marker rouge + flèche rouge
-        item.addEventListener("mouseenter", () => {
-          if (v._marker) v._marker.setIcon(redIcon);
-        });
-        item.addEventListener("mouseleave", () => {
-          if (v._marker) v._marker.setIcon(new L.Icon.Default());
-        });
+		// Survol = marker rouge + flèche rouge
+		item.addEventListener("mouseenter", () => {
+		  if (v._marker) v._marker.setIcon(redIcon);
+		  if (v._arrowId) {
+		    const arrow = document.getElementById(v._arrowId);
+		    if (arrow) arrow.querySelector("path").setAttribute("fill", "red");
+		  }
+		});
+		item.addEventListener("mouseleave", () => {
+		  if (v._marker) v._marker.setIcon(new L.Icon.Default());
+		  if (v._arrowId) {
+		    const arrow = document.getElementById(v._arrowId);
+		    if (arrow) arrow.querySelector("path").setAttribute("fill", "black");
+		  }
+		});
         container.appendChild(item);
       });
     });
