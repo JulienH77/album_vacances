@@ -164,50 +164,7 @@
 						</div>
 						<div class="sidepanel-tab-content" data-tab-content="tab-2">
 							<h4 data-lang-text="FR:Les villes du monde que j'ai visitées;EN:The cities around the world that I have visited;CH:我去過的世界各地的城市"></h4>
-							<div class="city-list">
-							  <button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/Beijing.jpg');">
-							    <span data-lang-text="FR:Pékin;EN:Beijing;CH:北京"></span>
-							  </button>
-							  <button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/xian.jpg');">
-							    <span data-lang-text="FR:Xi'an;EN:Xi'an;CH:西安"></span>
-							  </button>
-							  <button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/shanghai.jpg');">
-							    <span data-lang-text="FR:Shanghai;EN:Shanghai;CH:上海"></span>
-							  </button>
-								<button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/hangzhou.jpg');">
-							    <span data-lang-text="FR:Hangzhou;EN:Hangzhou;CH:杭州"></span>
-							  </button>
-								<button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/guilin.jpg');">
-							    <span data-lang-text="FR:Guilin;EN:Guilin;CH:桂林"></span>
-							  </button>
-								<button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/yangshuo.jpg');">
-							    <span data-lang-text="FR:Yangshuo;EN:Yangshuo;CH:陽朔"></span>
-							  </button>
-								<button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/tianjin.jpg');">
-							    <span data-lang-text="FR:Tianjin;EN:Tianjin;CH:天津"></span>
-							  </button>
-								<button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/munich.png');">
-							    <span data-lang-text="FR:Munich;EN:Munich;CH:慕尼黑"></span>
-							  </button>
-								<button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/marquartstein.jpg');">
-							    <span data-lang-text="FR:Marquartstein;EN:Marquartstein;CH:馬夸特施泰因"></span>
-							  </button>
-								<button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/salzburg.jpg');">
-							    <span data-lang-text="FR:Salzbourg;EN:Salzburg;CH:薩爾斯堡"></span>
-							  </button>
-								<button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/budapest.jpg');">
-							    <span data-lang-text="FR:Budapest;EN:Budapest;CH:布達佩斯"></span>
-							  </button>
-								<button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/prague.jpg');">
-							    <span data-lang-text="FR:Prague;EN:Prague;CH:布拉格"></span>
-							  </button>
-								<button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/regensburg.jpg');">
-							    <span data-lang-text="FR:Ratisbonne;EN:Regensburg;CH:雷根斯堡"></span>
-							  </button>
-								<button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/Ulm.jpg');">
-							    <span data-lang-text="FR:Ulm;EN:Ulm;CH:烏爾姆"></span>
-							  </button>
-							</div>
+							<div class="city-list" id="cityList"></div>
 						</div>
 						<div class="sidepanel-tab-content" data-tab-content="tab-3">
 						</div>
@@ -245,6 +202,113 @@
       
 // villes visitées avec photos et coordonnées
 <script src="visitedCities.js"></script> 
+<script>
+// Ce bloc suppose que visitedCities est déjà chargé (script visitedCities.js inclus avant).
+// utilitaires
+function getActiveLang(){
+  return document.querySelector('.language-option.active')?.getAttribute('data-lang') || 'FR';
+}
+const localeMap = { FR: 'fr-FR', EN: 'en-US', CH: 'zh-CN' };
+
+// Quelques traductions de noms de villes "special case" (ajoute/édite si besoin)
+const cityNameTranslations = {
+  'Beijing': {FR: 'Pékin', EN: 'Beijing', CH: '北京'},
+  'Salzburg': {FR: 'Salzbourg', EN: 'Salzburg', CH: '薩爾茨堡'}
+  // ajoute d'autres si nécessaire
+};
+
+function getCityLabel(cityObj, lang){
+  // cityObj.name est la clé canonique (ex: 'Beijing')
+  if (cityNameTranslations[cityObj.name] && cityNameTranslations[cityObj.name][lang]) {
+    return cityNameTranslations[cityObj.name][lang];
+  }
+  // fallback : affichage brut
+  return cityObj.name;
+}
+
+function getPhotoDisplayName(photoEntry, lang){
+  // photoEntry.name peut être objet {FR:..,EN:..,CH:..} ou string
+  if (photoEntry && typeof photoEntry.name === 'object'){
+    return photoEntry.name[lang] || photoEntry.name.FR || photoEntry.name.EN || JSON.stringify(photoEntry.name);
+  }
+  return photoEntry.name || photoEntry.photo?.split('/').pop() || '';
+}
+
+function formatTimeFromMatch(h,m,s, lang){
+  if(!h) return '';
+  if(lang === 'FR') return `${h}h${m}m${s}s`;
+  // en et chinois : format 12:34:56
+  return `${h}:${m}:${s}`;
+}
+
+function formatDateForLang(dateObj, lang){
+  try{
+    return dateObj.toLocaleDateString(localeMap[lang] || 'fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+  }catch(e){
+    // fallback
+    return dateObj.toLocaleDateString();
+  }
+}
+
+// RENDRE la liste des villes (remplace la liste HTML hardcodée)
+function renderCityButtons(lang){
+  const container = document.getElementById('cityList') || document.querySelector('.city-list');
+  if(!container) return;
+  container.innerHTML = ''; // reset
+
+  visitedCities.forEach(city => {
+    const btn = document.createElement('button');
+    btn.className = 'city-btn';
+    btn.setAttribute('data-city-key', city.name); // clé canonique (stable)
+    // tentative d'assigner une image basée sur le nom (si fichier existe dans ton dossier)
+    const imgCandidate = city.name.replace(/[^a-zA-Z0-9]/g,'').toLowerCase();
+    btn.style.backgroundImage = `url('./GLOBE/ImgVillesVisitees/${imgCandidate}.jpg')`;
+
+    const span = document.createElement('span');
+    span.textContent = getCityLabel(city, lang);
+    btn.appendChild(span);
+
+    // clic -> ouvre la popup / onglet photos (utilise la fonction existante openLeafletPopup)
+    btn.addEventListener('click', () => {
+      // met la ville sélectionnée pour pouvoir rafraichir photos après changement de langue
+      window.lastSelectedCityKey = city.name;
+      if (typeof openLeafletPopup === 'function') {
+        openLeafletPopup(city);
+      } else {
+        console.warn('openLeafletPopup() non disponible au moment du clic.');
+      }
+    });
+
+    container.appendChild(btn);
+  });
+}
+
+// Fonction exposée pour être appelée par changeLanguage (empêche l'erreur undefined)
+window.updateCitiesAndPhotos = function(lang){
+  // met à jour la liste des villes affichées
+  renderCityButtons(lang);
+
+  // met à jour la légende "Mes voyages" si elle existe
+  const voyagesContainer = document.querySelector('.voyages-container');
+  if (voyagesContainer) {
+    const labels = { FR: 'Mes voyages', EN: 'My trips', CH: '我的旅程' };
+    voyagesContainer.innerHTML = `<strong>${labels[lang] || labels.FR}</strong>`;
+  }
+
+  // si une ville est ouverte, ré-ouvrir pour rafraichir dates/noms dans l'onglet photos
+  if (window.lastSelectedCityKey){
+    const cityData = visitedCities.find(c => c.name === window.lastSelectedCityKey);
+    if (cityData && typeof openLeafletPopup === 'function') openLeafletPopup(cityData);
+  }
+};
+
+// Hook initial (au chargement) — si la liste hardcodée a été remplacée par le div vide id=cityList
+document.addEventListener('DOMContentLoaded', () => {
+  const lang = getActiveLang();
+  renderCityButtons(lang);
+});
+
+</script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Langue par défaut
@@ -1026,11 +1090,13 @@ function openLeafletPopup(cityData) {
       const month = dateKey.slice(4, 6);
       const day = dateKey.slice(6, 8);
       const dateObj = new Date(`${year}-${month}-${day}`);
-      const dateFormatted = dateObj.toLocaleDateString("fr-FR", {
-        day: "numeric",
-        month: "long",
-        year: "numeric"
-      });
+	  const lang = (document.querySelector('.language-option.active')?.getAttribute('data-lang')) || 'FR';
+	  const dateFormatted = dateObj.toLocaleDateString(localeMap[lang] || 'fr-FR', {
+	    day: "numeric",
+	    month: "long",
+	    year: "numeric"
+	  });
+
 
       const dayTitle = document.createElement("div");
       dayTitle.innerHTML = `<strong style="display:block; margin-top:20px; font-size:15px;">${dateFormatted}</strong>
@@ -1041,8 +1107,7 @@ function openLeafletPopup(cityData) {
         const item = document.createElement("div");
         item.className = "photo-item";
         item.style.marginBottom = "14px";
-        const displayName = v.name || v.photoName;
-
+		const displayName = (typeof v.name === 'object') ? (v.name[lang] || v.name.FR || v.name.EN) : (v.name || v.photoName);
         item.innerHTML = `
           <div style="cursor:pointer; text-align:center;">
             <img src="${v.photo}" style="width:90%; border-radius:6px; display:block; margin:0 auto;"/>
