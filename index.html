@@ -335,11 +335,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 const toggleDirections = document.getElementById("toggleDirections");
 toggleDirections.addEventListener("change", function() {
-    if (this.checked) {
-        createDirectionMarkers();
-    } else {
-        directionsLayer.clearLayers();
-    }
+	if (this.checked) {
+	    createDirectionMarkers();
+	} else {
+	    directionsLayer.clearLayers();
+	}
 });
 });
 
@@ -712,7 +712,7 @@ Object.entries(mapColor).forEach(([transport, color])=>{
 
 // === Init mainMap ===
 let currentLeafletMap = L.map('mainMap').setView([11.953125, 21.371244], 3);
-directionsLayer = L.layerGroup().addTo(mainMap);
+directionsLayer = L.layerGroup().addTo(currentLeafletMap);
 
 function createDirectionMarkers() {
     directionsLayer.clearLayers();
