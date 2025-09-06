@@ -1,16 +1,16 @@
 // Groupe dans la légende des différents voyages
 const voyagesToCities = {
   FR: {
-    'Mai 2025 - Chine': ['Beijing','Xi\'an','Shanghai','Hangzhou','Guilin','Yangshuo','Tianjin'],
-    'Juillet 2025 - Europe Centrale': ['Munich','Marquartstein','Salzburg','Budapest','Prague','Regensburg','Ulm']
+    'Mai 2025 - Chine': ['Pékin','Xi\'an','Shanghai','Hangzhou','Guilin','Yangshuo','Tianjin'],
+    'Juillet 2025 - Europe Centrale': ['Munich','Marquartstein','Salzbourg','Budapest','Prague','Ratisbonne','Ulm']
   },
   EN: {
     'May 2025 - China': ['Beijing','Xi\'an','Shanghai','Hangzhou','Guilin','Yangshuo','Tianjin'],
     'July 2025 - Central Europe': ['Munich','Marquartstein','Salzburg','Budapest','Prague','Regensburg','Ulm']
   },
   CH: {
-    '2025年5月 - 中國': ['Beijing','Xi\'an','Shanghai','Hangzhou','Guilin','Yangshuo','Tianjin'],
-    '2025年7月 - 中歐': ['Munich','Marquartstein','Salzburg','Budapest','Prague','Regensburg','Ulm']
+    '2025年5月 - 中國': ['北京','西安','上海','杭州','桂林','陽朔','天津'],
+    '2025年7月 - 中歐': ['慕尼黑','馬夸特施泰因','薩爾斯堡','布達佩斯','布拉格','雷根斯堡','烏爾姆']
   }
 };
 
