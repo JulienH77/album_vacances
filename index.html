@@ -34,12 +34,25 @@
 		.voyages-container label {
 		  font-weight: normal;
 		}
+/* Flèches de direction des photos */
+.arrow-icon {
+  font-size: 18px;
+  font-weight: bold;
+  color: red;
+  text-shadow: 0 0 3px white;
+}
+.arrow {
+  display: inline-block;
+  transition: transform 0.2s linear;
+}
+
 	</style>
 </head>
 <body>
       <div id="root">
 		    <!-- Nouvelle carte Leaflet principale -->
   			<div id="mainMap"></div>
+		  
 		    <!-- Bouton pour ouvrir la bobine -->
             <div id="toggleReel">^</div>
             <!-- Bobine horizontale -->
@@ -248,6 +261,7 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Langue par défaut
+	let directionsLayer;  // calque pour stocker les flèches
     let currentLanguage = 'FR';
 
     // Fonction pour obtenir la traduction d'un objet GeoJSON
@@ -317,6 +331,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialisation : appliquer la langue par défaut au chargement
     changeLanguage(currentLanguage);
+
+
+const toggleDirections = document.getElementById("toggleDirections");
+toggleDirections.addEventListener("change", function() {
+    if (this.checked) {
+        createDirectionMarkers();
+    } else {
+        directionsLayer.clearLayers();
+    }
+});
 });
 
 
@@ -688,6 +712,29 @@ Object.entries(mapColor).forEach(([transport, color])=>{
 
 // === Init mainMap ===
 let currentLeafletMap = L.map('mainMap').setView([11.953125, 21.371244], 3);
+directionsLayer = L.layerGroup().addTo(mainMap);
+
+function createDirectionMarkers() {
+    directionsLayer.clearLayers();
+
+    visitedCities.forEach(city => {
+        city.visites.forEach(visit => {
+            if (visit.rotation !== undefined && visit.coords) {
+                let arrowIcon = L.divIcon({
+                    className: "arrow-icon",
+                    html: `<div class="arrow" style="transform: rotate(${visit.rotation}deg);">⇧</div>`,
+                    iconSize: [20, 20],
+                    iconAnchor: [10, 10]
+                });
+
+                L.marker([visit.coords[1], visit.coords[0]], { icon: arrowIcon })
+                 .addTo(directionsLayer);
+            }
+        });
+    });
+}
+
+	
 // Fonds
 const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: 'Julien Houziaux | OSM'
