@@ -708,25 +708,20 @@ function createDirectionMarkers() {
     visitedCities.forEach(city => {
         city.visites.forEach(visit => {
             if (visit.rotation !== undefined && visit.coords) {
-// id unique basé sur la photo
-const arrowId = "arrow_" + btoa(visit.photo || city.name).replace(/=/g,"");
+                // id unique basé sur la photo
+                const arrowId = "arrow_" + btoa(visit.photo || city.name).replace(/=/g,"");
 
-let arrowIcon = L.divIcon({
-    className: "arrow-icon",
-    html: `
-        <svg id="${arrowId}" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"
-             style="transform: rotate(${visit.rotation}deg);">
-          <path d="M12 2 L20 10 H14 V22 H10 V10 H4 Z" fill="black"/>
-        </svg>
-    `,
-    iconSize: [40, 40],
-    iconAnchor: [20, 20]
-});
-L.marker([visit.coords[1], visit.coords[0]], { icon: arrowIcon })
- .addTo(directionsLayer);
-// on enregistre l’ID pour pouvoir le retrouver plus tard
-visit._arrowId = arrowId;
-
+				let arrowIcon = L.divIcon({
+				    className: "arrow-icon",
+				    html: `
+				        <svg id="${arrowId}" xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24"
+				             style="transform: rotate(${visit.rotation}deg);">
+				          <path d="M12 2 L22 12 L16 12 L16 22 L8 22 L8 12 L2 12 Z" fill="black"/>
+				        </svg>
+				    `,
+				    iconSize: [36, 36],
+				    iconAnchor: [18, 18]
+				});
 				
                 const marker = L.marker([visit.coords[1], visit.coords[0]], { icon: arrowIcon })
                                 .addTo(directionsLayer);
@@ -1113,7 +1108,6 @@ function openLeafletPopup(cityData) {
 		    if (arrow) arrow.querySelector("path").setAttribute("fill", "red");
 		  }
 		});
-		
 		item.addEventListener("mouseleave", () => {
 		  if (v._marker) v._marker.setIcon(new L.Icon.Default());
 		  if (v._arrowId) {
