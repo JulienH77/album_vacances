@@ -320,7 +320,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     }
-
     // Écouter les clics sur les boutons de langue
     document.querySelectorAll('.language-option').forEach(button => {
         button.addEventListener('click', function() {
@@ -328,19 +327,8 @@ document.addEventListener('DOMContentLoaded', function() {
             changeLanguage(lang);
         });
     });
-
     // Initialisation : appliquer la langue par défaut au chargement
     changeLanguage(currentLanguage);
-
-
-const toggleDirections = document.getElementById("toggleDirections");
-toggleDirections.addEventListener("change", function() {
-	if (this.checked) {
-	    createDirectionMarkers();
-	} else {
-	    directionsLayer.clearLayers();
-	}
-});
 });
 
 
@@ -733,7 +721,15 @@ function createDirectionMarkers() {
         });
     });
 }
-
+// Gestion du switch des flèches
+const toggleDirections = document.getElementById("toggleDirections");
+toggleDirections.addEventListener("change", function() {
+    if (this.checked) {
+        createDirectionMarkers();
+    } else {
+        directionsLayer.clearLayers();
+    }
+});
 	
 // Fonds
 const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
