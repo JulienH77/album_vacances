@@ -166,43 +166,43 @@
 							<h4 data-lang-text="FR:Les villes du monde que j'ai visitées;EN:The cities around the world that I have visited;CH:我去過的世界各地的城市"></h4>
 							<div class="city-list">
 							  <button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/Beijing.jpg');">
-							    <span>Beijing</span>
+							    <span data-lang-text="FR:Pékin;EN:Beijing;CH:北京"></span>
 							  </button>
 							  <button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/xian.jpg');">
-							    <span>Xi'an</span>
+							    <span data-lang-text="FR:Xi'an;EN:Xi'an;CH:西安"></span>
 							  </button>
 							  <button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/shanghai.jpg');">
-							    <span>Shanghai</span>
+							    <span data-lang-text="FR:Shanghai;EN:Shanghai;CH:上海"></span>
 							  </button>
 								<button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/hangzhou.jpg');">
-							    <span>Hangzhou</span>
+							    <span data-lang-text="FR:Hangzhou;EN:Hangzhou;CH:杭州"></span>
 							  </button>
 								<button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/guilin.jpg');">
-							    <span>Guilin</span>
+							    <span data-lang-text="FR:Guilin;EN:Guilin;CH:桂林"></span>
 							  </button>
 								<button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/yangshuo.jpg');">
-							    <span>Yangshuo</span>
+							    <span data-lang-text="FR:Yangshuo;EN:Yangshuo;CH:陽朔"></span>
 							  </button>
 								<button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/tianjin.jpg');">
-							    <span>Tianjin</span>
+							    <span data-lang-text="FR:Tianjin;EN:Tianjin;CH:天津"></span>
 							  </button>
 								<button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/munich.png');">
-							    <span>Munich</span>
+							    <span data-lang-text="FR:Munich;EN:Munich;CH:慕尼黑"></span>
 							  </button>
 								<button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/marquartstein.jpg');">
-							    <span>Marquartstein</span>
+							    <span data-lang-text="FR:Marquartstein;EN:Marquartstein;CH:馬夸特施泰因"></span>
 							  </button>
 								<button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/salzburg.jpg');">
-							    <span>Salzburg</span>
+							    <span data-lang-text="FR:Salzbourg;EN:Salzburg;CH:薩爾斯堡"></span>
 							  </button>
 								<button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/budapest.jpg');">
-							    <span>Budapest</span>
+							    <span data-lang-text="FR:Budapest;EN:Budapest;CH:布達佩斯"></span>
 							  </button>
 								<button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/prague.jpg');">
-							    <span>Prague</span>
+							    <span data-lang-text="FR:Prague;EN:Prague;CH:布拉格"></span>
 							  </button>
 								<button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/regensburg.jpg');">
-							    <span>Regensburg</span>
+							    <span data-lang-text="FR:Ratisbonne;EN:Regensburg;CH:雷根斯堡">Regensburg</span>
 							  </button>
 								<button class="city-btn" style="background-image: url('./GLOBE/ImgVillesVisitees/Ulm.jpg');">
 							    <span>Ulm</span>
@@ -258,6 +258,15 @@ document.addEventListener('DOMContentLoaded', function() {
         // Retourne le nom par défaut (FR) si la traduction n'existe pas
         return item.name ? item.name.FR || item.name.EN || item.name : '';
     }
+	function formatDate(dateStr, lang) {
+  const date = new Date(dateStr.split('/').reverse().join('-')); // "11/05/2025" → 2025-05-11
+  return date.toLocaleDateString(
+    lang === 'FR' ? 'fr-FR' :
+    lang === 'EN' ? 'en-US' : 'zh-CN',
+    { year: 'numeric', month: 'long', day: 'numeric' }
+  );
+}
+
 
     // Fonction pour changer la langue dans l'interface
     function changeLanguage(lang) {
@@ -289,6 +298,12 @@ document.addEventListener('DOMContentLoaded', function() {
         // Mettre à jour les noms dynamiques (GeoJSON) si nécessaire
         // Exemple : si tu as une liste ou des popups à mettre à jour
         updateDynamicNames(lang);
+		// Mettre à jour les villes et photos
+		updateCitiesAndPhotos();
+		// Mettre à jour la légende des voyages
+		updateVoyagesLegend();
+		// Mettre à jour les dates affichées
+		updatePhotoDates();
     }
 
     // Fonction pour mettre à jour les noms dynamiques (ex: popups Leaflet, listes, etc.)
