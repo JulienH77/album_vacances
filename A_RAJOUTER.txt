@@ -12,11 +12,7 @@ ONGLET SETTINGS IDEES :
 
 
 MODIF A FAIRE :
-
--  refaire marcher le globe et ses boutons
--  rendre beaucoup plus beau les stats des trajets
--  HEURE TRAJETS QUE SUR LES HEURES FRANCAISE DONC ATTENTION CHINE
-
+-  differentes couleurs de markers : https://github.com/pointhi/leaflet-color-markers/tree/master
 -  faire que la carte leaflet suive en taille le sidepanel ? (NUL)
 -  PREFERABLE DE FAIRE UN AFFICHAGE AU ZOOM ET LES BOUTONS NE FERONS QUE SUIVRE LES COORDS ET ZOOM DE MON JS ?
 -  points rond sur les villes visitées (comme pour le globe) / ou alors zoom = affiche hotels et photos - dezoom = desaffiche hotels et photos
