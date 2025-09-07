@@ -320,30 +320,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     }
-
-    function showCityArrows(cityName) {
-        if (directionsLayer) {
-            directionsLayer.clearLayers(); // on efface les anciennes flèches
-        } else {
-            directionsLayer = L.layerGroup().addTo(map);
-        }
-
-        const city = visitedCities.find(c => c.name === cityName);
-        if (!city) return;
-
-        city.visites.forEach(visit => {
-            if (visit.coords && visit.rotation !== undefined) {
-                const arrow = L.divIcon({
-                    className: "arrow-icon",
-                    html: `<span class="arrow" style="transform: rotate(${visit.rotation}deg)">➤</span>`,
-                    iconSize: [20, 20],
-                    iconAnchor: [10, 10]
-                });
-                L.marker([visit.coords[1], visit.coords[0]], { icon: arrow }).addTo(directionsLayer);
-            }
-        });
-    }
-	
     // Écouter les clics sur les boutons de langue
     document.querySelectorAll('.language-option').forEach(button => {
         button.addEventListener('click', function() {
@@ -352,7 +328,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     // Initialisation : appliquer la langue par défaut au chargement
-    changeLanguage(currentLanguage);	
+    changeLanguage(currentLanguage);
 });
 
 
@@ -750,13 +726,8 @@ function createDirectionMarkers() {
                     if (visit._marker) {
                         visit._marker.openPopup();
                         currentLeafletMap.setView(visit._marker.getLatLng(), currentLeafletMap.getZoom());
-						// afficher les flèches de direction pour cette ville
-    					showCityArrows(cityName);
                     }
                 });
-
-
-				
                 // Sauvegarde id flèche pour changement couleur au survol
                 visit._arrowId = arrowId;
             }
