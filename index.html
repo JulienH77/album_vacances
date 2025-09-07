@@ -328,47 +328,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     // Initialisation : appliquer la langue par défaut au chargement
-    changeLanguage(currentLanguage);
-
-
-// Calques
-let cityCirclesLayer = L.layerGroup().addTo(map);
-let markersLayer = L.layerGroup().addTo(map);  // pour tes markers/photos/flèches
-// Ajouter des cercles pour chaque ville visitée
-visitedCities.forEach(city => {
-    const coords = city.value; // [lng, lat, 0]
-    const circle = L.circleMarker([coords[1], coords[0]], {
-        radius: 8,
-        color: "black",
-        weight: 2,
-        fillColor: "white",
-        fillOpacity: 1
-    });
-    // Tooltip au survol
-    circle.bindTooltip(city.name, { permanent: false, direction: "top" });
-    // Effet hover : blanc -> jaune
-    circle.on("mouseover", function () {
-        this.setStyle({ fillColor: "yellow" });
-    });
-    circle.on("mouseout", function () {
-        this.setStyle({ fillColor: "white" });
-    });
-    cityCirclesLayer.addLayer(circle);
-});
-function updateLayersVisibility() {
-    const zoom = map.getZoom();
-    if (zoom < 9) {
-        map.addLayer(cityCirclesLayer);
-        map.removeLayer(markersLayer);
-    } else {
-        map.removeLayer(cityCirclesLayer);
-        map.addLayer(markersLayer);
-    }
-}
-// mettre à jour à chaque zoom
-map.on("zoomend", updateLayersVisibility);
-// lancer au démarrage
-updateLayersVisibility();
+    changeLanguage(currentLanguage);	
 });
 
 
@@ -740,7 +700,56 @@ Object.entries(mapColor).forEach(([transport, color])=>{
 
 // === Init mainMap ===
 let currentLeafletMap = L.map('mainMap').setView([11.953125, 21.371244], 3);
-directionsLayer = L.layerGroup().addTo(currentLeafletMap);
+// Layers pour contrôle par zoom
+const cityCirclesLayer = L.layerGroup();    // cercles blancs (zoom < 9)
+const markersLayer     = L.layerGroup();    // markers / photos / flèches (zoom >= 9)
+const directionsLayer = L.layerGroup();
+markersLayer.addLayer(directionsLayer);
+
+// crée les cercles blancs pour chaque ville (tooltip + hover => jaune)
+function createCityCircles() {
+    cityCirclesLayer.clearLayers();
+    (visitedCities || []).forEach(city => {
+        if (!city.value) return;
+        const [lon, lat] = city.value;
+        const circle = L.circleMarker([lat, lon], {
+            radius: 7,
+            color: "#000000",    // contour noir
+            weight: 2,
+            fillColor: "#FFFFFF",// remplissage blanc
+            fillOpacity: 1,
+            interactive: true
+        });
+        // tooltip : nom de la ville (si tu veux la version traduite, remplace city.name par getTranslatedName(city, currentLanguage))
+        circle.bindTooltip(city.name || getTranslatedName(city, 'FR'), { permanent: false, direction: "top" });
+        // hover : devient jaune et ouvre l'info-bulle
+        circle.on("mouseover", function () {
+            this.setStyle({ fillColor: "#FFD700" }); // jaune
+            this.openTooltip();
+        });
+        circle.on("mouseout", function () {
+            this.setStyle({ fillColor: "#FFFFFF" });
+            this.closeTooltip();
+        });
+        cityCirclesLayer.addLayer(circle);
+    });
+}
+// contrôle d'affichage selon le zoom (9 est la coupure demandée)
+function updateLayersVisibility() {
+    const z = currentLeafletMap.getZoom();
+    if (z < 9) {
+        if (!currentLeafletMap.hasLayer(cityCirclesLayer)) currentLeafletMap.addLayer(cityCirclesLayer);
+        if (currentLeafletMap.hasLayer(markersLayer)) currentLeafletMap.removeLayer(markersLayer);
+    } else {
+        if (!currentLeafletMap.hasLayer(markersLayer)) currentLeafletMap.addLayer(markersLayer);
+        if (currentLeafletMap.hasLayer(cityCirclesLayer)) currentLeafletMap.removeLayer(cityCirclesLayer);
+    }
+}
+// appel initial + écoute zoom
+createCityCircles();
+currentLeafletMap.on('zoomend', updateLayersVisibility);
+updateLayersVisibility();
+
 
 function createDirectionMarkers() {
     directionsLayer.clearLayers();
@@ -985,11 +994,14 @@ const redIcon = new L.Icon({
 function openLeafletPopup(cityData) {
   if (!currentLeafletMap) return;
 
-  // Supprimer anciens markers
-  if (currentLeafletMap._photoMarkers) {
-    currentLeafletMap._photoMarkers.forEach(m => currentLeafletMap.removeLayer(m));
-  }
-  currentLeafletMap._photoMarkers = [];
+// Supprimer anciens markers
+if (currentLeafletMap._photoMarkers) {
+  currentLeafletMap._photoMarkers.forEach(m => {
+    try { markersLayer.removeLayer(m); } catch(e){ /* noop */ }
+    try { currentLeafletMap.removeLayer(m); } catch(e){ /* noop */ }
+  });
+}
+currentLeafletMap._photoMarkers = [];
 
   // Recentrer la carte
   const [lon, lat] = cityData.value;
@@ -1003,7 +1015,7 @@ function openLeafletPopup(cityData) {
     // Hôtel
     if (v.type === "hotel") {
       const marker = L.marker([vlat, vlon], { icon: hotelIcon })
-        .addTo(currentLeafletMap)
+        .addTo(markersLayer)
         .bindPopup(`<b>Hotel</b><br>Du ${v.datedeb} au ${v.datefin}`);
       currentLeafletMap._photoMarkers.push(marker);
       return;
@@ -1039,9 +1051,9 @@ function openLeafletPopup(cityData) {
 
       const showDir = document.getElementById("toggleDirections").checked;
 
-      const marker = L.marker([vlat, vlon], {
-        icon: new L.Icon.Default()
-      }).bindPopup(popupContent).addTo(currentLeafletMap);
+	  const marker = L.marker([vlat, vlon], {
+		icon: new L.Icon.Default()
+	  }).bindPopup(popupContent).addTo(markersLayer);
 
       v._marker = marker;
       currentLeafletMap._photoMarkers.push(marker);
