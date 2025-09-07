@@ -329,6 +329,46 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     // Initialisation : appliquer la langue par défaut au chargement
     changeLanguage(currentLanguage);
+
+
+// Calques
+let cityCirclesLayer = L.layerGroup().addTo(map);
+let markersLayer = L.layerGroup().addTo(map);  // pour tes markers/photos/flèches
+// Ajouter des cercles pour chaque ville visitée
+visitedCities.forEach(city => {
+    const coords = city.value; // [lng, lat, 0]
+    const circle = L.circleMarker([coords[1], coords[0]], {
+        radius: 8,
+        color: "black",
+        weight: 2,
+        fillColor: "white",
+        fillOpacity: 1
+    });
+    // Tooltip au survol
+    circle.bindTooltip(city.name, { permanent: false, direction: "top" });
+    // Effet hover : blanc -> jaune
+    circle.on("mouseover", function () {
+        this.setStyle({ fillColor: "yellow" });
+    });
+    circle.on("mouseout", function () {
+        this.setStyle({ fillColor: "white" });
+    });
+    cityCirclesLayer.addLayer(circle);
+});
+function updateLayersVisibility() {
+    const zoom = map.getZoom();
+    if (zoom < 9) {
+        map.addLayer(cityCirclesLayer);
+        map.removeLayer(markersLayer);
+    } else {
+        map.removeLayer(cityCirclesLayer);
+        map.addLayer(markersLayer);
+    }
+}
+// mettre à jour à chaque zoom
+map.on("zoomend", updateLayersVisibility);
+// lancer au démarrage
+updateLayersVisibility();
 });
 
 
