@@ -701,7 +701,7 @@ Object.entries(mapColor).forEach(([transport, color])=>{
 // === Init mainMap ===
 let currentLeafletMap = L.map('mainMap').setView([11.953125, 21.371244], 3);
 // Layers pour contrôle par zoom
-const cityCirclesLayer = L.layerGroup();    // cercles blancs (zoom < 9)
+const cityCirclesLayer = L.layerGroup().addTo(currentLeafletMap);    // cercles blancs (zoom < 9)
 const markersLayer     = L.layerGroup();    // markers / photos / flèches (zoom >= 9)
 const directionsLayer = L.layerGroup();
 markersLayer.addLayer(directionsLayer);
@@ -709,30 +709,33 @@ markersLayer.addLayer(directionsLayer);
 // crée les cercles blancs pour chaque ville (tooltip + hover => jaune)
 function createCityCircles() {
     cityCirclesLayer.clearLayers();
-    (visitedCities || []).forEach(city => {
-        if (!city.value) return;
-        const [lon, lat] = city.value;
-        const circle = L.circleMarker([lat, lon], {
-            radius: 7,
-            color: "#000000",    // contour noir
-            weight: 2,
-            fillColor: "#FFFFFF",// remplissage blanc
-            fillOpacity: 1,
-            interactive: true
-        });
-        // tooltip : nom de la ville (si tu veux la version traduite, remplace city.name par getTranslatedName(city, currentLanguage))
-        circle.bindTooltip(city.name || getTranslatedName(city, 'FR'), { permanent: false, direction: "top" });
-        // hover : devient jaune et ouvre l'info-bulle
-        circle.on("mouseover", function () {
-            this.setStyle({ fillColor: "#FFD700" }); // jaune
-            this.openTooltip();
-        });
-        circle.on("mouseout", function () {
-            this.setStyle({ fillColor: "#FFFFFF" });
-            this.closeTooltip();
-        });
-        cityCirclesLayer.addLayer(circle);
-    });
+	// Ajouter un cercle blanc avec contour noir pour chaque ville visitée
+	visitedCities.forEach(city => {
+		if (!city.value) return;
+		const [lon, lat] = city.value;
+	
+		const circle = L.circleMarker([lat, lon], {
+			radius: 7,
+			color: "black",      // contour noir
+			weight: 2,
+			fillColor: "white",  // remplissage blanc
+			fillOpacity: 1,
+			pane: "markerPane"   // pour que ça passe AU-DESSUS des trajets
+		});
+	
+		// Tooltip au survol
+		circle.bindTooltip(city.name, { permanent: false, direction: "top" });
+	
+		// Effet hover : blanc -> jaune
+		circle.on("mouseover", function () {
+			this.setStyle({ fillColor: "yellow" });
+		});
+		circle.on("mouseout", function () {
+			this.setStyle({ fillColor: "white" });
+		});
+	
+		cityCirclesLayer.addLayer(circle);
+	});
 }
 // contrôle d'affichage selon le zoom (9 est la coupure demandée)
 function updateLayersVisibility() {
