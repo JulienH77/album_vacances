@@ -2,7 +2,6 @@ ONGLET SETTINGS IDEES :
 -  opacite de chaque cocuhe et img layers
 -  taille marker
 -  taille popup ou photo dedans
--  filtrer les voyages
 -  mode plein écran
 -  langue
 -  contraste / description textuelle des photos
