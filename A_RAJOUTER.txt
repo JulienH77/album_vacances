@@ -16,7 +16,6 @@ MODIF A FAIRE :
 -  faire que la carte leaflet suive en taille le sidepanel ? (NUL)
 -  PREFERABLE DE FAIRE UN AFFICHAGE AU ZOOM ET LES BOUTONS NE FERONS QUE SUIVRE LES COORDS ET ZOOM DE MON JS ?
 -  points rond sur les villes visitées (comme pour le globe) / ou alors zoom = affiche hotels et photos - dezoom = desaffiche hotels et photos
--  supprimer liste jours des photos a cocher car embetant pour le reste je pense
 -  desafficher hotels et photos a un zoom mondial
 -  faire un bouton pour le globe trop stylé (idée : faire un globe geant cliquable : https://stackoverflow.com/questions/27781634/rotating-globe-in-css )
 -  ajouter des settings ?? des settings qui se gardent dans le navigateur en question ???
