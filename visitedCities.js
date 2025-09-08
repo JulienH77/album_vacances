@@ -409,12 +409,12 @@ const visitedCities = [
       value: [12.09421, 49.02009, 0],
       visites: [
         { type: 'hotel', datedeb:'24/07/2025', datefin:'25/07/2025', coords:[12.107303, 49.014029] },
-        { name:'An old tower', coords:[12.10843, 49.01792], photo:'./IMG/2025/Central Europe/Regensburg/IMG_20250725_121358.jpg' },
-        { name:'Café Lorraine', coords:[12.10154, 49.01750], photo:'./IMG/2025/Central Europe/Regensburg/IMG_20250725_125458.jpg' },
-        { name:'Map of the middle-age town', coords:[12.09781, 49.02095], photo:'./IMG/2025/Central Europe/Regensburg/IMG_20250725_150953.jpg' },
-        { name:'Us on the old bridge', coords:[12.09711, 49.02176], photo:'./IMG/2025/Central Europe/Regensburg/IMG_20250725_151922.jpg' },
-        { name:'View of Regensburg', coords:[12.10189, 49.02126], photo:'./IMG/2025/Central Europe/Regensburg/IMG_20250725_165907.jpg' },
-        { name:'A 2000 years old tower from roman empire', coords:[12.09900, 49.02013], photo:'./IMG/2025/Central Europe/Regensburg/IMG_20250725_170604.jpg' }
+        { name:'An old tower', coords:[12.10843, 49.01792], photo:'./IMG/2025/Central Europe/Regensburg/IMG_20250725_121358.jpg', rotation: 304 },
+        { name:'Café Lorraine', coords:[12.10154, 49.01750], photo:'./IMG/2025/Central Europe/Regensburg/IMG_20250725_125458.jpg', rotation: 90 },
+        { name:'Map of the middle-age town', coords:[12.09781, 49.02095], photo:'./IMG/2025/Central Europe/Regensburg/IMG_20250725_150953.jpg', rotation: 210 },
+        { name:'Us on the old bridge', coords:[12.09711, 49.02176], photo:'./IMG/2025/Central Europe/Regensburg/IMG_20250725_151922.jpg', rotation: 284 },
+        { name:'View of Regensburg', coords:[12.10189, 49.02126], photo:'./IMG/2025/Central Europe/Regensburg/IMG_20250725_165907.jpg', rotation: 248 },
+        { name:'A 2000 years old tower from roman empire', coords:[12.09900, 49.02013], photo:'./IMG/2025/Central Europe/Regensburg/IMG_20250725_170604.jpg', rotation: 275 }
       ]
     },
     {
