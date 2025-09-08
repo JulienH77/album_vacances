@@ -384,13 +384,13 @@ const visitedCities = [
       value: [11.57251, 48.13922, 0],
       visites: [
         { type: 'hotel', datedeb:'11/07/2025', datefin:'13/07/2025', coords:[11.622536, 48.136962] },
-        { name:'Marienplatz', coords:[11.57566, 48.13707], photo:'./IMG/2025/Central Europe/Munich/IMG_20250712_145518.jpg' },
-        { name:'Cathedral', coords:[11.57251, 48.13863], photo:'./IMG/2025/Central Europe/Munich/IMG_20250712_173138.jpg' },
-        { name:'Beer at the englischergarten', coords:[11.59248, 48.15229], photo:'./IMG/2025/Central Europe/Munich/IMG_20250712_193124.jpg' },
-        { name:'Leaving the garten', coords:[11.596034, 48.1503655], photo:'./IMG/2025/Central Europe/Munich/IMG_20250712_203324.jpg' },
-        { name:'Waiting for her laundry', coords:[11.60667, 48.12429], photo:'./IMG/2025/Central Europe/Munich/IMG_20250712_221519.jpg' },
+        { name:'Marienplatz', coords:[11.57566, 48.13707], photo:'./IMG/2025/Central Europe/Munich/IMG_20250712_145518.jpg', rotation: 349 },
+        { name:'Cathedral', coords:[11.57251, 48.13863], photo:'./IMG/2025/Central Europe/Munich/IMG_20250712_173138.jpg', rotation: 100 },
+        { name:'Beer at the englischergarten', coords:[11.59248, 48.15229], photo:'./IMG/2025/Central Europe/Munich/IMG_20250712_193124.jpg', rotation: 70 },
+        { name:'Leaving the garten', coords:[11.596034, 48.1503655], photo:'./IMG/2025/Central Europe/Munich/IMG_20250712_203324.jpg', rotation: 340 },
+        { name:'Waiting for her laundry', coords:[11.60667, 48.12429], photo:'./IMG/2025/Central Europe/Munich/IMG_20250712_221519.jpg', rotation: 245 },
           
-        { name:'Last meal before the end', coords:[11.56099, 48.13865], photo:'./IMG/2025/Central Europe/Munich/IMG_20250727_140041.jpg' }
+        { name:'Last meal before the end', coords:[11.56099, 48.13865], photo:'./IMG/2025/Central Europe/Munich/IMG_20250727_140041.jpg', rotation: 270 }
       ]
     },
     {
