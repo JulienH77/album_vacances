@@ -701,12 +701,12 @@ Object.entries(mapColor).forEach(([transport, color])=>{
 // === Init mainMap ===
 let currentLeafletMap = L.map('mainMap').setView([11.953125, 21.371244], 3);
 directionsLayer = L.layerGroup().addTo(currentLeafletMap);
-
 function createDirectionMarkers() {
     directionsLayer.clearLayers();
     visitedCities.forEach(city => {
         city.visites.forEach(visit => {
-            if (visit.rotation !== undefined && visit.coords && visit._marker) {
+            // n'ajoute la flèche QUE si le marker existe ET est actuellement ajouté à la carte
+            if (visit.rotation !== undefined && visit.coords && visit._marker && currentLeafletMap.hasLayer(visit._marker)) {
                 const arrowId = "arrow_" + btoa(visit.photo || city.name).replace(/=/g,"");
                 let arrowIcon = L.divIcon({
                     className: "arrow-icon",
@@ -721,14 +721,12 @@ function createDirectionMarkers() {
                 });
                 const arrowMarker = L.marker([visit.coords[1], visit.coords[0]], { icon: arrowIcon })
                                       .addTo(directionsLayer);
-                // Lier le clic de la flèche à la popup du marker photo
                 arrowMarker.on("click", () => {
                     if (visit._marker) {
                         visit._marker.openPopup();
                         currentLeafletMap.setView(visit._marker.getLatLng(), currentLeafletMap.getZoom());
                     }
                 });
-                // Sauvegarde id flèche pour changement couleur au survol
                 visit._arrowId = arrowId;
             }
         });
@@ -902,7 +900,33 @@ fetch('GEOJSON/TRAJETS_ALL_vacances_wgs.geojson')
       // ajoute par défaut
       voyagesGroups[v].addTo(currentLeafletMap);
     });
-  });
+	// --- ajustement dynamique de l'épaisseur des trajets selon le zoom ---
+	function getLineWeightForZoom(zoom) {
+	  if (zoom <= 5) return 2;
+	  if (zoom <= 7) return 3;
+	  if (zoom <= 9) return 4;
+	  if (zoom <= 11) return 6;
+	  if (zoom <= 13) return 8;
+	  return 10;
+	}
+	function updateTrajetWeights() {
+	  const weight = getLineWeightForZoom(currentLeafletMap.getZoom());
+	  Object.keys(voyagesGroups).forEach(k => {
+	    voyagesGroups[k].eachLayer(layer => {
+	      // layer peut être un GeoJSON layer contenant des sous-segments
+	      if (layer.setStyle) {
+	        layer.setStyle({ weight });
+	      } else if (layer.eachLayer) {
+	        layer.eachLayer(sub => {
+	          if (sub.setStyle) sub.setStyle({ weight });
+	        });
+	      }
+	    });
+	  });
+	}
+	currentLeafletMap.on('zoomend', updateTrajetWeights);
+	updateTrajetWeights(); // applique immédiatement la bonne épaisseur
+});
 
 const redIcon = new L.Icon({
   iconUrl: './GLOBE/symboles/marker-icon-red.png',
@@ -950,6 +974,13 @@ function openLeafletPopup(cityData) {
     currentLeafletMap._photoMarkers.forEach(m => currentLeafletMap.removeLayer(m));
   }
   currentLeafletMap._photoMarkers = [];
+  // --- clear anciennes références de visite (important pour ne pas recréer d'anciennes flèches) ---
+  visitedCities.forEach(c => {
+    c.visites.forEach(v => {
+      v._marker = null;
+      v._arrowId = null;
+    });
+  });
 
   // Recentrer la carte
   const [lon, lat] = cityData.value;
@@ -1023,7 +1054,13 @@ function openLeafletPopup(cityData) {
       });
     }
   });
-
+// Recrée les flèches si le switch est activé, sinon vide le calque des flèches
+if (document.getElementById('toggleDirections').checked) {
+  createDirectionMarkers();
+} else {
+  directionsLayer.clearLayers();
+}
+	
   // --- Mettre à jour l’onglet 3 (photos) ---
   const photosTab = document.querySelector('[data-tab-content="tab-3"]');
   photosTab.innerHTML = `<h4 style="font-size:1.2em; margin-bottom:10px;" data-lang-text="FR:Les photos;EN:The photos;CH:照片"></h4>`;
