@@ -457,28 +457,28 @@ const visitedCities = [
       value: [19.05196, 47.49394, 0],
       visites: [
         { type: 'hotel', datedeb:'18/07/2025', datefin:'21/07/2025', coords:[19.0628424, 47.4977553] },
-        { name:'Piece of Berlin wall', coords:[19.06529, 47.50668], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250718_185336.jpg' },
-        { name:'Iron curtain', coords:[19.06544, 47.50679], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250718_185723.jpg' },
-        { name:'Heroes square', coords:[19.077351, 47.514584], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250718_191011.jpg' },
-        { name:'The cutest', coords:[19.080105, 47.516005], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250718_193447.jpg' },
-        { name:'Us and the castle of Vajdahunyad', coords:[19.0816144, 47.5159559], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250718_194127.jpg' },
-        { name:'Us and the castel of Pest', coords:[19.08303, 47.51652], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250718_195500.jpg' },
-        { name:'Entering the Ruin bar', coords:[19.06335, 47.497006], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250718_205500.jpg' },
-        { name:'Me and a drunk guy', coords:[19.06284, 47.49683], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250718_223000.jpg' },
+        { name:'Piece of Berlin wall', coords:[19.06529, 47.50668], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250718_185336.jpg', rotation: 35 },
+        { name:'Iron curtain', coords:[19.06544, 47.50679], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250718_185723.jpg', rotation: 210 },
+        { name:'Heroes square', coords:[19.077351, 47.514584], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250718_191011.jpg', rotation: 41 },
+        { name:'The cutest', coords:[19.080105, 47.516005], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250718_193447.jpg', rotation: 336 },
+        { name:'Us and the castle of Vajdahunyad', coords:[19.0816144, 47.5159559], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250718_194127.jpg', rotation: 128 },
+        { name:'Us and the castel of Pest', coords:[19.08303, 47.51652], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250718_195500.jpg', rotation: 209 },
+        { name:'Entering the Ruin bar', coords:[19.06335, 47.497006], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250718_205500.jpg', rotation: 247 },
+        { name:'Me and a drunk guy', coords:[19.06284, 47.49683], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250718_223000.jpg', rotation: 340 },
           
-        { name:'In the Ruin bar', coords:[19.06299, 47.49687], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250719_002000.jpg' },
-        { name:'Ruin bar', coords:[19.06287432, 47.49678406], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250719_003008.jpg' },
-        { name:'Snow White and the bird', coords:[19.06256, 47.497044], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250719_121752.jpg' },
-        { name:'Going to the Museum in the castle of Buda', coords:[19.041502, 47.495178], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250719_133222.jpg' },
-        { name:'Resting time in the museum', coords:[19.039736, 47.495084], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250719_154009.jpg' },
-        { name:'Photo of us', coords:[19.041387, 47.495095], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250719_171040.jpg' },
-        { name:'Fishermen\'s church', coords:[19.033740, 47.501323], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250719_183722.jpg' },
-        { name:'My beauty and the parliament', coords:[19.03952892, 47.506152106], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250719_200219.jpg' },
+        { name:'In the Ruin bar', coords:[19.06299, 47.49687], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250719_002000.jpg', rotation: 87 },
+        { name:'Ruin bar', coords:[19.06287432, 47.49678406], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250719_003008.jpg', rotation: 80 },
+        { name:'Snow White and the bird', coords:[19.06256, 47.497044], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250719_121752.jpg', rotation: 248 },
+        { name:'Going to the Museum in the castle of Buda', coords:[19.041502, 47.495178], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250719_133222.jpg', rotation: 26 },
+        { name:'Resting time in the museum', coords:[19.039736, 47.495084], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250719_154009.jpg', rotation: 45 },
+        { name:'Photo of us', coords:[19.041387, 47.495095], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250719_171040.jpg', rotation: 14 },
+        { name:'Fishermen\'s church', coords:[19.033740, 47.501323], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250719_183722.jpg', rotation: 18 },
+        { name:'My beauty and the parliament', coords:[19.03952892, 47.506152106], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250719_200219.jpg', rotation: 86 },
           
-        { name:'Parliament of Budapest', coords:[19.04688, 47.50800], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250720_192616.jpg' },
+        { name:'Parliament of Budapest', coords:[19.04688, 47.50800], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250720_192616.jpg', rotation: 244 },
           
-        { name:'On the way to the thermal baths', coords:[19.06856, 47.50860], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250721_111258_1.jpg' },
-        { name:'Luggage locker', coords:[19.08311, 47.50028], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250721_165000.jpg' }
+        { name:'On the way to the thermal baths', coords:[19.06856, 47.50860], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250721_111258_1.jpg', rotation: 43 },
+        { name:'Luggage locker', coords:[19.08311, 47.50028], photo:'./IMG/2025/Central Europe/Budapest/IMG_20250721_165000.jpg', rotation: 79 }
       ]
     },
     
