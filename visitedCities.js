@@ -397,11 +397,11 @@ const visitedCities = [
       name: 'Marquartstein',
       value: [12.46238, 47.75929, 0],
       visites: [
-        { name:'On a walk', coords:[12.46436, 47.757624], photo:'./IMG/2025/Central Europe/Marquartstein/IMG_20250713_135813.jpg' },
-        { name:'Cute girl and a bin', coords:[12.465336, 47.75557], photo:'./IMG/2025/Central Europe/Marquartstein/IMG_20250713_140715.jpg' },
-        { name:'The lion girl', coords:[12.46704, 47.75209], photo:'./IMG/2025/Central Europe/Marquartstein/IMG_20250713_141521.jpg' },
-        { name:'Barbie was lost', coords:[12.46681, 47.751229], photo:'./IMG/2025/Central Europe/Marquartstein/IMG_20250713_141835.jpg' },
-        { name:'Fuck the rain', coords:[12.463480, 47.759179], photo:'./IMG/2025/Central Europe/Marquartstein/IMG_20250713_150552.jpg' }
+        { name:'On a walk', coords:[12.46436, 47.757624], photo:'./IMG/2025/Central Europe/Marquartstein/IMG_20250713_135813.jpg', rotation: 104 },
+        { name:'Cute girl and a bin', coords:[12.465336, 47.75557], photo:'./IMG/2025/Central Europe/Marquartstein/IMG_20250713_140715.jpg', rotation: 162 },
+        { name:'The lion girl', coords:[12.46704, 47.75209], photo:'./IMG/2025/Central Europe/Marquartstein/IMG_20250713_141521.jpg', rotation: 282 },
+        { name:'Barbie was lost', coords:[12.46681, 47.751229], photo:'./IMG/2025/Central Europe/Marquartstein/IMG_20250713_141835.jpg', rotation: 290 },
+        { name:'Fuck the rain', coords:[12.463480, 47.759179], photo:'./IMG/2025/Central Europe/Marquartstein/IMG_20250713_150552.jpg', rotation: 98 }
       ]
     },
     {
