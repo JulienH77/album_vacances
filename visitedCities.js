@@ -488,29 +488,29 @@ const visitedCities = [
       value: [14.42037, 50.08427, 0],
       visites: [
         { type: 'hotel', datedeb:'21/07/2025', datefin:'24/07/2025', coords:[14.454204, 50.094476] },
-        { name:'Distorting mirror', coords:[14.42559, 50.08526], photo:'./IMG/2025/Central Europe/Prague/IMG_20250722_135000.jpg' },
-        { name:'Powder tower', coords:[14.42802, 50.08691], photo:'./IMG/2025/Central Europe/Prague/IMG_20250722_140357.jpg' },
-        { name:'Astronomical clock', coords:[14.42067, 50.08700], photo:'./IMG/2025/Central Europe/Prague/IMG_20250722_144513.jpg' },
-        { name:'Astronomical clock\'s square', coords:[14.42125, 50.08711], photo:'./IMG/2025/Central Europe/Prague/IMG_20250722_144953.jpg' },
-        { name:'Forced to eat', coords:[14.41971, 50.08665], photo:'./IMG/2025/Central Europe/Prague/IMG_20250722_154732.jpg' },
-        { name:'Riding a wooden D', coords:[14.42076, 50.08628], photo:'./IMG/2025/Central Europe/Prague/IMG_20250722_174552.jpg' },
-        { name:'The biggest', coords:[14.42082, 50.08628], photo:'./IMG/2025/Central Europe/Prague/IMG_20250722_182000.jpg' },
-        { name:'Old tavern', coords:[14.40156, 50.08898], photo:'./IMG/2025/Central Europe/Prague/IMG_20250722_204124.jpg' },
-        { name:'Us in the tavern', coords:[14.40155, 50.08893], photo:'./IMG/2025/Central Europe/Prague/IMG_20250722_210000.jpg' },
+        { name:'Distorting mirror', coords:[14.42559, 50.08526], photo:'./IMG/2025/Central Europe/Prague/IMG_20250722_135000.jpg', rotation: 40 },
+        { name:'Powder tower', coords:[14.42802, 50.08691], photo:'./IMG/2025/Central Europe/Prague/IMG_20250722_140357.jpg', rotation: 335 },
+        { name:'Astronomical clock', coords:[14.42067, 50.08700], photo:'./IMG/2025/Central Europe/Prague/IMG_20250722_144513.jpg', rotation: 328 },
+        { name:'Astronomical clock\'s square', coords:[14.42125, 50.08711], photo:'./IMG/2025/Central Europe/Prague/IMG_20250722_144953.jpg', rotation: 27 },
+        { name:'Forced to eat', coords:[14.41971, 50.08665], photo:'./IMG/2025/Central Europe/Prague/IMG_20250722_154732.jpg', rotation: 316 },
+        { name:'Riding a wooden D', coords:[14.42076, 50.08628], photo:'./IMG/2025/Central Europe/Prague/IMG_20250722_174552.jpg', rotation: 12 },
+        { name:'The biggest', coords:[14.42082, 50.08628], photo:'./IMG/2025/Central Europe/Prague/IMG_20250722_182000.jpg', rotation: 25 },
+        { name:'Old tavern', coords:[14.40156, 50.08898], photo:'./IMG/2025/Central Europe/Prague/IMG_20250722_204124.jpg', rotation: 114 },
+        { name:'Us in the tavern', coords:[14.40155, 50.08893], photo:'./IMG/2025/Central Europe/Prague/IMG_20250722_210000.jpg' /*PAS DE ROTATION CAR POINTE AU DESSUS*/ },
         /*{ name:'How we see inside', coords:[14.40153, 50.08891], photo:'./IMG/2025/Central Europe/Prague/GIF_20250722_220100.gif' },*/
-        { name:'Church of the infant Jesus', coords:[14.40365, 50.08572], photo:'./IMG/2025/Central Europe/Prague/IMG_20250723_165037.jpg' },
-
-        { name:'Man hanging out', coords:[14.41827, 50.08440], photo:'./IMG/2025/Central Europe/Prague/IMG_20250723_144739.jpg' },
-        { name:'Umbrella man', coords:[14.41814, 50.07778], photo:'./IMG/2025/Central Europe/Prague/IMG_20250723_151216.jpg' },
-        { name:'Umbrella woman', coords:[14.41788, 50.07753], photo:'./IMG/2025/Central Europe/Prague/IMG_20250723_151506.jpg' },
-        { name:'The dancing house', coords:[14.41420, 50.07587], photo:'./IMG/2025/Central Europe/Prague/IMG_20250723_152347.jpg' },
-        { name:'View of the famous bridge', coords:[14.41314, 50.08354], photo:'./IMG/2025/Central Europe/Prague/IMG_20250723_153923.jpg' },
-        { name:'The Lennon Wall', coords:[14.40678, 50.08620], photo:'./IMG/2025/Central Europe/Prague/IMG_20250723_175453.jpg' },
-        { name:'The Lennon wall', coords:[14.406930, 50.086249], photo:'./IMG/2025/Central Europe/Prague/IMG_20250723_180908.jpg' },
-        { name:'Frog guy with a frog on the Lennon wall', coords:[14.406810, 50.086249], photo:'./IMG/2025/Central Europe/Prague/IMG_20250723_181500.jpg' },
-        { name:'Delicious meal in a pub', coords:[14.40824, 50.08629], photo:'./IMG/2025/Central Europe/Prague/IMG_20250723_185200.jpg' },
-        { name:'Us on the bridge', coords:[14.40961, 50.08667], photo:'./IMG/2025/Central Europe/Prague/IMG_20250723_202523.jpg' },
-        { name:'London underground bar', coords:[14.41934, 50.08147], photo:'./IMG/2025/Central Europe/Prague/IMG_20250723_205251.jpg' }
+        
+        { name:'Church of the infant Jesus', coords:[14.40365, 50.08572], photo:'./IMG/2025/Central Europe/Prague/IMG_20250723_165037.jpg', rotation: 253 },
+        { name:'Man hanging out', coords:[14.41827, 50.08440], photo:'./IMG/2025/Central Europe/Prague/IMG_20250723_144739.jpg', rotation: 182 },
+        { name:'Umbrella man', coords:[14.41814, 50.07778], photo:'./IMG/2025/Central Europe/Prague/IMG_20250723_151216.jpg', rotation: 236 },
+        { name:'Umbrella woman', coords:[14.41788, 50.07753], photo:'./IMG/2025/Central Europe/Prague/IMG_20250723_151506.jpg', rotation: 41 },
+        { name:'The dancing house', coords:[14.41420, 50.07587], photo:'./IMG/2025/Central Europe/Prague/IMG_20250723_152347.jpg', rotation: 191 },
+        { name:'View of the famous bridge', coords:[14.41314, 50.08354], photo:'./IMG/2025/Central Europe/Prague/IMG_20250723_153923.jpg', rotation: 233 },
+        { name:'The Lennon Wall', coords:[14.40678, 50.08620], photo:'./IMG/2025/Central Europe/Prague/IMG_20250723_175453.jpg', rotation: 219 },
+        { name:'The Lennon wall', coords:[14.406930, 50.086249], photo:'./IMG/2025/Central Europe/Prague/IMG_20250723_180908.jpg', rotation: 11 },
+        { name:'Frog guy with a frog on the Lennon wall', coords:[14.406810, 50.086249], photo:'./IMG/2025/Central Europe/Prague/IMG_20250723_181500.jpg', rotation: 348 },
+        { name:'Delicious meal in a pub', coords:[14.40824, 50.08629], photo:'./IMG/2025/Central Europe/Prague/IMG_20250723_185200.jpg', rotation: 180 },
+        { name:'Us on the bridge', coords:[14.40961, 50.08667], photo:'./IMG/2025/Central Europe/Prague/IMG_20250723_202523.jpg', rotation: 162 },
+        { name:'London underground bar', coords:[14.41934, 50.08147], photo:'./IMG/2025/Central Europe/Prague/IMG_20250723_205251.jpg', rotation: 120 }
       ]
     }
   ];
