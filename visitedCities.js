@@ -422,14 +422,14 @@ const visitedCities = [
       value: [9.99271, 48.39848, 0],
       visites: [
         { type: 'hotel', datedeb:'25/07/2025', datefin:'27/07/2025', coords:[9.983286, 48.39558] },
-        { name:'No room...', coords:[9.983286, 48.39558], photo:'./IMG/2025/Central Europe/Ulm/IMG_20250726_031056.jpg' },
-        { name:'The tallest cathedral in the world', coords:[9.990807, 48.39833], photo:'./IMG/2025/Central Europe/Ulm/IMG_20250726_143246.jpg' },
-        { name:'The townhall', coords:[9.993648, 48.39700], photo:'./IMG/2025/Central Europe/Ulm/IMG_20250726_160509.jpg' },
-        { name:'The most leaning hotel in the world', coords:[9.991303, 48.39557], photo:'./IMG/2025/Central Europe/Ulm/IMG_20250726_162846.jpg' },
-        { name:'Cute bridge, river and us', coords:[9.9909279, 48.395416], photo:'./IMG/2025/Central Europe/Ulm/IMG_20250726_163153.jpg' },
-        { name:'Mona loser', coords:[9.99772, 48.39899], photo:'./IMG/2025/Central Europe/Ulm/IMG_20250726_175104.jpg' },
-        { name:'Einstein fountain', coords:[10.001146, 48.400465], photo:'./IMG/2025/Central Europe/Ulm/IMG_20250726_180211.jpg' },
-        { name:'Einstein fountain', coords:[10.001115, 48.40041], photo:'./IMG/2025/Central Europe/Ulm/IMG_20250726_180300.jpg' }
+        { name:'No room...', coords:[9.983286, 48.39558], photo:'./IMG/2025/Central Europe/Ulm/IMG_20250726_031056.jpg', rotation: 5 },
+        { name:'The tallest cathedral in the world', coords:[9.990807, 48.39833], photo:'./IMG/2025/Central Europe/Ulm/IMG_20250726_143246.jpg', rotation: 69 },
+        { name:'The townhall', coords:[9.993648, 48.39700], photo:'./IMG/2025/Central Europe/Ulm/IMG_20250726_160509.jpg', rotation: 250 },
+        { name:'The most leaning hotel in the world', coords:[9.991303, 48.39557], photo:'./IMG/2025/Central Europe/Ulm/IMG_20250726_162846.jpg', rotation: 313 },
+        { name:'Cute bridge, river and us', coords:[9.9909279, 48.395416], photo:'./IMG/2025/Central Europe/Ulm/IMG_20250726_163153.jpg', rotation: 288 },
+        { name:'Mona loser', coords:[9.99772, 48.39899], photo:'./IMG/2025/Central Europe/Ulm/IMG_20250726_175104.jpg', rotation: 103 },
+        { name:'Einstein fountain', coords:[10.001146, 48.400465], photo:'./IMG/2025/Central Europe/Ulm/IMG_20250726_180211.jpg', rotation: 47 },
+        { name:'Einstein fountain', coords:[10.001115, 48.40041], photo:'./IMG/2025/Central Europe/Ulm/IMG_20250726_180300.jpg', rotation: 47 }
       ]
     },
     
