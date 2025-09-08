@@ -1134,17 +1134,17 @@ if (document.getElementById('toggleDirections').checked) {
 		// Survol = marker rouge + flèche rouge
 		item.addEventListener("mouseenter", () => {
 		  if (v._marker) v._marker.setIcon(redIcon);
-		  if (v._arrowId) {
+		  /*if (v._arrowId) {
 		    const arrow = document.getElementById(v._arrowId);
 		    if (arrow) arrow.querySelector("path").setAttribute("fill", "red");
-		  }
+		  }*/
 		});
 		item.addEventListener("mouseleave", () => {
 		  if (v._marker) v._marker.setIcon(new L.Icon.Default());
-		  if (v._arrowId) {
+		  /*if (v._arrowId) {
 		    const arrow = document.getElementById(v._arrowId);
 		    if (arrow) arrow.querySelector("path").setAttribute("fill", "black");
-		  }
+		  }*/
 		});
         container.appendChild(item);
       });
