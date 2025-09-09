@@ -181,13 +181,13 @@ const visitedCities = [
       visites: [
         { type: 'hotel', datedeb:'19/05/2025', datefin:'24/05/2025', coords:[121.44882, 31.24892] },
         /*First visit of the bund*/
-        { name:'The Bund', coords:[121.486234, 31.240105], photo:'./IMG/2025/China/Shanghai/IMG_20250519_221420.jpg' },
-        { name:'The Bund', coords:[121.48624, 31.240071], photo:'./IMG/2025/China/Shanghai/IMG_20250519_221554.jpg' },
-        { name:'the Bund with people', coords:[121.486022, 31.240349], photo:'./IMG/2025/China/Shanghai/IMG_20250519_221710.jpg' },
-        { name:'The Bund', coords:[121.48623, 31.24055], photo:'./IMG/2025/China/Shanghai/IMG_20250519_224343.jpg' },
-        { name:'The Bund', coords:[121.48711, 31.23689], photo:'./IMG/2025/China/Shanghai/IMG_20250519_225620.jpg' },
-        { name:'The Bund', coords:[121.487199, 31.236728], photo:'./IMG/2025/China/Shanghai/IMG_20250519_225631.jpg' },
-        { name:'Lego store', coords:[121.474630, 31.237533], photo:'./IMG/2025/China/Shanghai/IMG_20250519_235423.jpg' },
+        { name:'The Bund', coords:[121.486234, 31.240105], photo:'./IMG/2025/China/Shanghai/IMG_20250519_221420.jpg', rotation: 97 },
+        { name:'The Bund', coords:[121.48624, 31.240071], photo:'./IMG/2025/China/Shanghai/IMG_20250519_221554.jpg', rotation: 97 },
+        { name:'the Bund with people', coords:[121.486022, 31.240349], photo:'./IMG/2025/China/Shanghai/IMG_20250519_221710.jpg', rotation: 97 },
+        { name:'The Bund', coords:[121.48623, 31.24055], photo:'./IMG/2025/China/Shanghai/IMG_20250519_224343.jpg', rotation: 97 },
+        { name:'The Bund', coords:[121.48711, 31.23689], photo:'./IMG/2025/China/Shanghai/IMG_20250519_225620.jpg', rotation: 82 },
+        { name:'The Bund', coords:[121.487199, 31.236728], photo:'./IMG/2025/China/Shanghai/IMG_20250519_225631.jpg', rotation: 82 },
+        { name:'Lego store', coords:[121.47036, 31.23660], photo:'./IMG/2025/China/Shanghai/IMG_20250519_235423.jpg', rotation: 130 },
         /*Visit of the french concession*/
         { name:'A brick church', coords:[121.468823, 31.217345], photo:'./IMG/2025/China/Shanghai/IMG_20250520_134203.jpg' },
         { name:'French concession', coords:[121.462994, 31.210833], photo:'./IMG/2025/China/Shanghai/IMG_20250520_135906.jpg' },
