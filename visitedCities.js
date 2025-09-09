@@ -343,7 +343,7 @@ const visitedCities = [
         { name:'Beautiful bridge', coords:[117.18775, 39.13266], photo:'./IMG/2025/China/Tianjin/IMG_20250529_120546.jpg', rotation: 110 },
         { name:'Beautiful bridge', coords:[117.18743, 39.13331], photo:'./IMG/2025/China/Tianjin/IMG_20250529_120712.jpg', rotation: 136 },
         { name:'Italian style buildings', coords:[117.18722, 39.13622], photo:'./IMG/2025/China/Tianjin/IMG_20250529_121129.jpg', rotation: 61 },
-        { name:'Soviet tank', coords:[117.18681, 39.13988], photo:'./IMG/2025/China/Tianjin/IMG_20250529_121939.jpg', rotation: 75 },
+        { name:'Soviet tank', coords:[117.18681, 39.13988], photo:'./IMG/2025/China/Tianjin/IMG_20250529_121939.jpg', rotation: 275 },
         { name:'Church', coords:[117.18629, 39.14004], photo:'./IMG/2025/China/Tianjin/IMG_20250529_122049.jpg', rotation: 190 },
         { name:'Beautiful street with gate', coords:[117.18659, 39.140383], photo:'./IMG/2025/China/Tianjin/IMG_20250529_123102.jpg', rotation: 359 },
         { name:'Beautiful buildings', coords:[117.18660, 39.14091], photo:'./IMG/2025/China/Tianjin/IMG_20250529_123140.jpg', rotation: 347 },
