@@ -1126,7 +1126,7 @@ if (document.getElementById('toggleDirections').checked) {
         // Clic = zoomer sur marker
         item.addEventListener("click", () => {
           if (v._marker) {
-            currentLeafletMap.setView(v._marker.getLatLng(), 16);
+            currentLeafletMap.setView(v._marker.getLatLng(), currentLeafletMap.getZoom());
             v._marker.openPopup();
           }
         });
