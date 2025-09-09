@@ -266,12 +266,12 @@ const visitedCities = [
         /*Visiting*/
         { name:'A little street', coords:[110.28963, 25.28083], photo:'./IMG/2025/China/Guilin/IMG_20250527_124224.jpg', rotation: 290 },
         /*Park*/
-        { name:'Dinosaur !', coords:[110.30750, 25.27165], photo:'./IMG/2025/China/Guilin/IMG_20250527_142433.jpg' },
-        { name:'The 7 star park', coords:[110.30861, 25.27236], photo:'./IMG/2025/China/Guilin/IMG_20250527_142922.jpg' },
-        { name:'Above the 7 star park viewing Guilin', coords:[110.30763, 25.27753], photo:'./IMG/2025/China/Guilin/IMG_20250527_151706.jpg' },
-        { name:'Me going at the top', coords:[110.30750, 25.27736], photo:'./IMG/2025/China/Guilin/IMG_20250527_151931_1.jpg' },
-        { name:'Free monkey in the park', coords:[110.30637, 25.27631], photo:'./IMG/2025/China/Guilin/IMG_20250527_152944.jpg' },
-        { name:'Free red ass monkey', coords:[110.30529, 25.27427], photo:'./IMG/2025/China/Guilin/IMG_20250527_153507.jpg' },
+        { name:'Dinosaur !', coords:[110.30750, 25.27165], photo:'./IMG/2025/China/Guilin/IMG_20250527_142433.jpg', rotation: 73 },
+        { name:'The 7 star park', coords:[110.30861, 25.27236], photo:'./IMG/2025/China/Guilin/IMG_20250527_142922.jpg', rotation: 292 },
+        { name:'Above the 7 star park viewing Guilin', coords:[110.30763, 25.27753], photo:'./IMG/2025/China/Guilin/IMG_20250527_151706.jpg', rotation: 289 },
+        { name:'Me going at the top', coords:[110.30750, 25.27736], photo:'./IMG/2025/China/Guilin/IMG_20250527_151931_1.jpg', rotation: 232 },
+        { name:'Free monkey in the park', coords:[110.30637, 25.27631], photo:'./IMG/2025/China/Guilin/IMG_20250527_152944.jpg', rotation: 125 },
+        { name:'Free red ass monkey', coords:[110.30529, 25.27427], photo:'./IMG/2025/China/Guilin/IMG_20250527_153507.jpg', rotation: 214 },
         /*ZOO*/
         { name:'Tiger in the zoo', coords:[110.31151, 25.27326], photo:'./IMG/2025/China/Guilin/IMG_20250527_155156.jpg' },
         { name:'hippopotamus in the zoo', coords:[110.31153, 25.27311], photo:'./IMG/2025/China/Guilin/IMG_20250527_160108.jpg' },
