@@ -273,15 +273,15 @@ const visitedCities = [
         { name:'Free monkey in the park', coords:[110.30637, 25.27631], photo:'./IMG/2025/China/Guilin/IMG_20250527_152944.jpg', rotation: 125 },
         { name:'Free red ass monkey', coords:[110.30529, 25.27427], photo:'./IMG/2025/China/Guilin/IMG_20250527_153507.jpg', rotation: 214 },
         /*ZOO*/
-        { name:'Tiger in the zoo', coords:[110.31151, 25.27326], photo:'./IMG/2025/China/Guilin/IMG_20250527_155156.jpg' },
-        { name:'hippopotamus in the zoo', coords:[110.31153, 25.27311], photo:'./IMG/2025/China/Guilin/IMG_20250527_160108.jpg' },
-        { name:'Flamingo', coords:[110.31182, 25.27274], photo:'./IMG/2025/China/Guilin/IMG_20250527_160408.jpg' },
-        { name:'Japanese crane', coords:[110.31191, 25.27270], photo:'./IMG/2025/China/Guilin/IMG_20250527_160419_1.jpg' },
-        { name:'Wolves', coords:[110.31245, 25.27215], photo:'./IMG/2025/China/Guilin/IMG_20250527_160609.jpg' },
+        { name:'Tiger in the zoo', coords:[110.31151, 25.27326], photo:'./IMG/2025/China/Guilin/IMG_20250527_155156.jpg', rotation: 260 },
+        { name:'hippopotamus in the zoo', coords:[110.31153, 25.27311], photo:'./IMG/2025/China/Guilin/IMG_20250527_160108.jpg', rotation: 120 },
+        { name:'Flamingo', coords:[110.31182, 25.27274], photo:'./IMG/2025/China/Guilin/IMG_20250527_160408.jpg', rotation: 61 },
+        { name:'Japanese crane', coords:[110.31191, 25.27270], photo:'./IMG/2025/China/Guilin/IMG_20250527_160419_1.jpg', rotation: 14 },
+        { name:'Wolves', coords:[110.31245, 25.27215], photo:'./IMG/2025/China/Guilin/IMG_20250527_160609.jpg', rotation: 43 },
         /*Park*/
-        { name:'Ladies dressed', coords:[110.30856, 25.27219], photo:'./IMG/2025/China/Guilin/IMG_20250527_163909.jpg' },
-        { name:'Longyin cave', coords:[110.30147, 25.27459], photo:'./IMG/2025/China/Guilin/IMG_20250527_170519.jpg' },
-        { name:'Longyin cave', coords:[110.30176, 25.27465], photo:'./IMG/2025/China/Guilin/IMG_20250527_170628.jpg' }
+        { name:'Ladies dressed', coords:[110.30856, 25.27219], photo:'./IMG/2025/China/Guilin/IMG_20250527_163909.jpg', rotation: 335 },
+        { name:'Longyin cave', coords:[110.30147, 25.27459], photo:'./IMG/2025/China/Guilin/IMG_20250527_170519.jpg', rotation: 89 },
+        { name:'Longyin cave', coords:[110.30176, 25.27465], photo:'./IMG/2025/China/Guilin/IMG_20250527_170628.jpg', rotation: 235 }
       ]
     },
     {
