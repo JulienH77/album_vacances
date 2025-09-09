@@ -236,15 +236,15 @@ const visitedCities = [
       value: [120.17478, 30.27338, 0],
       visites: [
         /*tourist street*/
-        { name:'Hefang street', coords:[120.16237, 30.24233], photo:'./IMG/2025/China/Hangzhou/IMG_20250521_102732.jpg' },
-        { name:'Hefang street', coords:[120.16279, 30.24234], photo:'./IMG/2025/China/Hangzhou/IMG_20250521_102831.jpg' },
-        { name:'Marco Polo\'s book in Chinese medicine museum', coords:[120.16425, 30.24220], photo:'./IMG/2025/China/Hangzhou/IMG_20250521_105933.jpg' },
+        { name:'Hefang street', coords:[120.16237, 30.24233], photo:'./IMG/2025/China/Hangzhou/IMG_20250521_102732.jpg', rotation: 87 },
+        { name:'Hefang street', coords:[120.16279, 30.24234], photo:'./IMG/2025/China/Hangzhou/IMG_20250521_102831.jpg', rotation: 23 },
+        { name:'Marco Polo\'s book in Chinese medicine museum', coords:[120.16425, 30.24220], photo:'./IMG/2025/China/Hangzhou/IMG_20250521_105933.jpg' /*PAS DE ROTATION*/  },
         /*Lake*/
-        { name:'Famous bridge', coords:[120.14823, 30.26160], photo:'./IMG/2025/China/Hangzhou/IMG_20250521_154618.jpg' },
-        { name:'Beautiful walk', coords:[120.14517, 30.25887], photo:'./IMG/2025/China/Hangzhou/IMG_20250521_155357.jpg' },
-        { name:'Beautiful gate', coords:[120.137691, 30.25252], photo:'./IMG/2025/China/Hangzhou/IMG_20250521_162017.jpg' },
-        { name:'A little rest with duckling', coords:[120.13531, 30.25394], photo:'./IMG/2025/China/Hangzhou/IMG_20250521_175710_1.jpg' },
-        { name:'City god pavillon above the lake', coords:[120.14120, 30.25955], photo:'./IMG/2025/China/Hangzhou/IMG_20250521_183158.jpg' }
+        { name:'Famous bridge', coords:[120.14823, 30.26160], photo:'./IMG/2025/China/Hangzhou/IMG_20250521_154618.jpg', rotation: 226 },
+        { name:'Beautiful walk', coords:[120.14517, 30.25887], photo:'./IMG/2025/China/Hangzhou/IMG_20250521_155357.jpg', rotation: 214 },
+        { name:'Beautiful gate', coords:[120.137691, 30.25252], photo:'./IMG/2025/China/Hangzhou/IMG_20250521_162017.jpg', rotation: 170 },
+        { name:'A little rest with duckling', coords:[120.13531, 30.25394], photo:'./IMG/2025/China/Hangzhou/IMG_20250521_175710_1.jpg' /*PAS DE ROTATION*/ },
+        { name:'City god pavillon above the lake', coords:[120.14120, 30.25955], photo:'./IMG/2025/China/Hangzhou/IMG_20250521_183158.jpg', rotation: 135 }
       ]
     },
     {
