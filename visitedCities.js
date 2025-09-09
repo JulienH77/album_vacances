@@ -311,20 +311,20 @@ const visitedCities = [
         { name:'Glass path on a cliff', coords:[110.45862, 24.69208], photo:'./IMG/2025/China/Yangshuo/IMG_20250526_133616.jpg', rotation: 172 },
         { name:'Cable car leaving the hills', coords:[110.45896, 24.68943], photo:'./IMG/2025/China/Yangshuo/IMG_20250526_135945.jpg', rotation: 142 },
         /*Visiting the parks*/
-        { name:'A park', coords:[110.48247, 24.73450], photo:'./IMG/2025/China/Yangshuo/IMG_20250526_162002.jpg' },
-        { name:'Sacred tree', coords:[110.48052, 24.73471], photo:'./IMG/2025/China/Yangshuo/IMG_20250526_165025.jpg' },
-        { name:'Cool view', coords:[110.48557, 24.73719], photo:'./IMG/2025/China/Yangshuo/IMG_20250526_170650.jpg' },
-        { name:'Cool view from the bridge', coords:[110.48621, 24.73716], photo:'./IMG/2025/China/Yangshuo/IMG_20250526_171317.jpg' },
-        { name:'Me on the bridge', coords:[110.48627, 24.73727], photo:'./IMG/2025/China/Yangshuo/IMG_20250526_171349.jpg' },
-        { name:'field of water lilies', coords:[110.49065, 24.74373], photo:'./IMG/2025/China/Yangshuo/IMG_20250526_173403.jpg' },
-        { name:'Durian seller', coords:[110.48767, 24.75080], photo:'./IMG/2025/China/Yangshuo/IMG_20250526_174721.jpg' },
-        { name:'Cool view', coords:[110.48708, 24.75336], photo:'./IMG/2025/China/Yangshuo/IMG_20250526_175136.jpg' },
-        { name:'Big pink statue', coords:[110.48920, 24.7668], photo:'./IMG/2025/China/Yangshuo/IMG_20250526_181355.jpg' },
+        { name:'A park', coords:[110.48247, 24.73450], photo:'./IMG/2025/China/Yangshuo/IMG_20250526_162002.jpg', rotation: 294 },
+        { name:'Sacred tree', coords:[110.48052, 24.73471], photo:'./IMG/2025/China/Yangshuo/IMG_20250526_165025.jpg', rotation: 141 },
+        { name:'Cool view', coords:[110.48557, 24.73719], photo:'./IMG/2025/China/Yangshuo/IMG_20250526_170650.jpg', rotation: 58 },
+        { name:'Cool view from the bridge', coords:[110.48621, 24.73716], photo:'./IMG/2025/China/Yangshuo/IMG_20250526_171317.jpg', rotation: 308 },
+        { name:'Me on the bridge', coords:[110.48627, 24.73727], photo:'./IMG/2025/China/Yangshuo/IMG_20250526_171349.jpg', rotation: 57 },
+        { name:'field of water lilies', coords:[110.49065, 24.74373], photo:'./IMG/2025/China/Yangshuo/IMG_20250526_173403.jpg', rotation: 167 },
+        { name:'Durian seller', coords:[110.48767, 24.75080], photo:'./IMG/2025/China/Yangshuo/IMG_20250526_174721.jpg', rotation: 2 },
+        { name:'Cool view', coords:[110.48708, 24.75336], photo:'./IMG/2025/China/Yangshuo/IMG_20250526_175136.jpg', rotation: 222 },
+        { name:'Big pink statue', coords:[110.48920, 24.7668], photo:'./IMG/2025/China/Yangshuo/IMG_20250526_181355.jpg', rotation: 263 },
         /*Impression Liu Sanjie*/
-        { name:'Enter of the Impression Liu Sanjie', coords:[110.50185, 24.76819], photo:'./IMG/2025/China/Yangshuo/IMG_20250526_195417.jpg' },
-        { name:'Start of the show', coords:[110.50577, 24.77105], photo:'./IMG/2025/China/Yangshuo/IMG_20250526_200533.jpg' },
-        { name:'Middle of the show', coords:[110.50581, 24.77104], photo:'./IMG/2025/China/Yangshuo/IMG_20250526_202232.jpg' },
-        { name:'Going back from the show', coords:[110.49783, 24.76995], photo:'./IMG/2025/China/Yangshuo/IMG_20250526_212603.jpg' }
+        { name:'Enter of the Impression Liu Sanjie', coords:[110.50185, 24.76819], photo:'./IMG/2025/China/Yangshuo/IMG_20250526_195417.jpg', rotation: 54 },
+        { name:'Start of the show', coords:[110.50577, 24.77105], photo:'./IMG/2025/China/Yangshuo/IMG_20250526_200533.jpg', rotation: 42 },
+        { name:'Middle of the show', coords:[110.50581, 24.77104], photo:'./IMG/2025/China/Yangshuo/IMG_20250526_202232.jpg', rotation: 42 },
+        { name:'Going back from the show', coords:[110.49783, 24.76995], photo:'./IMG/2025/China/Yangshuo/IMG_20250526_212603.jpg', rotation: 324 }
       ]
     },
     {
