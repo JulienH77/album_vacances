@@ -254,17 +254,17 @@ const visitedCities = [
         { type: 'hotel', datedeb:'24/05/2025', datefin:'25/05/2025', coords:[110.29357, 25.27618] },
         { type: 'hotel', datedeb:'27/05/2025', datefin:'28/05/2025', coords:[110.28903, 25.28033] },
         /*The pagodas*/
-        { name:'The pagodas of moon and sun', coords:[110.29236, 25.27466], photo:'./IMG/2025/China/Guilin/IMG_20250524_203940.jpg' },
-        { name:'The pagodas of moon and sun', coords:[110.29228, 25.27462], photo:'./IMG/2025/China/Guilin/IMG_20250524_203944.jpg' },
-        { name:'The pagodas of moon and sun', coords:[110.291732, 25.27381], photo:'./IMG/2025/China/Guilin/IMG_20250524_204341.jpg' },
-        { name:'The pagodas of moon and sun', coords:[110.29164, 25.27368], photo:'./IMG/2025/China/Guilin/IMG_20250524_204457.jpg' },
+        { name:'The pagodas of moon and sun', coords:[110.29236, 25.27466], photo:'./IMG/2025/China/Guilin/IMG_20250524_203940.jpg', rotation: 259 },
+        { name:'The pagodas of moon and sun', coords:[110.29228, 25.27462], photo:'./IMG/2025/China/Guilin/IMG_20250524_203944.jpg', rotation: 259 },
+        { name:'The pagodas of moon and sun', coords:[110.291732, 25.27381], photo:'./IMG/2025/China/Guilin/IMG_20250524_204341.jpg', rotation: 293 },
+        { name:'The pagodas of moon and sun', coords:[110.29164, 25.27368], photo:'./IMG/2025/China/Guilin/IMG_20250524_204457.jpg', rotation: 297 },
         /*River trip*/
-        { name:'In the boat for the river trip to Yangshuo', coords:[110.42834, 25.14959], photo:'./IMG/2025/China/Guilin/IMG_20250525_113425.jpg' },
-        { name:'The famous view of the 20RMB banknote', coords:[110.47529, 24.94933], photo:'./IMG/2025/China/Guilin/IMG_20250525_134720.jpg' },
-        { name:'Cool view', coords:[110.48172, 24.94812], photo:'./IMG/2025/China/Guilin/IMG_20250525_135216.jpg' },
-        { name:'Cool view', coords:[110.48752, 24.93775], photo:'./IMG/2025/China/Guilin/IMG_20250525_135454.jpg' },
+        { name:'In the boat for the river trip to Yangshuo', coords:[110.42834, 25.14959], photo:'./IMG/2025/China/Guilin/IMG_20250525_113425.jpg', rotation: 329 },
+        { name:'The famous view of the 20RMB banknote', coords:[110.516288, 24.924486], photo:'./IMG/2025/China/Guilin/IMG_20250525_134720.jpg', rotation: 266 },
+        { name:'Cool view', coords:[110.51261, 24.91499], photo:'./IMG/2025/China/Guilin/IMG_20250525_135216.jpg', rotation: 294 },
+        { name:'Cool view', coords:[110.50263, 24.91022], photo:'./IMG/2025/China/Guilin/IMG_20250525_135454.jpg', rotation: 249 },
         /*Visiting*/
-        { name:'A little street', coords:[110.28956, 25.28063], photo:'./IMG/2025/China/Guilin/IMG_20250527_124224.jpg' },
+        { name:'A little street', coords:[110.28956, 25.28063], photo:'./IMG/2025/China/Guilin/IMG_20250527_124224.jpg', rotation: 290 },
         /*Park*/
         { name:'Dinosaur !', coords:[110.30750, 25.27165], photo:'./IMG/2025/China/Guilin/IMG_20250527_142433.jpg' },
         { name:'The 7 star park', coords:[110.30861, 25.27236], photo:'./IMG/2025/China/Guilin/IMG_20250527_142922.jpg' },
