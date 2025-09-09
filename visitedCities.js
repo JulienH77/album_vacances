@@ -264,7 +264,7 @@ const visitedCities = [
         { name:'Cool view', coords:[110.51261, 24.91499], photo:'./IMG/2025/China/Guilin/IMG_20250525_135216.jpg', rotation: 294 },
         { name:'Cool view', coords:[110.50263, 24.91022], photo:'./IMG/2025/China/Guilin/IMG_20250525_135454.jpg', rotation: 249 },
         /*Visiting*/
-        { name:'A little street', coords:[110.28956, 25.28063], photo:'./IMG/2025/China/Guilin/IMG_20250527_124224.jpg', rotation: 290 },
+        { name:'A little street', coords:[110.28963, 25.28083], photo:'./IMG/2025/China/Guilin/IMG_20250527_124224.jpg', rotation: 290 },
         /*Park*/
         { name:'Dinosaur !', coords:[110.30750, 25.27165], photo:'./IMG/2025/China/Guilin/IMG_20250527_142433.jpg' },
         { name:'The 7 star park', coords:[110.30861, 25.27236], photo:'./IMG/2025/China/Guilin/IMG_20250527_142922.jpg' },
