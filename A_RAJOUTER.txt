@@ -7,6 +7,7 @@ ONGLET SETTINGS IDEES :
 -  contraste / description textuelle des photos
 -  theme clair/sombre
 -  activer/desactiver ombre temps reel de OSMBUILDINGS
+-  bouton pour trajets ou autres : https://uiverse.io/Nawsome/silent-owl-45
 
 MODIF A FAIRE :
 
