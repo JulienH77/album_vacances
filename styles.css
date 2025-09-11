@@ -133,7 +133,7 @@ font-family: Inter, Arial, sans-serif;
 #globePopup label,
 #globePopup #trajetLegend,
 #globePopup #voyagesList {
-  position: relative;
+  /*position: relative;*/
   z-index: 100000;
   pointer-events: auto; 
 }
