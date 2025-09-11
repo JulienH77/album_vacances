@@ -121,9 +121,21 @@ font-family: Inter, Arial, sans-serif;
   width: 98vw; height: 98vh;
   background: rgba(0,0,0,0.95);
   border-radius: 12px;
+  inset: 0;
   box-shadow: 0 8px 20px rgba(0,0,0,0.4);
   display: none;
   z-index: 9990;
+  pointer-events: auto;
+}
+/* Pour tous les contrôles dans la popup du globe */
+#globePopup button,
+#globePopup input,
+#globePopup label,
+#globePopup #trajetLegend,
+#globePopup #voyagesList {
+  position: relative;
+  z-index: 100000;
+  pointer-events: auto; 
 }
 
 #globeClose {
