@@ -534,7 +534,7 @@ const visitedCities = [
 
     /*------------------------------------------------------- A D E L A I D E ------------------------------------------------------------*/
     {
-      name: 'Adélaïde',
+      name: 'Adélaide',
       value: [-34.927770924709584, 138.59973159727903, 0],
       visites: [
         { type: 'hotel', datedeb:'06/12/2025', datefin:'15/07/2025', coords:[13.037606, 47.810420] },
@@ -542,8 +542,19 @@ const visitedCities = [
         { name:'aaaaaaaaaaaaaaaaaaaa', coords:[13.0441398, 47.7970268], photo:'./IMG/2025/Australia/Adelaide/IMG_20251207_112751.jpg', rotation: 120 },
 
       ]
-    }
+    },
+  
+    /*------------------------------------------------------- H A H N D O R F ------------------------------------------------------------*/
+    {
+      name: 'Hahndorf',
+      value: [-35.029439005374330, 138.81241725034008, 0],
+      visites: [
+        { type: 'hotel', datedeb:'06/12/2025', datefin:'15/07/2025', coords:[13.037606, 47.810420] },
+        { name:'aaaaaaaaaaaaaaaaaaaa', coords:[13.04112, 47.802834], photo:'./IMG/2025/Australia/Adelaide/IMG_20251206_174747.jpg', rotation: 151 },
+        { name:'aaaaaaaaaaaaaaaaaaaa', coords:[13.0441398, 47.7970268], photo:'./IMG/2025/Australia/Adelaide/IMG_20251207_112751.jpg', rotation: 120 },
 
+      ]
+    },
 
 
   ];
