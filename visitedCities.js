@@ -19,7 +19,7 @@
 const voyagesToCities = {
     'May 2025 - China': ['Beijing','Xi\'an','Shanghai','Hangzhou','Guilin','Yangshuo','Tianjin'],
     'July 2025 - Central Europe': ['Munich','Marquartstein','Salzburg','Budapest','Prague','Regensburg','Ulm'],
-    'December 2025 - Australia': ['Adelaide']
+    'December 2025 - Australia': ['Adelaide', 'Hahndorf']
 };
 
 
@@ -42,11 +42,11 @@ const cityViewConfig = {
     'Ulm': { center: [48.397026547811194, 9.990649223327638], zoom: 15 },
     'Salzburg': { center: [47.8036142598392, 13.041458129882814], zoom: 14 },
     'Budapest': { center: [47.50485033050466, 19.06059265136719], zoom: 13 },
-    'Prague': { center: [50.08834555719001, 14.419813156127931], zoom: 14 }
+    'Prague': { center: [50.08834555719001, 14.419813156127931], zoom: 14 },
 
     // OCEANIA
     'Adelaide': { center: [-34.927770924709584, 138.59973159727903], zoom: 13 },
-    'Hahndorf': { center: [-35.029439005374330, 138.81241725034008], zoom: 15 },
+    'Hahndorf': { center: [-35.029439005374330, 138.81241725034008], zoom: 15 }
 };
 
 const visitedCities = [
