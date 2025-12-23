@@ -2,20 +2,24 @@
 /*const voyagesToCities = {
   FR: {
     'Mai 2025 - Chine': ['Pékin','Xi\'an','Shanghai','Hangzhou','Guilin','Yangshuo','Tianjin'],
-    'Juillet 2025 - Europe Centrale': ['Munich','Marquartstein','Salzbourg','Budapest','Prague','Ratisbonne','Ulm']
+    'Juillet 2025 - Europe Centrale': ['Munich','Marquartstein','Salzbourg','Budapest','Prague','Ratisbonne','Ulm'],
+    'Décembre 2025 - Australie': ['Adélaïde']
   },
   EN: {
     'May 2025 - China': ['Beijing','Xi\'an','Shanghai','Hangzhou','Guilin','Yangshuo','Tianjin'],
-    'July 2025 - Central Europe': ['Munich','Marquartstein','Salzburg','Budapest','Prague','Regensburg','Ulm']
+    'July 2025 - Central Europe': ['Munich','Marquartstein','Salzburg','Budapest','Prague','Regensburg','Ulm'],
+    'December 2025 - Australia': ['Adelaide']
   },
   CH: {
     '2025年5月 - 中國': ['北京','西安','上海','杭州','桂林','陽朔','天津'],
-    '2025年7月 - 中歐': ['慕尼黑','馬夸特施泰因','薩爾斯堡','布達佩斯','布拉格','雷根斯堡','烏爾姆']
+    '2025年7月 - 中歐': ['慕尼黑','馬夸特施泰因','薩爾斯堡','布達佩斯','布拉格','雷根斯堡','烏爾姆'],
+    '2025年12月 - 澳洲': ['阿德雷德']
   }
 };*/
 const voyagesToCities = {
     'May 2025 - China': ['Beijing','Xi\'an','Shanghai','Hangzhou','Guilin','Yangshuo','Tianjin'],
-    'July 2025 - Central Europe': ['Munich','Marquartstein','Salzburg','Budapest','Prague','Regensburg','Ulm']
+    'July 2025 - Central Europe': ['Munich','Marquartstein','Salzburg','Budapest','Prague','Regensburg','Ulm'],
+    'December 2025 - Australia': ['Adelaide']
 };
 
 
@@ -39,6 +43,10 @@ const cityViewConfig = {
     'Salzburg': { center: [47.8036142598392, 13.041458129882814], zoom: 14 },
     'Budapest': { center: [47.50485033050466, 19.06059265136719], zoom: 13 },
     'Prague': { center: [50.08834555719001, 14.419813156127931], zoom: 14 }
+
+    // OCEANIA
+    'Adelaide': { center: [-34.927770924709584, 138.59973159727903], zoom: 13 },
+    'Hahndorf': { center: [-35.029439005374330, 138.81241725034008], zoom: 15 },
 };
 
 const visitedCities = [
@@ -516,3 +524,24 @@ const visitedCities = [
   ];
     /*----------------------------------------------------------------------------------------------------------------------------------*/
     /*----------------------------------------------------------------------------------------------------------------------------------*/
+
+
+
+
+
+    /*----------------------------------------------------------------------------------------------------------------------------------*/
+    /*------------------------------------------------------- O C E A N I A ------------------------------------------------------------*/
+    /*----------------------------------------------------------------------------------------------------------------------------------*/
+
+    /*------------------------------------------------------- A D E L A I D E ------------------------------------------------------------*/
+    {
+      name: 'Adélaïde',
+      value: [-34.927770924709584, 138.59973159727903, 0],
+      visites: [
+        { type: 'hotel', datedeb:'06/12/2025', datefin:'15/07/2025', coords:[13.037606, 47.810420] },
+        { name:'aaaaaaaaaaaaaaaaaaaa', coords:[13.04112, 47.802834], photo:'./IMG/2025/Australia/Adelaide/IMG_20251206_174747.jpg', rotation: 151 },
+        { name:'aaaaaaaaaaaaaaaaaaaa', coords:[13.0441398, 47.7970268], photo:'./IMG/2025/Australia/Adelaide/IMG_20251207_112751.jpg', rotation: 120 },
+
+      ]
+    },
+  
