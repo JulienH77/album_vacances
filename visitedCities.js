@@ -3,17 +3,17 @@
   FR: {
     'Mai 2025 - Chine': ['Pékin','Xi\'an','Shanghai','Hangzhou','Guilin','Yangshuo','Tianjin'],
     'Juillet 2025 - Europe Centrale': ['Munich','Marquartstein','Salzbourg','Budapest','Prague','Ratisbonne','Ulm'],
-    'Décembre 2025 - Australie': ['Adélaïde']
+    'Décembre 2025 - Australie': ['Adélaïde', 'Hahndorf']
   },
   EN: {
     'May 2025 - China': ['Beijing','Xi\'an','Shanghai','Hangzhou','Guilin','Yangshuo','Tianjin'],
     'July 2025 - Central Europe': ['Munich','Marquartstein','Salzburg','Budapest','Prague','Regensburg','Ulm'],
-    'December 2025 - Australia': ['Adelaide']
+    'December 2025 - Australia': ['Adelaide', 'Hahndorf']
   },
   CH: {
     '2025年5月 - 中國': ['北京','西安','上海','杭州','桂林','陽朔','天津'],
     '2025年7月 - 中歐': ['慕尼黑','馬夸特施泰因','薩爾斯堡','布達佩斯','布拉格','雷根斯堡','烏爾姆'],
-    '2025年12月 - 澳洲': ['阿德雷德']
+    '2025年12月 - 澳洲': ['阿德雷德', '漢多夫']
   }
 };*/
 const voyagesToCities = {
@@ -520,8 +520,7 @@ const visitedCities = [
         { name:'Us on the bridge', coords:[14.40961, 50.08667], photo:'./IMG/2025/Central Europe/Prague/IMG_20250723_202523.jpg', rotation: 162 },
         { name:'London underground bar', coords:[14.41934, 50.08147], photo:'./IMG/2025/Central Europe/Prague/IMG_20250723_205251.jpg', rotation: 120 }
       ]
-    }
-  ];
+    },
     /*----------------------------------------------------------------------------------------------------------------------------------*/
     /*----------------------------------------------------------------------------------------------------------------------------------*/
 
@@ -543,5 +542,9 @@ const visitedCities = [
         { name:'aaaaaaaaaaaaaaaaaaaa', coords:[13.0441398, 47.7970268], photo:'./IMG/2025/Australia/Adelaide/IMG_20251207_112751.jpg', rotation: 120 },
 
       ]
-    },
+    }
+
+
+
+  ];
   
