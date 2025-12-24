@@ -543,8 +543,11 @@ const visitedCities = [
          { name:'Beautiful tree', coords:[138.5927458,-34.926958], photo:'./IMG/2025/Australia/Adelaide/IMG_20251206_174747.jpg', rotation: 0 },
         { name:'She gave me the macca\'s hat', coords:[138.5927619,-34.924608], photo:'./IMG/2025/Australia/Adelaide/IMG_20251207_112751.jpg', rotation: 0 },
         { name:'Emergency :)', coords:[138.586609,-34.921057], photo:'./IMG/2025/Australia/Adelaide/IMG_20251207_145221.jpg', rotation: 0 },
+        { name:'aaaaaaaaaaaaaaaaaaaa', coords:[0,0], photo:'./IMG/2025/Australia/Adelaide/IMG_20251207_182656.jpg', rotation: 0 },
         
-        { name:'aaaaaaaaaaaaaaaaaaaa', coords:[-34.921039,138.586631], photo:'./IMG/2025/Australia/Adelaide/IMG_20251207_182656.jpg', rotation: 0 }
+        { name:'Second time at the emergency', coords:[138.586693,-34.920908], photo:'./IMG/2025/Australia/Adelaide/IMG_20251208_065357.jpg', rotation: 0 },
+        { name:'At a vietnamese restaurant', coords:[138.592832,-34.923453], photo:'./IMG/2025/Australia/Adelaide/IMG_20251208_192544.jpg', rotation: 0 },
+        { name:'The smelly cheese :)', coords:[138.59736,-34.92963], photo:'./IMG/2025/Australia/Adelaide/IMG_20251207_182656.jpg', rotation: 0 },
 
       ]
     },
