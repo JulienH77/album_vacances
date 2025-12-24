@@ -630,6 +630,14 @@ const visitedCities = [
         { name:'AHAHAH the beak', coords:[138.607500,-34.913724], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_150039.jpg', rotation: 0 },
         { name:'Torii gate and my girl', coords:[138.607023,-34.913537], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_150822.jpg', rotation: 0 },
         { name:'Casoar', coords:[138.606612,-34.91345], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_151308.jpg', rotation: 0 },
+        { name:'The dragon tree', coords:[138.606602,-34.913473], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_151337.jpg', rotation: 0 },
+        { name:'Ugh pelican xDDD', coords:[138.606393,-34.913321], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_151919.jpg', rotation: 0 },
+        { name:'Welcome to China', coords:[138.6065329,-34.9136282], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_152115.jpg', rotation: 0 },
+        { name:'Pandaaa', coords:[138.606632,-34.914256], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_152503.jpg', rotation: 0 },
+        { name:'Red pandaaa', coords:[138.6063800,-34.91399090], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_152835.jpg', rotation: 0 },
+        { name:'Family photo', coords:[138.6062807,-34.9140115], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_152910.jpg', rotation: 0 },
+        { name:'Hungry otter', coords:[138.6059401,-34.914229], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_153051.jpg', rotation: 0 },
+        
       ]
     },
   
