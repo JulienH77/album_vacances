@@ -652,7 +652,8 @@ const visitedCities = [
         { name:'J+X', coords:[138.51146,-35.00741], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_210428.jpg', rotation: 0 },
         { name:'Scary girl', coords:[138.51139,-35.00403], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_212455.jpg', rotation: 0 },
         { name:'Night view of the beach', coords:[138.51143,-35.00308], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_212752.jpg', rotation: 0 },
-
+        { name:'CowBoy style', coords:[138.538265,-34.97533], photo:'./IMG/2025/Australia/Adelaide/IMG_20251217_151654.jpg', rotation: 0 },
+        { name:'Go to the national park !', coords:[138.702103,-34.90324], photo:'./IMG/2025/Australia/Adelaide/IMG_20251218_123534.jpg', rotation: 0 },
 
         
       ]
