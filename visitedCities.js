@@ -553,11 +553,21 @@ const visitedCities = [
         { name:'Delicious', coords:[138.597292,-34.92934], photo:'./IMG/2025/Australia/Adelaide/IMG_20251209_110335.jpg', rotation: 0 },
         { name:'French-style cheese', coords:[138.59709,-34.92987], photo:'./IMG/2025/Australia/Adelaide/IMG_20251209_115738.jpg', rotation: 0 },
         
-        { name:'Our car', coords:[138.592650,-34.92516], photo:'./IMG/2025/Australia/Adelaide/IMG_20251209_123452.jpg', rotation: 0 },
+        { name:'Our car (Hyundai Venue)', coords:[138.592650,-34.92516], photo:'./IMG/2025/Australia/Adelaide/IMG_20251209_123452.jpg', rotation: 0 },
         { name:'Beautiful trees', coords:[138.59357,-34.9261], photo:'./IMG/2025/Australia/Adelaide/IMG_20251209_141204.jpg', rotation: 0 },
         { name:'Us', coords:[138.59364,-34.92617], photo:'./IMG/2025/Australia/Adelaide/IMG_20251209_141212.jpg', rotation: 0 },
         { name:'Gingerbread event', coords:[138.5977116,-34.92182292], photo:'./IMG/2025/Australia/Adelaide/IMG_20251209_142557.jpg', rotation: 0 },
         { name:'The designer at work', coords:[138.5977304,-34.92183011], photo:'./IMG/2025/Australia/Adelaide/IMG_20251209_150026.jpg', rotation: 0 },
+        
+        { name:'Hainanese retaurant', coords:[138.59926,-34.92567], photo:'./IMG/2025/Australia/Adelaide/IMG_20251210_141439.jpg', rotation: 0 },
+        { name:'Cosplay before the cinema', coords:[138.59284,-34.92183011], photo:'./IMG/2025/Australia/Adelaide/IMG_20251210_172123.jpg', rotation: 0 },
+        { name:'Photo at the cinema', coords:[138.60949,-34.92200], photo:'./IMG/2025/Australia/Adelaide/IMG_20251210_180337.jpg', rotation: 0 },
+        { name:'At the restaurant just after the movie', coords:[138.60776,-34.92275], photo:'./IMG/2025/Australia/Adelaide/IMG_20251210_202010.jpg', rotation: 0 },
+        { name:'Delicious steak and tiramisu', coords:[138.60771,-34.92268], photo:'./IMG/2025/Australia/Adelaide/IMG_20251210_202936.jpg', rotation: 0 },
+        
+        { name:'Brazilian restaurant', coords:[138.593251,-34.92716], photo:'./IMG/2025/Australia/Adelaide/IMG_20251211_160349.jpg', rotation: 0 },
+        { name:'Cute photo', coords:[138.592527,-34.927179], photo:'./IMG/2025/Australia/Adelaide/IMG_20251211_164920.jpg', rotation: 0 },
+        { name:'Cute photo', coords:[138.592643,-34.92716], photo:'./IMG/2025/Australia/Adelaide/IMG_20251211_164925.jpg', rotation: 0 },
 
       ]
     },
