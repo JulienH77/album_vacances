@@ -578,6 +578,36 @@ const visitedCities = [
         { name:'Us and the view', coords:[138.696913326,-34.9314501], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_010618.jpg', rotation: 0 },
         { name:'Us', coords:[138.696827496,-34.9314111], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_010926.jpg', rotation: 0 },
 
+
+
+
+
+
+
+
+
+        { name:'The spa', coords:[138.59307734,-34.926937], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_102104.jpg', rotation: 0 },
+        { name:'The swimming pool', coords:[138.59307734,-34.926937], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_102046.jpg', rotation: 0 },
+        { name:'The national wine center cave (full of french wine)', coords:[138.6140957,-34.919488], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_151342.jpg', rotation: 0 },
+        
+        { name:'Wine we tried', coords:[138.61387,-34.9197], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_154135.jpg', rotation: 0 },
+        { name:'Wine we tried', coords:[138.61387,-34.9197], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_154150.jpg', rotation: 0 },
+        { name:'Wine we tried', coords:[138.61387,-34.9197], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_155630.jpg', rotation: 0 },
+        { name:'Wine we tried', coords:[138.61387,-34.9197], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_155646.jpg', rotation: 0 },
+        { name:'Meal for the wines', coords:[138.61387,-34.9197], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_155649.jpg', rotation: 0 },
+        { name:'Wine we tried', coords:[138.61387,-34.9197], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_161106.jpg', rotation: 0 },
+        { name:'Wine we tried', coords:[138.61387,-34.9197], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_161813.jpg', rotation: 0 },
+        { name:'Wine we tried', coords:[138.61387,-34.9197], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_164609.jpg', rotation: 0 },
+        { name:'Wine we tried', coords:[138.61387,-34.9197], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_164621.jpg', rotation: 0 },
+        { name:'Wine we tried', coords:[138.61387,-34.9197], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_165116.jpg', rotation: 0 },
+        { name:'Wine we tried', coords:[138.61387,-34.9197], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_165130.jpg', rotation: 0 },
+        { name:'Wine we tried', coords:[138.61387,-34.9197], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_165142.jpg', rotation: 0 },
+        
+        /*{ name:'Us', coords:[138.696827496,-34.9314111], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_010926.jpg', rotation: 0 },
+        { name:'Us', coords:[138.696827496,-34.9314111], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_010926.jpg', rotation: 0 },
+        { name:'Us', coords:[138.696827496,-34.9314111], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_010926.jpg', rotation: 0 },
+        { name:'Us', coords:[138.696827496,-34.9314111], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_010926.jpg', rotation: 0 },
+        { name:'Us', coords:[138.696827496,-34.9314111], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_010926.jpg', rotation: 0 },*/
       ]
     },
   
