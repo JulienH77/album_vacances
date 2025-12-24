@@ -628,7 +628,7 @@ const visitedCities = [
         { name:'Big bird', coords:[138.607543,-34.913575], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_145345.jpg', rotation: 0 },
         { name:'Hitler\'s bird', coords:[138.60754,-34.91365], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_145527.jpg', rotation: 0 },
         { name:'AHAHAH the beak', coords:[138.607500,-34.913724], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_150039.jpg', rotation: 0 },
-        { name:'Torii gate and my girl', coords:[138.60697,-34.91274], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_150822.jpg', rotation: 0 },
+        { name:'Torii gate and my girl', coords:[138.607023,-34.913537], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_150822.jpg', rotation: 0 },
         { name:'Casoar', coords:[138.606612,-34.91345], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_151308.jpg', rotation: 0 },
       ]
     },
