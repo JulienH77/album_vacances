@@ -547,7 +547,7 @@ const visitedCities = [
         
         { name:'Second time at the emergency', coords:[138.586693,-34.920908], photo:'./IMG/2025/Australia/Adelaide/IMG_20251208_065357.jpg', rotation: 0 },
         { name:'At a vietnamese restaurant', coords:[138.592832,-34.923453], photo:'./IMG/2025/Australia/Adelaide/IMG_20251208_192544.jpg', rotation: 0 },
-        { name:'The smelly cheese :)', coords:[138.59736,-34.92963], photo:'./IMG/2025/Australia/Adelaide/IMG_20251207_182656.jpg', rotation: 0 },
+        { name:'The smelly cheese :)', coords:[138.59736,-34.92963], photo:'./IMG/2025/Australia/Adelaide/IMG_20251209_102235.jpg', rotation: 0 },
 
       ]
     },
