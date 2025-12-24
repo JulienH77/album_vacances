@@ -602,12 +602,11 @@ const visitedCities = [
         { name:'Wine we tried', coords:[138.61387,-34.9197], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_165116.jpg', rotation: 0 },
         { name:'Wine we tried', coords:[138.61387,-34.9197], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_165130.jpg', rotation: 0 },
         { name:'Wine we tried', coords:[138.61387,-34.9197], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_165142.jpg', rotation: 0 },
-        
-        /*{ name:'Us', coords:[138.696827496,-34.9314111], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_010926.jpg', rotation: 0 },
-        { name:'Us', coords:[138.696827496,-34.9314111], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_010926.jpg', rotation: 0 },
-        { name:'Us', coords:[138.696827496,-34.9314111], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_010926.jpg', rotation: 0 },
-        { name:'Us', coords:[138.696827496,-34.9314111], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_010926.jpg', rotation: 0 },
-        { name:'Us', coords:[138.696827496,-34.9314111], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_010926.jpg', rotation: 0 },*/
+        { name:'Punk pigeon', coords:[138.61302015,-34.919571], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_172129.jpg', rotation: 0 },
+        { name:'A bird', coords:[138.61293432,-34.9194985], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_172351.jpg', rotation: 0 },
+        { name:'another bird', coords:[138.6125910,-34.918978], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_172608.jpg', rotation: 0 },
+        { name:'Hungry parrot', coords:[138.610834,-34.917878], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_181020.jpg', rotation: 0 },
+        { name:'Hungry parrot', coords:[138.610785,-34.917908], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_181216.jpg', rotation: 0 },
       ]
     },
   
