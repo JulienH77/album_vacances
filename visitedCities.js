@@ -615,7 +615,6 @@ const visitedCities = [
         { name:'Resting kangaroo', coords:[138.6057144,-34.913404], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_132534.jpg', rotation: 0 },
         { name:'Baby kangaroo', coords:[138.6057144,-34.913404], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_132551.jpg', rotation: 0 },
         { name:'Kangaroo', coords:[138.6057144,-34.913404], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_132925.jpg', rotation: 0 },
-
         { name:'King Julian', coords:[138.605521,-34.912882], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_133542.jpg', rotation: 0 },
         { name:'Kingfisher', coords:[138.60571,-34.912912], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_133914.jpg', rotation: 0 },
         { name:'Rock monkeys', coords:[138.60596,-34.9129927], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_134017.jpg', rotation: 0 },
@@ -637,24 +636,22 @@ const visitedCities = [
         { name:'Red pandaaa', coords:[138.6063800,-34.91399090], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_152835.jpg', rotation: 0 },
         { name:'Family photo', coords:[138.6062807,-34.9140115], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_152910.jpg', rotation: 0 },
         { name:'Hungry otter', coords:[138.6059401,-34.914229], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_153051.jpg', rotation: 0 },
-
         { name:'Mr Hotpoter', coords:[138.5947061,-34.9298742], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_164002.jpg', rotation: 0 },
         { name:'Aussie style', coords:[138.5967982,-34.931735], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_175344.jpg', rotation: 0 },
-        
-        /*{ name:'Awww', coords:[138.6059401,-34.914229], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_202307.jpg', rotation: 0 },
-        { name:'Hungry otter', coords:[138.6059401,-34.914229], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_153051.jpg', rotation: 0 },
-        { name:'Hungry otter', coords:[138.6059401,-34.914229], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_153051.jpg', rotation: 0 },
-        { name:'Hungry otter', coords:[138.6059401,-34.914229], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_153051.jpg', rotation: 0 },
-        { name:'Hungry otter', coords:[138.6059401,-34.914229], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_153051.jpg', rotation: 0 },
-        { name:'Hungry otter', coords:[138.6059401,-34.914229], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_153051.jpg', rotation: 0 },
-        { name:'Hungry otter', coords:[138.6059401,-34.914229], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_153051.jpg', rotation: 0 },
-        { name:'Hungry otter', coords:[138.6059401,-34.914229], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_153051.jpg', rotation: 0 },
-        { name:'Hungry otter', coords:[138.6059401,-34.914229], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_153051.jpg', rotation: 0 },
-        { name:'Hungry otter', coords:[138.6059401,-34.914229], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_153051.jpg', rotation: 0 },
-        { name:'Hungry otter', coords:[138.6059401,-34.914229], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_153051.jpg', rotation: 0 },
-        { name:'Hungry otter', coords:[138.6059401,-34.914229], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_153051.jpg', rotation: 0 },
-        { name:'Hungry otter', coords:[138.6059401,-34.914229], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_153051.jpg', rotation: 0 },
-        { name:'Hungry otter', coords:[138.6059401,-34.914229], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_153051.jpg', rotation: 0 },*/
+        { name:'Awww', coords:[138.51073,-35.00083], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_202307.jpg', rotation: 0 },
+        { name:'Sunset', coords:[138.51067,-35.00094], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_202318.jpg', rotation: 0 },
+        { name:'Showing the sunset', coords:[138.51074,-35.0009], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_202326.jpg', rotation: 0 },
+        { name:'You saw the sunset RIGHT ?!', coords:[138.51074,-35.0009], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_202344.jpg', rotation: 0 },
+        { name:'Me and the sunset', coords:[138.51062,-35.0011], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_202617.jpg', rotation: 0 },
+        { name:'Shoes 🙂', coords:[138.51057,-35.00122], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_202704.jpg', rotation: 0 },
+        { name:'Us', coords:[138.51057,-35.00122], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_202657.jpg', rotation: 0 },
+        { name:'Beautiful sunset', coords:[138.5106,-35.0016], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_202833.jpg', rotation: 0 },
+        { name:'Wow', coords:[138.510734,-35.00171], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_202848.jpg', rotation: 0 },
+        { name:'Bisous', coords:[138.510964,-35.0031], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_203915.jpg', rotation: 0 },
+        { name:'The suicid bee', coords:[138.51139,-35.0068], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_210036.jpg', rotation: 0 },
+        { name:'J+X', coords:[138.51146,-35.00741], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_210428.jpg', rotation: 0 },
+        { name:'Scary girl', coords:[138.51139,-35.00403], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_212455.jpg', rotation: 0 },
+        { name:'Night view of the beach', coords:[138.51143,-35.00308], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_212752.jpg', rotation: 0 },
 
 
         
