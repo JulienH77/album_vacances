@@ -540,8 +540,8 @@ const visitedCities = [
         { type: 'hotel', datedeb:'06/12/2025', datefin:'13/12/2025', coords:[-34.92695859199718,138.5928234706278] },
         { type: 'hotel', datedeb:'13/12/2025', datefin:'18/12/2025', coords:[-35.0007250433274,138.51148168154995] },
         { type: 'hotel', datedeb:'18/12/2025', datefin:'20/12/2025', coords:[-34.92411928356853,138.59888483173975] },
-        { name:'She gave me the macca\'s hat', coords:[-34.924119,138.598884], photo:'./IMG/2025/Australia/Adelaide/IMG_20251207_112751.jpg', rotation: 0 },
-        { name:'Emergency :)', coords:[-34.921039,138.586631], photo:'./IMG/2025/Australia/Adelaide/IMG_20251207_145221.jpg', rotation: 0 },
+        { name:'She gave me the macca\'s hat', coords:[138.5928691,-34.9271573], photo:'./IMG/2025/Australia/Adelaide/IMG_20251207_112751.jpg', rotation: 0 },
+        { name:'Emergency :)', coords:[138.586609,-34.921057], photo:'./IMG/2025/Australia/Adelaide/IMG_20251207_145221.jpg', rotation: 0 },
         
         { name:'aaaaaaaaaaaaaaaaaaaa', coords:[-34.921039,138.586631], photo:'./IMG/2025/Australia/Adelaide/IMG_20251207_182656.jpg', rotation: 0 }
 
