@@ -603,7 +603,20 @@ const visitedCities = [
         { name:'Tasting of French wine', coords:[138.5977248,-34.92235], photo:'./IMG/2025/Australia/Adelaide/IMG_20251214_000631.jpg', rotation: 0 },
         { name:'Moana beach', coords:[138.47078,-35.206842], photo:'./IMG/2025/Australia/Adelaide/IMG_20251215_003129.jpg', rotation: 0 },
         { name:'Moana beach', coords:[138.470769,-35.206970], photo:'./IMG/2025/Australia/Adelaide/IMG_20251215_003203.jpg', rotation: 0 },
+        { name:'Beautiful view', coords:[138.511177,-35.00022], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_083637.jpg', rotation: 0 },
+        { name:'Beautiful view', coords:[138.51106,138.51106], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_085231.jpg', rotation: 0 },
+        { name:'Beautiful view', coords:[138.511287,-35.00011], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_085409.jpg', rotation: 0 },
+        { name:'Mr Incredible car', coords:[138.608332,-34.91356], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_123715.jpg', rotation: 0 },
+        { name:'Us', coords:[138.6079674,-34.913658], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_123856.jpg', rotation: 0 },
+        { name:'The entrance and her', coords:[138.606580,-34.914833], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_124122.jpg', rotation: 0 },
+        { name:'Penguin !', coords:[138.605985,-34.91437], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_124837.jpg', rotation: 0 },
+        { name:'Komodo dragon', coords:[138.60559,-34.914547], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_125726.jpg', rotation: 0 },
+        { name:'Sleeping koala', coords:[138.605853,-34.913426], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_132419.jpg', rotation: 0 },
+        { name:'Resting kangaroo', coords:[138.6057144,-34.913404], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_132534.jpg', rotation: 0 },
+        { name:'Baby kangaroo', coords:[138.6057144,-34.913404], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_132551.jpg', rotation: 0 },
+        { name:'Kangaroo', coords:[138.6057144,-34.913404], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_132551.jpg', rotation: 0 },
 
+        
       ]
     },
   
