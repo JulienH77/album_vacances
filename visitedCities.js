@@ -544,31 +544,25 @@ const visitedCities = [
         { name:'She gave me the macca\'s hat', coords:[138.5927458,-34.926958], photo:'./IMG/2025/Australia/Adelaide/IMG_20251207_112751.jpg', rotation: 0 },
         { name:'Emergency :)', coords:[138.586609,-34.921057], photo:'./IMG/2025/Australia/Adelaide/IMG_20251207_145221.jpg', rotation: 0 },
         { name:'aaaaaaaaaaaaaaaaaaaa', coords:[0,0], photo:'./IMG/2025/Australia/Adelaide/IMG_20251207_182656.jpg', rotation: 0 },
-        
         { name:'Second time at the emergency', coords:[138.586693,-34.920908], photo:'./IMG/2025/Australia/Adelaide/IMG_20251208_065357.jpg', rotation: 0 },
         { name:'At a vietnamese restaurant', coords:[138.592832,-34.923453], photo:'./IMG/2025/Australia/Adelaide/IMG_20251208_192544.jpg', rotation: 0 },
         { name:'The smelly cheese :)', coords:[138.59736,-34.92963], photo:'./IMG/2025/Australia/Adelaide/IMG_20251209_102235.jpg', rotation: 0 },
-        
         { name:'KROISSANT', coords:[138.5975362,-34.92960], photo:'./IMG/2025/Australia/Adelaide/IMG_20251209_102730.jpg', rotation: 0 },
         { name:'Delicious', coords:[138.597292,-34.92934], photo:'./IMG/2025/Australia/Adelaide/IMG_20251209_110335.jpg', rotation: 0 },
         { name:'French-style cheese', coords:[138.59709,-34.92987], photo:'./IMG/2025/Australia/Adelaide/IMG_20251209_115738.jpg', rotation: 0 },
-        
         { name:'Our car (Hyundai Venue)', coords:[138.592650,-34.92516], photo:'./IMG/2025/Australia/Adelaide/IMG_20251209_123452.jpg', rotation: 0 },
         { name:'Beautiful trees', coords:[138.59357,-34.9261], photo:'./IMG/2025/Australia/Adelaide/IMG_20251209_141204.jpg', rotation: 0 },
         { name:'Us', coords:[138.59364,-34.92617], photo:'./IMG/2025/Australia/Adelaide/IMG_20251209_141212.jpg', rotation: 0 },
         { name:'Gingerbread event', coords:[138.5977116,-34.92182292], photo:'./IMG/2025/Australia/Adelaide/IMG_20251209_142557.jpg', rotation: 0 },
         { name:'The designer at work', coords:[138.5977304,-34.92183011], photo:'./IMG/2025/Australia/Adelaide/IMG_20251209_150026.jpg', rotation: 0 },
-        
         { name:'Hainanese retaurant', coords:[138.59926,-34.92567], photo:'./IMG/2025/Australia/Adelaide/IMG_20251210_141439.jpg', rotation: 0 },
         { name:'Cosplay before the cinema', coords:[138.59261507,-34.926999], photo:'./IMG/2025/Australia/Adelaide/IMG_20251210_172123.jpg', rotation: 0 },
         { name:'Photo at the cinema', coords:[138.60949,-34.92200], photo:'./IMG/2025/Australia/Adelaide/IMG_20251210_180337.jpg', rotation: 0 },
         { name:'At the restaurant just after the movie', coords:[138.60776,-34.92275], photo:'./IMG/2025/Australia/Adelaide/IMG_20251210_202010.jpg', rotation: 0 },
         { name:'Delicious steak and tiramisu', coords:[138.60771,-34.92268], photo:'./IMG/2025/Australia/Adelaide/IMG_20251210_202936.jpg', rotation: 0 },
-        
         { name:'Brazilian restaurant', coords:[138.593251,-34.92716], photo:'./IMG/2025/Australia/Adelaide/IMG_20251211_160349.jpg', rotation: 0 },
         { name:'Cute photo', coords:[138.592527,-34.927179], photo:'./IMG/2025/Australia/Adelaide/IMG_20251211_164920.jpg', rotation: 0 },
         { name:'Cute photo', coords:[138.59255,-34.927158], photo:'./IMG/2025/Australia/Adelaide/IMG_20251211_164925.jpg', rotation: 0 },
-
         { name:'Too cute', coords:[138.5927599103,-34.925166459], photo:'./IMG/2025/Australia/Adelaide/IMG_20251211_223013.jpg', rotation: 0 },
         { name:'Too cute', coords:[138.59276527,-34.92510547], photo:'./IMG/2025/Australia/Adelaide/IMG_20251211_223031.jpg', rotation: 0 },
         { name:'Too cute', coords:[138.592719677,-34.9251200], photo:'./IMG/2025/Australia/Adelaide/IMG_20251211_223045.jpg', rotation: 0 },
@@ -577,19 +571,9 @@ const visitedCities = [
         { name:'View of a part of the city from a hill', coords:[138.69697233,-34.93144431], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_004713.jpg', rotation: 0 },
         { name:'Us and the view', coords:[138.696913326,-34.9314501], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_010618.jpg', rotation: 0 },
         { name:'Us', coords:[138.696827496,-34.9314111], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_010926.jpg', rotation: 0 },
-
-
-
-
-
-
-
-
-
         { name:'The spa', coords:[138.59307734,-34.926937], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_102104.jpg', rotation: 0 },
         { name:'The swimming pool', coords:[138.59307734,-34.926937], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_102046.jpg', rotation: 0 },
         { name:'The national wine center cave (full of french wine)', coords:[138.6140957,-34.919488], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_151342.jpg', rotation: 0 },
-        
         { name:'Wine we tried', coords:[138.61387,-34.9197], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_154135.jpg', rotation: 0 },
         { name:'Wine we tried', coords:[138.61387,-34.9197], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_154150.jpg', rotation: 0 },
         { name:'Wine we tried', coords:[138.61387,-34.9197], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_155630.jpg', rotation: 0 },
@@ -607,6 +591,15 @@ const visitedCities = [
         { name:'another bird', coords:[138.6125910,-34.918978], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_172608.jpg', rotation: 0 },
         { name:'Hungry parrot', coords:[138.610834,-34.917878], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_181020.jpg', rotation: 0 },
         { name:'Hungry parrot', coords:[138.610785,-34.917908], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_181216.jpg', rotation: 0 },
+        { name:'big trees alley', coords:[138.6103016,-34.91660], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_181550.jpg', rotation: 0 },
+        { name:'Ibis', coords:[138.61033,-34.91666], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_181737.jpg', rotation: 0 },
+        { name:'Beautiful tree', coords:[138.60702,-34.91638], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_182807.jpg', rotation: 0 },
+        { name:'Cute girl', coords:[138.59276,-34.92691], photo:'./IMG/2025/Australia/Adelaide/IMG_20251213_090504.jpg', rotation: 0 },
+        { name:'My lego gf', coords:[138.60099,-34.9223], photo:'./IMG/2025/Australia/Adelaide/IMG_20251213_124641.jpg', rotation: 0 },
+        { name:'Aahhh souvenirs', coords:[138.59992,-34.92282], photo:'./IMG/2025/Australia/Adelaide/IMG_20251213_140657.jpg', rotation: 0 },
+        { name:'New apartment', coords:[138.511470,-35.00070], photo:'./IMG/2025/Australia/Adelaide/IMG_20251213_170452.jpg', rotation: 0 },
+        { name:'Ouch remover', coords:[138.511470,-35.00070], photo:'./IMG/2025/Australia/Adelaide/IMG_20251213_172910.jpg', rotation: 0 },
+        { name:'Sunset', coords:[138.511368249,-35.0007044], photo:'./IMG/2025/Australia/Adelaide/IMG_20251213_202324.jpg', rotation: 0 },
       ]
     },
   
