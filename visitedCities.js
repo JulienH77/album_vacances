@@ -614,9 +614,22 @@ const visitedCities = [
         { name:'Sleeping koala', coords:[138.605853,-34.913426], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_132419.jpg', rotation: 0 },
         { name:'Resting kangaroo', coords:[138.6057144,-34.913404], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_132534.jpg', rotation: 0 },
         { name:'Baby kangaroo', coords:[138.6057144,-34.913404], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_132551.jpg', rotation: 0 },
-        { name:'Kangaroo', coords:[138.6057144,-34.913404], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_132551.jpg', rotation: 0 },
+        { name:'Kangaroo', coords:[138.6057144,-34.913404], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_132925.jpg', rotation: 0 },
 
-        
+        { name:'King Julian', coords:[138.605521,-34.912882], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_133542.jpg', rotation: 0 },
+        { name:'Kingfisher', coords:[138.60571,-34.912912], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_133914.jpg', rotation: 0 },
+        { name:'Rock monkeys', coords:[138.60596,-34.9129927], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_134017.jpg', rotation: 0 },
+        { name:'Great Bilbi', coords:[138.6055722,-34.912760], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_135538.jpg', rotation: 0 },
+        { name:'The lion king guy', coords:[138.6073579,-34.9124963], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_141254.jpg', rotation: 0 },
+        { name:'The seal and the girl', coords:[138.60748,-34.912922], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_142259.jpg', rotation: 0 },
+        { name:'Capibaaaraaaa', coords:[138.608892,-34.91324], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_142635.jpg', rotation: 0 },
+        { name:'Capibaaaraaaa', coords:[138.608892,-34.91324], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_142705.jpg', rotation: 0 },
+        { name:'Beautiful old house', coords:[138.60747,-34.91323], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_145017.jpg', rotation: 0 },
+        { name:'Big bird', coords:[138.607543,-34.913575], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_145345.jpg', rotation: 0 },
+        { name:'Hitler\'s bird', coords:[138.60754,-34.91365], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_145527.jpg', rotation: 0 },
+        { name:'AHAHAH the beak', coords:[138.607500,-34.913724], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_150039.jpg', rotation: 0 },
+        { name:'Torii gate and my girl', coords:[138.60697,-34.91274], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_150822.jpg', rotation: 0 },
+        { name:'Casoar', coords:[138.606612,-34.91345], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_151308.jpg', rotation: 0 },
       ]
     },
   
