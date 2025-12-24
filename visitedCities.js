@@ -654,6 +654,20 @@ const visitedCities = [
         { name:'Night view of the beach', coords:[138.51143,-35.00308], photo:'./IMG/2025/Australia/Adelaide/IMG_20251216_212752.jpg', rotation: 0 },
         { name:'CowBoy style', coords:[138.538265,-34.97533], photo:'./IMG/2025/Australia/Adelaide/IMG_20251217_151654.jpg', rotation: 0 },
         { name:'Go to the national park !', coords:[138.702103,-34.90324], photo:'./IMG/2025/Australia/Adelaide/IMG_20251218_123534.jpg', rotation: 0 },
+        { name:'Going to the fresh air of the cave', coords:[138.70604,-34.90335], photo:'./IMG/2025/Australia/Adelaide/IMG_20251218_124431.jpg', rotation: 0 },
+        { name:'Fresh in the cave', coords:[138.70580,-34.90358], photo:'./IMG/2025/Australia/Adelaide/IMG_20251218_124626.jpg', rotation: 0 },
+        { name:'Waterfall licking good', coords:[138.70788,-34.9063], photo:'./IMG/2025/Australia/Adelaide/IMG_20251218_130302.jpg', rotation: 0 },
+        { name:'Waterfall', coords:[138.70788,-34.9063], photo:'./IMG/2025/Australia/Adelaide/IMG_20251218_130314.jpg', rotation: 0 },
+        { name:'Beautiful girl under the sun', coords:[138.70706,-34.90487], photo:'./IMG/2025/Australia/Adelaide/IMG_20251218_131003.jpg', rotation: 0 },
+        { name:'WILD KOALAAA', coords:[138.70747,-34.90418], photo:'./IMG/2025/Australia/Adelaide/IMG_20251218_131149.jpg', rotation: 0 },
+        { name:'Us and the fat baby', coords:[138.707370,-34.9040], photo:'./IMG/2025/Australia/Adelaide/IMG_20251218_131325.jpg', rotation: 0 },
+        { name:'fat baby', coords:[138.70788,-34.9063], photo:'./IMG/2025/Australia/Adelaide/IMG_20251218_131501.jpg', rotation: 0 },
+        { name:'Cute baby and my baby', coords:[138.707370,-34.9040], photo:'./IMG/2025/Australia/Adelaide/IMG_20251218_131342.jpg', rotation: 0 },
+        { name:'Break on a bench', coords:[138.70681,-34.90306], photo:'./IMG/2025/Australia/Adelaide/IMG_20251218_132556.jpg', rotation: 0 },
+        { name:'Choose your path', coords:[138.70532,-34.90306], photo:'./IMG/2025/Australia/Adelaide/IMG_20251218_133159.jpg', rotation: 0 },
+        { name:'Long live the AC', coords:[138.701721,-34.90296], photo:'./IMG/2025/Australia/Adelaide/IMG_20251218_133856.jpg', rotation: 0 },
+
+
 
         
       ]
