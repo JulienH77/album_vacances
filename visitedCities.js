@@ -600,6 +600,10 @@ const visitedCities = [
         { name:'New apartment', coords:[138.511470,-35.00070], photo:'./IMG/2025/Australia/Adelaide/IMG_20251213_170452.jpg', rotation: 0 },
         { name:'Ouch remover', coords:[138.511470,-35.00070], photo:'./IMG/2025/Australia/Adelaide/IMG_20251213_172910.jpg', rotation: 0 },
         { name:'Sunset', coords:[138.511368249,-35.0007044], photo:'./IMG/2025/Australia/Adelaide/IMG_20251213_202324.jpg', rotation: 0 },
+        { name:'Tasting of French wine', coords:[138.5977248,-34.92235], photo:'./IMG/2025/Australia/Adelaide/IMG_20251214_000631.jpg', rotation: 0 },
+        { name:'Moana beach', coords:[138.47078,-35.206842], photo:'./IMG/2025/Australia/Adelaide/IMG_20251215_003129.jpg', rotation: 0 },
+        { name:'Moana beach', coords:[138.470769,-35.206970], photo:'./IMG/2025/Australia/Adelaide/IMG_20251215_003203.jpg', rotation: 0 },
+
       ]
     },
   
@@ -608,9 +612,13 @@ const visitedCities = [
       name: 'Hahndorf',
       value: [-35.029439005374330, 138.81241725034008, 0],
       visites: [
-        { name:'aaaaaaaaaaaaaaaaaaaa', coords:[13.04112, 47.802834], photo:'./IMG/2025/Australia/Adelaide/IMG_20251206_174747.jpg', rotation: 151 },
-        { name:'aaaaaaaaaaaaaaaaaaaa', coords:[13.0441398, 47.7970268], photo:'./IMG/2025/Australia/Adelaide/IMG_20251207_112751.jpg', rotation: 120 },
-
+        { name:'Walking the dog', coords:[138.80987,-35.029097], photo:'./IMG/2025/Australia/Adelaide/IMG_20251215_121446.jpg', rotation: 0 },
+        { name:'Mmh mmh interesting writing', coords:[138.8100529,-35.02933], photo:'./IMG/2025/Australia/Adelaide/IMG_20251215_122023.jpg', rotation: 0 },
+        { name:'Bon appétit', coords:[138.811517,-35.031382], photo:'./IMG/2025/Australia/Adelaide/IMG_20251215_131923.jpg', rotation: 0 },
+        { name:'Nice bone', coords:[138.811517,-35.031382], photo:'./IMG/2025/Australia/Adelaide/IMG_20251215_134744.jpg', rotation: 0 },
+        { name:'Elves\' domination', coords:[138.812445,-35.03311], photo:'./IMG/2025/Australia/Adelaide/IMG_20251215_143731.jpg', rotation: 0 },
+        { name:'Technologia', coords:[138.810605,-35.030579], photo:'./IMG/2025/Australia/Adelaide/IMG_20251215_145403.jpg', rotation: 0 },
+        { name:'Christmas tree', coords:[138.809741,-35.02893], photo:'./IMG/2025/Australia/Adelaide/IMG_20251215_150413.jpg', rotation: 0 },
       ]
     },
 
