@@ -553,12 +553,11 @@ const visitedCities = [
         { name:'Delicious', coords:[138.597292,-34.92934], photo:'./IMG/2025/Australia/Adelaide/IMG_20251209_110335.jpg', rotation: 0 },
         { name:'French-style cheese', coords:[138.59709,-34.92987], photo:'./IMG/2025/Australia/Adelaide/IMG_20251209_115738.jpg', rotation: 0 },
         
-        { name:'The smelly cheese :)', coords:[138.59736,-34.92963], photo:'./IMG/2025/Australia/Adelaide/IMG_20251209_102235.jpg', rotation: 0 },
-        { name:'The smelly cheese :)', coords:[138.59736,-34.92963], photo:'./IMG/2025/Australia/Adelaide/IMG_20251209_102235.jpg', rotation: 0 },
-        { name:'The smelly cheese :)', coords:[138.59736,-34.92963], photo:'./IMG/2025/Australia/Adelaide/IMG_20251209_102235.jpg', rotation: 0 },
-        { name:'The smelly cheese :)', coords:[138.59736,-34.92963], photo:'./IMG/2025/Australia/Adelaide/IMG_20251209_102235.jpg', rotation: 0 },
-        { name:'The smelly cheese :)', coords:[138.59736,-34.92963], photo:'./IMG/2025/Australia/Adelaide/IMG_20251209_102235.jpg', rotation: 0 },
-        { name:'The smelly cheese :)', coords:[138.59736,-34.92963], photo:'./IMG/2025/Australia/Adelaide/IMG_20251209_102235.jpg', rotation: 0 },
+        { name:'Our car', coords:[138.592650,-34.92516], photo:'./IMG/2025/Australia/Adelaide/IMG_20251209_123452.jpg', rotation: 0 },
+        { name:'Beautiful trees', coords:[138.59357,-34.9261], photo:'./IMG/2025/Australia/Adelaide/IMG_20251209_141204.jpg', rotation: 0 },
+        { name:'Us', coords:[138.59364,-34.92617], photo:'./IMG/2025/Australia/Adelaide/IMG_20251209_141212.jpg', rotation: 0 },
+        { name:'Gingerbread event', coords:[138.5977116,-34.92182292], photo:'./IMG/2025/Australia/Adelaide/IMG_20251209_142557.jpg', rotation: 0 },
+        { name:'The designer at work', coords:[138.5977304,-34.92183011], photo:'./IMG/2025/Australia/Adelaide/IMG_20251209_150026.jpg', rotation: 0 },
 
       ]
     },
