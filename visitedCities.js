@@ -612,13 +612,13 @@ const visitedCities = [
       name: 'Hahndorf',
       value: [-35.029439005374330, 138.81241725034008, 0],
       visites: [
-        { name:'Walking the dog', coords:[138.80987,-35.029097], photo:'./IMG/2025/Australia/Adelaide/IMG_20251215_121446.jpg', rotation: 0 },
-        { name:'Mmh mmh interesting writing', coords:[138.8100529,-35.02933], photo:'./IMG/2025/Australia/Adelaide/IMG_20251215_122023.jpg', rotation: 0 },
-        { name:'Bon appétit', coords:[138.811517,-35.031382], photo:'./IMG/2025/Australia/Adelaide/IMG_20251215_131923.jpg', rotation: 0 },
-        { name:'Nice bone', coords:[138.811517,-35.031382], photo:'./IMG/2025/Australia/Adelaide/IMG_20251215_134744.jpg', rotation: 0 },
-        { name:'Elves\' domination', coords:[138.812445,-35.03311], photo:'./IMG/2025/Australia/Adelaide/IMG_20251215_143731.jpg', rotation: 0 },
-        { name:'Technologia', coords:[138.810605,-35.030579], photo:'./IMG/2025/Australia/Adelaide/IMG_20251215_145403.jpg', rotation: 0 },
-        { name:'Christmas tree', coords:[138.809741,-35.02893], photo:'./IMG/2025/Australia/Adelaide/IMG_20251215_150413.jpg', rotation: 0 }
+        { name:'Walking the dog', coords:[138.80987,-35.029097], photo:'./IMG/2025/Australia/Hahndorf/IMG_20251215_121446.jpg', rotation: 0 },
+        { name:'Mmh mmh interesting writing', coords:[138.8100529,-35.02933], photo:'./IMG/2025/Australia/Hahndorf/IMG_20251215_122023.jpg', rotation: 0 },
+        { name:'Bon appétit', coords:[138.811517,-35.031382], photo:'./IMG/2025/Australia/Hahndorf/IMG_20251215_131923.jpg', rotation: 0 },
+        { name:'Nice bone', coords:[138.811517,-35.031382], photo:'./IMG/2025/Australia/Hahndorf/IMG_20251215_134744.jpg', rotation: 0 },
+        { name:'Elves\' domination', coords:[138.812445,-35.03311], photo:'./IMG/2025/Australia/Hahndorf/IMG_20251215_143731.jpg', rotation: 0 },
+        { name:'Technologia', coords:[138.810605,-35.030579], photo:'./IMG/2025/Australia/Hahndorf/IMG_20251215_145403.jpg', rotation: 0 },
+        { name:'Christmas tree', coords:[138.809741,-35.02893], photo:'./IMG/2025/Australia/Hahndorf/IMG_20251215_150413.jpg', rotation: 0 }
       ]
     },
 
