@@ -560,7 +560,7 @@ const visitedCities = [
         { name:'The designer at work', coords:[138.5977304,-34.92183011], photo:'./IMG/2025/Australia/Adelaide/IMG_20251209_150026.jpg', rotation: 0 },
         
         { name:'Hainanese retaurant', coords:[138.59926,-34.92567], photo:'./IMG/2025/Australia/Adelaide/IMG_20251210_141439.jpg', rotation: 0 },
-        { name:'Cosplay before the cinema', coords:[138.592767,-34.926991], photo:'./IMG/2025/Australia/Adelaide/IMG_20251210_172123.jpg', rotation: 0 },
+        { name:'Cosplay before the cinema', coords:[138.59261507,-34.926999], photo:'./IMG/2025/Australia/Adelaide/IMG_20251210_172123.jpg', rotation: 0 },
         { name:'Photo at the cinema', coords:[138.60949,-34.92200], photo:'./IMG/2025/Australia/Adelaide/IMG_20251210_180337.jpg', rotation: 0 },
         { name:'At the restaurant just after the movie', coords:[138.60776,-34.92275], photo:'./IMG/2025/Australia/Adelaide/IMG_20251210_202010.jpg', rotation: 0 },
         { name:'Delicious steak and tiramisu', coords:[138.60771,-34.92268], photo:'./IMG/2025/Australia/Adelaide/IMG_20251210_202936.jpg', rotation: 0 },
@@ -568,6 +568,15 @@ const visitedCities = [
         { name:'Brazilian restaurant', coords:[138.593251,-34.92716], photo:'./IMG/2025/Australia/Adelaide/IMG_20251211_160349.jpg', rotation: 0 },
         { name:'Cute photo', coords:[138.592527,-34.927179], photo:'./IMG/2025/Australia/Adelaide/IMG_20251211_164920.jpg', rotation: 0 },
         { name:'Cute photo', coords:[138.59255,-34.927158], photo:'./IMG/2025/Australia/Adelaide/IMG_20251211_164925.jpg', rotation: 0 },
+
+        { name:'Too cute', coords:[138.5927599103,-34.925166459], photo:'./IMG/2025/Australia/Adelaide/IMG_20251211_223013.jpg', rotation: 0 },
+        { name:'Too cute', coords:[138.59276527,-34.92510547], photo:'./IMG/2025/Australia/Adelaide/IMG_20251211_223031.jpg', rotation: 0 },
+        { name:'Too cute', coords:[138.592719677,-34.9251200], photo:'./IMG/2025/Australia/Adelaide/IMG_20251211_223045.jpg', rotation: 0 },
+        { name:'Chess at the uni at night', coords:[138.604356,-34.918901], photo:'./IMG/2025/Australia/Adelaide/IMG_20251211_234856.jpg', rotation: 0 },
+        { name:'Chinese-size\'s tree', coords:[138.60451,-34.91856], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_002132.jpg', rotation: 0 },
+        { name:'View of a part of the city from a hill', coords:[138.69697233,-34.93144431], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_004713.jpg', rotation: 0 },
+        { name:'Us and the view', coords:[138.696913326,-34.9314501], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_010618.jpg', rotation: 0 },
+        { name:'Us', coords:[138.696827496,-34.9314111], photo:'./IMG/2025/Australia/Adelaide/IMG_20251212_010926.jpg', rotation: 0 },
 
       ]
     },
