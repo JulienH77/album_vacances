@@ -660,7 +660,7 @@ const visitedCities = [
         { name:'Beautiful girl under the sun', coords:[138.70706,-34.90487], photo:'./IMG/2025/Australia/Adelaide/IMG_20251218_131003.jpg', rotation: 0 },
         { name:'WILD KOALAAA', coords:[138.70747,-34.90418], photo:'./IMG/2025/Australia/Adelaide/IMG_20251218_131149.jpg', rotation: 0 },
         { name:'Us and the fat baby', coords:[138.707370,-34.9040], photo:'./IMG/2025/Australia/Adelaide/IMG_20251218_131325.jpg', rotation: 0 },
-        { name:'fat baby', coords:[138.70788,-34.9063], photo:'./IMG/2025/Australia/Adelaide/IMG_20251218_131501.jpg', rotation: 0 },
+        { name:'fat baby', coords:[138.707370,-34.9040], photo:'./IMG/2025/Australia/Adelaide/IMG_20251218_131501.jpg', rotation: 0 },
         { name:'Cute baby and my baby', coords:[138.707370,-34.9040], photo:'./IMG/2025/Australia/Adelaide/IMG_20251218_131342.jpg', rotation: 0 },
         { name:'Break on a bench', coords:[138.70681,-34.90306], photo:'./IMG/2025/Australia/Adelaide/IMG_20251218_132556.jpg', rotation: 0 },
         { name:'Choose your path', coords:[138.70532,-34.90306], photo:'./IMG/2025/Australia/Adelaide/IMG_20251218_133159.jpg', rotation: 0 },
