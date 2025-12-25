@@ -676,8 +676,22 @@ const visitedCities = [
         { name:'Us for the 6 months', coords:[138.606567,-34.923673], photo:'./IMG/2025/Australia/Adelaide/IMG_20251218_203431.jpg', rotation: 0 },
         { name:'Playing chess after diner', coords:[138.59890,-34.92407], photo:'./IMG/2025/Australia/Adelaide/IMG_20251218_225018.jpg', rotation: 0 },
         { name:'Playing chess after diner', coords:[138.59890,-34.92407], photo:'./IMG/2025/Australia/Adelaide/IMG_20251218_230644.jpg', rotation: 0 },
-
-
+        { name:'Breakfast', coords:[138.59884,-34.92422], photo:'./IMG/2025/Australia/Adelaide/IMG_20251219_121823.jpg', rotation: 0 },
+        { name:'Us', coords:[138.59898,-34.91843], photo:'./IMG/2025/Australia/Adelaide/IMG_20251219_131328.jpg', rotation: 0 },
+        { name:'Christmas tree smelling like childhood', coords:[138.59816,-34.91275], photo:'./IMG/2025/Australia/Adelaide/IMG_20251219_134529.jpg', rotation: 0 },
+        { name:'Entrance of the festival', coords:[138.59823,-34.91331], photo:'./IMG/2025/Australia/Adelaide/IMG_20251219_134850.jpg', rotation: 0 },
+        { name:'Watching cricket', coords:[138.59785,-34.91472], photo:'./IMG/2025/Australia/Adelaide/IMG_20251219_135725.jpg', rotation: 0 },
+        { name:'Cathedral and her', coords:[138.598021,-34.91462], photo:'./IMG/2025/Australia/Adelaide/IMG_20251219_141510.jpg', rotation: 0 },
+        { name:'Beer break', coords:[138.59756,-34.91400], photo:'./IMG/2025/Australia/Adelaide/IMG_20251219_142031.jpg', rotation: 0 },
+        { name:'In the ferry wheel', coords:[138.598022,-34.91437], photo:'./IMG/2025/Australia/Adelaide/IMG_20251219_150117.jpg', rotation: 0 },
+        { name:'Cute', coords:[138.598022,-34.91437], photo:'./IMG/2025/Australia/Adelaide/IMG_20251219_150225.jpg', rotation: 0 },
+        { name:'Chief shrimp cooking', coords:[138.59771,-34.91497], photo:'./IMG/2025/Australia/Adelaide/IMG_20251219_151909.jpg', rotation: 0 },
+        { name:'Snowman suffering with the heat', coords:[138.596139,-34.91890], photo:'./IMG/2025/Australia/Adelaide/IMG_20251219_153038.jpg', rotation: 0 },
+        
+        { name:'Juice break', coords:[138.600417,-34.92256], photo:'./IMG/2025/Australia/Adelaide/IMG_20251219_164151.jpg', rotation: 0 },
+        { name:'Diner', coords:[138.625720,-34.91457], photo:'./IMG/2025/Australia/Adelaide/IMG_20251219_211131.jpg', rotation: 0 },
+        { name:'The spiciest chicken wings', coords:[138.625720,-34.91457], photo:'./IMG/2025/Australia/Adelaide/IMG_20251219_212036.jpg', rotation: 0 },
+        { name:'She win the revenge', coords:[138.59890,-34.92407], photo:'./IMG/2025/Australia/Adelaide/IMG_20251220_003403.jpg', rotation: 0 },
         
       ]
     },
