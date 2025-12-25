@@ -666,7 +666,16 @@ const visitedCities = [
         { name:'Break on a bench', coords:[138.70681,-34.90306], photo:'./IMG/2025/Australia/Adelaide/IMG_20251218_132556.jpg', rotation: 0 },
         { name:'Choose your path', coords:[138.70532,-34.90306], photo:'./IMG/2025/Australia/Adelaide/IMG_20251218_133159.jpg', rotation: 0 },
         { name:'Long live the AC', coords:[138.701721,-34.90296], photo:'./IMG/2025/Australia/Adelaide/IMG_20251218_133856.jpg', rotation: 0 },
-
+        { name:'Toast of a eggplant\'s caviar and truffle', coords:[138.60656,-34.9063], photo:'./IMG/2025/Australia/Adelaide/IMG_20251218_203417.jpg', rotation: 0 },
+        { name:'Us', coords:[138.70788,-34.92367], photo:'./IMG/2025/Australia/Adelaide/IMG_20251218_203426.jpg', rotation: 0 },
+        { name:'Us in the mirror', coords:[138.70788,-34.92367], photo:'./IMG/2025/Australia/Adelaide/IMG_20251218_203745.jpg', rotation: 0 },
+        { name:'Her ❤️', coords:[138.70788,-34.92367], photo:'./IMG/2025/Australia/Adelaide/IMG_20251218_210422.jpg', rotation: 0 },
+        { name:'Marinated salmon with chive cream and pistachios', coords:[138.70788,-34.92367], photo:'./IMG/2025/Australia/Adelaide/IMG_20251218_204805.jpg', rotation: 0 },
+        { name:'Coq au vin and confit de canard', coords:[138.70788,-34.92367], photo:'./IMG/2025/Australia/Adelaide/IMG_20251218_210844.jpg', rotation: 0 },
+        { name:'Iced soufflé with chartreuse liquor and a crème brulée', coords:[138.70788,-34.92367], photo:'./IMG/2025/Australia/Adelaide/IMG_20251218_215930.jpg', rotation: 0 },
+        { name:'Us for the 6 months', coords:[138.70788,-34.92367], photo:'./IMG/2025/Australia/Adelaide/IMG_20251218_203431.jpg', rotation: 0 },
+        { name:'Playing chess after diner', coords:[138.59890,-34.92407], photo:'./IMG/2025/Australia/Adelaide/IMG_20251218_225018.jpg', rotation: 0 },
+        { name:'Playing chess after diner', coords:[138.59890,-34.92407], photo:'./IMG/2025/Australia/Adelaide/IMG_20251218_230644.jpg', rotation: 0 },
 
 
         
