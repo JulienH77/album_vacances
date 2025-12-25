@@ -540,10 +540,9 @@ const visitedCities = [
         { type: 'hotel', datedeb:'06/12/2025', datefin:'13/12/2025', coords:[138.5928234706278,-34.92695859199718] },
         { type: 'hotel', datedeb:'13/12/2025', datefin:'18/12/2025', coords:[138.51148168154995,-35.0007250433274] },
         { type: 'hotel', datedeb:'18/12/2025', datefin:'20/12/2025', coords:[138.59888483173975,-34.92411928356853] },
-         { name:'Beautiful tree', coords:[138.5927619,-34.924608], photo:'./IMG/2025/Australia/Adelaide/IMG_20251206_174747.jpg', rotation: 0 },
         { name:'She gave me the macca\'s hat', coords:[138.5927458,-34.926958], photo:'./IMG/2025/Australia/Adelaide/IMG_20251207_112751.jpg', rotation: 0 },
         { name:'Emergency :)', coords:[138.586609,-34.921057], photo:'./IMG/2025/Australia/Adelaide/IMG_20251207_145221.jpg', rotation: 0 },
-        { name:'aaaaaaaaaaaaaaaaaaaa', coords:[0,0], photo:'./IMG/2025/Australia/Adelaide/IMG_20251207_182656.jpg', rotation: 0 },
+        { name:'Korean BBQ', coords:[138.59547,-34.9305], photo:'./IMG/2025/Australia/Adelaide/IMG_20251207_182656.jpg', rotation: 0 },
         { name:'Second time at the emergency', coords:[138.586693,-34.920908], photo:'./IMG/2025/Australia/Adelaide/IMG_20251208_065357.jpg', rotation: 0 },
         { name:'At a vietnamese restaurant', coords:[138.592832,-34.923453], photo:'./IMG/2025/Australia/Adelaide/IMG_20251208_192544.jpg', rotation: 0 },
         { name:'The smelly cheese :)', coords:[138.59736,-34.92963], photo:'./IMG/2025/Australia/Adelaide/IMG_20251209_102235.jpg', rotation: 0 },
@@ -687,12 +686,19 @@ const visitedCities = [
         { name:'Cute', coords:[138.598022,-34.91437], photo:'./IMG/2025/Australia/Adelaide/IMG_20251219_150225.jpg', rotation: 0 },
         { name:'Chief shrimp cooking', coords:[138.59771,-34.91497], photo:'./IMG/2025/Australia/Adelaide/IMG_20251219_151909.jpg', rotation: 0 },
         { name:'Snowman suffering with the heat', coords:[138.596139,-34.91890], photo:'./IMG/2025/Australia/Adelaide/IMG_20251219_153038.jpg', rotation: 0 },
-        
         { name:'Juice break', coords:[138.600417,-34.92256], photo:'./IMG/2025/Australia/Adelaide/IMG_20251219_164151.jpg', rotation: 0 },
         { name:'Diner', coords:[138.625720,-34.91457], photo:'./IMG/2025/Australia/Adelaide/IMG_20251219_211131.jpg', rotation: 0 },
         { name:'The spiciest chicken wings', coords:[138.625720,-34.91457], photo:'./IMG/2025/Australia/Adelaide/IMG_20251219_212036.jpg', rotation: 0 },
         { name:'She win the revenge', coords:[138.59890,-34.92407], photo:'./IMG/2025/Australia/Adelaide/IMG_20251220_003403.jpg', rotation: 0 },
-        
+        { name:'Dipping the LU !', coords:[138.59778,-34.92291], photo:'./IMG/2025/Australia/Adelaide/IMG_20251220_111433.jpg', rotation: 0 },
+        { name:'Christmas concert', coords:[138.601158,-34.91457], photo:'./IMG/2025/Australia/Adelaide/IMG_20251220_113709.jpg', rotation: 0 },
+        { name:'Fake beautiful building aaah', coords:[138.60384,-34.92276], photo:'./IMG/2025/Australia/Adelaide/IMG_20251220_135406.jpg', rotation: 0 },
+        { name:'Fake beautiful building aaah', coords:[138.6007,-34.91457], photo:'./IMG/2025/Australia/Adelaide/IMG_20251220_140040.jpg', rotation: 0 },
+        { name:'Last lunch is greek', coords:[138.5990,-34.92288], photo:'./IMG/2025/Australia/Adelaide/IMG_20251220_142229.jpg', rotation: 0 },
+        { name:'Resting before leaving', coords:[138.59783,-34.9223], photo:'./IMG/2025/Australia/Adelaide/IMG_20251220_172840.jpg', rotation: 0 },
+        { name:'Waiting for the plane', coords:[138.53719,-34.93841], photo:'./IMG/2025/Australia/Adelaide/IMG_20251220_194720.jpg', rotation: 0 },
+        { name:'Waiting for the plane', coords:[138.536923,-34.9382], photo:'./IMG/2025/Australia/Adelaide/IMG_20251220_203305.jpg', rotation: 0 },
+        { name:'Last moment o7', coords:[138.53750,-34.93868], photo:'./IMG/2025/Australia/Adelaide/IMG_20251220_203658.jpg', rotation: 0 },
       ]
     },
   
