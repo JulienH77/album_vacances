@@ -1187,6 +1187,10 @@ if (document.getElementById('toggleDirections').checked) {
       groupedByDay[dateKey].forEach(v => {
         const item = document.createElement("div");
         item.className = "photo-item";
+        item.style.MaxHeight = "380.15px";
+        item.style.MaxWidth = "285.2px";
+        item.style.Width = "auto";
+        item.style.Height = "auto";
         item.style.marginBottom = "14px";
         const displayName = v.name || v.photoName;
 
