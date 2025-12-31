@@ -99,16 +99,16 @@
         }
 
         .project-card {
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            display: flex;
-            flex-direction: column;
-            height: 320px;
-            border: 1px solid #ddd;
-        }
+		    background: white;
+		    border-radius: 8px;
+		    overflow: hidden;
+		    box-shadow: var(--shadow);
+		    transition: var(--transition);
+		    display: flex;
+		    flex-direction: column;
+		    height: 380px; /* Hauteur fixe pour tous les blocs */
+		    border: 1px solid #ddd;
+		}
 
         .project-card:hover {
             transform: translateY(-5px);
@@ -116,22 +116,23 @@
         }
 
         .project-image {
-            height: 180px;
-            background-color: var(--light);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary);
-            font-size: 2.5rem;
-            border-bottom: 1px solid #eee;
-        }
+		    height: 200px; /* Hauteur fixe pour la zone du logo/icône */
+		    background-color: var(--light);
+		    display: flex;
+		    align-items: center;
+		    justify-content: center;
+		    color: var(--primary);
+		    font-size: 3rem; /* Taille de l'icône légèrement augmentée */
+		    border-bottom: 1px solid #eee;
+		}
 
         .project-info {
-            padding: 1.5rem;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
+		    padding: 1.5rem;
+		    flex: 1; /* Prend tout l'espace restant */
+		    display: flex;
+		    flex-direction: column;
+		    overflow-y: auto; /* Permet au texte de défiler si trop long */
+		}
 
         .project-info h3 {
             margin-bottom: 0.5rem;
@@ -140,11 +141,13 @@
         }
 
         .project-info p {
-            color: #666;
-            margin-bottom: 1rem;
-            flex: 1;
-            font-size: 0.9rem;
-        }
+		    color: #666;
+		    margin-bottom: 1rem;
+		    flex: 1; /* Permet au texte de s'étendre */
+		    font-size: 0.9rem;
+		    overflow-y: auto; /* Défilement si nécessaire */
+		    max-height: 120px; /* Limite la hauteur du texte pour éviter les débordements */
+		}
 
         .project-link {
             display: inline-block;
