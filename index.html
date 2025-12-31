@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Julien Houziaux | Hub Projets</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #e74c3c;
+            --accent: #f1c40f;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f9f9f9;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            text-align: center;
+            padding: 3rem 1rem;
+            box-shadow: var(--shadow);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            animation: fadeInDown 1s ease;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            animation: fadeIn 1.5s ease;
+        }
+
+        nav {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            padding: 1rem;
+        }
+
+        nav ul li {
+            margin: 0 1rem;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        nav ul li a:hover {
+            background-color: var(--accent);
+            color: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        section {
+            background: white;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        section:hover {
+            transform: translateY(-5px);
+        }
+
+        section h2 {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem;
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .section-content {
+            padding: 2rem;
+        }
+
+        .project-card {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1.5rem;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            background: white;
+        }
+
+        .project-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .project-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .project-image.album {
+            background: linear-gradient(45deg, #ff9a8b, #ff6b6b);
+        }
+
+        .project-image.trajets {
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+        }
+
+        .project-image.cartographie {
+            background: linear-gradient(45deg, #a8e6cf, #88d8c0);
+        }
+
+        .project-image.photogrammetrie {
+            background: linear-gradient(45deg, #ffd93d, #fcb045);
+        }
+
+        .project-image.guessr {
+            background: linear-gradient(45deg, #6a89cc, #4a69bd);
+        }
+
+        .project-image.concours {
+            background: linear-gradient(45deg, #fd79a8, #f759ab);
+        }
+
+        .project-info {
+            padding: 1.5rem;
+        }
+
+        .project-info h3 {
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .project-info p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .project-link {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .project-link:hover {
+            background-color: var(--secondary);
+        }
+
+        footer {
+            background-color: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 2rem;
+        }
+
+        footer p {
+            margin-bottom: 1rem;
+        }
+
+        .social-links {
+            margin: 1rem 0;
+        }
+
+        .social-links a {
+            color: white;
+            margin: 0 0.5rem;
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            color: var(--accent);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            nav ul li {
+                margin: 0.5rem 0;
+            }
+
+            .project-card {
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Julien Houziaux</h1>
+        <p>Explorateur de données, cartographe et développeur web</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#album">Album Vacances</a></li>
+            <li><a href="#trajets">Trajets Vacances</a></li>
+            <li><a href="#cartographie">Cartographie</a></li>
+            <li><a href="#photogrammetrie">Photogrammétrie</a></li>
+            <li><a href="#guessr">Haute-Marne Guessr</a></li>
+            <li><a href="#concours">Concours Data</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <section id="album">
+            <h2><i class="fas fa-images"></i> Album Vacances</h2>
+            <div class="section-content">
+                <div class="project-card">
+                    <div class="project-image album"></div>
+                    <div class="project-info">
+                        <h3>Album Photo Interactif</h3>
+                        <p>Découvrez mes voyages en Chine et en Europe à travers une carte interactive, des photos et des récits de voyage. Un projet personnel pour partager mes souvenirs avec ma copine.</p>
+                        <a href="https://julienh77.github.io/testjulienh77.github.io/" class="project-link">Voir l'album</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="trajets">
+            <h2><i class="fas fa-route"></i> Trajets Vacances</h2>
+            <div class="section-content">
+                <div class="project-card">
+                    <div class="project-image trajets"></div>
+                    <div class="project-info">
+                        <h3>Carte des Trajets</h3>
+                        <p>Visualisation de mes trajets de vacances en Chine et en Europe, avec animations et détails sur les moyens de transport utilisés.</p>
+                        <a href="#" class="project-link">Voir les trajets</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="cartographie">
+            <h2><i class="fas fa-map"></i> Productions Cartographiques</h2>
+            <div class="section-content">
+                <div class="project-card">
+                    <div class="project-image cartographie"></div>
+                    <div class="project-info">
+                        <h3>Portfolio Cartographique</h3>
+                        <p>Mes créations de cartes thématiques, notamment avec QGIS. Découvrez mes projets en cours, dont une carte en thème noir et or.</p>
+                        <a href="#" class="project-link">Voir les cartes</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="photogrammetrie">
+            <h2><i class="fas fa-camera-retro"></i> Photogrammétrie</h2>
+            <div class="section-content">
+                <div class="project-card">
+                    <div class="project-image photogrammetrie"></div>
+                    <div class="project-info">
+                        <h3>Modèles 3D</h3>
+                        <p>Mes expériences en photogrammétrie : création de modèles 3D à partir de photos, pour des projets personnels et professionnels.</p>
+                        <a href="#" class="project-link">Voir les modèles</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="guessr">
+            <h2><i class="fas fa-globe-americas"></i> Haute-Marne Guessr</h2>
+            <div class="section-content">
+                <div class="project-card">
+                    <div class="project-image guessr"></div>
+                    <div class="project-info">
+                        <h3>GeoGuessr Personnalisé</h3>
+                        <p>Un jeu de géolocalisation centré sur la Haute-Marne. Testez vos connaissances sur cette région française !</p>
+                        <a href="#" class="project-link">Jouer</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="concours">
+            <h2><i class="fas fa-trophy"></i> Concours Data Grand-Est</h2>
+            <div class="section-content">
+                <div class="project-card">
+                    <div class="project-image concours"></div>
+                    <div class="project-info">
+                        <h3>Participations 2024 & 2025</h3>
+                        <p>Mes projets pour les concours Data Grand-Est, incluant des visualisations de données géographiques et des analyses thématiques.</p>
+                        <a href="#" class="project-link">Voir les projets</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>© 2025 Julien Houziaux | Tous droits réservés</p>
+        <div class="social-links">
+            <a href="https://github.com/julienh77" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+        </div>
+        <p>Contact : julien.houziaux@example.com</p>
+    </footer>
+</body>
+</html>
