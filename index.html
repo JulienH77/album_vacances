@@ -22,37 +22,31 @@
             --radius: 12px;
             --transition: 0.25s ease;
         }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
             font-family: 'Inter', sans-serif;
             background: linear-gradient(180deg, var(--bg), #020617);
             color: var(--text);
             line-height: 1.6;
         }
-
         header {
             max-width: 1200px;
             margin: auto;
             padding: 4rem 1rem 2rem;
         }
-
         header h1 {
             font-size: 2.8rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
         }
-
         header p {
             color: var(--muted);
             font-size: 1.1rem;
         }
-
         nav {
             position: sticky;
             top: 0;
@@ -61,7 +55,6 @@
             backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--border);
         }
-
         nav ul {
             max-width: 1200px;
             margin: auto;
@@ -71,7 +64,6 @@
             list-style: none;
             overflow-x: auto;
         }
-
         nav a {
             text-decoration: none;
             color: var(--muted);
@@ -79,23 +71,19 @@
             white-space: nowrap;
             transition: var(--transition);
         }
-
         nav a:hover {
             color: var(--accent);
         }
-
         .container {
             max-width: 1200px;
             margin: auto;
             padding: 3rem 1rem;
         }
-
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 1.8rem;
         }
-
         .project-card {
             background: var(--bg-light);
             border: 1px solid var(--border);
@@ -105,29 +93,24 @@
             flex-direction: column;
             transition: var(--transition);
         }
-
         .project-card:hover {
             transform: translateY(-6px);
             border-color: var(--accent);
         }
-
         .project-icon {
             font-size: 2rem;
             color: var(--accent);
             margin-bottom: 1rem;
         }
-
         .project-card h3 {
             font-size: 1.2rem;
             margin-bottom: 0.5rem;
         }
-
         .project-card p {
             color: var(--muted);
             font-size: 0.95rem;
             margin-bottom: 1.5rem;
         }
-
         .project-link {
             margin-top: auto;
             text-decoration: none;
@@ -138,11 +121,9 @@
             gap: 0.4rem;
             transition: var(--transition);
         }
-
         .project-link:hover {
             color: var(--accent-hover);
         }
-
         footer {
             border-top: 1px solid var(--border);
             padding: 1.5rem;
@@ -150,7 +131,6 @@
             color: var(--muted);
             font-size: 0.9rem;
         }
-
         @media (max-width: 600px) {
             header h1 {
                 font-size: 2.2rem;
@@ -205,84 +185,78 @@ header p {
     </style>
 </head>
 <body>
-
-<header>
-    <h1>Julien Houziaux</h1>
-    <p>Projets de cartographie, data & web interactif</p>
-    <div class="header-accent"></div>
-</header>
-
-
-<nav>
-    <ul>
-        <li><a href="#album">Album</a></li>
-        <li><a href="#trajets">Trajets</a></li>
-        <li><a href="#carto">Cartographie</a></li>
-        <li><a href="#photo">Photogrammétrie</a></li>
-        <li><a href="#guessr">Guessr</a></li>
-        <li><a href="#data2024">Data 2024</a></li>
-        <li><a href="#data2025">Data 2025</a></li>
-    </ul>
-</nav>
-
-<main class="container">
-    <section class="grid">
-
-        <div class="project-card" id="album">
-            <div class="project-icon"><i class="fas fa-images"></i></div>
-            <h3>Album Vacances</h3>
-            <p>Carte interactive et photos de mes voyages à partir de 2025.</p>
-            <a class="project-link" href="https://julienh77.github.io/album_vacances">Voir le projet →</a>
-        </div>
-
-        <div class="project-card" id="trajets">
-            <div class="project-icon"><i class="fas fa-route"></i></div>
-            <h3>Trajets Vacances</h3>
-            <p>Visualisation animée de mes trajets et moyens de transport.</p>
-            <a class="project-link" href="https://julienh77.github.io/testjulienh77.github.io/">Voir le projet →</a>
-        </div>
-
-        <div class="project-card" id="carto">
-            <div class="project-icon"><i class="fas fa-map"></i></div>
-            <h3>Cartographie</h3>
-            <p>Cartes thématiques réalisées avec QGIS et Wonderdraft.</p>
-            <a class="project-link" href="https://sites.google.com/view/mescartographies/accueil">Voir le projet →</a>
-        </div>
-
-        <div class="project-card" id="photo">
-            <div class="project-icon"><i class="fas fa-cube"></i></div>
-            <h3>Photogrammétrie</h3>
-            <p>Modèles 3D de monuments et idées de musée virtuel.</p>
-            <a class="project-link" href="https://sites.google.com/view/photogrammetrie">Voir le projet →</a>
-        </div>
-
-        <div class="project-card" id="guessr">
-            <div class="project-icon"><i class="fas fa-globe-europe"></i></div>
-            <h3>Haute-Marne Guessr</h3>
-            <p>Mini jeu façon GeoGuessr limité à la Haute-Marne.</p>
-            <a class="project-link" href="https://sites.google.com/view/hautemarneguessr/">Jouer →</a>
-        </div>
-
-        <div class="project-card" id="data2024">
-            <div class="project-icon"><i class="fas fa-chart-line"></i></div>
-            <h3>Concours Data 2024</h3>
-            <p>Carte interactive production/consommation d’électricité.</p>
-            <a class="project-link" href="https://sites.google.com/view/dataviz24/concours">Voir le projet →</a>
-        </div>
-
-        <div class="project-card" id="data2025">
-            <div class="project-icon"><i class="fas fa-leaf"></i></div>
-            <h3>Concours Data 2025</h3>
-            <p>Carte interactive sur la faune du Grand Est.</p>
-            <a class="project-link" href="https://julienh77.github.io/Concours_dataviz_2025/">Voir le projet →</a>
-        </div>
-
-    </section>
-</main>
-
-<footer>
-    © 2025 Julien Houziaux — Tous droits réservés
-</footer>
-
+    <header>
+        <h1>Julien Houziaux</h1>
+        <p>Projets de cartographie, data & web interactif</p>
+        <div class="header-accent"></div>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="https://julienh77.github.io/album_vacances">Album</a></li>
+            <li><a href="https://julienh77.github.io/testjulienh77.github.io/">Trajets</a></li>
+            <li><a href="https://sites.google.com/view/mescartographies/accueil">Cartographie</a></li>
+            <li><a href="https://sites.google.com/view/photogrammetrie">Photogrammétrie</a></li>
+            <li><a href="https://sites.google.com/view/hautemarneguessr/">Guessr</a></li>
+            <li><a href="https://sites.google.com/view/dataviz24/concours">Data 2024</a></li>
+            <li><a href="https://julienh77.github.io/Concours_dataviz_2025/">Data 2025</a></li>
+        </ul>
+    </nav>
+    <main class="container">
+        <section class="grid">
+    
+            <div class="project-card" id="album">
+                <div class="project-icon"><i class="fas fa-images"></i></div>
+                <h3>Album Vacances</h3>
+                <p>Carte interactive et photos de mes voyages à partir de 2025.</p>
+                <a class="project-link" href="https://julienh77.github.io/album_vacances">Voir le projet →</a>
+            </div>
+    
+            <div class="project-card" id="trajets">
+                <div class="project-icon"><i class="fas fa-route"></i></div>
+                <h3>Trajets Vacances</h3>
+                <p>Visualisation animée de mes trajets et moyens de transport.</p>
+                <a class="project-link" href="https://julienh77.github.io/testjulienh77.github.io/">Voir le projet →</a>
+            </div>
+    
+            <div class="project-card" id="carto">
+                <div class="project-icon"><i class="fas fa-map"></i></div>
+                <h3>Cartographie</h3>
+                <p>Cartes thématiques réalisées avec QGIS et Wonderdraft.</p>
+                <a class="project-link" href="https://sites.google.com/view/mescartographies/accueil">Voir le projet →</a>
+            </div>
+    
+            <div class="project-card" id="photo">
+                <div class="project-icon"><i class="fas fa-cube"></i></div>
+                <h3>Photogrammétrie</h3>
+                <p>Modèles 3D de monuments et idées de musée virtuel.</p>
+                <a class="project-link" href="https://sites.google.com/view/photogrammetrie">Voir le projet →</a>
+            </div>
+    
+            <div class="project-card" id="guessr">
+                <div class="project-icon"><i class="fas fa-globe-europe"></i></div>
+                <h3>Haute-Marne Guessr</h3>
+                <p>Mini jeu façon GeoGuessr limité à la Haute-Marne.</p>
+                <a class="project-link" href="https://sites.google.com/view/hautemarneguessr/">Jouer →</a>
+            </div>
+    
+            <div class="project-card" id="data2024">
+                <div class="project-icon"><i class="fas fa-chart-line"></i></div>
+                <h3>Concours Data 2024</h3>
+                <p>Carte interactive production/consommation d’électricité du Grand Est.</p>
+                <a class="project-link" href="https://sites.google.com/view/dataviz24/concours">Voir le projet →</a>
+            </div>
+    
+            <div class="project-card" id="data2025">
+                <div class="project-icon"><i class="fas fa-leaf"></i></div>
+                <h3>Concours Dataviz 2025</h3>
+                <p>Carte interactive sur la faune du Grand Est.</p>
+                <a class="project-link" href="https://julienh77.github.io/Concours_dataviz_2025/">Voir le projet →</a>
+            </div>
+    
+        </section>
+    </main>
+    <footer>
+        © 2025 Julien Houziaux — Tous droits réservés
+    </footer>
 </body>
 </html>
