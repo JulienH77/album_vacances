@@ -9,156 +9,185 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <style>
-	/* --- ALL --- */
-        :root {
-            --bg: #0f172a;
-            --bg-light: #111827;
-            --card: #020617;
-            --border: #1f2937;
-            --text: #e5e7eb;
-            --muted: #9ca3af;
-            --accent: #38bdf8;
-            --accent-hover: #0ea5e9;
-            --radius: 12px;
-            --transition: 0.25s ease;
-        }
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            /*overflow: hidden;*/
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(180deg, var(--bg), #020617);
-            color: var(--text);
-            line-height: 1.6;
-			background-image: url('fond_chaumont.svg');
-			background-size: cover;
-            /*background-repeat: no-repeat;*/
-            /*background-position: center;*/
-            margin: 0;
-            height: 100vh;
-        }
-		
-	/* --- ENTETE --- */
-		.header {
-			max-width: 1200px;
-			margin: auto;
-			padding: 4rem 1rem 2rem;
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-		}
-		.header-title {
-			max-width: 600px;
-		}
-		.link img {
-			width: 40px;
-			height: 40px;
-			opacity: 0.7;
-			transition: var(--transition);
-		}
-		.link:hover img {
-			opacity: 1;
-			transform: scale(1.2);
-		}
-        header h1 {
-            font-size: 2.8rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-        header p {
-            color: var(--muted);
-            font-size: 1.1rem;
-        }
-	
-	/* --- BARRE DE NAV --- */
-        nav {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: rgba(2, 6, 23, 0.85);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border);
-        }
-        nav ul {
-            max-width: 1200px;
-            margin: auto;
-            display: flex;
-            gap: 1.5rem;
-            padding: 1rem;
-            list-style: none;
-            overflow-x: auto;
-        }
-        nav a {
-            text-decoration: none;
-            color: var(--muted);
-            font-weight: 500;
-            white-space: nowrap;
-            transition: var(--transition);
-        }
-        nav a:hover {
-            color: var(--accent);
-        }
-		
-	/* --- GRILLE DE LIENS --- */
-        .container {
-            max-width: 1200px;
-            margin: auto;
-            padding: 3rem 1rem;
-        }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.8rem;
-        }
-        .project-card {
-            background: var(--bg-light);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 1.8rem;
-            display: flex;
-            flex-direction: column;
-            transition: var(--transition);
-        }
-        .project-card:hover {
-            transform: translateY(-6px);
-            /*border-color: var(--accent);*/
-        }
-        .project-icon {
-            font-size: 2rem;
-            color: var(--accent);
-            margin-bottom: 1rem;
-        }
-        .project-card h3 {
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-        }
-        .project-card p {
-            color: var(--muted);
-            font-size: 0.95rem;
-            margin-bottom: 1.5rem;
-        }
-        .project-link {
-            margin-top: auto;
-            text-decoration: none;
-            color: var(--accent);
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            transition: var(--transition);
-        }
-        .project-link:hover {
-            color: var(--accent-hover);
-        }
+<style>
+/* ---    VARIABLES --- */
+:root {
+    --bg: #0f172a;
+    --bg-light: #111827;
+    --border: #1f2937;
+    --text: #e5e7eb;
+    --muted: #9ca3af;
+    --accent: #38bdf8;
+    --accent-hover: #0ea5e9;
+    --radius: 12px;
+    --transition: 0.25s ease;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* --- GLOBAL --- */
+body {
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+    line-height: 1.6;
+    background: linear-gradient(180deg, var(--bg), #020617);
+	background-image: url('fond_chaumont.svg');
+	background-size: cover;
+    min-height: 100vh;
+}
+
+/* --- HEADER --- */
+.header {
+    max-width: 1200px;
+    margin: auto;
+    padding: 4rem 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.header-title {
+    max-width: 600px;
+}
+header h1 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: titleIn 0.8s ease-out forwards;
+}
+header p {
+    color: var(--muted);
+    font-size: 1.1rem;
+    opacity: 0;
+    transform: translateY(15px);
+    animation: subtitleIn 0.8s ease-out forwards 0.3s;
+}
+.header-accent {
+    width: 0;
+    height: 4px;
+    background: var(--accent);
+    border-radius: 2px;
+    margin-top: 1.2rem;
+    animation: lineIn 0.6s ease-out forwards 0.6s;
+}
+/* Liens header */
+.link img {
+    width: 40px;
+    height: 40px;
+    opacity: 0.7;
+    transition: var(--transition);
+}
+.link:hover img {
+    opacity: 1;
+    transform: scale(1.15);
+}
+
+/* --- NAVIGATION --- */
+nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(2, 6, 23, 0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+}
+nav ul {
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    gap: 1.5rem;
+    padding: 1rem;
+    list-style: none;
+    overflow-x: auto;
+}
+nav a {
+    text-decoration: none;
+    color: var(--muted);
+    font-weight: 500;
+    white-space: nowrap;
+    transition: var(--transition);
+}
+nav a:hover {
+    color: var(--accent);
+}
+
+/* --- CONTENU --- */
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 3rem 1rem;
+}
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.8rem;
+}
+
+/* ---BLOCS PROJET --- */
 .project-card {
     position: relative;
     overflow: hidden;
+    background: var(--bg-light);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.8rem;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s ease, background-color 0.25s ease;
 }
-/* Base badge */
+.project-card:hover {
+    transform: translateY(-4px);
+    background-color: rgba(17, 24, 39, 0.96);
+}
+/* Ligne d’entité */
+.project-card::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    width: 0;
+    background: var(--accent);
+    transition: width 0.4s ease;
+}
+.project-card:hover::after {
+    width: 100%;
+}
+/* Icone et texte */
+.project-icon {
+    font-size: 2rem;
+    color: var(--accent);
+    margin-bottom: 1rem;
+}
+.project-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+.project-card p {
+    color: var(--muted);
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+}
+/* Lien */
+.project-link {
+    margin-top: auto;
+    text-decoration: none;
+    color: var(--accent);
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: var(--transition);
+}
+.project-card:hover .project-link {
+    color: var(--accent-hover);
+}
+
+/* --- BADGES --- */
 .badge {
     position: absolute;
     top: 14px;
@@ -170,94 +199,37 @@
     letter-spacing: 0.3px;
     backdrop-filter: blur(6px);
 }
-/* Projet phare */
 .badge-featured {
     background: rgba(56, 189, 248, 0.15);
     color: #38bdf8;
     border: 1px solid rgba(56, 189, 248, 0.4);
 }
-/* Projet de cœur */
 .badge-heart {
     background: rgba(244, 114, 182, 0.15);
     color: #f472b6;
     border: 1px solid rgba(244, 114, 182, 0.4);
 }
-		
-	/* --- PIED DE PAGE --- */
-        footer {
-		    background: linear-gradient(180deg, var(--bg), #020617);
-            border-top: 1px solid var(--border);
-            padding: 1.5rem;
-            text-align: center;
-            color: var(--muted);
-            font-size: 0.9rem;
-        }
-		
-	/* --- Animations header --- */
-		header h1 {
-			opacity: 0;
-			transform: translateY(20px);
-			animation: titleIn 0.8s ease-out forwards;
-		}
-		header p {
-			opacity: 0;
-			transform: translateY(15px);
-			animation: subtitleIn 0.8s ease-out forwards;
-			animation-delay: 0.3s;
-		}
-		.header-accent {
-			width: 0;
-			height: 4px;
-			background: var(--accent);
-			border-radius: 2px;
-			margin-top: 1.2rem;
-			animation: lineIn 0.6s ease-out forwards;
-			animation-delay: 0.6s;
-		}
-		@keyframes titleIn {
-			to {
-				opacity: 1;
-				transform: translateY(0);
-			}
-		}
-		@keyframes subtitleIn {
-			to {
-				opacity: 1;
-				transform: translateY(0);
-			}
-		}
-		@keyframes lineIn {
-			to {
-				width: 120px;
-			}
-		}
-		
-		
-		
-.project-card::after {
-    content: "";
-    height: 3px;
-    width: 0;
-    background: var(--accent);
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    transition: width 0.5s ease;
-}
-
-.project-card:hover::after {
-    width: 100%;
-}
+/* Couleur ligne par projet */
 #album::after { background: #38bdf8; }
 #photo::after { background: #f472b6; }
 #guessr::after { background: #34d399; }
 
+/* --- FOOTER --- */
+footer {
+    border-top: 1px solid var(--border);
+    padding: 1.5rem;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.9rem;
+    background: linear-gradient(180deg, var(--bg), #020617);
+}
 
+/* --- ANIMATIONS --- */
+@keyframes titleIn {to { opacity: 1; transform: translateY(0); }}
+@keyframes subtitleIn {to { opacity: 1; transform: translateY(0); }}
+@keyframes lineIn {to { width: 120px; }}
+</style>
 
-
-
-
-    </style>
 </head>
 <body>
 	<header class="header">
