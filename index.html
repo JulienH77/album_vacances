@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
+	/* --- ALL --- */
         :root {
             --bg: #0f172a;
             --bg-light: #111827;
@@ -28,37 +29,35 @@
             box-sizing: border-box;
         }
         body {
-            overflow: hidden;
+            /*overflow: hidden;*/
             font-family: 'Inter', sans-serif;
             background: linear-gradient(180deg, var(--bg), #020617);
             color: var(--text);
             line-height: 1.6;
         }
-.header {
-    max-width: 1200px;
-    margin: auto;
-    padding: 4rem 1rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.header-title {
-    max-width: 600px;
-}
-
-.link img {
-    width: 50px;
-    height: 50px;
-    opacity: 0.7;
-    transition: var(--transition);
-}
-
-.link:hover img {
-    opacity: 1;
-    transform: scale(1.2);
-}
-
+		
+	/* --- ENTETE --- */
+		.header {
+			max-width: 1200px;
+			margin: auto;
+			padding: 4rem 1rem 2rem;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+		.header-title {
+			max-width: 600px;
+		}
+		.link img {
+			width: 40px;
+			height: 40px;
+			opacity: 0.7;
+			transition: var(--transition);
+		}
+		.link:hover img {
+			opacity: 1;
+			transform: scale(1.2);
+		}
         header h1 {
             font-size: 2.8rem;
             font-weight: 700;
@@ -68,6 +67,8 @@
             color: var(--muted);
             font-size: 1.1rem;
         }
+	
+	/* --- BARRE DE NAV --- */
         nav {
             position: sticky;
             top: 0;
@@ -95,6 +96,8 @@
         nav a:hover {
             color: var(--accent);
         }
+		
+	/* --- GRILLE DE LIENS --- */
         .container {
             max-width: 1200px;
             margin: auto;
@@ -145,6 +148,8 @@
         .project-link:hover {
             color: var(--accent-hover);
         }
+		
+	/* --- PIED DE PAGE --- */
         footer {
             border-top: 1px solid var(--border);
             padding: 1.5rem;
@@ -152,76 +157,62 @@
             color: var(--muted);
             font-size: 0.9rem;
         }
-        @media (max-width: 600px) {
-            header h1 {
-                font-size: 2.2rem;
-            }
-        }
-/* === Animations header === */
-
-header h1 {
-    opacity: 0;
-    transform: translateY(20px);
-    animation: titleIn 0.8s ease-out forwards;
-}
-
-header p {
-    opacity: 0;
-    transform: translateY(15px);
-    animation: subtitleIn 0.8s ease-out forwards;
-    animation-delay: 0.3s;
-}
-
-.header-accent {
-    width: 0;
-    height: 4px;
-    background: var(--accent);
-    border-radius: 2px;
-    margin-top: 1.2rem;
-    animation: lineIn 0.6s ease-out forwards;
-    animation-delay: 0.6s;
-}
-
-@keyframes titleIn {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes subtitleIn {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes lineIn {
-    to {
-        width: 120px;
-    }
-}
-
-
+		
+	/* --- Animations header --- */
+		header h1 {
+			opacity: 0;
+			transform: translateY(20px);
+			animation: titleIn 0.8s ease-out forwards;
+		}
+		header p {
+			opacity: 0;
+			transform: translateY(15px);
+			animation: subtitleIn 0.8s ease-out forwards;
+			animation-delay: 0.3s;
+		}
+		.header-accent {
+			width: 0;
+			height: 4px;
+			background: var(--accent);
+			border-radius: 2px;
+			margin-top: 1.2rem;
+			animation: lineIn 0.6s ease-out forwards;
+			animation-delay: 0.6s;
+		}
+		@keyframes titleIn {
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+		@keyframes subtitleIn {
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+		@keyframes lineIn {
+			to {
+				width: 120px;
+			}
+		}
     </style>
 </head>
 <body>
-<header class="header">
-    <div class="header-title">
-        <h1>Julien Houziaux</h1>
-        <p>Projets de cartographie et sites webs interactifs</p>
-        <div class="header-accent"></div>
-    </div>
+	<header class="header">
+		<div class="header-title">
+			<h1>Julien Houziaux</h1>
+			<p>Projets de cartographie et sites webs interactifs</p>
+			<div class="header-accent"></div>
+		</div>
 
-<div class="header-links">
-    <a class="link" href="https://github.com/JulienH77" target="_blank" aria-label="GitHub"><img src="https://cdn.iconscout.com/icon/free/png-256/free-github-icon-svg-download-png-3073768.png?f=webp" alt="GitHub"></a>
-    <a class="link" href="https://www.linkedin.com/in/julien-houziaux-385090195/" target="_blank" aria-label="Linkedin"><img src="https://cdn.worldvectorlogo.com/logos/linkedin-icon.svg" alt="Linkedin"></a>
-    <a class="link" href="https://letterboxd.com/oShaRKio/" target="_blank" aria-label="Letterboxd"><img src="https://a.ltrbxd.com/logos/letterboxd-mac-icon.png" alt="Letterboxd"></a>
-    <!--<a class="link" href="/CV_Julien_Houziaux.pdf" target="_blank" aria-label="CV"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9f/Curriculum-vitae-warning-icon.svg" alt="CV"></a>-->
-</div>
-
-
-</header>
+		<div class="header-links">
+			<a class="link" href="https://github.com/JulienH77" target="_blank" aria-label="GitHub"><img src="https://cdn.iconscout.com/icon/free/png-256/free-github-icon-svg-download-png-3073768.png?f=webp" alt="GitHub"></a>
+			<a class="link" href="https://www.linkedin.com/in/julien-houziaux-385090195/" target="_blank" aria-label="Linkedin"><img src="https://cdn.worldvectorlogo.com/logos/linkedin-icon.svg" alt="Linkedin"></a>
+			<a class="link" href="https://letterboxd.com/oShaRKio/" target="_blank" aria-label="Letterboxd"><img src="https://a.ltrbxd.com/logos/letterboxd-mac-icon.png" alt="Letterboxd"></a>
+			<!--<a class="link" href="/CV_Julien_Houziaux.pdf" target="_blank" aria-label="CV"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9f/Curriculum-vitae-warning-icon.svg" alt="CV"></a>-->
+		</div>
+	</header>
 
     <nav>
         <ul>
@@ -289,7 +280,7 @@ header p {
         </section>
     </main>
     <footer>
-        © 2025 Julien Houziaux — Tous droits réservés
+        © 2025 Julien Houziaux — Seulement par pur amusement
     </footer>
 </body>
 </html>
