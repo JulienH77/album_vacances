@@ -34,6 +34,12 @@
             background: linear-gradient(180deg, var(--bg), #020617);
             color: var(--text);
             line-height: 1.6;
+			background-image: url('fond_chaumont.svg');
+			background-size: cover;
+            /*background-repeat: no-repeat;*/
+            /*background-position: center;*/
+            margin: 0;
+            height: 100vh;
         }
 		
 	/* --- ENTETE --- */
@@ -119,7 +125,7 @@
         }
         .project-card:hover {
             transform: translateY(-6px);
-            border-color: var(--accent);
+            /*border-color: var(--accent);*/
         }
         .project-icon {
             font-size: 2rem;
@@ -179,6 +185,7 @@
 		
 	/* --- PIED DE PAGE --- */
         footer {
+		    background: linear-gradient(180deg, var(--bg), #020617);
             border-top: 1px solid var(--border);
             padding: 1.5rem;
             text-align: center;
@@ -223,7 +230,33 @@
 			to {
 				width: 120px;
 			}
-		}		
+		}
+		
+		
+		
+.project-card::after {
+    content: "";
+    height: 3px;
+    width: 0;
+    background: var(--accent);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transition: width 0.5s ease;
+}
+
+.project-card:hover::after {
+    width: 100%;
+}
+#album::after { background: #38bdf8; }
+#photo::after { background: #f472b6; }
+#guessr::after { background: #34d399; }
+
+
+
+
+
+
     </style>
 </head>
 <body>
