@@ -148,6 +148,34 @@
         .project-link:hover {
             color: var(--accent-hover);
         }
+.project-card {
+    position: relative;
+    overflow: hidden;
+}
+/* Base badge */
+.badge {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.3rem 0.6rem;
+    border-radius: 999px;
+    letter-spacing: 0.3px;
+    backdrop-filter: blur(6px);
+}
+/* Projet phare */
+.badge-featured {
+    background: rgba(56, 189, 248, 0.15);
+    color: #38bdf8;
+    border: 1px solid rgba(56, 189, 248, 0.4);
+}
+/* Projet de cœur */
+.badge-heart {
+    background: rgba(244, 114, 182, 0.15);
+    color: #f472b6;
+    border: 1px solid rgba(244, 114, 182, 0.4);
+}
 		
 	/* --- PIED DE PAGE --- */
         footer {
@@ -195,7 +223,7 @@
 			to {
 				width: 120px;
 			}
-		}
+		}		
     </style>
 </head>
 <body>
@@ -229,6 +257,7 @@
         <section class="grid">
     
             <div class="project-card" id="album">
+				<span class="badge badge-featured">Projet phare</span>
                 <div class="project-icon"><i class="fas fa-images"></i></div>
                 <h3>Album Vacances</h3>
                 <p>Carte interactive et photos de mes voyages à partir de 2025.</p>
@@ -250,6 +279,7 @@
             </div>
     
             <div class="project-card" id="photo">
+				<span class="badge badge-heart">Projet de cœur</span>
                 <div class="project-icon"><i class="fas fa-cube"></i></div>
                 <h3>Photogrammétrie</h3>
                 <p>Modèles 3D de monuments et idées de musée virtuel.</p>
@@ -281,6 +311,7 @@
     </main>
     <footer>
         © 2025 Julien Houziaux — Seulement par pur amusement
+		<p style="font-size:0.7em">Dernière mise à jour : janvier 2026</p>
     </footer>
 </body>
 </html>
