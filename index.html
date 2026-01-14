@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Julien Houziaux | Projets</title>
+    <title data-i18n="page_title">Julien Houziaux | Projets</title>
 
     <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -239,8 +239,8 @@ footer {
 	<div class="top-layer">
 		<header class="header">
 			<div class="header-title">
-				<h1>Julien Houziaux</h1>
-				<p>Projets de cartographie et sites webs interactifs</p>
+				<h1 data-i18n="name">Julien Houziaux</h1>
+				<p data-i18n="subtitle">Projets de cartographie et sites webs interactifs</p>
 				<div class="header-accent"></div>
 			</div>
 
@@ -254,13 +254,13 @@ footer {
 
 		<nav>
 			<ul>
-				<li><a href="https://julienh77.github.io/album_vacances">Album</a></li>
-				<li><a href="https://julienh77.github.io/trajets_voyage/">Trajets</a></li>
-				<li><a href="https://julienh77.github.io/cartographie/">Cartographie</a></li>
-				<li><a href="https://julienh77.github.io/photogrammetrie/">Photogrammétrie</a></li>
-				<li><a href="https://sites.google.com/view/hautemarneguessr/">Guessr</a></li>
-				<li><a href="https://sites.google.com/view/dataviz24/concours">Dataviz 2024</a></li>
-				<li><a href="https://julienh77.github.io/Concours_dataviz_2025/">Dataviz 2025</a></li>
+				<li><a data-i18n="nav_album"  href="https://julienh77.github.io/album_vacances">Album</a></li>
+				<li><a data-i18n="nav_trip"  href="https://julienh77.github.io/trajets_voyage/">Trajets</a></li>
+				<li><a data-i18n="nav_cartography" href="https://julienh77.github.io/cartographie/">Cartographie</a></li>
+				<li><a data-i18n="nav_photogrammetry" href="https://julienh77.github.io/photogrammetrie/">Photogrammétrie</a></li>
+				<li><a data-i18n="nav_guessr" href="https://sites.google.com/view/hautemarneguessr/">Guessr</a></li>
+				<li><a data-i18n="nav_dataviz2024" href="https://sites.google.com/view/dataviz24/concours">Dataviz 2024</a></li>
+				<li><a data-i18n="nav_dataviz2025" href="https://julienh77.github.io/Concours_dataviz_2025/">Dataviz 2025</a></li>
 			</ul>
 		</nav>
 	</div>
@@ -268,61 +268,161 @@ footer {
         <section class="grid">
     
             <div class="project-card" id="album">
-				<span class="badge badge-featured">Projet phare</span>
+				<span data-i18n="badge_phare" class="badge badge-featured">Projet phare</span>
                 <div class="project-icon"><i class="fas fa-images"></i></div>
-                <h3>Album Vacances</h3>
-                <p>Carte interactive et photos de mes voyages à partir de 2025.</p>
-                <a class="project-link" href="https://julienh77.github.io/album_vacances">Voir le projet →</a>
+                <h3 data-i18n="project_album_title">Album Vacances</h3>
+                <p data-i18n="album_desc">Carte interactive et photos de mes voyages à partir de 2025.</p>
+                <a data-i18n="see_project" class="project-link" ref="https://julienh77.github.io/album_vacances">Voir le projet →</a>
             </div>
     
             <div class="project-card" id="trajets">
                 <div class="project-icon"><i class="fas fa-route"></i></div>
-                <h3>Trajets Vacances</h3>
-                <p>Visualisation animée de mes trajets et moyens de transport.</p>
-                <a class="project-link" href="https://julienh77.github.io/trajets_voyage/">Voir le projet →</a>
+                <h3 data-i18n="project_trip_title">Trajets Vacances</h3>
+                <p data-i18n="trip_desc">Visualisation animée de mes trajets et moyens de transport.</p>
+                <a data-i18n="see_project" class="project-link" href="https://julienh77.github.io/trajets_voyage/">Voir le projet →</a>
             </div>
     
             <div class="project-card" id="carto">
                 <div class="project-icon"><i class="fas fa-map"></i></div>
-                <h3>Cartographie</h3>
-                <p>Cartes thématiques réalisées avec QGIS et Wonderdraft.</p>
+                <h3 data-i18n="project_cartography_title">Cartographie</h3>
+                <p data-i18n="cartography_desc">Cartes thématiques réalisées avec QGIS et Wonderdraft.</p>
                 <a class="project-link" href="https://julienh77.github.io/cartographie/">Voir le projet →</a>
             </div>
     
             <div class="project-card" id="photo">
-				<span class="badge badge-heart">Projet de cœur</span>
+				<span data-i18n="badge_heart" class="badge badge-heart">Projet de cœur</span>
                 <div class="project-icon"><i class="fas fa-cube"></i></div>
-                <h3>Photogrammétrie</h3>
-                <p>Modèles 3D de monuments et idées de musée virtuel.</p>
-                <a class="project-link" href="https://julienh77.github.io/photogrammetrie/">Voir le projet →</a>
+                <h3 data-i18n="project_photogra_title">Photogrammétrie</h3>
+                <p data-i18n="photogra_desc">Modèles 3D de monuments et idées de musée virtuel.</p>
+                <a data-i18n="see_project" class="project-link" href="https://julienh77.github.io/photogrammetrie/">Voir le projet →</a>
             </div>
     
             <div class="project-card" id="guessr">
                 <div class="project-icon"><i class="fas fa-globe-europe"></i></div>
-                <h3>Haute-Marne Guessr</h3>
-                <p>Mini jeu façon GeoGuessr limité à la Haute-Marne.</p>
-                <a class="project-link" href="https://sites.google.com/view/hautemarneguessr/">Jouer →</a>
+                <h3 data-i18n="project_guessr_title">Haute-Marne Guessr</h3>
+                <p data-i18n="guessr_desc">Mini jeu façon GeoGuessr limité à la Haute-Marne.</p>
+                <a data-i18n="play" class="project-link" href="https://sites.google.com/view/hautemarneguessr/">Jouer →</a>
             </div>
     
             <div class="project-card" id="data2024">
                 <div class="project-icon"><i class="fas fa-chart-line"></i></div>
-                <h3>Concours Dataviz 2024</h3>
-                <p>Carte interactive production/consommation d’électricité du Grand Est.</p>
-                <a class="project-link" href="https://sites.google.com/view/dataviz24/concours">Voir le projet →</a>
+                <h3 data-i18n="project_dataviz24_title">Concours Dataviz 2024</h3>
+                <p data-i18n="dataviz24_desc">Carte interactive production/consommation d’électricité du Grand Est.</p>
+                <a data-i18n="see_project" class="project-link" href="https://sites.google.com/view/dataviz24/concours">Voir le projet →</a>
             </div>
     
             <div class="project-card" id="data2025">
                 <div class="project-icon"><i class="fas fa-dove"></i></div>
-                <h3>Concours Dataviz 2025</h3>
-                <p>Carte interactive sur la faune du Grand Est.</p>
-                <a class="project-link" href="https://julienh77.github.io/Concours_dataviz_2025/">Voir le projet →</a>
+                <h3 data-i18n="project_dataviz25_title">Concours Dataviz 2025</h3>
+                <p data-i18n="dataviz25_desc">Carte interactive sur la faune du Grand Est.</p>
+                <a data-i18n="see_project" class="project-link" href="https://julienh77.github.io/Concours_dataviz_2025/">Voir le projet →</a>
             </div>
     
         </section>
     </main>
     <footer>
-        © 2025 Julien Houziaux — Seulement par pur amusement
+        <p data-i18n="footer" >© 2025 Julien Houziaux — Seulement par pur amusement</p>
 		<p style="font-size:0.7em">Dernière mise à jour : janvier 2026</p>
     </footer>
+	
+	<script>
+		const translations = {
+			fr: {
+				page_title: "Julien Houziaux | Projets",
+				name: "Julien Houziaux",
+				subtitle: "Projets de cartographie et sites webs interactifs",
+
+				nav_album: "Album",
+				nav_routes: "Trajets",
+				nav_cartography: "Cartographie",
+				nav_photogrammetry: "Photogrammétrie",
+				nav_guessr: "Guessr",
+				nav_dataviz2024: "Dataviz 2024",
+				nav_dataviz2025: "Dataviz 2025",
+
+				badge_phare: "Projet phare",
+				badge_heart: "Projet de cœur",		
+				
+				project_album_title: "Album Vacances",
+				album_desc: "Carte interactive et photos de mes voyages à partir de 2025.",
+
+				project_trip_title: "Trajets Vacances",
+				trip_desc: "Visualisation animée de mes trajets et moyens de transport.",
+					
+				project_cartography_title: "Cartographie",
+				cartography_desc: "Cartes thématiques réalisées avec QGIS et Wonderdraft.",
+				
+				project_photogra_title: "Photogrammétrie",
+				photogra_desc: "Modèles 3D de monuments et idées de musée virtuel.",
+
+				project_guessr_title: "Haute-Marne Guessr",
+				guessr_desc: "Mini jeu façon GeoGuessr limité à la Haute-Marne.",
+
+				project_dataviz24_title: "Concours Dataviz 2024",
+				dataviz24_desc: "Carte interactive production/consommation d’électricité du Grand Est.",
+
+				project_dataviz25_title: "Concours Dataviz 2025",
+				dataviz25_desc: "Carte interactive sur la faune du Grand Est.",
+
+				see_project: "Voir le projet →",
+				play: "Jouer →",
+				footer: "© 2025 Julien Houziaux — Seulement par pur amusement",
+			},
+
+			en: {
+				page_title: "Julien Houziaux | Projects",
+				name: "Julien Houziaux",
+				subtitle: "Cartography projects and interactive websites",
+
+				nav_album: "Album",
+				nav_trip: "Trips",
+				nav_cartography: "Cartography",
+				nav_photogrammetry: "Photogrammetry",
+				nav_guessr: "Guessr",
+				nav_dataviz2024: "Dataviz 2024",
+				nav_dataviz2025: "Dataviz 2025",
+
+				badge_featured: "Featured project",
+				badge_heart: "Favorite project",
+
+				project_album_title: "Holiday Album",
+				album_desc: "Interactive map and photos from my travels since 2025.",
+
+				project_trip_title: "Holiday Journeys",
+				trip_desc: "Animated visualization of my journeys and means of transport.",
+
+				project_cartography_title: "Mapping",
+				cartography_desc: "Thematic maps created with QGIS and Wonderdraft.",
+
+				project_photogra_title: "Photogrammetry",
+				photogra_desc: "3D models of monuments and virtual museum concepts.",
+
+				project_guessr_title: "Haute-Marne Guessr",
+				guessr_desc: "Mini game in the style of GeoGuessr, limited to Haute-Marne.",
+
+				project_dataviz24_title: "Dataviz Competition 2024",
+				dataviz24_desc: "Interactive map of electricity production/consumption in the Grand Est region.",
+
+				project_dataviz25_title: "Dataviz Competition 2025",
+				dataviz25_desc: "Interactive map of the wildlife of the Grand Est region.",
+
+				see_project: "View project →",
+				play: "Play →",
+				footer: "© 2025 Julien Houziaux — Just for fun",
+			}
+		};
+
+		const userLang = navigator.language.slice(0, 2);
+		const lang = translations[userLang] ? userLang : "fr";
+
+		document.documentElement.lang = lang;
+
+		document.querySelectorAll("[data-i18n]").forEach(el => {
+			const key = el.dataset.i18n;
+			if (translations[lang][key]) {
+				el.textContent = translations[lang][key];
+			}
+		});
+	</script>
 </body>
 </html>
