@@ -31,7 +31,7 @@
 				guessr_desc: "Mini jeu façon GeoGuessr limité à la Haute-Marne.",
 
 				project_dataviz24_title: "Concours Dataviz 2024",
-				dataviz24_desc: "Carte interactive production/consommation d’électricité du Grand Est.",
+				dataviz24_desc: "Carte interactive prod/cons d’électricité du Grand Est.",
 
 				project_dataviz25_title: "Concours Dataviz 2025",
 				dataviz25_desc: "Carte interactive sur la faune du Grand Est.",
@@ -73,7 +73,7 @@
 				guessr_desc: "Mini game in the style of GeoGuessr, limited to Haute-Marne.",
 
 				project_dataviz24_title: "Dataviz Competition 2024",
-				dataviz24_desc: "Interactive map of electricity production/consumption in the Grand Est region.",
+				dataviz24_desc: "Interactive map of electricity prod/cons in the Grand Est region.",
 
 				project_dataviz25_title: "Dataviz Competition 2025",
 				dataviz25_desc: "Interactive map of the wildlife of the Grand Est region.",
@@ -126,14 +126,33 @@
 			}
 		};
 
-		const userLang = navigator.language.slice(0, 2);
-		const lang = translations[userLang] ? userLang : "fr";
+// vérifie si l'utilisateur a déjà choisi une langue
+const savedLang = localStorage.getItem("lang");
 
-		document.documentElement.lang = lang;
+// récupère la langue du navigateur
+const browserLang = navigator.language.slice(0, 2);
 
-		document.querySelectorAll("[data-i18n]").forEach(el => {
-			const key = el.dataset.i18n;
-			if (translations[lang][key]) {
-				el.innerHTML = translations[lang][key];
-			}
-		});
+// décide quelle langue utiliser au chargement
+const lang = savedLang || (translations[browserLang] ? browserLang : "fr");
+
+function applyTranslations(lang) {
+  document.documentElement.lang = lang;
+  document.title = translations[lang].tab_title;
+
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.dataset.i18n;
+    if (translations[lang][key]) {
+      el.innerHTML = translations[lang][key];
+    }
+  });
+}
+
+function setLang(newLang) {
+  if (!translations[newLang]) return; // sécurité
+  localStorage.setItem("lang", newLang); // mémorise
+  applyTranslations(newLang);           // applique
+  langBtn.textContent = newLang.toUpperCase(); // change texte du bouton
+}
+
+applyTranslations(lang);   // traduit la page au chargement
+langBtn.textContent = lang.toUpperCase(); // affiche la bonne langue dans le bouton
