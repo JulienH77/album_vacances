@@ -1,6 +1,6 @@
 		const translations = {
 			fr: {
-				page_title: "Julien Houziaux | Projets",
+				tab_title: "Julien Houziaux | Projets",
 				name: "Julien Houziaux",
 				subtitle: "Projets de cartographie et sites webs interactifs",
 
@@ -42,7 +42,7 @@
 			},
 
 			en: {
-				page_title: "Julien Houziaux | Projects",
+				tab_title: "Julien Houziaux | Projects",
 				name: "Julien Houziaux",
 				subtitle: "Cartography projects and interactive websites",
 
@@ -84,7 +84,7 @@
 			},
 
 			zh: {
-				page_title: "Julien Houziaux | 項目",
+				tab_title: "Julien Houziaux | 項目",
 				name: "Julien Houziaux",
 				subtitle: "地圖項目與互動網站",
 
