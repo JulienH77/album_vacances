@@ -34,7 +34,7 @@
 				dataviz24_desc: "Carte interactive prod/cons d’électricité du Grand Est.",
 
 				project_dataviz25_title: "Concours Dataviz 2025",
-				dataviz25_desc: "Carte interactive sur la faune du Grand Est.",
+				dataviz25_desc: "Carte interactive sur les oiseaux du Grand Est.",
 
 				see_project: "Voir le projet →",
 				play: "Jouer →",
@@ -76,7 +76,7 @@
 				dataviz24_desc: "Interactive map of electricity prod/cons in the Grand Est region.",
 
 				project_dataviz25_title: "Dataviz Competition 2025",
-				dataviz25_desc: "Interactive map of the wildlife of the Grand Est region.",
+				dataviz25_desc: "Interactive map of birds in the Grand Est region.",
 
 				see_project: "View project →",
 				play: "Play →",
@@ -118,7 +118,7 @@
 				dataviz24_desc: "大東部地區電力生產/消費的互動式地圖。",
 
 				project_dataviz25_title: "2025 年資料視覺化競賽",
-				dataviz25_desc: "大東部地區動物群的互動式地圖。(區域)。",
+				dataviz25_desc: "法國大東部地區鳥類互動地圖。(區域)。",
 
 				see_project: "檢視項目 →",
 				play: "播放 →",
